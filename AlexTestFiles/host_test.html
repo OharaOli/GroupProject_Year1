@@ -1,0 +1,43 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <title>Player Connect Test</title>
+    <!--<script language="javascript" type="text/javascript" 
+      src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js">
+    </script> -->
+    <script type = "text/javascript">
+      function pollForPlayer()
+        {
+          var xhttp = new XMLHttpRequest();
+          xhttp.onreadystatechange = function() 
+          {
+          if (xhttp.readyState == 4 && xhttp.status == 200) 
+            if(xhttp.responeText == "true")
+              document.getElementById("textToChange").innerHTML 
+                                                       = "Player connected!";
+          }
+        };
+        xhttp.open("GET", "is_player_connected.php", true);
+        xhttp.send(); 
+        /*
+        $.ajx({ url: 'is_player_connected.php',
+                success: function(result) 
+                { 
+                  if(result == "true")
+                    document.getElementById("textToChange").innerHTML 
+                                                       = "Player connected!";
+                }
+        });
+        */
+      }
+    </script>
+  </head>
+  <body>
+    <p id="textToChange">Waiting for player...</p>
+    <script type = "text/javascript">
+      setInterval(pollForPlayer, 100);
+    </script>
+  </body>
+</html>
+
+
