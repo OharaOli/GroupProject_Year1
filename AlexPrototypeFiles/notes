@@ -1,0 +1,7 @@
+This directory will hold/holds the prototype build for a basic audience response system. It will be built using the following files:
+
+1. Player Class.
+2. Host Class.
+3. Scripts for polling the database.
+4. Scripts for updating values in the database. 
+5. Scripts for getting values from the database.
