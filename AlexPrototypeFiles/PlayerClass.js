@@ -3,25 +3,13 @@
 // The maximum time difference in milliseconds before a player is disconnected.
 var MAX_TIME_DIFF = 4000; // Currently set to 4 seconds.
 
-// Enum that determins all the possible answers.
-var AnswerEnum =
-{
-  NONE: 0, // None is when no answer has been given yet.
-  A: 1,
-  B: 2,
-  C: 3,
-  D: 4,
-}; // AnswerEnum
-
 // Player class constructor.
-function Player(screenName)
+function Player(screenName, initialTimeValue)
 {
   // The name of the player which will be displayed on the screen.
   this.screenName = screenName;
   // Calculates the time when the player was created.
-  // This time will not be exact to when the player entry was added to the 
-  // database, but will be mostly correct.
-  this.startTime = Date.now();
+  this.startTime = Date.now() - initialTimeValue;
   // The score which will be displayed on the screen. Always calculated but
   // may not be used.
   this.score = 0;
@@ -29,7 +17,7 @@ function Player(screenName)
   // This will be set false if the time difference is too much. 
   this.connected = true;
   // The answer to the most previous question. Initially this will be nothing.
-  this.currentAnswer = AnswerEnum.NONE;
+  this.currentAnswer = "-";
   
   // Assigns the class methods.
   this.giveAnswer = giveAnswer;
@@ -43,7 +31,7 @@ function giveAnswer(correctAnswer)
   if(this.currentAnswer == correctAnswer)
     this.score += 1;
   // Clears the answer for the next question.
-  this.currentAnswer = AnswerEnum.NONE;
+  this.currentAnswer = "-";
 } // giveAnswer
 
 // Determines if a player should be disconnected if their time difference
@@ -68,3 +56,5 @@ function checkTime(apparentDifference)
   return true;
 } // checkTime
 
+// Exports the Player class.
+export { Player }; 
