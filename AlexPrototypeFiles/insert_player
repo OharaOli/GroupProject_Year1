@@ -1,0 +1,7 @@
+#!/bin/bash
+set -v
+mysql -h dbhost.cs.man.ac.uk -u y62154ab -p 2018_comp10120_y7  << EOF
+
+INSERT INTO players (host_id, screen_name) VALUES (1, "NEW PLAYER");
+quit
+EOF
