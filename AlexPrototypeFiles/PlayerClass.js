@@ -55,6 +55,3 @@ function checkTime(apparentDifference)
   // If the time difference is acceptable then true is returned.
   return true;
 } // checkTime
-
-// Exports the Player class.
-export { Player }; 

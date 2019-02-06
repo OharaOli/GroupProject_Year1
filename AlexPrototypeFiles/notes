@@ -5,3 +5,8 @@ This directory will hold/holds the prototype build for a basic audience response
 3. Scripts for polling the database.
 4. Scripts for updating values in the database. 
 5. Scripts for getting values from the database.
+
+ISSUE WITH CURRENT SYSTEM:
+If a host is made, then destroyed before changing state,
+there will be no way way to distinguish it later between
+new hosts with the same quiz code.
