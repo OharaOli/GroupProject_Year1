@@ -47,7 +47,7 @@ function setHostID(newHostID)
   // Polls the database for new players at a predefined interval.
   // Saves it in a variable so it can be stopped later.
   pollForPlayersInterval = setInterval(function() { requestDataFromDB(
-                                       pollForPlayersDataReturned, 
+                                      pollForPlayersDataReturned, 
                                       "HostConnectToDB.php?a=pfp&h=" + hostID + "&t=" 
                                        + getTimeSinceStart()); 
                                                   }, POLL_FOR_PLAYERS_DELAY);
@@ -55,42 +55,44 @@ function setHostID(newHostID)
 
 function pollForPlayersDataReturned(returnedText)
 {
+  // Returns if an empty string is returned from the server.
+  if(returnedText == "")
+    return;
+    
   // Returned text will have the following form:
   // Each player entry is separated by a new line.
   // Each player entry has ID, screen name and time since start.
   // Each of these values is separated by a comma.
   
   // Separates all the players.
-  var players = returnedText.split("\n");
-  
+  var receivedPlayers = returnedText.split("\n");
   // Loops through each player ID that is connected to the host.
-  for(playerIDIndex = 0; playerIDIndex < players.length; ++playerIDIndex)
+  for(playerIDIndex = 0; playerIDIndex < receivedPlayers.length; ++playerIDIndex)
   {
     // Gets the three values from the single player entry.
-    var playerID = players[playerIDIndex].split(",")[0];
-    var screenName = players[playerIDIndex].split(",")[1];
-    var timeSinceStart = players[playerIDIndex].split(",")[2];
+    var playerID = receivedPlayers[playerIDIndex].split(",")[0];
+    var screenName = receivedPlayers[playerIDIndex].split(",")[1];
+    var timeSinceStart = receivedPlayers[playerIDIndex].split(",")[2];
     
     // If the player has already been registered.
     if(playerID in players)
     {
       // Checks the time difference to see if the player has disconnected.
-      if(!players[playerID].checkTime(parseInt(timesSinceStart)))
+      if(!players[playerID].checkTime(parseInt(timeSinceStart)))
         // If so disconnects them.
         disconnectPlayer(playerID);
-    }
-    // If the player has not already been registered.   
-    else
+    } // if
+    else  // If the player has not already been registered.   
       // It creates a new player and adds it to the dictionary.
       players[playerID] = new Player(screenName, parseInt(timeSinceStart));
-    }
+  } // for
 } // pollForPlayersDataReturned
 
 // Disconnects a specific player based on their ID.
 function disconnectPlayer(playerID)
 {
-  updateDataInDB("HostConnectToDB.php?a=dp&p=" + playerID + "&h="                                    
-                                 + hostID + "&t=" + getTimeSinceStart());
+  updateDataInDB("HostConnectToDB.php?a=dp&p=" + playerID                                     
+                                 + "&t=" + getTimeSinceStart());
 } // disconnectPlayer
 
 function startQuiz()
@@ -118,3 +120,8 @@ function calculateScoreChanges()
 function calculateResults()
 {
 }
+
+function testForErrors(error)
+{
+  document.write(error + "\n");
+} // testForError

@@ -5,7 +5,6 @@
 // The operation for requesting data uses GET.
 function requestDataFromDB(stateChangeFunction, phpFile)
 {
-  document.write(phpFile + "\n");
   // Create a new object so that data can be requested.
   var xhttp = new XMLHttpRequest();
   // Assigns the function to be called when data is returned successfully.

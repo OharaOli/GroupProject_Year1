@@ -14,10 +14,7 @@
    // Updates the time if the action is not inserting the initial host entry. 
   if($_GET["a"] != "gh")
     updateTime($mysqli);
-    
-    $s = "UPDATE hosts SET time_since_start = 1";
-    $mysqli->query($s);
-
+   
   // Runs the correct function depending on the type of action.
   switch($_GET["a"])
   {
@@ -28,7 +25,9 @@
     // Update state.
     case "us": break;
     // Update disconnect players.
-    case "dp": break; 
+    case "dp":
+      disconnectPlayer($mysqli); 
+      break; 
     // Poll for players.
     case "pfp":
       pollForPlayers($mysqli); 
@@ -44,10 +43,10 @@
   function updateTime($mysqli)
   {  
     $updateTime = $mysqli->prepare("UPDATE hosts SET time_since_start = ? "
-                                                                + "WHERE host_id = ?;");
+                                                                . "WHERE host_id = ?;");
     $updateTime->bind_param("ss", $_GET["t"], $_GET["h"]);
     $updateTime->execute();
-    $updateTime->close();
+    $updateTime->close(); 
   } // updateTime
   
   function insertNewHost($mysqli)
@@ -60,18 +59,26 @@
   function pollForPlayers($mysqli)
   {
     $pollPlayers = $mysqli->prepare("SELECT player_id, screen_name, "
-                                                             + "time_since_start FROM players WHERE "
-                                                             + "host_id = ?;");
+                                                             . "time_since_start FROM players WHERE "
+                                                             . "host_id = ? AND connected = 1;");
     $pollPlayers->bind_param("s", $_GET["h"]);
     $pollPlayers->execute();
     $pollResult =  $pollPlayers->get_result();
     if($pollResult->num_rows > 0)
-      while($row = $result->fetch_assoc())
+      while($row = $pollResult->fetch_assoc())
         echo $row["player_id"] . "," . $row["screen_name"] . "," . 
                   $row["time_since_start"];
-    $pollResult->close();
     $pollPlayers->close();
   } // pollForPlayers
+  
+  function disconnectPlayer($mysqli)
+  {
+    $disconnectPlayer = $mysqli->prepare("UPDATE players SET connected = 0 "
+                                                                        . "WHERE player_id = ?;");
+    $disconnectPlayer->bind_param("s", $_GET["p"]);
+    $disconnectPlayer->execute();
+    $disconnectPlayer->close();
+  }
  
 /*
   function safeSelect($selectStatement)
