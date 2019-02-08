@@ -9,8 +9,8 @@ import { Player, giveAnswer, checkTime }  from "./PlayerClass.js";
 */
 
 // The time in milliseconds for poll delays.
-var POLL_FOR_PLAYERS_DELAY = 200;
-var POLL_FOR_ANSWERS_DELAY = 200;
+var POLL_FOR_PLAYERS_DELAY = 500;
+var POLL_FOR_ANSWERS_DELAY = 500;
 
 // References to intervals so that they can be stopped later.
 var pollForPlayersInterval; 
@@ -23,11 +23,18 @@ var hostID;
 // The time when the host was started.
 var startTime; 
 
+var alreadyStarted = false;
+
 // Starts the host and initialises it in the database.
 function startHost(quizCode)
-{ 
-  // Create Host table entry.
-  requestDataFromDB(setHostID, "hostConnectToDB.php?a=gh&c=" + quizCode);
+{
+  if(!alreadyStarted) 
+  {
+     // Starts the host.
+    alreadyStarted = true;
+    // Create Host table entry.
+    requestDataFromDB(setHostID, "hostConnectToDB.php?a=gh&c=" + quizCode);
+  }
 } // startHost
 
 // Returns the time since the host was started.

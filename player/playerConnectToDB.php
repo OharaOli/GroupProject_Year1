@@ -33,7 +33,7 @@
       break; 
     // Updates the answer stored..
     case "ua":
-      pollForPlayers($mysqli); 
+      insertAnswers($mysqli); 
       break;
   } // switch
   
@@ -75,10 +75,13 @@
       echo "-";
       return;
     } // if 
-    $hostID =  $checkQuizCodeResults->fetch_assoc()["host_id"];
+    $hostStateData = $checkQuizCodeResults->fetch_assoc();
+    $hostID =  $hostStateData["host_id"];
+    $time = $hostStateData["time_since_start"];
     // Outputs the host ID and the time since start.
-    echo $hostID;
-    echo $checkQuizCodeResults->fetch_assoc()["time_since_start"];
+    echo $hostID . "\n";
+    echo $time . "\n";
+   //echo $checkQuizCodeResults->fetch_assoc()["time_since_start"];
     $checkQuizCodeExists->close();
     // The quiz code exists so the player is inserted.
     $insertNewPlayer = $mysqli->prepare("INSERT INTO players "
@@ -104,10 +107,12 @@
     $pollForState->bind_param("s", $_GET["h"]);
     $pollForState->execute();
     $pollForStateResult = $pollForState->get_result();
-    $hostState = $pollForStateResult->fetch_assoc()["state"];
+    $hostStateData = $pollForStateResult->fetch_assoc();
+    // Saves the host state
+    $hostState = $hostStateData["state"];
     // Outputs the state and time since start.
-    echo $hostState;
-    echo $pollForStateResult->fetch_assoc()["time_since_start"];
+    echo $hostState . "\n";
+    echo $hostStateData["time_since_start"];
     // Only continues if the state is feedback.
     if($hostState != "feedback")
       return;
@@ -119,7 +124,7 @@
     $pollForScore->bind_param("s", $_GET["p"]);
     $pollForScore->execute();
     // Outputs the player's score.
-    echo $pollForScore->get_result()->fetch_assoc()["score"];
+    echo "\n" . $pollForScore->get_result()->fetch_assoc()["score"];
     $pollForScore->close();
   } // pollForState
   

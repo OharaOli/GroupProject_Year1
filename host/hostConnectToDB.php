@@ -69,9 +69,16 @@
     $pollPlayers->execute();
     $pollResult =  $pollPlayers->get_result();
     if($pollResult->num_rows > 0)
+      {
+      // Echos out the first line so that the new lines are in the right place.
+      $firstRow = $pollResult -> fetch_assoc();
+      echo $firstRow["player_id"] . "," . $firstRow["screen_name"] . "," . 
+                  $firstRow["time_since_start"];
+      // Outputs all the other lines.
       while($row = $pollResult->fetch_assoc())
-        echo $row["player_id"] . "," . $row["screen_name"] . "," . 
+        echo "\n" . $row["player_id"] . "," . $row["screen_name"] . "," . 
                   $row["time_since_start"];
+      } // if
     $pollPlayers->close();
   } // pollForPlayers
   
