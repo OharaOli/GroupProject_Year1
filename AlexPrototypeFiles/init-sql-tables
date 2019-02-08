@@ -8,7 +8,7 @@ DROP TABLE IF EXISTS players;
 CREATE TABLE hosts(
   host_id int NOT NULL AUTO_INCREMENT,
   quiz_code VARCHAR(5) NOT NULL,
-  state ENUM("intro", "ask", "answer", "outro") NOT NULL DEFAULT "intro",
+  state ENUM("intro", "question", "feedback", "outro") NOT NULL DEFAULT "intro",
   time_since_start int NOT NULL DEFAULT 0,
   PRIMARY KEY (host_id));
 
@@ -17,6 +17,7 @@ CREATE TABLE players(
   host_id int NOT NULL,
   answer ENUM("A", "B", "C", "D", "-") NOT NULL DEFAULT "-",
   time_since_start int NOT NULL DEFAULT 0,
+  score int NOT NULL DEFAULT 0,
   screen_name VARCHAR(20) NOT NULL,
   connected BIT NOT NULL DEFAULT 1,
   PRIMARY KEY(player_id));

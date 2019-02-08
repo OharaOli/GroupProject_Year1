@@ -24,10 +24,10 @@ var hostID;
 var startTime; 
 
 // Starts the host and initialises it in the database.
-function startHost()
+function startHost(quizCode)
 { 
   // Create Host table entry.
-  requestDataFromDB(setHostID, "HostConnectToDB.php?a=gh");
+  requestDataFromDB(setHostID, "HostConnectToDB.php?a=gh&c=" + quizCode);
 } // startHost
 
 // Returns the time since the host was started.

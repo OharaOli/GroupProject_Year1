@@ -10,7 +10,7 @@
   // Check for errors before doing anything else
   if($mysqli -> connect_error) 
     die("Connection failed.");
-
+    
    // Updates the time if the action is not inserting the initial host entry. 
   if($_GET["a"] != "gh")
     updateTime($mysqli);
@@ -51,9 +51,12 @@
   
   function insertNewHost($mysqli)
   {
-    $insertNewHost = "INSERT INTO hosts (quiz_code) VALUES ('TEST1');";
-    $mysqli->query($insertNewHost);
-    echo mysqli_insert_id($mysqli);
+    $insertNewHost = $mysqli->prepare("INSERT INTO hosts (quiz_code) "
+                                                                   .  "VALUES (?);");
+    $insertNewHost->bind_param("s", $_GET["c"]);
+    $insertNewHost->execute();
+    echo  mysqli_insert_id($mysqli);
+    $insertNewHost->close();
   } // insertNewHost
   
   function pollForPlayers($mysqli)
@@ -84,14 +87,10 @@
   {
   }
   
-  function pollForAnswer
+  function pollForAnswer()
   {
   }
   
-  function insertNewHost()
-  {
-    
-  }
   
   function disconnectPlayers()
   {
@@ -101,5 +100,5 @@
   {
     
   }
-*/
+
 ?>
