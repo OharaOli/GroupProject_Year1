@@ -3,11 +3,13 @@
 <head>
 <title></title>
 <script src="../misc/connectToDB.js"></script>
+<script src="../player/player.js"></script>
 <script src="playerClass.js"></script>
 <script src="host.js"></script>
 <script src="temp.js"></script>
 </head>
-<body>
+<body onload="displayPlayers();">
+<h4 id="number-of-players-connected"></h4>
 <input id="quiz-code-host" type="text" placeholder="Quiz Code"/>
 <button id="host-button" onclick="startHost(selectHostID());">Host Quiz</button>
 </body>
