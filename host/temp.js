@@ -8,12 +8,7 @@ if (hostButton) {
 	});
 }*/
 
+// A function which returns the value of the input field with id: quiz-code-host.
 function selectHostID() {
 	return document.getElementById("quiz-code-host").value;
-}
-
-window.onload = function() {
-	var string = "TEST2";
-	startHost(string.replace(/\n|\r/g, ""));
-	console.log(string);
 }
