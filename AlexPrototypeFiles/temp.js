@@ -13,7 +13,7 @@ function selectHostID() {
 }
 
 window.onload = function() {
-	var string = "TEST2";
+	var string = "LOAD1";
 	startHost(string.replace(/\n|\r/g, ""));
 	console.log(string);
 }
