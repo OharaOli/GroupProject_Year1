@@ -65,9 +65,10 @@
     } // if 
     echo $hostID;
     $checkQuizCodeExists->close();
-    $insertNewPlayer = $mysqli->prepare("INSERT INTO players (host_id) "
-                                                                   .  "VALUES (?);");
-    $insertNewPlayer->bind_param("s", $hostID);
+    $insertNewPlayer = $mysqli->prepare("INSERT INTO players "
+                                                                   . "(host_id, screen_name) "
+                                                                   .  "VALUES (?,?);");
+    $insertNewPlayer->bind_param("ss", $hostID, $_GET["n"]);
     $insertNewPlayer->execute();
     echo  mysqli_insert_id($mysqli);
     $insertNewPlayer->close();
@@ -83,7 +84,7 @@
     $pollForState->execute();
     $hostState= $checkQuizCodeExists->get_result();
     echo $hostState;
-    if($hostState == "feedback")
+    if($hostState != "feedback")
       return;
     $pollForState->close();
     $pollForScore = $mysqli->prepare("SELECT score FROM players "
@@ -104,5 +105,10 @@
   
   function insertAnswer($mysqli)
   {
+    $inputAnswer = $mysqli->prepare("INSERT INTO players(answer) "
+                                                                . "VALUES (?);");
+    $inputAnswer->bind_param("s", $_GET["w"]);
+    $inputAnswer->execute();
+    $inputAnswer->close();
   } // insertAnswer
 ?>
