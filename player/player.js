@@ -56,7 +56,7 @@ function setPlayerID(playerAndHostID)
     pollForStateInterval = setInterval(function() { requestDataFromDB(
                                       pollForState, 
                                       "playerConnectToDB.php?a=pfs&h=" + hostID + "&t=" 
-                                       + getTimeSinceStart()); 
+                                       + getTimeSinceStart() + "&p=" + playerID); 
                                                   }, POLL_FOR_STATE_DELAY);
 
 
@@ -79,8 +79,24 @@ function pollForState(responseText)
   } // if      
   else
   {
-    switch(statesArray[])
-}
+    // use  a switch statement to pick which function will run based on the state
+    switch(statesArray[0])
+    {
+        case "intro": 
+          intro();
+          break;
+        case "question":
+          showQuestion();
+          break;
+        case "feedback":
+          feedback(statesArray[2]); 
+          break;
+        case"outro":
+           outro();
+           break;
+     }  // switch
+  } // else
+} //pollForState
 
 // function to show the question to the player 
 function showQuestion()
@@ -88,8 +104,8 @@ function showQuestion()
 
 }
 
-// function to show the answer to the player after the timer has ran out or host decides to reveal the answer
-function showAnswer()
+// function to show the outro of when the quiz has ended
+function outro()
 {
 
 
@@ -103,7 +119,7 @@ function intro()
 }
 
 // function to return feedback to the player
-function feedback()
+function feedback(updatedPlayerScore)
 {
 
 
