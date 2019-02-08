@@ -112,7 +112,7 @@ function pollForState(responseText)
 function inputAnswer(answerSelected)
 {
     updateDataInDB("playerConnectToDB.php?a=ua&p=" + playerID +"&t=" 
-                                       + getTimeSinceStart() + );
+                                       + getTimeSinceStart() + "&w=" + answerSelected);
 
 }
 // function to show the question to the player 
