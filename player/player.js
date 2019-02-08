@@ -7,7 +7,7 @@ var playerID;
 var hostID;
 
 // delay for each state delay
-var POLL_FOR_STATE_DELAY = 200;
+var POLL_FOR_STATE_DELAY = 500;
 
 // host start time
 var hostStartTime;
@@ -21,12 +21,20 @@ var pollForStateInterval;
 // create the variable for the player's score
 var playerScore;
 
+// variable to check if the player has already joined the quiz
+var alreadyJoined = false;
+
 function tryToJoin(quizCode, screenName)
 {
-  requestDataFromDB(setPlayerID, "playerConnectToDB.php?a=gp&n=" + screenName + "&c=" + quizCode);
+  // if player hasn't joined yet, try to join
+  if (!alreadyJoined)
+   {
+    alreadyJoined = true;
+    requestDataFromDB(setPlayerID, "playerConnectToDB.php?a=gp&n=" + screenName + "&c=" + quizCode);
+   // set to already joined to true
+   } // if
 
-
-}
+} // tryToJoin
 
 // Returns the time since the host was started.
 function getTimeSinceStart()
@@ -41,9 +49,11 @@ function setPlayerID(playerAndHostID)
   if (playerAndHostID.startsWith("-"))
   {
     document.write("There was an error for the input string into the setPlayerID in the player.js function");
+    alreadyJoined = false;
   } // if
   else
   {
+
    // split the string in the parameter into different positions in an array by new line seperator
     var playerIDhostIDArray = playerAndHostID.split("\n");
     //  assign the hostID and playerID  and the host time from the string array
@@ -74,7 +84,7 @@ function pollForState(responseText)
   if (Math.abs((Date.now() - hostStartTime) - parseInt(statesArray[1])) > 10000)
   {     
     // update the data in the database by calling the JS function and then call the php
-    // function that  diconnects self
+    // function that  disconnects self
     updateDataInDB("playerConnectToDB.php?a=ds&p=" + playerID);
   } // if      
   else
@@ -98,6 +108,13 @@ function pollForState(responseText)
   } // else
 } //pollForState
 
+// function to call when an answer is input
+function inputAnswer(answerSelected)
+{
+    updateDataInDB("playerConnectToDB.php?a=ua&p=" + playerID +"&t=" 
+                                       + getTimeSinceStart() + );
+
+}
 // function to show the question to the player 
 function showQuestion()
 {
@@ -120,8 +137,9 @@ function intro()
 
 // function to return feedback to the player
 function feedback(updatedPlayerScore)
-{
-
+{  
+   // update the player score
+   playerScore = updatedPlayerScore;
 
 }
 
