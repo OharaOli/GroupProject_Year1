@@ -103,10 +103,11 @@
     // Binds the host ID h.
     $pollForState->bind_param("s", $_GET["h"]);
     $pollForState->execute();
-    $hostState= $checkQuizCodeExists->get_result();
+    $pollForStateResult = $pollForState->get_result();
+    $hostState = $pollForStateResult->fetch_assoc()["state"];
     // Outputs the state and time since start.
     echo $hostState;
-    echo $checkQuizCodeExists->get_result()["time_since_start"];
+    echo $pollForStateResult->fetch_assoc()["time_since_start"];
     // Only continues if the state is feedback.
     if($hostState != "feedback")
       return;
@@ -118,7 +119,7 @@
     $pollForScore->bind_param("s", $_GET["p"]);
     $pollForScore->execute();
     // Outputs the player's score.
-    echo $pollForScore->get_result();
+    echo $pollForScore->get_result()->fetch_assoc()["score"];
     $pollForScore->close();
   } // pollForState
   
