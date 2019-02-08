@@ -18,6 +18,9 @@ var startTime;
 // interval for polling the state
 var pollForStateInterval;
 
+// create the variable for the player's score
+var playerScore;
+
 function tryToJoin(quizCode, screenName)
 {
   requestDataFromDB(setPlayerID, "playerConnectToDB.php?a=gp&n=" + screenName + "&c=" + quizCode);
@@ -37,16 +40,16 @@ function setPlayerID(playerAndHostID)
   // if string starts with a -,  then give an exception to the html page
   if (playerAndHostID.startsWith("-"))
   {
-    document.write("There was an error for the input string into the setPlayerID function");
+    document.write("There was an error for the input string into the setPlayerID in the player.js function");
   } // if
   else
   {
    // split the string in the parameter into different positions in an array by new line seperator
     var playerIDhostIDArray = playerAndHostID.split("\n");
     //  assign the hostID and playerID  and the host time from the string array
-    hostID = playerIDhostIDarray[0];
-    playerID = playerIDhostIDarray[2];
-    hostStartTime = Date.now() - parseInt(playerIDhostIDarray[1]);
+    hostID = playerIDhostIDArray[0];
+    playerID = playerIDhostIDArray[2];
+    hostStartTime = Date.now() - parseInt(playerIDhostIDArray[1]);
     // get the start time
     startTime = Date.now();
 
@@ -62,12 +65,21 @@ function setPlayerID(playerAndHostID)
     
 
 
-
-function pollForState()
+function pollForState(responseText)
 {
+  // get the state, time and possibly the new update score and put that into an array split by new lines
+  var statesArray = responseText.split("\n");
 
-
-
+  // if the value we get from the database is greater than 10 seconds, then we should disconnect self
+  if (Math.abs((Date.now() - hostStartTime) - parseInt(statesArray[1])) > 10000)
+  {     
+    // update the data in the database by calling the JS function and then call the php
+    // function that  diconnects self
+    updateDataInDB("playerConnectToDB.php?a=ds&p=" + playerID);
+  } // if      
+  else
+  {
+    switch(statesArray[])
 }
 
 // function to show the question to the player 
@@ -95,6 +107,11 @@ function feedback()
 {
 
 
+}
+
+function testForErrors(errors)
+{
+  document.write(errors + "\n");
 }
 
 
