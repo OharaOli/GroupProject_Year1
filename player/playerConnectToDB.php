@@ -2,7 +2,7 @@
   // Written by Alex.
   
   // Load the configuration file containing your database credentials
-  require_once('config.inc.php');
+  require_once('../misc/config.inc.php');
 
   // Connect to the database
   $mysqli = new mysqli($database_host, $database_user, 
@@ -75,10 +75,10 @@
       echo "-";
       return;
     } // if 
-    $hostID =  $checkQuizCodeResults["host_id"];
+    $hostID =  $checkQuizCodeResults->fetch_assoc()["host_id"];
     // Outputs the host ID and the time since start.
     echo $hostID;
-    echo $checkQuizCodeResults["time_since_start"];
+    echo $checkQuizCodeResults->fetch_assoc()["time_since_start"];
     $checkQuizCodeExists->close();
     // The quiz code exists so the player is inserted.
     $insertNewPlayer = $mysqli->prepare("INSERT INTO players "
