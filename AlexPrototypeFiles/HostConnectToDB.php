@@ -79,19 +79,6 @@
     $disconnectPlayer->execute();
     $disconnectPlayer->close();
   }
- 
-/*
-  function safeSelect($selectStatement)
-  {
-       $selectStatement = $mysqli->prepare("SELECT * FROM ex7_users WHERE 
-                                           name = ? AND email = ?");
-      //the first parameter is the input types - s for string
-      $selectStatement->bind_param("ss", $name, $email);
-      $selectStatement->execute();
-      //result of the query
-      $selectResult = $selectStatement->get_result();
-      $selectStatement->close();
-  }
   
   function pollForPlayer()
   {
