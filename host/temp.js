@@ -27,9 +27,9 @@ function displayPlayers() {
     
     numberOfConnectedPlayers = 0;
     console.log(Object.keys(players).length);
-    console.log(players)
     for(var playerID = 0; playerID < Object.keys(players).length; players++) {
-      //console.log(players[playerID].connected);
+      console.log(players[playerID].connected);
+      console.log(players[playerID].screenName);
       /*if (players[playerID].connected == false) {
         
         numberOfConnectedPlayers++;
