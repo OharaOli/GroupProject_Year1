@@ -1,7 +1,8 @@
 <?php
-
+  // Written by Alex.
+  
   // Load the configuration file containing your database credentials
-  require_once('config.inc.php');
+  require_once('../misc/config.inc.php');
 
   // Connect to the database
   $mysqli = new mysqli($database_host, $database_user, 

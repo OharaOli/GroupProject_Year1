@@ -27,7 +27,7 @@ var startTime;
 function startHost(quizCode)
 { 
   // Create Host table entry.
-  requestDataFromDB(setHostID, "HostConnectToDB.php?a=gh&c=" + quizCode);
+  requestDataFromDB(setHostID, "hostConnectToDB.php?a=gh&c=" + quizCode);
 } // startHost
 
 // Returns the time since the host was started.
@@ -48,7 +48,7 @@ function setHostID(newHostID)
   // Saves it in a variable so it can be stopped later.
   pollForPlayersInterval = setInterval(function() { requestDataFromDB(
                                       pollForPlayersDataReturned, 
-                                      "HostConnectToDB.php?a=pfp&h=" + hostID + "&t=" 
+                                      "hostConnectToDB.php?a=pfp&h=" + hostID + "&t=" 
                                        + getTimeSinceStart()); 
                                                   }, POLL_FOR_PLAYERS_DELAY);
 } // getHostID
@@ -91,7 +91,7 @@ function pollForPlayersDataReturned(returnedText)
 // Disconnects a specific player based on their ID.
 function disconnectPlayer(playerID)
 {
-  updateDataInDB("HostConnectToDB.php?a=dp&p=" + playerID                                     
+  updateDataInDB("hostConnectToDB.php?a=dp&p=" + playerID                                     
                                  + "&t=" + getTimeSinceStart());
 } // disconnectPlayer
 
