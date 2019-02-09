@@ -6,34 +6,107 @@ This one creates -->
 <HEAD>
 	<TITLE> Add/Remove dynamic rows in HTML table </TITLE>
 	<SCRIPT language="javascript">
-		function addRow(tableID) {
 
-			var table = document.getElementById(tableID);
+                //function for creating the answer chunk with given index
+                function buildAnswerChunk(index)
+                {
+                return   "<button onclick='hideORShow(hiddenPart" + index + ")' Show/Hide answers </button>
+                                    <div id = 'hiddenPart" + index + "'>
+                                      <table id='answerTable" + index + "' width= '350px' border='1'>
+                                          <TR>
+			                    <TD><INPUT type='checkbox' name='chk'/></TD>
+			                    <TD> 1 </TD> 
+                                            <TD> <INPUT type='text' />  </TD>
+                                          </TR>
+                                     </table> 
+                                     <INPUT type='button' value='Add an answer' onclick= 'addRowAnswers('answerTable" + index + "')' />
+	                             <INPUT type='button' value='Delete an answer' onclick='deleteRow('answerTable" + index + "')' />
+                                   </div>";
+     
+                } // buildAnswerChunk
 
-			var rowCount = table.rows.length;
-			var row = table.insertRow(rowCount);
+                const answerIndex = 0;
+  
+		function addRowQuestions(givenTable) {
+                        //accessing the table object of the given table
+			var table = document.getElementById(givenTable);
 
-			var cell1 = row.insertCell(0);
-			var element1 = document.createElement("input");
+                        // returns the number of <tr> elements
+			var numOfRows = table.rows.length;
+
+                        //inserts an empty row (empty <tr> element) to the table at the given position
+                        //the position of the row starts from 0. Here I'm appending a row at the last row
+			var newRow = table.insertRow(numOfRows);
+
+                       //inserts 1st empty cell(column) to the new row
+			var newCell1 = newRow.insertCell(0);
+
+                        //html DOM createElement() method
+                        //create a new, empty html element
+			var element1 = document.createElement("Input");
 			element1.type = "checkbox";
 			element1.name="chkbox[]";
-			cell1.appendChild(element1);
+			newCell1.appendChild(element1);
 
-			var cell2 = row.insertCell(1);
-			cell2.innerHTML = rowCount + 1;
+                        //inserts 2nd empty cell(column) to the new row
+			var newCell2 = newRow.insertCell(1);
+			newCell2.innerHTML = numOfRows + 1;
 
-			var cell3 = row.insertCell(2);
-			var element2 = document.createElement("input");
+
+                       //inserts 3rd empty cell to the new row
+			var newCell3 = newRow.insertCell(2);
+			var element2 = document.createElement("Input");
 			element2.type = "text";
 			element2.name = "txtbox[]";
-			cell3.appendChild(element2);
+			newCell3.appendChild(element2);
+
+                       //inserts 4th empty cell to the new row
+                       var newCell4 = newRow.insertCell(3);
+                       var element3 = document.getElementById("answers");
+                       var elementCopy = element3.cloneNode(true);
+                       answerIndex++;
+                       elementCopy.innerHTML = buildAnswerChunk(answerIndex);
+                       newCell4.appendChild(elementCopy);
+		} // addRowQuestions
+
+		function addRowAnswers(givenTable) {
+                        //accessing the table object of the given table
+			var table = document.getElementById(givenTable);
+
+                        // returns the number of <tr> elements
+			var numOfRows = table.rows.length;
+
+                        //inserts an empty row (empty <tr> element) to the table at the given position
+                        //the position of the row starts from 0. Here I'm appending a row at the last row
+			var newRow = table.insertRow(numOfRows);
+
+                       //inserts 1st empty cell(column) to the new row
+			var newCell1 = newRow.insertCell(0);
+
+                        //html DOM createElement() method
+                        //create a new, empty html element
+			var element1 = document.createElement("checkBoxInput");
+			element1.type = "checkbox";
+			element1.name="chkbox[]";
+
+			newCell1.appendChild(element1);
+
+                        //inserts 2nd empty cell(column) to the new row
+			var newCell2 = newRow.insertCell(1);
+			newCell2.innerHTML = numOfRows + 1;
 
 
-		}
+                       //inserts 3rd empty cell to the new row
+			var newCell3 = newRow.insertCell(2);
+			var element2 = document.createElement("TextBoxInput");
+			element2.type = "text";
+			element2.name = "txtbox[]";
+			newCell3.appendChild(element2);
+                } // addRowAnswers
 
-		function deleteRow(tableID) {
+		function deleteRow(givenTable) {
 			try {
-			var table = document.getElementById(tableID);
+			var table = document.getElementById(givenTable);
 			var rowCount = table.rows.length;
 
 			for(var i=0; i<rowCount; i++) {
@@ -53,9 +126,9 @@ This one creates -->
 		}
 
          //javascript for making the ansers disappear
-        function myFunction()
+        function hideORShow(givenElement)
         {
-          var x = document.getElementById("answers");
+          var x = document.getElementById(givenElement);
           if (x.style.display === "none")
           {
             x.style.display = "block";
@@ -69,32 +142,32 @@ This one creates -->
 	</SCRIPT>
 </HEAD>
 <BODY>
+	<INPUT type="button" value="Add  a question" onclick="addRowQuestions('questionTable')" />
 
-	<INPUT type="button" value="Add  a question" onclick="addRow('dataTable')" />
+	<INPUT type="button" value="Delete a  question" onclick="deleteRow('questionTable')" />
 
-	<INPUT type="button" value="Delete a  question" onclick="deleteRow('dataTable')" />
-
-	<TABLE id="dataTable" width="350px" border="1">
+	<TABLE id="questionTable" width="350px" border="1">
 		<TR>
 			<TD><INPUT type="checkbox" name="chk"/></TD>
 			<TD> 1 </TD>
 			<TD> <INPUT type="text" /> </TD>
                         <TD>
-                                  <button onclick="myFunction()"> Show/Hide answers</button>
-                                  <div id ="answers">
-                                  <table id="answerTable" width= "350px" border="1">
-                                    <TR>
-			              <TD><INPUT type="checkbox" name="chk"/></TD>
-			              <TD> 1 </TD> 
-                                      <TD> <INPUT type="text" />  </TD>
-                                   </TR>
-                                 </table> 
-                                 <INPUT type="button" value="Add an answer" onclick="addRow('answerTable')" />
-	                         <INPUT type="button" value="Delete an answer" onclick="deleteRow('answerTable')" />
-                                 <div>
+                                  <div id ="answers0">
+                                    <button onclick="hideORShow(hiddenPart0)" Show/Hide answers </button>
+                                    <div id = "hiddenPart0">
+                                      <table id="answerTable" width= "350px" border="1">
+                                          <TR>
+			                    <TD><INPUT type="checkbox" name="chk"/></TD>
+			                    <TD> 1 </TD> 
+                                            <TD> <INPUT type="text" />  </TD>
+                                          </TR>
+                                     </table> 
+                                     <INPUT type="button" value="Add an answer" onclick="addRowAnswers('answerTable')" />
+	                             <INPUT type="button" value="Delete an answer" onclick="deleteRow('answerTable')" />
+                                   </div> 
+                                 </div>
                       </TD>
 		</TR>
 	</TABLE>
-
 </BODY>
 </HTML>
