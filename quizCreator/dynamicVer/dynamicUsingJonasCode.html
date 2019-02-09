@@ -7,6 +7,9 @@
 <body>
 <script>
 
+
+//for different quizzes - why not create different tabs for different quizzes?
+
 //method to add a row onto quiz maker table
 function addQuestionRow(givenTable) {
   //put quiz maker table into a variable
@@ -150,89 +153,182 @@ function hideORShow(givenId)
     x.style.display = "none";
   }
 }
+// function to open the creator for each tab
+function openCreator(givenQuiz) {
+  // Declare all variables
+  var i, tabcontent, tablinks;
+
+  // Get all elements with class="tabcontent" and hide them
+  tabcontent = document.getElementsByClassName("tabcontent");
+  for (i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].style.display = "none";
+  }
+
+  // Get all elements with class="tablinks" and remove the class "active"
+  tablinks = document.getElementsByClassName("tablinks");
+  for (i = 0; i < tablinks.length; i++) {
+    tablinks[i].className = tablinks[i].className.replace(" active", "");
+  }
+
+  // Show the current tab, and add an "active" class to the button that opened the tab
+  document.getElementById(givenQuiz).style.display = "block";
+  evt.currentTarget.className += " active";
+}
 
 </script>
 
 
-<!-- Quiz maker table -->
-<table id="quizMakerTable" border="1">
-  <!-- Labels for quiz master -->
-  <tr>
-    <th>Question</th>
-    <th>Related nodes</th>
-    <th>Answers</th>
-  </tr>
+
+
+<!-- tabs for selecting quizzes -->
+
+<div class="tab">
+  <button id= "default" class="tablinks" onclick="openCreator('quiz1')">Quiz1</button>
+  <button class="tablinks" onclick="openCreator('quiz2')">Quiz2</button>
+  <button class="tablinks" onclick="openCreator('quiz3')">Quiz3</button>
+</div>
+
+<div id="quiz1" class="tabcontent">
+  <h3>QUIZ1</h3>
+  <p> Create questions for QUIZ1</p>
+
+  <!-- Quiz maker table -->
+  <table id="creatorForQ1" border="1">
+    <!-- Labels for quiz master -->
+    <tr>
+      <th>Question</th>
+      <th>Related nodes</th>
+      <th>Answers</th>
+    </tr>
 
 
 
-  <!--
-        each question row has unique ids for its elements
-        answer id format is made of two numbers:
-        index of row and second answer index
-  -->
+    <!--
+          each question row has unique ids for its elements
+          answer id format is made of two numbers:
+          index of row and second answer index
+    -->
 
-    <!-- Q1 -->
-  <tr>
-    <td><input type="text" name="Question" id = "q0"></td>
-    <td><input type="text" name="Related nodes" id = "rn0"></td>
-    <td> <div id ="answersQ0">
-           <button onclick="hideORShow('hiddenPartQ0')"> Hide/show answers </button>
-            <div id = "hiddenPartQ0">
-              <table id="answersTableQ0" width= "350px" border="1">
-                <TR>
-                  <TD> <input type="text" name="Answer" id ="ansQ00" </TD>
+      <!-- Q1 -->
+    <tr>
+      <td><input type="text" name="Question" id = "q0"></td>
+      <td><input type="text" name="Related nodes" id = "rn0"></td>
+      <td> <div id ="answersQ0">
+             <button onclick="hideORShow('hiddenPartQ0')"> Hide/show answers </button>
+              <div id = "hiddenPartQ0">
+                <table id="answersTableQ0" width= "350px" border="1">
+                  <TR>
+                    <TD> <input type="text" name="Answer" id ="ansQ00" </TD>
+                    </TR>
+                </table>
+                <INPUT type="button" value="Add an answer" onclick="addAnswerRow('answersTableQ0')" />
+                <INPUT type="button" value="Delete an answer" onclick="deleteQuestionRow('answersTableQ0')" />
+              </div> <!-- hidden part -->
+           </div> <!-- answersQ0 -->
+    </tr>
+    <!-- Q2 -->
+    <tr>
+      <td><input type="text" name="Question" id = "q1"></td>
+      <td><input type="text" name="Related nodes" id = "rn1"></td>
+      <td> <div id ="answersQ1">
+             <button onclick="hideORShow('hiddenPartQ1')"> Hide/show answers </button>
+              <div id = "hiddenPartQ1">
+                <table id="answersTableQ1" width= "350px" border="1">
+                  <TR>
+                    <TD> <input type="text" name="Answer" id ="ansQ10" </TD>
+                    </TR>
+                </table>
+                <INPUT type="button" value="Add an answer" onclick="addAnswerRow('answersTableQ1')" />
+                <INPUT type="button" value="Delete an answer" onclick="deleteQuestionRow('answersTableQ1')" />
+              </div> <!-- hidden part -->
+           </div> <!-- answersQ0 -->
+    </tr>
+    <!-- Q3 -->
+    <tr>
+      <td><input type="text" name="Question" id = "q2"></td>
+      <td><input type="text" name="Related nodes" id = "rn2"></td>
+      <td> <div id ="answersQ2">
+             <button onclick="hideORShow('hiddenPartQ2')"> Hide/show answers </button>
+              <div id = "hiddenPartQ2">
+                <table id="answersTableQ2" width= "350px" border="1">
+                  <TR>
+                    <TD> <input type="text" name="Answer" id ="ansQ20" </TD>
                   </TR>
-              </table>
-              <INPUT type="button" value="Add an answer" onclick="addAnswerRow('answersTableQ0')" />
-              <INPUT type="button" value="Delete an answer" onclick="deleteQuestionRow('answersTableQ0')" />
-            </div> <!-- hidden part -->
-         </div> <!-- answersQ0 -->
-  </tr>
-  <!-- Q2 -->
-  <tr>
-    <td><input type="text" name="Question" id = "q1"></td>
-    <td><input type="text" name="Related nodes" id = "rn1"></td>
-    <td> <div id ="answersQ1">
-           <button onclick="hideORShow('hiddenPartQ1')"> Hide/show answers </button>
-            <div id = "hiddenPartQ1">
-              <table id="answersTableQ1" width= "350px" border="1">
-                <TR>
-                  <TD> <input type="text" name="Answer" id ="ansQ10" </TD>
-                  </TR>
-              </table>
-              <INPUT type="button" value="Add an answer" onclick="addAnswerRow('answersTableQ1')" />
-              <INPUT type="button" value="Delete an answer" onclick="deleteQuestionRow('answersTableQ1')" />
-            </div> <!-- hidden part -->
-         </div> <!-- answersQ0 -->
-  </tr>
-  <!-- Q3 -->
-  <tr>
-    <td><input type="text" name="Question" id = "q2"></td>
-    <td><input type="text" name="Related nodes" id = "rn2"></td>
-    <td> <div id ="answersQ2">
-           <button onclick="hideORShow('hiddenPartQ2')"> Hide/show answers </button>
-            <div id = "hiddenPartQ2">
-              <table id="answersTableQ2" width= "350px" border="1">
-                <TR>
-                  <TD> <input type="text" name="Answer" id ="ansQ20" </TD>
-                </TR>
-              </table>
-              <INPUT type="button" value="Add an answer" onclick="addAnswerRow('answersTableQ2')" />
-              <INPUT type="button" value="Delete an answer" onclick="deleteQuestionRow('answersTableQ2')" />
-            </div> <!-- hidden part -->
-         </div> <!-- answersQ0 -->
-  </tr>
-  </table>
-  <!-- END Quiz maker table -->
-  <br>
-  <!-- Add/delete quiz buttons -->
-  <button onclick="addQuestionRow('quizMakerTable')">Add question
-  <button onclick="deleteQuestionRow('quizMakerTable')">Delete question
-  <!-- Submit button -->
-  <button onclick="">Submit does nothing yet
+                </table>
+                <INPUT type="button" value="Add an answer" onclick="addAnswerRow('answersTableQ2')" />
+                <INPUT type="button" value="Delete an answer" onclick="deleteQuestionRow('answersTableQ2')" />
+              </div> <!-- hidden part -->
+           </div> <!-- answersQ0 -->
+    </tr>
+    </table>
+    <!-- END Quiz maker table -->
+    <br>
+    <!-- Add/delete quiz buttons -->
+    <button onclick="addQuestionRow('creatorForQ1')">Add question
+    <button onclick="deleteQuestionRow('creatorForQ1')">Delete question
+    <!-- Submit button -->
+    <button onclick="">Submit does nothing yet
+</div>
 
 
+<div id="quiz2" class="tabcontent">
+  <h3>QUIZ2</h3>
+  <p> Create questions for QUIZ2</p>
+</div>
 
+<div id="quiz3" class="tabcontent">
+  <h3>QUIZ3</h3>
+  <p> Create questions for QUIZ3</p>
+</div>
+
+<!-- CSS script for the tabs -->
+<style>
+/* Style the tab */
+.tab {
+  overflow: hidden;
+  border: 1px solid #ccc;
+  background-color: #f1f1f1;
+}
+
+/* Style the buttons that are used to open the tab content */
+.tab button {
+  background-color: inherit;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  transition: 0.3s;
+}
+
+/* Change background color of buttons on hover */
+.tab button:hover {
+  background-color: #ddd;
+}
+
+/* Create an active/current tablink class */
+.tab button.active {
+  background-color: #ccc;
+}
+
+/* Style the tab content */
+.tabcontent {
+  display: none;
+  padding: 6px 12px;
+  border: 1px solid #ccc;
+  border-top: none;
+}
+/* CSS bit for fade-out effect of the tabs */
+.tabcontent {
+  animation: fadeEffect 1s; /* Fading effect takes 1 second */
+}
+
+/* Go from zero to full opacity */
+@keyframes fadeEffect {
+  from {opacity: 0;}
+  to {opacity: 1;}
+}
+</style>
 
 </body>
 
