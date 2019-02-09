@@ -17,28 +17,38 @@ function addQuestionRow() {
   //inserts a row onto the table
   var row = table.insertRow(lastRowIndex);
 
+  //set to 3 because the table starts with 3 rows by default
+  //var nextRowIndex = 3;
+
+
+
   //inserts 6 cells each with their own text field
   //first cell represents the question
   var questionCell = row.insertCell(0);
   questionCell.innerHTML = "<input type='text' name='Question'>";
+  questionCell.id = ("q" + (lastRowIndex-1));
 
   //inserts relations cell
   var nodesCell = row.insertCell(1);
   nodesCell.innerHTML = "<input type='text' name='RelatedNodes'>";
-
+  nodesCell.id = ("rn" + (lastRowIndex-1));
 
   //then add four answer cells
   var ansCell1 = row.insertCell(2);
   ansCell1.innerHTML = "<input type='text' name='Answer1'>";
+  ansCell1.id = ("ans" + (lastRowIndex-1) + "0");
 
   var ansCell2 = row.insertCell(3);
   ansCell2.innerHTML = "<input type='text' name='Answer2'>";
+  ansCell2.id = ("ans" + (lastRowIndex-1) + "1");
 
   var ansCell3 = row.insertCell(4);
   ansCell3.innerHTML = "<input type='text' name='Answer3'>";
+  ansCell3.id = ("ans" + (lastRowIndex-1) + "2");
 
   var ansCell4 = row.insertCell(5);
   ansCell4.innerHTML = "<input type='text' name='Answer4'>";
+  ansCell4.id = ("ans" + (lastRowIndex-1) + "3");
 
 }
 
