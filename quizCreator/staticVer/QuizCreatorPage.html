@@ -14,21 +14,15 @@ function addQuestionRow() {
   //put last row index into a varibale
   var lastRowIndex = table.rows.length;
 
-  //index set to 3 because first
-  //because first 3 questions are showed by default
-  var rowIndex = 3;
-
   //inserts a row onto the table
   var row = table.insertRow(lastRowIndex);
 
   //inserts 6 cells each with their own text field
   //first cell represents the question
-  var questionCell1 = row.insertCell(0);
-  //questionCell1.innerHTML = "<input type='text' name='Question'";
-  questionCell1.id = ("q" + testIndex);
-  questionCell1.innerHTML = questionCell1.id;
+  var questionCell = row.insertCell(0);
+  questionCell.innerHTML = "<input type='text' name='Question'>";
 
-  //inserts
+  //inserts relations cell
   var nodesCell = row.insertCell(1);
   nodesCell.innerHTML = "<input type='text' name='RelatedNodes'>";
 
@@ -43,8 +37,8 @@ function addQuestionRow() {
   var ansCell3 = row.insertCell(4);
   ansCell3.innerHTML = "<input type='text' name='Answer3'>";
 
-  var ansCell4 = row.insertCell(4);
-  ansCell3.innerHTML = "<input type='text' name='Answer4'>";
+  var ansCell4 = row.insertCell(5);
+  ansCell4.innerHTML = "<input type='text' name='Answer4'>";
 
 }
 
