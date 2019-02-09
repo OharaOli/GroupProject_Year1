@@ -7,67 +7,100 @@ This one creates -->
 	<TITLE> Add/Remove dynamic rows in HTML table </TITLE>
 	<SCRIPT language="javascript">
 
-                //function for creating the answer chunk with given index
-                function buildAnswerChunk(index)
-                {
-                return   "<button onclick='hideORShow(hiddenPart" + index + ")' Show/Hide answers </button>
-                                    <div id = 'hiddenPart" + index + "'>
-                                      <table id='answerTable" + index + "' width= '350px' border='1'>
-                                          <TR>
-			                    <TD><INPUT type='checkbox' name='chk'/></TD>
-			                    <TD> 1 </TD> 
-                                            <TD> <INPUT type='text' />  </TD>
-                                          </TR>
-                                     </table> 
-                                     <INPUT type='button' value='Add an answer' onclick= 'addRowAnswers('answerTable" + index + "')' />
-	                             <INPUT type='button' value='Delete an answer' onclick='deleteRow('answerTable" + index + "')' />
-                                   </div>";
-     
-                } // buildAnswerChunk
 
-                const answerIndex = 0;
   
 		function addRowQuestions(givenTable) {
                         //accessing the table object of the given table
 			var table = document.getElementById(givenTable);
 
                         // returns the number of <tr> elements
-			var numOfRows = table.rows.length;
+			var lastRowIndex = table.rows.length;
+
+                        var nextQuestionNum = lastRowIndex;
 
                         //inserts an empty row (empty <tr> element) to the table at the given position
                         //the position of the row starts from 0. Here I'm appending a row at the last row
-			var newRow = table.insertRow(numOfRows);
+			var newRow = table.insertRow(lastRowIndex);
 
                        //inserts 1st empty cell(column) to the new row
 			var newCell1 = newRow.insertCell(0);
 
                         //html DOM createElement() method
                         //create a new, empty html element
-			var element1 = document.createElement("Input");
+			var element1 = document.createElement("checkBoxInput");
 			element1.type = "checkbox";
 			element1.name="chkbox[]";
 			newCell1.appendChild(element1);
 
+
                         //inserts 2nd empty cell(column) to the new row
 			var newCell2 = newRow.insertCell(1);
-			newCell2.innerHTML = numOfRows + 1;
+			newCell2.innerHTML = lastRowIndex + 1;
 
 
                        //inserts 3rd empty cell to the new row
 			var newCell3 = newRow.insertCell(2);
-			var element2 = document.createElement("Input");
+			var element2 = document.createElement("InputTextBox");
 			element2.type = "text";
 			element2.name = "txtbox[]";
 			newCell3.appendChild(element2);
+                        newCell3.id = (lastRowIndex + 1);
 
                        //inserts 4th empty cell to the new row
                        var newCell4 = newRow.insertCell(3);
-                       var element3 = document.getElementById("answers");
-                       var elementCopy = element3.cloneNode(true);
-                       answerIndex++;
-                       elementCopy.innerHTML = buildAnswerChunk(answerIndex);
-                       newCell4.appendChild(elementCopy);
+                       //create the hide and show button
+                       var elementHideButton = document.createElement("hideShowButton");
+                         elementHideButton.type = "button";
+                         elementHideButton.onclick= "hideORShow(hiddenPart"
+                                                                                 + nextQuestionNum + ")";
+                         elementHideButton.innerHTML = "Hide/Show answers";
+                                
+                       //create div for the hidden part
+                       var elementHiddenPart = document.createElement("hiddenPart");
+                         elementHiddenPart.type = "div';
+                         elementHiddenPart.id = "hiddenPart" + newQuestionNum;
+                      
+                      //append this hiddenpart as a child of the button
+                      elementHideButton.appendChild(elementHiddenPart);
+
+
+                       //create the answer table
+                       var elementAnswerTable = docuemnt.createElement("answerTable");
+                         elementAnswerTable.type = "table";
+                         elementAnswerTable.id = "answerTable" + nextQuestionNum;
+                         elementAnswerTable.width= "350px";
+                         elementAnswerTable.border= "1";
+                         elementAnswerTable.innerHTML =  "<TR>
+			                                                              <TD><INPUT type='checkbox' name='chk' /></TD>
+			                                                              <TD> 1 </TD> 
+                                                                                      <TD> <INPUT id = '1' type='text' />  </TD>
+                                                                                   </TR>"
+                  
+                      //append the table as a child of the div
+                      elementHiddenPart.appendChild(elementAnswerTable);
+
+                      //lastly create the two buttons for creating and dellting the answers
+                      var elementAddAnswerButton = document.createElement("addanswer");
+                        elementAddAnswerButton.type = "button";
+                        elementAddAnswerButton.onclick = "addRowAnswers('answerTable"
+                                                                                   +  nextQuestionNum + "')";
+                        elementAddAnswerButton.innerHTML = "add answers";    
+
+                      var elementDeleteAnswerButton = document.createElement("deleteAnswer");
+                        elementDeleteAnswerButton.type = "button";
+                        elementDeleteAnswerButton.onclick = "deleteRow('answerTable"
+                                                                                   +  nextQuestionNum + "')";
+                        elementDeleteAnswerButton.innerHTML = "delete answers"; 
+                                                 
+                        //append the two buttons to the hidden part
+                        elementHiddenPart.appendChild(elementAddAnswerButton);
+                        elemnetHiddenPart.appendChild(elementDeleteAnswerButton);
+
+                        //append the hide and show button to the cell
+                       newCell4.appendChild(elementHideButton);
+
 		} // addRowQuestions
+                 
 
 		function addRowAnswers(givenTable) {
                         //accessing the table object of the given table
@@ -150,16 +183,16 @@ This one creates -->
 		<TR>
 			<TD><INPUT type="checkbox" name="chk"/></TD>
 			<TD> 1 </TD>
-			<TD> <INPUT type="text" /> </TD>
+			<TD> <INPUT id = "1"  type="text" /> </TD>
                         <TD>
-                                  <div id ="answers0">
-                                    <button onclick="hideORShow(hiddenPart0)" Show/Hide answers </button>
-                                    <div id = "hiddenPart0">
-                                      <table id="answerTable" width= "350px" border="1">
+                                  <div id ="answers1">
+                                    <button onclick="hideORShow(hiddenPart1)"> Show/Hide answers </button>
+                                    <div id = "hiddenPart1">
+                                      <table id="answerTable1" width= "350px" border="1">
                                           <TR>
 			                    <TD><INPUT type="checkbox" name="chk"/></TD>
 			                    <TD> 1 </TD> 
-                                            <TD> <INPUT type="text" />  </TD>
+                                            <TD> <INPUT id = "1" type="text" />  </TD>
                                           </TR>
                                      </table> 
                                      <INPUT type="button" value="Add an answer" onclick="addRowAnswers('answerTable')" />
