@@ -19,8 +19,8 @@
   // Runs the correct function depending on the type of action.
   switch($_GET["a"])
   {
-    // Insert new host and get host ID.
-    case "gh": 
+    // Insert new host and get host ID and number of questions..
+    case "ghnq": 
       insertNewHost($mysqli);
       break; 
     // Update state.
@@ -69,7 +69,7 @@
     $pollPlayers->execute();
     $pollResult =  $pollPlayers->get_result();
     if($pollResult->num_rows > 0)
-      {
+    {
       // Echos out the first line so that the new lines are in the right place.
       $firstRow = $pollResult -> fetch_assoc();
       echo $firstRow["player_id"] . "," . $firstRow["screen_name"] . "," . 
@@ -91,17 +91,23 @@
     $disconnectPlayer->close();
   }
   
-  function pollForPlayer()
-  {
-  }
-  
   function pollForAnswer()
   {
-  }
-  
-  
-  function disconnectPlayers()
-  {
+    $pollAnswers = $mysqli->prepare("SELECT player_id, answer "
+                                                                . "FROM players WHERE "
+                                                                . "host_id = ? AND connected = 1 "
+                                                                . " AND answer <> '-';");
+    $pollAnswers->bind_param("s", $_GET["h"]);
+    $pollAnswers->execute();
+    $pollResult = $pollPlayers->get_result();
+    if($pollResult->num_rows > 0)
+    {
+      $firstRow = $pollResult->fetch_assoc();
+      echo $firstRow["player_id"] . "," . $firstRow["answer"];
+      while($row = $pollResult->fetch_assoc())
+        echo "\n" .  $row["player_id"] . "," . $row["answer"]; 
+    } // if
+    $pollAnswers->close();
   }
   
   function changeState()

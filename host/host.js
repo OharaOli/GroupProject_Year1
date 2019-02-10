@@ -22,18 +22,31 @@ var players = {};
 var hostID;
 // The time when the host was started.
 var startTime; 
-
+// The number of questions in the quiz.
+var numQuestions;
+// The question number that the host is currently on.
+// Initially set to 0 (not a question) but incremented before fetching next.
+var currentQuestionNum = 0;
+// The question text that the host is currently on.
+var currentQuestionText;
+// The answers to the question the host is currently on.
+var currentQuestionAnswers; 
+// The letter of the correct answer. 
+var currentQuestionCorrectAnswer;
+// Determines if the current page already has a host started on it.
 var alreadyStarted = false;
 
 // Starts the host and initialises it in the database.
-function startHost(quizCode)
+function startHost(quizCode, quizID = 1)
 {
   if(!alreadyStarted) 
   {
      // Starts the host.
     alreadyStarted = true;
     // Create Host table entry.
-    requestDataFromDB(setHostID, "hostConnectToDB.php?a=gh&c=" + quizCode);
+    requestDataFromDB(setHostIDAndNumQuestions, 
+                                         "hostConnectToDB.php?a=ghnq&c=" 
+                                         + quizCode + "&q=" + quizID);
   }
 } // startHost
 
@@ -44,10 +57,12 @@ function getTimeSinceStart()
   return Date.now() - startTime;
 } // getTimeSinceStart
 
-function setHostID(newHostID)
+function setHostIDAndNumQuestions(returnedText)
 {
   // Assigns the host ID for the quiz.
-  hostID = newHostID;
+  hostID = returnedText.split("\n")[0];
+  // Assigns the number of questions.
+  numQuestions = parseInt(returnedText.split("\n")[1]);
   // Sets the start time.
   startTime = Date.now();
   
@@ -62,15 +77,11 @@ function setHostID(newHostID)
 
 function pollForPlayersDataReturned(returnedText)
 {
-  // Returns if an empty string is returned from the server.
-  if(returnedText == "")
-    return;
-    
   // Returned text will have the following form:
   // Each player entry is separated by a new line.
   // Each player entry has ID, screen name and time since start.
   // Each of these values is separated by a comma.
-  
+  document.getElement
   // Separates all the players.
   var receivedPlayers = returnedText.split("\n");
   // Loops through each player ID that is connected to the host.
@@ -80,7 +91,7 @@ function pollForPlayersDataReturned(returnedText)
     var playerID = receivedPlayers[playerIDIndex].split(",")[0];
     var screenName = receivedPlayers[playerIDIndex].split(",")[1];
     var timeSinceStart = receivedPlayers[playerIDIndex].split(",")[2];
-    
+
     // If the player has already been registered.
     if(playerID in players)
     {
@@ -93,6 +104,8 @@ function pollForPlayersDataReturned(returnedText)
       // It creates a new player and adds it to the dictionary.
       players[playerID] = new Player(screenName, parseInt(timeSinceStart));
   } // for
+  
+  updateUIIntro();
 } // pollForPlayersDataReturned
 
 // Disconnects a specific player based on their ID.
@@ -106,29 +119,110 @@ function startQuiz()
 {
   // Stops polling for new players.
   clearInterval(pollForPlayersInterval);
-  // TEMP CODE
-  // CODE NEEDS TO CHANGE STATES
-  for(let playerID in players)
-    document.write(players[playerID].screenName);
+  getNextQuestion();
 } // startQuiz
 
-function askQuestion()
+function getNextQuestion()
+{
+    currentQuestionNum++;
+    if(currentQuestionNum >= numQuestions)
+      showQuestionResults;
+    else
+      requestDataInDB(returnedText, "hostConnectToDB.php?a=us&h=" + hostID
+                                  + "&n=" currentQuestionNum + "&s=question&t="
+                                  + getTimeSinceStart()); 
+} // getQuestionData
+
+function askQuestion(returnedText)
+{
+  splitReturnedText = returnedText.split("\n");
+  currentQuestionText = splitReturnedText[0];
+  currentQuestionCorrectAnswer = splitReturnedText[1];
+  currentQuestionAnswers = {};
+  switch(splitReturnedText.length - 2)
+  {
+    case 4: currentQuestionAnswers["D"] = splitReturnedText[5]; 
+    case 3: currentQuestionAnswers["C"] = splitReturnedText[4]; 
+    case 2: currentQuestionAnswers["B"] = splitReturnedText[3]; 
+    case 1: currentQuestionAnswers["A"] = splitReturnedText[2]; 
+  } // switch
+  
+  pollForAnswersInterval = setInterval(function() { requestDataFromDB(
+                                      pollForAnswersDataReturned, 
+                                      "hostConnectToDB.php?a=pfa&h=" + hostID + "&t=" 
+                                       + getTimeSinceStart()); 
+                                                  }, POLL_FOR_ANSWERS_DELAY);
+  
+  updateUIShowQuestion();
+  
+} // askQuestion
+
+function pollForAnswersDataReturned(returnedText)
+{
+   splitReturnedText = returnedText.split("\n");
+   var numAnswersGiven = 0;
+   for(idAnswerPair in splitReturnedText)
+   {
+     var id = idAnswerPair.split(",")[0];
+     var answer = idAnswerPair.split(",")[1];
+     if(answer != "-")
+      numAnswersGiven++;
+     players[id].currentAnswer = answer; 
+   } // for
+
+    updateUIPlayersAnswered(numAnswersGiven);
+}
+
+function showQuestionResults()
+{
+  clearInterval(pollForAnswersInterval);
+  for(key in players)
+    players[key].giveAnswer(currentQuestionCorrectAnswer);
+  updateDataInDB("hostConnectToDB.php?a=us&h=" + hostID + "&s=feedback"
+                                + "&t=" + getTimeSinceStart());
+                                
+  updateUIQuestionResults();
+} // showQuestionResults
+
+function showFinalResults()
+{
+  updateDataInDB("hostConnectToDB.php?a=us&h=" + hostID + "&s=feedback"
+                                 + "&t=" + getTimeSinceStart());
+  updateUIFinalResults();
+} // showFinalResults
+
+//---------------------- MANNE + ROMANS + PRAEVEEN ------------------------------
+//--------------- IMPLEMENT ALL THESE FUNCTIONS PLZ THX -------------------
+
+// Manne's
+function updateUIIntro()
 {
 }
 
-function pollForAnswers()
+// Romans'
+function updateUIShowQuestion()
 {
 }
 
-function calculateScoreChanges()
+// Romans'
+function updateUIPlayersAnswered(numOfPlayers)
 {
 }
 
-function calculateResults()
+// Romans'
+function updateUIQuestionResults()
 {
 }
+
+// Not assigned yet.
+function updateUIFinalResults()
+{
+}
+
+// -------------------------- STOP TOUCHING MY CODE AFTER HERE --------------------
+// --------------------- THX GOODBYE HAVE FUN DON'T TOUCH MY CODE -----------
 
 function testForErrors(error)
 {
   document.write(error + "\n");
-} // testForError
+} // testForErrors
