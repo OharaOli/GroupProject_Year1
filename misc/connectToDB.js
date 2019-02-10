@@ -9,8 +9,8 @@ function requestDataFromDB(stateChangeFunction, phpFile)
   var xhttp = new XMLHttpRequest();
   // Assigns the function to be called when data is returned successfully.
   xhttp.onreadystatechange = function() {
-    // Checks the data is sent successfully.
-    if(xhttp.readyState == 4 && xhttp.status == 200)
+    // Checks the data is sent successfully and is not blank.
+    if(xhttp.readyState == 4 && xhttp.status == 200 && xhttp.responseText != "")
       // Calls the given function.
       stateChangeFunction(xhttp.responseText);
    };
