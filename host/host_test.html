@@ -3,11 +3,16 @@
   <head>
     <meta charset="UTF-8">
     <title>Host Test</title>
-    <script src="../ReusableFiles/ConnectToDB.js" type = "text/javascript"></script>
-    <script src="./PlayerClass.js" type = "text/javascript"></script>
-    <script src="./Host.js" type = "text/javascript"></script>
+    <script src="tempHostFile.js" type="text/javascript"></script>
   </head>
   <body>
-    <p id = "toChange">This is a host test.</p>
-    <script type="text/javascript">startHost("TEST1");</script>
+    <h1 id = "MainHeading"> </h1>
+    <h2 id = "SubHeading1"> </h2>
+    <h2 id = "SubHeading2"> </h2>
+    <h1 id = "SubHeading3"> </h1>
+    <p id="paragraph"></p>
+    <script> displayQuestion("How old were you when the accident happened?"); displayAnswers({'A': 'Something', 'B': 'Something Else', 'C':"Something completely else"});</script>
+    <button id = "button" type="button" onclick="clearPage(); displayAnswers({'A': 'Something', 'B': 'Something Else', 'C':'Something completely else'});  displayCorrectAnswer('B'); displayFeedback('When I was 5 years old I spilled beans'); removeButton('button');"> 
+     End Quiz Early </button>
+
 </html>
