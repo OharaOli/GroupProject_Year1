@@ -101,7 +101,7 @@
     $disconnectPlayer->close();
   }
   
-  function pollForAnswer($mysqli)
+  function pollForAnswers($mysqli)
   {
     $pollAnswers = $mysqli->prepare("SELECT player_id, answer "
                                                                 . "FROM players WHERE "
@@ -109,7 +109,7 @@
                                                                 . " AND answer <> '-';");
     $pollAnswers->bind_param("s", $_GET["h"]);
     $pollAnswers->execute();
-    $pollResult = $pollPlayers->get_result();
+    $pollResult = $pollAnswers->get_result();
     if($pollResult->num_rows > 0)
     {
       $firstRow = $pollResult->fetch_assoc();
@@ -118,7 +118,7 @@
         echo "\n" .  $row["player_id"] . "," . $row["answer"]; 
     } // if
     $pollAnswers->close();
-  }
+  } // pollForAnswers
   
   function updateState($mysqli)
   {
@@ -128,12 +128,12 @@
     $updateState->execute();
     $updateState->close();
     if($_GET["s"] == "question")
-      outputQuestion($mysqli);
+      getQuestion($mysqli);
   } // updateState
   
-  function outputQuestion($mysqli)
+  function getQuestion($mysqli)
   {
-      $clearPlayerAnswers = $mysqli->prepare("UPDATE players SET answer = <> "
+      $clearPlayerAnswers = $mysqli->prepare("UPDATE players SET answer = '-' "
                                                                                . " WHERE host_id = ?;");
       $clearPlayerAnswers->bind_param("s", $_GET["h"]);
       $clearPlayerAnswers ->execute();
@@ -145,7 +145,8 @@
                                                                               . "order_num = ?;");
       $selectQuestionText->bind_param("ss", $_GET["q"], $_GET["n"]);
       $selectQuestionText->execute();
-      $selectQuestionData = $selectQuestionText->get_results()->fetch_assoc();
+      $selectQuestionResults = $selectQuestionText->get_result();
+      $selectQuestionData = $selectQuestionResults->fetch_assoc();
       $questionID = $selectQuestionData["question_id"];
       echo $selectQuestionData["text"];
       $selectQuestionText->close();
@@ -155,7 +156,7 @@
                                                                                 . "is_correct = 1;");
       $selectCorrectAnswer->bind_param("s", $questionID);
       $selectCorrectAnswer->execute();
-      echo $selectCorrectAnswer->get_result()->fetch_assoc()["letter"];
+      echo "\n" . $selectCorrectAnswer->get_result()->fetch_assoc()["letter"];
       $selectCorrectAnswer->close();
       
       $selectAnswersText = $mysqli->prepare("SELECT text FROM answers "
@@ -163,9 +164,9 @@
                                                                            . "ORDER BY letter;");
       $selectAnswersText->bind_param("s", $questionID);
       $selectAnswersText->execute();
-      $selectAnswersResult = $selectAnswerText->get_result();
+      $selectAnswersResult = $selectAnswersText->get_result();
       $firstRow = $selectAnswersResult -> fetch_assoc();
-      echo $firstRow["text"];
+      echo "\n" . $firstRow["text"];
       // Outputs all the other answers
       while($row = $selectAnswersResult->fetch_assoc())
         echo "\n" . $row["text"];
