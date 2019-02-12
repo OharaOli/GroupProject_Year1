@@ -1,4 +1,4 @@
-// Written by Alex.
+// Written by Alex + Manne (possibly)
 
 // Implement importing later.
 /*
@@ -39,19 +39,22 @@ var alreadyStarted = false;
 var quizCode;
 // The number of players that are currenty connected.
 var numberOfConnectedPlayers;
+// The ID of the quiz that the host is currently hosting.
+var quizID;
 
 // Starts the host and initialises it in the database.
-function startHost(requiredQuizCode, quizID = 1)
+function startHost(requiredQuizCode, requiredQuizID = 1)
 {
   if(!alreadyStarted) 
   {
      // Starts the host.
     alreadyStarted = true;
+    quizCode = requiredQuizCode;
+    quizID = requiredQuizID;
     // Create Host table entry.
     requestDataFromDB(setHostIDAndNumQuestions, 
                                          "hostConnectToDB.php?a=ghnq&c=" 
                                          + quizCode + "&q=" + quizID);
-    quizCode = requiredQuizCode;
   }
 } // startHost
 
@@ -118,6 +121,7 @@ function disconnectPlayer(playerID)
 {
   updateDataInDB("hostConnectToDB.php?a=dp&p=" + playerID                                     
                                  + "&t=" + getTimeSinceStart());
+  numberOfConnectedPlayers--:
 } // disconnectPlayer
 
 function startQuiz()
@@ -130,8 +134,8 @@ function startQuiz()
 function getNextQuestion()
 {
     currentQuestionNum++;
-    if(currentQuestionNum >= numQuestions)
-      showQuestionResults;
+    if(currentQuestionNum > numQuestions)
+      showQuestionResults();
     else
       requestDataFromDB(askQuestion, "hostConnectToDB.php?a=us&h=" + hostID
                                   + "&n=" + currentQuestionNum + "&s=question&t="
@@ -158,7 +162,7 @@ function askQuestion(returnedText)
                                        + getTimeSinceStart()); 
                                                   }, POLL_FOR_ANSWERS_DELAY);
   
-  updateUIShowQuestion();
+  displayQuestionAndAnswers();
   
 } // askQuestion
 
@@ -255,34 +259,26 @@ $(document).ready(function() {
   $("#start-button").click(function() {
     clearPage();
     startQuiz();
-    displayQuestion();
-    displayAnswers();
   });
 });
 
 
 // Romans'
-function displayQuestion()
+function displayQuestionAndAnswers()
 {
-  $("#question-answers-pair").append("<h2></h2>")
-  
-    document.getElementById("<TYPE ID HERE>").innerHTML = currentQuestionText;
+  $("#question-answers-pair").append("<h2>" + currentQuestionText + "</h2>")
+
+    var answers_message = '';
+    for (var key in currentQuestionAnswers)
+        answers_message += (key + ": " + currentQuestionAnswers[key] + "<br />");
+
+    document.getElementById("TYPE ID HERE").innerHTML = answers_message;
 }
 
 // Romans'
 function updateUIPlayersAnswered(numOfPlayers)
 {
     document.getElementById("<TYPE ID HERE>").innerHTML = "Number of players: " + numOfPlayers;
-}
-
-//Romans'
-function displayAnswers()
-{
-    var answers_message = '';
-    for (var key in currentQuestionAnswers)
-        answers_message += (key + ": " + currentQuestionAnswers[key] + "<br />");
-
-    document.getElementById("TYPE ID HERE").innerHTML = answers_message;
 }
 
 // Romans'
