@@ -1,28 +1,27 @@
-// Written by Praeveen
+// Written by Praeveen and Alex
 
 // The ID of the player currently playing the game 
 var playerID;
-
 // The ID of the host of which the player is currently in the quiz in
 var hostID;
-
 // delay for each state delay
 var POLL_FOR_STATE_DELAY = 500;
-
 // host start time
 var hostStartTime;
-
 // the start time of the player
 var startTime;
-
 // interval for polling the state
 var pollForStateInterval;
-
 // create the variable for the player's score
 var playerScore;
-
 // variable to check if the player has already joined the quiz
 var alreadyJoined = false;
+
+var quizID;
+var currentQuestionNum = 0;
+var currentQuestionAnswers;
+var currentQuestionText;
+var alreadyUpdatedQuestionNum = false;
 
 function tryToJoin(quizCode, screenName)
 {
@@ -58,7 +57,8 @@ function setPlayerID(playerAndHostID)
     var playerIDhostIDArray = playerAndHostID.split("\n");
     //  assign the hostID and playerID  and the host time from the string array
     hostID = playerIDhostIDArray[0];
-    playerID = playerIDhostIDArray[2];
+    quizId = playerIDhostIDArray[2];
+    playerID = playerIDhostIDArray[3];
     hostStartTime = Date.now() - parseInt(playerIDhostIDArray[1]);
     // get the start time
     startTime = Date.now();
@@ -81,7 +81,7 @@ function pollForState(responseText)
   var statesArray = responseText.split("\n");
 
   // if the value we get from the database is greater than 10 seconds, then we should disconnect self
-  if (Math.abs((Date.now() - hostStartTime) - parseInt(statesArray[1])) > 10000)
+  if (Math.abs((Date.now() - hostStartTime) - parseInt(statesArray[1])) > POLL_FOR_STATE_DELAY)
   {     
     // update the data in the database by calling the JS function and then call the php
     // function that  disconnects self
@@ -100,10 +100,10 @@ function pollForState(responseText)
           intro();
           break;
         case "question":
-          showQuestion();
+          showQuestion(statesArray);
           break;
         case "feedback":
-          feedback(statesArray[2]); 
+          feedback(statesArray[2], statesArray[3]); 
           break;
         case"outro":
            outro();
@@ -117,35 +117,70 @@ function inputAnswer(answerSelected)
 {
     updateDataInDB("playerConnectToDB.php?a=ua&p=" + playerID +"&t=" 
                                        + getTimeSinceStart() + "&w=" + answerSelected);
-
 }
 // function to show the question to the player 
-function showQuestion()
+function showQuestion(statesArray)
 {
-
-}
+  if(!alreadyUpdatedQuestionNum)
+  {
+    currentQuestionNum++;
+    alreadyUpdatedQuestionNum = true;
+  } // if
+  currentQuestionText = statesArray[2];
+  currentQuestionAnswers = {};
+  switch(splitReturnedText.length - 3)
+  {
+    case 4: currentQuestionAnswers["D"] = splitReturnedText[5]; 
+    case 3: currentQuestionAnswers["C"] = splitReturnedText[4]; 
+    case 2: currentQuestionAnswers["B"] = splitReturnedText[3]; 
+    case 1: currentQuestionAnswers["A"] = splitReturnedText[2]; 
+  }  // switch
+  
+  updateUIQuestion();
+} // showQuestion
 
 // function to show the outro of when the quiz has ended
 function outro()
 {
-
-
+  updateUIOutro();
 }
 
 // function of intro of the question to the player
 function intro()
 {
-
-
+  updateUIIntro();
 }
 
 // function to return feedback to the player
-function feedback(updatedPlayerScore)
+function feedback(feedback, isCorrectNum)
 {  
-   // update the player score
-   playerScore = updatedPlayerScore;
-
+  var isCorrect = false;
+  if(isCorrectNum == "1")
+    isCorrect = true;
+  alreadyUpdatedQuestionNum = false;
+  updateUIAnswer(feedback, isCorrect);  
 }
+
+// ---- UPDATE THIS WITH ALL YOUR JUICY FUNCTIONS ---
+// ------------------- MR PRAEVEEN DO THIS!!!! ---------------------
+
+function updateUIIntro()
+{
+}
+
+function updateUIQuestion()
+{
+}
+
+function updateUIAnswer(feedback, isCorrect)
+{
+}
+
+function updateUIOutro()
+{
+}
+
+// ----------- END OF UPDATING STUFF -----------------------------------------
 
 function testForErrors(errors)
 {

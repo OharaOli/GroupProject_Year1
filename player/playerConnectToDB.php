@@ -60,7 +60,7 @@
     // Selects the host with the highest ID whose quiz code matches and is 
     // in the intro state. Also selects the time since start.
     $checkQuizCodeExists = $mysqli->prepare("SELECT host_id, time_since_start "
-                                                                                . "FROM hosts "
+                                                                                . ", quiz_id FROM hosts "
                                                                                 . "WHERE quiz_code = ? AND "
                                                                                 . "state = 'intro' ORDER BY "
                                                                                 . "host_id DESC LIMIT 1;");
@@ -77,10 +77,10 @@
     } // if 
     $hostStateData = $checkQuizCodeResults->fetch_assoc();
     $hostID =  $hostStateData["host_id"];
-    $time = $hostStateData["time_since_start"];
     // Outputs the host ID and the time since start.
     echo $hostID . "\n";
-    echo $time . "\n";
+    echo $hostStateData["time_since_start"] . "\n";
+    echo $hostStateData["quiz_code"] . "\n";
    //echo $checkQuizCodeResults->fetch_assoc()["time_since_start"];
     $checkQuizCodeExists->close();
     // The quiz code exists so the player is inserted.
@@ -113,20 +113,65 @@
     // Outputs the state and time since start.
     echo $hostState . "\n";
     echo $hostStateData["time_since_start"];
-    // Only continues if the state is feedback.
-    if($hostState != "feedback")
-      return;
-    $pollForState->close();
-    // Gets the score from the players table.
-    $pollForScore = $mysqli->prepare("SELECT score FROM players "
-                                                                 .  "WHERE player_id = ?;");
-    // Binds the player ID p.
-    $pollForScore->bind_param("s", $_GET["p"]);
-    $pollForScore->execute();
-    // Outputs the player's score.
-    echo "\n" . $pollForScore->get_result()->fetch_assoc()["score"];
-    $pollForScore->close();
+    // If the host state was changed to feedback.
+    if($hostState == "feedback")
+    {
+      outputFeedback($mysqli);
+    }
+    else if($hostState == "question")
+      outputQuestion($mysqli);
   } // pollForState
+  
+  function outputFeedback($mysqli)
+  {
+    $selectQuestionID = $mysqli->prepare("SELECT question_id "
+                                                                            . "FROM questions "
+                                                                            . "WHERE quiz_id = ? AND "
+                                                                            . "order_num = ?;");
+    $selectQuestionID->bind_param("ss", $_GET["q"], $_GET["n"]);
+    $selectQuestionID->execute();
+    $questionID = $selectQuestionID->get_results()->fetch_assoc()["question_id"];
+    $selectQuestionID->close();
+    
+    $selectCorrectAnswer = $mysqli->prepare("SELECT is_correct, feedback "
+                                                                              . "FROM answers "
+                                                                              . "WHERE letter = ? AND "
+                                                                              . " question_id = ?;");
+    $selectCorrectAnswer->bind_param("s", $questionID);
+    $selectCorrectAnswer->execute();
+    $selectCorrectAnswerData = 
+                                                  $selectCorrectAnswer->get_result()->fetch_assoc();
+    echo $selectCorrectAnswerData["is_correct"];
+    echo "\n" . $selectCorrectAnswerData["feedback"];
+    $selectCorrectAnswer->close();
+  } // outputFeedback
+  
+  function outputQuestion($mysqli)
+  {
+     $selectQuestionText = $mysqli->prepare("SELECT question_id, text "
+                                                                            . "FROM questions "
+                                                                            . "WHERE quiz_id = ? AND "
+                                                                            . "order_num = ?;");
+    $selectQuestionText->bind_param("ss", $_GET["q"], $_GET["n"]);
+    $selectQuestionText->execute();
+    $selectQuestionData = $selectQuestionText->get_results()->fetch_assoc();
+    $questionID = $selectQuestionData["question_id"];
+    echo $selectQuestionData["text"];
+    $selectQuestionText->close();
+    
+    $selectAnswersText = $mysqli->prepare("SELECT text FROM answers "
+                                                                         . "WHERE question_id = ? "
+                                                                         . "ORDER BY letter;");
+    $selectAnswersText->bind_param("s", $questionID);
+    $selectAnswersText->execute();
+    $selectAnswersResult = $selectAnswerText->get_result();
+    $firstRow = $selectAnswersResult -> fetch_assoc();
+    echo $firstRow["text"];
+    // Outputs all the other answers
+    while($row = $selectAnswersResult->fetch_assoc())
+      echo "\n" . $row["text"];
+    $selectAnswersText->close();
+  } // outputQuestion
   
   // Disconnects oneself from the table.
   function disconnectSelf($mysqli)

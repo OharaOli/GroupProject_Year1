@@ -133,6 +133,12 @@
   
   function outputQuestion($mysqli)
   {
+      $clearPlayerAnswers = $mysqli->prepare("UPDATE players SET answer = <> "
+                                                                               . " WHERE host_id = ?;");
+      $clearPlayerAnswers->bind_param("s", $_GET["h"]);
+      $clearPlayerAnswers ->execute();
+      $clearPlayerAnswers->close();
+      
       $selectQuestionText = $mysqli->prepare("SELECT question_id, text "
                                                                               . "FROM questions "
                                                                               . "WHERE quiz_id = ? AND "
@@ -142,7 +148,7 @@
       $selectQuestionData = $selectQuestionText->get_results()->fetch_assoc();
       $questionID = $selectQuestionData["question_id"];
       echo $selectQuestionData["text"];
-      $selectQuestionData->close();
+      $selectQuestionText->close();
       
       $selectCorrectAnswer = $mysqli->prepare("SELECT letter FROM answers "
                                                                                 . "WHERE question_id = ? AND "
