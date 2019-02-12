@@ -233,7 +233,8 @@ function updateIntroUI()
 $(document).ready(function() {
   // Initially hide the start quiz button.
   $("#start-button").hide();
-
+  // Initially hide the current question and answers.
+  $("#question-and-answers").hide()
   // Upon clicking the 'Host Quiz' button...
   $("#host-button").click(function() {
     // Check that the length of the characters in the input feld is
@@ -248,7 +249,7 @@ $(document).ready(function() {
       // Call the function to start the quiz, passing quizCode as argument.
       startHost(quizCode);
       // Display the quiz code chosen by the host.
-      $("#state-display").text("Quiz with quiz code:"
+      $("#state-display").text("Quiz with quiz code: "
                                                + quizCode + " has been created.");
       // Since quiz has been created, the host can now start it,
       // which is why the start button is now shown.
@@ -259,20 +260,20 @@ $(document).ready(function() {
   $("#start-button").click(function() {
     clearPage();
     startQuiz();
+    $("#question-and-answers").show()
   });
 });
 
-
-// Romans'
+// Romans' + Manne
 function displayQuestionAndAnswers()
 {
   $("#question-answers-pair").append("<h2>" + currentQuestionText + "</h2>")
 
-    var answers_message = '';
-    for (var key in currentQuestionAnswers)
-        answers_message += (key + ": " + currentQuestionAnswers[key] + "<br />");
+  var answers_message = "";
+  for (var key in currentQuestionAnswers)
+    answers_message += (key + ": " + currentQuestionAnswers[key] + "<br />");
 
-    document.getElementById("TYPE ID HERE").innerHTML = answers_message;
+  $("#question-answers-pair").append("<p>" + answers_message + "</p>")
 }
 
 // Romans'
