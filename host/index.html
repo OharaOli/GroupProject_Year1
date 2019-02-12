@@ -2,20 +2,21 @@
 <html>
 <head>
 <title></title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="../misc/connectToDB.js"></script>
   <script src="../player/player.js"></script>
   <script src="playerClass.js"></script>
   <script src="host.js"></script>
 </head>
-<body onload="updateUIIntro()">
-  <h4 id="number-of-players-connected"></h4>
+<body>
   <h4 id="state-display"></h4>
+  <button id="start-button">Start Quiz</button>
+  <h4 id="number-of-players-connected"></h4>
   <ul id="player-list">
-    <li>asdsad</li>
   </ul>
-  <div id="host-option" style="visibility:visible;;">
+  <div id="host-option">
     <input id="quiz-code-host" type="text" placeholder="Quiz Code"/>
-    <button id="host-button" onclick="startHost(selectQuizCode()); removeHostOption();">Host Quiz</button>
+    <button id="host-button">Host Quiz</button>
   </div>
 </body>
 </html> 

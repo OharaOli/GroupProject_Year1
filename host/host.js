@@ -35,11 +35,13 @@ var currentQuestionAnswers;
 var currentQuestionCorrectAnswer;
 // Determines if the current page already has a host started on it.
 var alreadyStarted = false;
-// The quiz code.
-var requiredQuizCode;
+// The code used by players to connect, created by the host.
+var quizCode;
+// The number of players that are currenty connected.
+var numberOfConnectedPlayers;
 
 // Starts the host and initialises it in the database.
-function startHost(quizCode, quizID = 1)
+function startHost(requiredQuizCode, quizID = 1)
 {
   if(!alreadyStarted) 
   {
@@ -49,7 +51,7 @@ function startHost(quizCode, quizID = 1)
     requestDataFromDB(setHostIDAndNumQuestions, 
                                          "hostConnectToDB.php?a=ghnq&c=" 
                                          + quizCode + "&q=" + quizID);
-    requiredQuizCode = quizCode;
+    quizCode = requiredQuizCode;
   }
 } // startHost
 
@@ -108,7 +110,7 @@ function pollForPlayersDataReturned(returnedText)
       players[playerID] = new Player(screenName, parseInt(timeSinceStart));
   } // for
   
-  updateUIIntro();
+  updateIntroUI();
 } // pollForPlayersDataReturned
 
 // Disconnects a specific player based on their ID.
@@ -199,57 +201,57 @@ function showFinalResults()
 
 // Manne's
 
-// The number of players that are connected.
-var numberOfConnectedPlayers;
-
-// A function which when called, displays the screen name of each player 
-// connected and the total number of connected players.
-function updateUIIntro()
+// A function to update the UI of intro state.
+function updateIntroUI()
 {
+    // Number of players is reset to 0 prior to recount.
     numberOfConnectedPlayers = 0;
-    console.log(Object.keys(players).length);
-    console.log(players);
-    document.getElementById("player-list").innerHTML = "";
+    // List is reset as well to be empty, to avoid duplicates.
+    $("#player-list").text("");
+    // For every player in quiz...
     for(var index in players) {
-      //console.log(players[index].connected);
-      //console.log(players[index].screenName);
-      var newListElement = document.createElement("li").appendChild(document.createTextNode(players[index].screenName));
-      document.getElementById("player-list").appendChild(newListElement);
-      numberOfConnectedPlayers++;
-      
-    }
-      document.getElementById("number-of-players-connected")
-        .innerHTML = numberOfConnectedPlayers;
-}
-
-//for (playerID in Players) {
-     //   if ()
-
-      /*if (players[playerID].connected == false) {
-        
+      // ...check if they are connected.
+      if (players[index].connected) {
+        // If they are connected, add a list element, containing the
+        //  player's screen name, to the list.
+        $("#player-list").append("<li>" + players[index].screenName
+                                                  + " has connected!</li>");
+        // Increment the number of connected players by 1.
         numberOfConnectedPlayers++;
-        console.log(numberOfConnectedPlayers);
-      }*/
+      }  // end-if
+    } // end-for
+    // Display the number of players that are currently connected.
+    $("#number-of-players-connected").text("" + numberOfConnectedPlayers
+                                                                          + " players are currently connected.");
+} // end-updateIntroUI()
 
-// A function which returns the value of the input field with id: quiz-code-host.
-function selectQuizCode() {
-	return document.getElementById("quiz-code-host").value;
-}
+// Execute the code when the page is ready.
+$(document).ready(function() {
+  // Initially hide the start quiz button.
+  $("#start-button").hide();
 
-function removeHostOption() {
-  document.getElementById("host-option").style.visibility = "hidden";
-  document.getElementById("state-display").innerHTML = "Quiz with quiz code:" + requiredQuizCode + " has been started";
-}
-
-/*var hostButton = document.getElementById("host.button");
-
-var quizCode;
-
-if (hostButton) {
-	hostButton.addEventListener("click", function() {
-		quizCode = document.getElementById("quiz-code-host").value;
-	});
-}*/
+  // Upon clicking the 'Host Quiz' button...
+  $("#host-button").click(function() {
+    // Check that the length of the characters in the input feld is
+    // exactly 5. (trim removes whitespace)
+    if ($.trim($("#quiz-code-host").val()).length == 5)
+    {
+      // Remove the ability to host another quiz.
+      // The button and input field are contained within a div parent element.
+      $("#host-option").hide();
+      // Store the value of the quiz code input field in quizCode.
+      quizCode = $("#quiz-code-host").val();
+      // Call the function to start the quiz, passing quizCode as argument.
+      startHost(quizCode);
+      // Display the quiz code chosen by the host.
+      $("#state-display").text("Quiz with quiz code:"
+                                               + quizCode + " has been created.");
+      // Since quiz has been created, the host can now start it,
+      // which is why the start button is now shown.
+      $("#start-button").show();
+    }  // end-if
+  });
+});
 
 
 // Romans'
@@ -286,6 +288,12 @@ function updateUIRemoveButton(buttonID)
     var element = document.getElementById(buttonID);
     element.parentNode.removeChild(element);
 }//removeButton
+
+
+function clearPage()
+{
+    document.innerHTML = '';    
+}//clearPage
 
 
 // Not assigned yet.
