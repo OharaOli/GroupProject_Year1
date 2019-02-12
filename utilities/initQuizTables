@@ -1,0 +1,43 @@
+#!/bin/bash
+set -v
+mysql -h dbhost.cs.man.ac.uk -u y62154ab -p 2018_comp10120_y7  << EOF
+
+DROP TABLE IF EXISTS quizzes;
+DROP TABLE IF EXISTS questions;
+DROP TABLE IF EXISTS answers;
+
+CREATE TABLE  quizzes(
+  quiz_id int NOT NULL AUTO_INCREMENT,
+  name VARCHAR(50) NOT NULL,
+  PRIMARY KEY (quiz_id));
+  
+CREATE TABLE questions(
+  question_id int NOT NULL AUTO_INCREMENT,
+  quiz_id int NOT NULL,
+  order_num int NOT NULL, 
+  text VARCHAR(255) NOT NULL,
+  PRIMARY KEY(question_ID));
+  
+CREATE TABLE answers(
+  answer_id int NOT NULL AUTO_INCREMENT,
+  question_id int NOT NULL,
+  text VARCHAR(255) NOT NULL,
+  feedback VARCHAR(255) NOT NULL,
+  is_correct BIT NOT NULL,
+  letter ENUM("A", "B", "C", "D") NOT NULL,
+  PRIMARY KEY(answer_id));
+  
+INSERT INTO quizzes(name) VALUES("Test Quiz");
+INSERT INTO questions VALUES (NULL, 1, 1, "What is 9 squared?"),
+                                                          (NULL, 1, 2, "What is the capital of England?");
+INSERT INTO answers VALUES
+  (NULL, 1, "81", "9 times 9 is equal to 81.", 1, "A"),
+  (NULL, 1, "3", "3 is the square root of 9.", 0, "B"),
+  (NULL, 2, "Manchester", "Manchester is not the capital of England.", 0, "A"),
+  (NULL, 2, "Paris", "Paris is the capital of France, not England.", 0, "B"),
+  (NULL, 2, "London", "London is the capital of England.", 1, "C"),
+  (NULL, 2, "Ireland", "Ireland is a country, not a city.", 0, "D"); 
+  
+quit
+EOF
+

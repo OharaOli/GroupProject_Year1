@@ -65,8 +65,6 @@ function addQuestionRow(givenTable) {
   //setting the attributes for the table
   elementAnswersTable.setAttribute('width' , '350px');
   elementAnswersTable.setAttribute('border', '1');
-  elementAnswersTable.innerHTML =
-  "<TR> <TD> 0 </TD> <TD><input type='text' name='Answer' id ='ansQ" + (lastRowIndex - 1) + "0' </TD> </TR>";
 
   // create addAnswer & deleteAnswer buttons!
   var elementAddAnswerButton = document.createElement("input");
@@ -94,6 +92,9 @@ function addQuestionRow(givenTable) {
   //append the hidden part as the child of the cell
   answerCell.appendChild(elementHiddenPart);
 
+  addAnswerRow('answersTableQ' + (lastRowIndex -1));
+
+
 
   /* these code - not required for now.
   //then add four answer cells
@@ -116,7 +117,8 @@ function addQuestionRow(givenTable) {
 }
 
 //method to add a row onto quiz maker table
-function deleteQuestionRow(givenTable) {
+function deleteQuestionRow(givenTable)
+{
   //put quiz maker table into a variable
   var table = document.getElementById(givenTable);
   //put last row index into a varibale
@@ -126,7 +128,8 @@ function deleteQuestionRow(givenTable) {
   table.deleteRow(lastRowIndex-1);
 }
 
-//function to add answers
+
+
 function addAnswerRow(givenTable, givenQuestionNum)
 {
   //put answer table into a variable
@@ -134,20 +137,33 @@ function addAnswerRow(givenTable, givenQuestionNum)
   //put last row index into a varibale
   var lastRowIndex = table.rows.length;
 
-  //inserts a row onto the table
-  var row = table.insertRow(lastRowIndex);
 
-  //first cell is the index for the answer
-  var indexCell = row.insertCell(0);
-  indexCell.innerHTML = lastRowIndex;
-  indexCell.id = "indexAnsQ" + givenQuestionNum + (lastRowIndex);
+  if(lastRowIndex <= 3)
+  {
+    //inserts a row onto the table
+    var row = table.insertRow(lastRowIndex);
 
-  //second Cell is just an answer
-  var answerCell = row.insertCell(1);
-  answerCell.innerHTML = "<input type='text' name='Answer'>";
-  answerCell.id = ("ansQ" + givenQuestionNum + (lastRowIndex));
+    //first cell is the index for the answer
+    var indexCell = row.insertCell(0);
+    indexCell.innerHTML = lastRowIndex;
+    indexCell.id = "indexAnsQ" + givenQuestionNum + (lastRowIndex);
 
-} // function addAnswerRow
+    //second Cell is just an answer
+    var answerCell = row.insertCell(1);
+    answerCell.innerHTML = "<input type='text' name='Answer'>";
+    answerCell.id = ("ansQ" + givenQuestionNum + (lastRowIndex));
+
+    //third cell is the switch
+    var switchCell = row.insertCell(2);
+    switchCell.innerHTML = "<input type='checkbox'> ";
+
+    //the last cell is for the descriptions
+    var descriptionCell = row.insertCell(3);
+    descriptionCell.innerHTML = "<input type='text' name='Description'>";
+  }
+  else;
+
+} // function addAnswerRow for given table id
 
 
 //javascript for making an element disappear/appear
@@ -233,20 +249,14 @@ function openCreator(givenQuiz) {
                 <table id="answersTableQ0" width= "350px" border="1">
                   <TR>
                     <td> 0 </td>
-                    <TD> <input type="text" name="Answer" id ="ansQ00" </TD>
-                    <td>
-                      <!-- Rounded switch -->
-                      <div>
-                      <label class="switch">
-                      <input type="checkbox">
-                      <span class="slider round"></span>
-                      </label>
-                    </td>
-                    </TR>
+                    <TD> <input type="text" name="Answer" </TD>
+                    <td> <input type="checkbox"> </td>
+                    <td> <input type="text" name="description" </td>
+                  </TR>
                 </table>
-
               </div> <!-- hidden part -->
            </div> <!-- answersQ0 -->
+      </td> <!-- the answer column = -->
     </tr>
     <!-- Q2 -->
     <tr>
@@ -261,12 +271,14 @@ function openCreator(givenQuiz) {
                 <table id="answersTableQ1" width= "350px" border="1">
                   <TR>
                     <td> 0 </td>
-                    <TD> <input type="text" name="Answer" id ="ansQ10" </TD>
-                    </TR>
+                    <td> <input type="text" name="Answer" id ="ansQ10" </td>
+                    <td> <input type="checkbox"> </td>
+                    <td> <input type="text" name="description" </td>
+                  </TR>
                 </table>
-
               </div> <!-- hidden part -->
            </div> <!-- answersQ0 -->
+      </td> <!-- the answer column -->
     </tr>
     <!-- Q3 -->
     <tr>
@@ -282,11 +294,13 @@ function openCreator(givenQuiz) {
                   <TR>
                     <td> 0 </td>
                     <TD> <input type="text" name="Answer" id ="ansQ20" </TD>
+                    <td> <input type="checkbox"> </td>
+                    <td> <input type="text" name="description" </td>
                   </TR>
                 </table>
-
               </div> <!-- hidden part -->
            </div> <!-- answersQ0 -->
+      </td> <!-- answer column -->
     </tr>
     </table>
     <!-- END Quiz maker table -->
@@ -357,69 +371,6 @@ function openCreator(givenQuiz) {
   to {opacity: 1;}
 }
 
-/*CSS code for the correct/incorrect switch
-/* The switch - the box around the slider */
-.switch {
-  position: relative;
-  display: inline-block;
-  width: 60px;
-  height: 34px;
-}
-
-/* Hide default HTML checkbox */
-.switch input {
-  opacity: 0;
-  width: 0;
-  height: 0;
-}
-
-/* The slider */
-.slider {
-  position: absolute;
-  cursor: pointer;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: Tomato;
-  -webkit-transition: .4s;
-  transition: .4s;
-}
-
-.slider:before {
-  position: absolute;
-  content: "";
-  height: 26px;
-  width: 26px;
-  left: 4px;
-  bottom: 4px;
-  background-color: White;
-  -webkit-transition: .4s;
-  transition: .4s;
-}
-
-input:checked + .slider {
-  background-color: MediumSeaGreen;
-}
-
-input:focus + .slider {
-  box-shadow: 0 0 1px #2196F3;
-}
-
-input:checked + .slider:before {
-  -webkit-transform: translateX(26px);
-  -ms-transform: translateX(26px);
-  transform: translateX(26px);
-}
-
-/* Rounded sliders */
-.slider.round {
-  border-radius: 34px;
-}
-
-.slider.round:before {
-  border-radius: 50%;
-}
 
 </style>
 

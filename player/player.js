@@ -86,6 +86,10 @@ function pollForState(responseText)
     // update the data in the database by calling the JS function and then call the php
     // function that  disconnects self
     updateDataInDB("playerConnectToDB.php?a=ds&p=" + playerID);
+    // Stops polling for player 
+    clearInterval(pollForStateInterval);
+    // Gives an error message. 
+    document.write("Host disconnected.");
   } // if      
   else
   {
