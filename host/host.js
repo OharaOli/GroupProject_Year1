@@ -135,7 +135,7 @@ function getNextQuestion()
     else
       requestDataFromDB(askQuestion, "hostConnectToDB.php?a=us&h=" + hostID
                                   + "&n=" + currentQuestionNum + "&s=question&t="
-                                  + getTimeSinceStart()); 
+                                  + getTimeSinceStart() + "&q=" + quizID); 
 } // getQuestionData
 
 function askQuestion(returnedText)
@@ -255,16 +255,17 @@ $(document).ready(function() {
   $("#start-button").click(function() {
     clearPage();
     startQuiz();
+    displayQuestion();
+    displayAnswers();
   });
-
-
-
 });
 
 
 // Romans'
-function updateUIShowQuestion()
+function displayQuestion()
 {
+  $("#question-answers-pair").append("<h2></h2>")
+  
     document.getElementById("<TYPE ID HERE>").innerHTML = currentQuestionText;
 }
 
@@ -275,7 +276,7 @@ function updateUIPlayersAnswered(numOfPlayers)
 }
 
 //Romans'
-function updateUIShowAnswers()
+function displayAnswers()
 {
     var answers_message = '';
     for (var key in currentQuestionAnswers)
