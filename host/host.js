@@ -121,7 +121,7 @@ function disconnectPlayer(playerID)
 {
   updateDataInDB("hostConnectToDB.php?a=dp&p=" + playerID                                     
                                  + "&t=" + getTimeSinceStart());
-  numberOfConnectedPlayers--:
+  numberOfConnectedPlayers--;
 } // disconnectPlayer
 
 function startQuiz()
