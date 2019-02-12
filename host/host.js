@@ -17,7 +17,7 @@ var pollForPlayersInterval;
 var pollForAnswersInterval;
 
 // A dictionary of all players in the game - disconnected or connected.
-var players = {}; 
+var players = {};
 // The ID of the host that is currently running.
 var hostID;
 // The time when the host was started.
@@ -35,6 +35,8 @@ var currentQuestionAnswers;
 var currentQuestionCorrectAnswer;
 // Determines if the current page already has a host started on it.
 var alreadyStarted = false;
+// The quiz code.
+var requiredQuizCode;
 
 // Starts the host and initialises it in the database.
 function startHost(quizCode, quizID = 1)
@@ -47,6 +49,7 @@ function startHost(quizCode, quizID = 1)
     requestDataFromDB(setHostIDAndNumQuestions, 
                                          "hostConnectToDB.php?a=ghnq&c=" 
                                          + quizCode + "&q=" + quizID);
+    requiredQuizCode = quizCode;
   }
 } // startHost
 
@@ -77,11 +80,12 @@ function setHostIDAndNumQuestions(returnedText)
 
 function pollForPlayersDataReturned(returnedText)
 {
+  console.log("Returned:"+returnedText+"---");
   // Returned text will have the following form:
   // Each player entry is separated by a new line.
   // Each player entry has ID, screen name and time since start.
   // Each of these values is separated by a comma.
-  document.getElement
+
   // Separates all the players.
   var receivedPlayers = returnedText.split("\n");
   // Loops through each player ID that is connected to the host.
@@ -129,7 +133,7 @@ function getNextQuestion()
       showQuestionResults;
     else
       requestDataInDB(returnedText, "hostConnectToDB.php?a=us&h=" + hostID
-                                  + "&n=" currentQuestionNum + "&s=question&t="
+                                  + "&n=" + currentQuestionNum + "&s=question&t="
                                   + getTimeSinceStart()); 
 } // getQuestionData
 
@@ -195,9 +199,59 @@ function showFinalResults()
 //--------------- IMPLEMENT ALL THESE FUNCTIONS PLZ THX -------------------
 
 // Manne's
+
+// The number of players that are connected.
+var numberOfConnectedPlayers;
+
+// A function which when called, displays the screen name of each player 
+// connected and the total number of connected players.
 function updateUIIntro()
 {
+    numberOfConnectedPlayers = 0;
+    console.log(Object.keys(players).length);
+    console.log(players);
+    document.getElementById("player-list").innerHTML = "";
+    for(var index in players) {
+      //console.log(players[index].connected);
+      console.log(players[index].screenName);
+      var newListElement = document.createElement("li").appendChild(document.createTextNode(players[index].screenName));
+      document.getElementById("player-list").appendChild(newListElement);
+      numberOfConnectedPlayers++;
+      
+    }
+      document.getElementById("number-of-players-connected")
+        .innerHTML = numberOfConnectedPlayers;
 }
+
+//for (playerID in Players) {
+     //   if ()
+
+      /*if (players[playerID].connected == false) {
+        
+        numberOfConnectedPlayers++;
+        console.log(numberOfConnectedPlayers);
+      }*/
+
+// A function which returns the value of the input field with id: quiz-code-host.
+function selectQuizCode() {
+	return document.getElementById("quiz-code-host").value;
+}
+
+function removeHostOption() {
+  document.getElementById("host-option").style.visibility = "hidden";
+  document.getElementById("state-display").innerHTML = "Quiz with quiz code:" + requiredQuizCode + " has been started";
+}
+
+/*var hostButton = document.getElementById("host.button");
+
+var quizCode;
+
+if (hostButton) {
+	hostButton.addEventListener("click", function() {
+		quizCode = document.getElementById("quiz-code-host").value;
+	});
+}*/
+
 
 // Romans'
 function updateUIShowQuestion()

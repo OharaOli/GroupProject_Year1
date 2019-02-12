@@ -2,15 +2,20 @@
 <html>
 <head>
 <title></title>
-<script src="../misc/connectToDB.js"></script>
-<script src="../player/player.js"></script>
-<script src="playerClass.js"></script>
-<script src="host.js"></script>
-<script src="temp.js"></script>
+  <script src="../misc/connectToDB.js"></script>
+  <script src="../player/player.js"></script>
+  <script src="playerClass.js"></script>
+  <script src="host.js"></script>
 </head>
-<body onload="displayPlayers();">
-<h4 id="number-of-players-connected"></h4>
-<input id="quiz-code-host" type="text" placeholder="Quiz Code"/>
-<button id="host-button" onclick="startHost(selectHostID());">Host Quiz</button>
+<body onload="updateUIIntro()">
+  <h4 id="number-of-players-connected"></h4>
+  <h4 id="state-display"></h4>
+  <ul id="player-list">
+    <li>asdsad</li>
+  </ul>
+  <div id="host-option" style="visibility:visible;;">
+    <input id="quiz-code-host" type="text" placeholder="Quiz Code"/>
+    <button id="host-button" onclick="startHost(selectQuizCode()); removeHostOption();">Host Quiz</button>
+  </div>
 </body>
 </html> 
