@@ -133,7 +133,7 @@ function getNextQuestion()
     if(currentQuestionNum >= numQuestions)
       showQuestionResults;
     else
-      requestDataInDB(returnedText, "hostConnectToDB.php?a=us&h=" + hostID
+      requestDataFromDB(askQuestion, "hostConnectToDB.php?a=us&h=" + hostID
                                   + "&n=" + currentQuestionNum + "&s=question&t="
                                   + getTimeSinceStart()); 
 } // getQuestionData
@@ -251,6 +251,14 @@ $(document).ready(function() {
       $("#start-button").show();
     }  // end-if
   });
+
+  $("#start-button").click(function() {
+    clearPage();
+    startQuiz();
+  });
+
+
+
 });
 
 
@@ -292,7 +300,7 @@ function updateUIRemoveButton(buttonID)
 
 function clearPage()
 {
-    document.innerHTML = '';    
+    $("body").empty();    
 }//clearPage
 
 
