@@ -52,11 +52,16 @@
   
   function insertNewHost($mysqli)
   {
-    $insertNewHost = $mysqli->prepare("INSERT INTO hosts (quiz_code) "
-                                                                   .  "VALUES (?);");
-    $insertNewHost->bind_param("s", $_GET["c"]);
+    $insertNewHost = $mysqli->prepare("INSERT INTO hosts (quiz_code, quiz_id)  "
+                                                                   .  "VALUES (?, ?);");
+    $insertNewHost->bind_param("ss", $_GET["c"], $_GET["q"]);
     $insertNewHost->execute();
     echo  mysqli_insert_id($mysqli);
+    $getNumQuestions = $mysqli->prepare("SELECT * FROM questions "
+                                                                           . "WHERE quiz_id = ?;");
+    $getNumQuestions->bind_param("s", $_GET["q"]);
+    $getNumQuestions->execute();
+    echo "\n" . $getNumQuestions->get_result()->num_rows;
     $insertNewHost->close();
   } // insertNewHost
   
