@@ -48,7 +48,7 @@ function checkTime(apparentDifference)
      > MAX_TIME_DIFF)
   {
     // The player is considered disconnected.
-    connected = false;
+    this.connected = false;
     // Returns false to signify the time difference is too great.
     return false; 
   }

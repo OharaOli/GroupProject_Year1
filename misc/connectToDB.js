@@ -11,9 +11,11 @@ function requestDataFromDB(stateChangeFunction, phpFile)
   xhttp.onreadystatechange = function() {
     // Checks the data is sent successfully and is not blank.
     if(xhttp.readyState == 4 && xhttp.status == 200 && xhttp.responseText != "")
+    {  
       // Calls the given function.
       stateChangeFunction(xhttp.responseText);
-   };
+    }
+  };
   // Determines which file to send to.
   xhttp.open("GET", phpFile, true);
   // Sends the request.

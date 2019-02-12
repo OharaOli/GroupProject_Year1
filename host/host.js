@@ -80,7 +80,6 @@ function setHostIDAndNumQuestions(returnedText)
 
 function pollForPlayersDataReturned(returnedText)
 {
-  console.log("Returned:"+returnedText+"---");
   // Returned text will have the following form:
   // Each player entry is separated by a new line.
   // Each player entry has ID, screen name and time since start.
@@ -213,7 +212,7 @@ function updateUIIntro()
     document.getElementById("player-list").innerHTML = "";
     for(var index in players) {
       //console.log(players[index].connected);
-      console.log(players[index].screenName);
+      //console.log(players[index].screenName);
       var newListElement = document.createElement("li").appendChild(document.createTextNode(players[index].screenName));
       document.getElementById("player-list").appendChild(newListElement);
       numberOfConnectedPlayers++;
