@@ -63,7 +63,7 @@
                                                                                 . "FROM hosts "
                                                                                 . "WHERE quiz_code = ? AND "
                                                                                 . "state = 'intro' ORDER BY "
-                                                                                . "host_id LIMIT 1;");
+                                                                                . "host_id DESC LIMIT 1;");
     // Binds the quiz code c.
     $checkQuizCodeExists->bind_param("s", $_GET["c"]);
     $checkQuizCodeExists->execute();
