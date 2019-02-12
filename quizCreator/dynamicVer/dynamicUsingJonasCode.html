@@ -24,19 +24,23 @@ function addQuestionRow(givenTable) {
   //var nextRowIndex = 3;
 
 
+  //first cell represents the index for the question
+  var indexCell = row.insertCell(0);
+  indexCell.innerHTML = lastRowIndex - 1;
+  indexCell.id = "i" + (lastRowIndex - 1);
 
-  //first cell represents the question
-  var questionCell = row.insertCell(0);
+  //second cell represents the question
+  var questionCell = row.insertCell(1);
   questionCell.innerHTML = "<input type='text' name='Question'>";
   questionCell.id = ("q" + (lastRowIndex-1));
 
   //inserts relations cell
-  var nodesCell = row.insertCell(1);
+  var nodesCell = row.insertCell(2);
   nodesCell.innerHTML = "<input type='text' name='RelatedNodes'>";
   nodesCell.id = ("rn" + (lastRowIndex-1));
 
   //inserts answer cell, which will be another table
-  var answerCell = row.insertCell(2);
+  var answerCell = row.insertCell(3);
   //create an input element which will be used as a button
   var elementHideShowButton = document.createElement('input');
 
@@ -62,7 +66,7 @@ function addQuestionRow(givenTable) {
   elementAnswersTable.setAttribute('width' , '350px');
   elementAnswersTable.setAttribute('border', '1');
   elementAnswersTable.innerHTML =
-  "<TR><TD><input type='text' name='Answer' id ='ansQ" + (lastRowIndex - 1) + "0' </TD> </TR>";
+  "<TR> <TD> 0 </TD> <TD><input type='text' name='Answer' id ='ansQ" + (lastRowIndex - 1) + "0' </TD> </TR>";
 
   // create addAnswer & deleteAnswer buttons!
   var elementAddAnswerButton = document.createElement("input");
@@ -76,12 +80,13 @@ function addQuestionRow(givenTable) {
   elementDeleteAnswerButton.setAttribute('onclick', "deleteQuestionRow('answersTableQ" + (lastRowIndex - 1) + "')");
 
 
-  //append the table to the hiddenPart
-  elementHiddenPart.appendChild(elementAnswersTable);
-
   //append the two buttons to the hiddenpart
   elementHiddenPart.appendChild(elementAddAnswerButton);
   elementHiddenPart.appendChild(elementDeleteAnswerButton);
+
+  //append the table to the hiddenPart
+  elementHiddenPart.appendChild(elementAnswersTable);
+
 
   //append the button to the cell
   answerCell.appendChild(elementHideShowButton);
@@ -132,10 +137,15 @@ function addAnswerRow(givenTable, givenQuestionNum)
   //inserts a row onto the table
   var row = table.insertRow(lastRowIndex);
 
-  //firstCell is just an answer
-  var answerCell = row.insertCell(0);
+  //first cell is the index for the answer
+  var indexCell = row.insertCell(0);
+  indexCell.innerHTML = lastRowIndex;
+  indexCell.id = "indexAnsQ" + givenQuestionNum + (lastRowIndex);
+
+  //second Cell is just an answer
+  var answerCell = row.insertCell(1);
   answerCell.innerHTML = "<input type='text' name='Answer'>";
-  answerCell.id = ("ansQ" + givenQuestionNum + (lastRowIndex-1));
+  answerCell.id = ("ansQ" + givenQuestionNum + (lastRowIndex));
 
 } // function addAnswerRow
 
@@ -196,6 +206,7 @@ function openCreator(givenQuiz) {
   <table id="creatorForQ1" border="1">
     <!-- Labels for quiz master -->
     <tr>
+      <th>index</th>
       <th>Question</th>
       <th>Related nodes</th>
       <th>Answers</th>
@@ -211,52 +222,69 @@ function openCreator(givenQuiz) {
 
       <!-- Q1 -->
     <tr>
+      <td id> 0 </td>
       <td><input type="text" name="Question" id = "q0"></td>
       <td><input type="text" name="Related nodes" id = "rn0"></td>
       <td> <div id ="answersQ0">
              <button onclick="hideORShow('hiddenPartQ0')"> Hide/show answers </button>
               <div id = "hiddenPartQ0">
-                <table id="answersTableQ0" width= "350px" border="1">
-                  <TR>
-                    <TD> <input type="text" name="Answer" id ="ansQ00" </TD>
-                    </TR>
-                </table>
                 <INPUT type="button" value="Add an answer" onclick="addAnswerRow('answersTableQ0')" />
                 <INPUT type="button" value="Delete an answer" onclick="deleteQuestionRow('answersTableQ0')" />
+                <table id="answersTableQ0" width= "350px" border="1">
+                  <TR>
+                    <td> 0 </td>
+                    <TD> <input type="text" name="Answer" id ="ansQ00" </TD>
+                    <td>
+                      <!-- Rounded switch -->
+                      <div>
+                      <label class="switch">
+                      <input type="checkbox">
+                      <span class="slider round"></span>
+                      </label>
+                    </td>
+                    </TR>
+                </table>
+
               </div> <!-- hidden part -->
            </div> <!-- answersQ0 -->
     </tr>
     <!-- Q2 -->
     <tr>
+      <td> 1 </td>
       <td><input type="text" name="Question" id = "q1"></td>
       <td><input type="text" name="Related nodes" id = "rn1"></td>
       <td> <div id ="answersQ1">
              <button onclick="hideORShow('hiddenPartQ1')"> Hide/show answers </button>
               <div id = "hiddenPartQ1">
+                <INPUT type="button" value="Add an answer" onclick="addAnswerRow('answersTableQ1')" />
+                <INPUT type="button" value="Delete an answer" onclick="deleteQuestionRow('answersTableQ1')" />
                 <table id="answersTableQ1" width= "350px" border="1">
                   <TR>
+                    <td> 0 </td>
                     <TD> <input type="text" name="Answer" id ="ansQ10" </TD>
                     </TR>
                 </table>
-                <INPUT type="button" value="Add an answer" onclick="addAnswerRow('answersTableQ1')" />
-                <INPUT type="button" value="Delete an answer" onclick="deleteQuestionRow('answersTableQ1')" />
+
               </div> <!-- hidden part -->
            </div> <!-- answersQ0 -->
     </tr>
     <!-- Q3 -->
     <tr>
+      <td> 2 </td>
       <td><input type="text" name="Question" id = "q2"></td>
       <td><input type="text" name="Related nodes" id = "rn2"></td>
       <td> <div id ="answersQ2">
              <button onclick="hideORShow('hiddenPartQ2')"> Hide/show answers </button>
               <div id = "hiddenPartQ2">
+                <INPUT type="button" value="Add an answer" onclick="addAnswerRow('answersTableQ2')" />
+                <INPUT type="button" value="Delete an answer" onclick="deleteQuestionRow('answersTableQ2')" />
                 <table id="answersTableQ2" width= "350px" border="1">
                   <TR>
+                    <td> 0 </td>
                     <TD> <input type="text" name="Answer" id ="ansQ20" </TD>
                   </TR>
                 </table>
-                <INPUT type="button" value="Add an answer" onclick="addAnswerRow('answersTableQ2')" />
-                <INPUT type="button" value="Delete an answer" onclick="deleteQuestionRow('answersTableQ2')" />
+
               </div> <!-- hidden part -->
            </div> <!-- answersQ0 -->
     </tr>
@@ -328,6 +356,71 @@ function openCreator(givenQuiz) {
   from {opacity: 0;}
   to {opacity: 1;}
 }
+
+/*CSS code for the correct/incorrect switch
+/* The switch - the box around the slider */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+/* Hide default HTML checkbox */
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* The slider */
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: Tomato;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: White;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: MediumSeaGreen;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+
 </style>
 
 </body>
