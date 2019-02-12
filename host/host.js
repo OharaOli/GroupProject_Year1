@@ -256,17 +256,38 @@ if (hostButton) {
 // Romans'
 function updateUIShowQuestion()
 {
+    document.getElementById("<TYPE ID HERE>").innerHTML = currentQuestionText;
 }
 
 // Romans'
 function updateUIPlayersAnswered(numOfPlayers)
 {
+    document.getElementById("<TYPE ID HERE>").innerHTML = "Number of players: " + numOfPlayers;
+}
+
+//Romans'
+function updateUIShowAnswers()
+{
+    var answers_message = '';
+    for (var key in currentQuestionAnswers)
+        answers_message += (key + ": " + currentQuestionAnswers[key] + "<br />");
+
+    document.getElementById("TYPE ID HERE").innerHTML = answers_message;
 }
 
 // Romans'
 function updateUIQuestionResults()
 {
+    document.getElementById("<TYPE ID HERE>").innerHTML = currentQuestionAnswers[currentQuestionCorrectAnswer];
 }
+
+//Romans'
+function updateUIRemoveButton(buttonID)
+{
+    var element = document.getElementById(buttonID);
+    element.parentNode.removeChild(element);
+}//removeButton
+
 
 // Not assigned yet.
 function updateUIFinalResults()

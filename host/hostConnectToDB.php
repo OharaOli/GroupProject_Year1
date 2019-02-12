@@ -24,8 +24,10 @@
       insertNewHost($mysqli);
       break; 
     // Update state.
-    case "us": break;
-    // Update disconnect players.
+    case "us":
+      updateState($mysqli);
+      break;
+    // Disconnect a player.
     case "dp":
       disconnectPlayer($mysqli); 
       break; 
@@ -34,7 +36,9 @@
       pollForPlayers($mysqli); 
       break;
     // Poll for answers.
-    case "pfa": break;
+    case "pfa":
+      pollForAnswers($mysqli); 
+      break;
   } // switch
   
   // Closes the connection to the database.
@@ -57,12 +61,13 @@
     $insertNewHost->bind_param("ss", $_GET["c"], $_GET["q"]);
     $insertNewHost->execute();
     echo  mysqli_insert_id($mysqli);
+    $insertNewHost->close();
     $getNumQuestions = $mysqli->prepare("SELECT * FROM questions "
                                                                            . "WHERE quiz_id = ?;");
     $getNumQuestions->bind_param("s", $_GET["q"]);
     $getNumQuestions->execute();
     echo "\n" . $getNumQuestions->get_result()->num_rows;
-    $insertNewHost->close();
+    $getNumQuestions->close();
   } // insertNewHost
   
   function pollForPlayers($mysqli)
@@ -96,7 +101,7 @@
     $disconnectPlayer->close();
   }
   
-  function pollForAnswer()
+  function pollForAnswer($mysqli)
   {
     $pollAnswers = $mysqli->prepare("SELECT player_id, answer "
                                                                 . "FROM players WHERE "
@@ -115,9 +120,49 @@
     $pollAnswers->close();
   }
   
-  function changeState()
+  function updateState($mysqli)
   {
-    
-  }
-
+    $updateState = $mysqli->prepare("UPDATE hosts SET state = ? "
+                                                                . "WHERE host_id = ?;");
+    $updateState->bind_param("ss", $_GET["s"], $_GET["h"]);
+    $updateState->execute();
+    $updateState->close();
+    if($_GET["s"] == "question")
+      outputQuestion($mysqli);
+  } // updateState
+  
+  function outputQuestion($mysqli)
+  {
+      $selectQuestionText = $mysqli->prepare("SELECT question_id, text "
+                                                                              . "FROM questions "
+                                                                              . "WHERE quiz_id = ? AND "
+                                                                              . "order_num = ?;");
+      $selectQuestionText->bind_param("ss", $_GET["q"], $_GET["n"]);
+      $selectQuestionText->execute();
+      $selectQuestionData = $selectQuestionText->get_results()->fetch_assoc();
+      $questionID = $selectQuestionData["question_id"];
+      echo $selectQuestionData["text"];
+      $selectQuestionData->close();
+      
+      $selectCorrectAnswer = $mysqli->prepare("SELECT letter FROM answers "
+                                                                                . "WHERE question_id = ? AND "
+                                                                                . "is_correct = 1;");
+      $selectCorrectAnswer->bind_param("s", $questionID);
+      $selectCorrectAnswer->execute();
+      echo $selectCorrectAnswer->get_result()->fetch_assoc()["letter"];
+      $selectCorrectAnswer->close();
+      
+      $selectAnswersText = $mysqli->prepare("SELECT text FROM answers "
+                                                                           . "WHERE question_id = ? "
+                                                                           . "ORDER BY letter;");
+      $selectAnswersText->bind_param("s", $questionID);
+      $selectAnswersText->execute();
+      $selectAnswersResult = $selectAnswerText->get_result();
+      $firstRow = $selectAnswersResult -> fetch_assoc();
+      echo $firstRow["text"];
+      // Outputs all the other answers
+      while($row = $selectAnswersResult->fetch_assoc())
+        echo "\n" . $row["text"];
+      $selectAnswersText->close();
+  } // outputQuestion
 ?>
