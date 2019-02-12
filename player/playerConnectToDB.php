@@ -80,7 +80,7 @@
     // Outputs the host ID and the time since start.
     echo $hostID . "\n";
     echo $hostStateData["time_since_start"] . "\n";
-    echo $hostStateData["quiz_code"] . "\n";
+    echo $hostStateData["quiz_id"] . "\n";
    //echo $checkQuizCodeResults->fetch_assoc()["time_since_start"];
     $checkQuizCodeExists->close();
     // The quiz code exists so the player is inserted.

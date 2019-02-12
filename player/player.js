@@ -13,12 +13,12 @@ var startTime;
 // interval for polling the state
 var pollForStateInterval;
 // create the variable for the player's score
-var playerScore;
+var playerScore = 0;
 // variable to check if the player has already joined the quiz
 var alreadyJoined = false;
 
 var quizID;
-var currentQuestionNum = 0;
+var currentQuestionNum = 1;
 var currentQuestionAnswers;
 var currentQuestionText;
 var alreadyUpdatedQuestionNum = false;
@@ -66,7 +66,8 @@ function setPlayerID(playerAndHostID)
     pollForStateInterval = setInterval(function() { requestDataFromDB(
                                       pollForState, 
                                       "playerConnectToDB.php?a=pfs&h=" + hostID + "&t=" 
-                                       + getTimeSinceStart() + "&p=" + playerID); 
+                                       + getTimeSinceStart() + "&p=" + playerID 
+                                       + "&q=" + quizID + "&n=" + currentQuestionNum); 
                                                   }, POLL_FOR_STATE_DELAY);
 
 
@@ -156,7 +157,10 @@ function feedback(feedback, isCorrectNum)
 {  
   var isCorrect = false;
   if(isCorrectNum == "1")
+  {
     isCorrect = true;
+    playerScore++;
+  }
   alreadyUpdatedQuestionNum = false;
   updateUIAnswer(feedback, isCorrect);  
 }
