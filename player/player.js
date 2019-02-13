@@ -6,6 +6,8 @@ var playerID;
 var hostID;
 // delay for each state delay
 var POLL_FOR_STATE_DELAY = 500;
+// maximum difference in time for the host before disconnecting
+var MAX_HOST_DIFF_TIME = 10000;
 // host start time
 var hostStartTime;
 // the start time of the player
@@ -82,7 +84,7 @@ function pollForState(responseText)
   var statesArray = responseText.split("\n");
 
   // if the value we get from the database is greater than 10 seconds, then we should disconnect self
-  if (Math.abs((Date.now() - hostStartTime) - parseInt(statesArray[1])) > POLL_FOR_STATE_DELAY)
+  if (Math.abs((Date.now() - hostStartTime) - parseInt(statesArray[1])) > MAX_HOST_DIFF_TIME)
   {     
     // update the data in the database by calling the JS function and then call the php
     // function that  disconnects self
