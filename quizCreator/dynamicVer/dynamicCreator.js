@@ -115,8 +115,13 @@ function deleteQuestionRow(givenTable)
   //put last row index into a varibale
   var lastRowIndex = table.rows.length;
 
+  if(lastRowIndex >= 3)
+  {
   //delete a row from the table
   table.deleteRow(lastRowIndex-1);
+  }
+  else;
+
 }
 
 
