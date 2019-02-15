@@ -1,7 +1,9 @@
 <?php
-$str = "We live in a society";
+$str = "password";
 $lead = "bob";
 $hashedPass = password_hash($str, PASSWORD_DEFAULT);
+
+echo $hashedPass;
 
 if (password_verify("$lead" , "$hashedPass"))
 	echo "The password matches";
