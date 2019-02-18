@@ -179,32 +179,38 @@ function pollForAnswersDataReturned(returnedText)
 {
   splitReturnedText = returnedText.split("\n");
   var numAnswersGiven = 0;
-  for(idAnswerPair in splitReturnedText)
+  for(var splitIndex = 0; splitIndex < splitReturnedText.length; splitIndex++)
   {
-    var id = idAnswerPair.split(",")[0];
-    var answer = idAnswerPair.split(",")[1];
-    if(answer != "-")
+    var id = splitReturnedText[splitIndex].split(",")[0];
+    var answer =splitReturnedText[splitIndex].split(",")[1];
+    if(answer != "-" && answer in currentQuestionAnswers)
       numAnswersGiven++;
-      players[id].currentAnswer = answer; 
+    players[id].currentAnswer = answer; 
   } // for
   updatePlayerAnswers(numAnswersGiven);
   $("#numberOfAnswers").show();
 }
 
-function updateFeedback()
+function updateFeedbackStage()
 {
   clearInterval(pollForAnswersInterval);
+  answerSelections = { "A": 0, "B": 0, "C": 0, "D": 0 }
   for(key in players)
+  {
+    if(players[key].currentAnswer != "-")
+      answerSelections[players[key].currentAnswer]++;
     players[key].giveAnswer(currentQuestionCorrectAnswer);
+  }
+  
   updateDataInDB("hostConnectToDB.php?a=us&h=" + hostID + "&s=feedback"
                                 + "&t=" + getTimeSinceStart());
                                 
-  displayQuestionResults();
-} // updateFeedback
+  displayFeedback(answerSelections);
+} // updateFeedbackStage
 
 function showOutro()
 {
-  updateDataInDB("hostConnectToDB.php?a=us&h=" + hostID + "&s=feedback"
+  updateDataInDB("hostConnectToDB.php?a=us&h=" + hostID + "&s=outro"
                                  + "&t=" + getTimeSinceStart());
   displayOutro();
 } // showOutro
@@ -285,7 +291,7 @@ $(document).ready(function() {
   // Display the feedback upon clicking the 'next' button.
   $("#reveal-button").click(function() {
     // Display the correct answer and maybe feedback.
-    updateFeedback();
+    updateFeedbackStage();
     // Hide the reveal button.
     $(this).hide();
     // Show instead the next button.
@@ -343,11 +349,15 @@ function displayPlayerAnswers()
 
 // A function which adds some text, within the q-and-a div
 // container, which contains the correct answer.
-function displayQuestionResults()
+function displayFeedback(answerSelections)
 {
+  for(answerSelection in answerSelections)
+    if(answerSelection in currentQuestionAnswers)
+      $("#q-and-a-container").append("<p>Number of  " + answerSelection + "s: " + answerSelections[answerSelection]);
+
   $("#q-and-a-container").append("<p>The correct answer is "
     + currentQuestionAnswers[currentQuestionCorrectAnswer] + "</p>");
-}  // end-displayQuestionResults
+}  // end-displayFeedback
 
 
 /* not used atm
@@ -369,17 +379,22 @@ function clearIntro()
 
 
 // A function to remove all elements used in the question
-// and answers container (except for buttons), in order to introduce the first
-// round of question and answers.
+// and answers container (except for buttons and the number of answers),
+// in order to introduce the first round of question and answers.
 function clearQuestionAndAnswers()
 {
-    $("#q-and-a-container").find("*").not(".button").remove();    
+  $("#q-and-a-container")
+    .find("*").not(".button").not("#numberOfAnswers").remove();    
 }  // end-clearQuestionAndAnswers
 
 
 // A function which displays the outro page.
 function displayOutro()
 {
+  for (var index in players)
+    if (players[index].connected || players[index].score > 0)
+      $("#score-list").append("<li>" + players[index].screenName + ": " + players[index].score + "</li>")      
+
   // Remove all content used for displaying the questions and answers.
   $("#q-and-a-container").empty();
   // Make visible the contents of the outro container div.

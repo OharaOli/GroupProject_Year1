@@ -4,7 +4,7 @@
 // function for the displaying questions to the player
 function showQuestion(question)
 {
-   document.getElementById("playerQuestion").innerHTML = question;
+   $("#playerQuestion").html(question);
 } // showQuestion
 
 // function thats the answers from the players 
@@ -15,39 +15,33 @@ function  showAnswer(answersDictionary)
          count++;
           
       // sets all the answers to hidden, then set display based on the length of dictionary
-      document.getElementById("answer1").style.display = "none";
-      document.getElementById("answer2").style.display = "none";
-      document.getElementById("answer3").style.display = "none";
-      document.getElementById("answer4").style.display = "none";
-      document.getElementById("answer5").style.display = "none";
+      $("#answer1").hide();
+      $("#answer2").hide();
+      $("#answer3").hide();
+      $("#answer4").hide();
 
       // if there are 5 answers,  show the option for the 5 answers and put the value of answers to the buttons
       switch(count)
        {
-         case 5:
-         {
-           document.getElementById("answer5").style.display = "block";
-           document.getElementById("answer5").innerHTML = answersDictionary['e'];
-         } // case 5
          case 4:
          {
-           document.getElementById("answer4").style.display = "block";
-           document.getElementById("answer4").innerHTML = answersDictionary['d'];
+           $("#answer4").show();
+           $("#answer4").html(answersDictionary['d']);
          } // case 4
          case 3:
          {
-           document.getElementById("answer3").style.display = "block";
-          document.getElementById("answer3").innerHTML = answersDictionary['c'];
+           $("#answer3").show();
+           $("#answer3").html(answersDictionary['c']);
          }  // case 3
          case 2:
          {
-           document.getElementById("answer2").style.display = "block";
-           document.getElementById("answer2").innerHTML = answersDictionary['b'];
+           $("#answer2").show();
+           $("#answer2").html(answersDictionary['b']);
          } // case 2 
         case 1:
         {
-           document.getElementById("answer1").style.display = "block";
-           document.getElementById("answer1").innerHTML = answersDictionary['a'];
+           $("#answer1").show();
+           $("#answer1").html(answersDictionary['a']);
          } // case 1
      } // switch
 
