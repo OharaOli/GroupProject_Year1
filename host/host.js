@@ -135,7 +135,7 @@ function getNextQuestion()
 {
     currentQuestionNum++;
     if(currentQuestionNum > numQuestions)
-      showQuestionResults();
+      updateFeedback();
     else
       requestDataFromDB(askQuestion, "hostConnectToDB.php?a=us&h=" + hostID
                                   + "&n=" + currentQuestionNum + "&s=question&t="
@@ -148,6 +148,15 @@ function askQuestion(returnedText)
   currentQuestionText = splitReturnedText[0];
   currentQuestionCorrectAnswer = splitReturnedText[1];
   currentQuestionAnswers = {};
+  
+  currentQuestionAnswers["A"] = splitReturnedText[2]; 
+  currentQuestionAnswers["B"] = splitReturnedText[3];
+  if(splitReturnedText.length >= 5)
+    currentQuestionAnswers["C"] = splitReturnedText[4]; 
+  if(splitReturnedText.length == 6)
+    currentQuestionAnswers["D"] = splitReturnedText[5]; 
+
+ /*
   switch(splitReturnedText.length - 2)
   {
     case 4: currentQuestionAnswers["D"] = splitReturnedText[5]; 
@@ -155,7 +164,7 @@ function askQuestion(returnedText)
     case 2: currentQuestionAnswers["B"] = splitReturnedText[3]; 
     case 1: currentQuestionAnswers["A"] = splitReturnedText[2]; 
   } // switch
-  
+  */
   pollForAnswersInterval = setInterval(function() { requestDataFromDB(
                                       pollForAnswersDataReturned, 
                                       "hostConnectToDB.php?a=pfa&h=" + hostID + "&t=" 
@@ -182,7 +191,7 @@ function pollForAnswersDataReturned(returnedText)
     updateUIPlayersAnswered(numAnswersGiven);
 }
 
-function showQuestionResults()
+function updateFeedback()
 {
   clearInterval(pollForAnswersInterval);
   for(key in players)
@@ -190,8 +199,8 @@ function showQuestionResults()
   updateDataInDB("hostConnectToDB.php?a=us&h=" + hostID + "&s=feedback"
                                 + "&t=" + getTimeSinceStart());
                                 
-  updateUIQuestionResults();
-} // showQuestionResults
+  displayQuestionResults();
+} // updateFeedback
 
 function showFinalResults()
 {
@@ -234,7 +243,8 @@ $(document).ready(function() {
   // Initially hide the start quiz button.
   $("#start-button").hide();
   // Initially hide the current question and answers.
-  $("#question-and-answers").hide()
+  $("#q-and-a-container").hide()
+
   // Upon clicking the 'Host Quiz' button...
   $("#host-button").click(function() {
     // Check that the length of the characters in the input feld is
@@ -257,35 +267,56 @@ $(document).ready(function() {
     }  // end-if
   });
 
+  // Upon clicking the 'Start Quiz' button...
   $("#start-button").click(function() {
-    clearPage();
+    // ...remove all elements used in the intro.
+    clearIntro();
+    // Call the function to start the quiz.
     startQuiz();
-    $("#question-and-answers").show()
+    // Show all the elements in the question and answer container.
+    $("#q-and-a-container").show()
   });
+
+  // Display the feedback upon clicking the 'next' button.
+  $("#reveal-button").click(function() {
+    displayQuestionResults();
+  });
+
 });
 
 // Romans' + Manne
 function displayQuestionAndAnswers()
 {
-  $("#question-answers-pair").append("<h2>" + currentQuestionText + "</h2>")
+  // Clears the feedback, so that the next question and answers can be displayed.
+  //clearFeedback();
 
+  // Adds a header containing the current question.
+  $("#q-and-a-container").append("<h2>" + currentQuestionText + "</h2>")
+
+  // A variable to contain all answers in string, initially empty.
   var answers_message = "";
+  // Add the answers onto string, one at a time.
   for (var key in currentQuestionAnswers)
     answers_message += (key + ": " + currentQuestionAnswers[key] + "<br />");
 
-  $("#question-answers-pair").append("<p>" + answers_message + "</p>")
+  // Adds a paragraph containing the current different possible answers.
+  $("#q-and-a-container").append("<p>" + answers_message + "</p>")
 }
 
 // Romans'
 function updateUIPlayersAnswered(numOfPlayers)
 {
-    document.getElementById("<TYPE ID HERE>").innerHTML = "Number of players: " + numOfPlayers;
+    $("#q-and-a-container").append("<p>Number of responses:" + numOfPlayers + "</p>")
 }
 
-// Romans'
-function updateUIQuestionResults()
+// Romans' + Manne
+
+// Adds a paragraph containing the correct answer upon function call.
+function displayQuestionResults()
 {
-    document.getElementById("<TYPE ID HERE>").innerHTML = currentQuestionAnswers[currentQuestionCorrectAnswer];
+  $("#q-and-a-container")
+    .append("<p>The correct answer is "
+                   + currentQuestionAnswers[currentQuestionCorrectAnswer] + "</p>")
 }
 
 //Romans'
@@ -296,9 +327,11 @@ function updateUIRemoveButton(buttonID)
 }//removeButton
 
 
-function clearPage()
+// A function to remove all elements used in the intro, in order to
+// introduce the first round of question and answers.
+function clearIntro()
 {
-    $("body").empty();    
+    $("#intro-container").empty();    
 }//clearPage
 
 

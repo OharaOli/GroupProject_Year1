@@ -9,16 +9,19 @@
   <script src="host.js"></script>
 </head>
 <body>
-  <h4 id="state-display"></h4>
-  <button id="start-button">Start Quiz</button>
-  <h4 id="number-of-players-connected"></h4>
-  <div id="question-and-answers">
+  <div id="intro-container">
+    <h4 id="state-display"></h4>
+    <button id="start-button">Start Quiz</button>
+    <h4 id="number-of-players-connected"></h4>
+    <ul id="player-list">
+    </ul>
+    <div id="host-option">
+      <input id="quiz-code-host" type="text" placeholder="Quiz Code"/>
+      <button id="host-button">Host Quiz</button>
+    </div>
   </div>
-  <ul id="player-list">
-  </ul>
-  <div id="host-option">
-    <input id="quiz-code-host" type="text" placeholder="Quiz Code"/>
-    <button id="host-button">Host Quiz</button>
+  <div id="q-and-a-container">
+    <button id="reveal-button">Next</button>
   </div>
 </body>
 </html> 
