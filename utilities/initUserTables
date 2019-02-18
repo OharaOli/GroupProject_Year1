@@ -2,17 +2,18 @@
 set -v
 mysql -h dbhost.cs.man.ac.uk -u j25802rk -p 2018_comp10120_y7  << EOF
 
-DROP TABLE IF EXISTS Users;
+DROP TABLE IF EXISTS users;
 
-CREATE TABLE Users(
+CREATE TABLE users(
   user_id int NOT NULL AUTO_INCREMENT,
-  Username VARCHAR(20) NOT NULL,
-  Password CHAR(255),
+  username VARCHAR(20) NOT NULL,
+  password CHAR(255),
   PRIMARY KEY (user_id));
 
-INSERT INTO Users(Username, Password) VALUES ("Jim", "\$2y\$10\$e301./O6DY7j07fUmCZPOuGvmstHPbV204HcKNcvDA/xN2DV1Lr5C");
+INSERT INTO users(username, password) VALUES ("Jim", "\$2y\$10\$e301./O6DY7j07fUmCZPOuGvmstHPbV204HcKNcvDA/xN2DV1Lr5C");
 
 quit
 EOF
 
 #The password inserted into Users is 'password' but hashed
+

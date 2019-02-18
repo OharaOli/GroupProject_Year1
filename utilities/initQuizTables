@@ -9,6 +9,7 @@ DROP TABLE IF EXISTS answers;
 CREATE TABLE  quizzes(
   quiz_id int NOT NULL AUTO_INCREMENT,
   name VARCHAR(50) NOT NULL,
+  user_id int NOT NULL,
   PRIMARY KEY (quiz_id));
   
 CREATE TABLE questions(
@@ -27,7 +28,7 @@ CREATE TABLE answers(
   letter ENUM("A", "B", "C", "D") NOT NULL,
   PRIMARY KEY(answer_id));
   
-INSERT INTO quizzes(name) VALUES("Test Quiz");
+INSERT INTO quizzes(name, user_id) VALUES("Test Quiz", 1);
 INSERT INTO questions VALUES (NULL, 1, 1, "What is 9 squared?"),
                                                           (NULL, 1, 2, "What is the capital of England?");
 INSERT INTO answers VALUES
