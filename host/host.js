@@ -135,7 +135,7 @@ function getNextQuestion()
 {
     currentQuestionNum++;
     if(currentQuestionNum > numQuestions)
-      updateFeedback();
+      showFinalResults();
     else
       requestDataFromDB(askQuestion, "hostConnectToDB.php?a=us&h=" + hostID
                                   + "&n=" + currentQuestionNum + "&s=question&t="
@@ -206,7 +206,7 @@ function showFinalResults()
 {
   updateDataInDB("hostConnectToDB.php?a=us&h=" + hostID + "&s=feedback"
                                  + "&t=" + getTimeSinceStart());
-  updateUIFinalResults();
+  displayFinalResults();
 } // showFinalResults
 
 //---------------------- MANNE + ROMANS + PRAEVEEN ------------------------------
@@ -244,6 +244,8 @@ $(document).ready(function() {
   $("#start-button").hide();
   // Initially hide the current question and answers.
   $("#q-and-a-container").hide()
+  // Initially hide the outro content.
+  $("#outro-container").hide();    
 
   // Upon clicking the 'Host Quiz' button...
   $("#host-button").click(function() {
@@ -273,40 +275,53 @@ $(document).ready(function() {
     clearIntro();
     // Call the function to start the quiz.
     startQuiz();
+    // Hide the next question button before showing the container
+    // for the question and answers.
+    $("#next-button").hide();
     // Show all the elements in the question and answer container.
     $("#q-and-a-container").show()
   });
 
   // Display the feedback upon clicking the 'next' button.
   $("#reveal-button").click(function() {
-    displayQuestionResults();
+    console.log("reveal button clicked");
+    updateFeedback();
+    $(this).hide();
+    $("#next-button").show();
   });
 
+  // Display the next question upon clicking the 'next' button.
+  $("#next-button").click(function() {
+    clearQuestionAndAnswers();
+    getNextQuestion();
+    $(this).hide();
+    $("#reveal-button").show();
+  });
 });
 
 // Romans' + Manne
 function displayQuestionAndAnswers()
 {
   // Clears the feedback, so that the next question and answers can be displayed.
-  //clearFeedback();
+  //clearCurrent();
 
   // Adds a header containing the current question.
-  $("#q-and-a-container").append("<h2>" + currentQuestionText + "</h2>")
+  $("#q-and-a-container").append("<h2>" + currentQuestionText + "</h2>");
 
   // A variable to contain all answers in string, initially empty.
-  var answers_message = "";
+  var answers_collection = "";
   // Add the answers onto string, one at a time.
   for (var key in currentQuestionAnswers)
-    answers_message += (key + ": " + currentQuestionAnswers[key] + "<br />");
+    answers_collection += (key + ": " + currentQuestionAnswers[key] + "<br />");
 
   // Adds a paragraph containing the current different possible answers.
-  $("#q-and-a-container").append("<p>" + answers_message + "</p>")
+  $("#q-and-a-container").append("<p>" + answers_collection + "</p>");
 }
 
-// Romans'
+// Romans' + Manne
 function updateUIPlayersAnswered(numOfPlayers)
 {
-    $("#q-and-a-container").append("<p>Number of responses:" + numOfPlayers + "</p>")
+    $("#q-and-a-container").append("<p>Number of responses:" + numOfPlayers + "</p>");
 }
 
 // Romans' + Manne
@@ -316,7 +331,7 @@ function displayQuestionResults()
 {
   $("#q-and-a-container")
     .append("<p>The correct answer is "
-                   + currentQuestionAnswers[currentQuestionCorrectAnswer] + "</p>")
+                   + currentQuestionAnswers[currentQuestionCorrectAnswer] + "</p>");
 }
 
 //Romans'
@@ -332,12 +347,24 @@ function updateUIRemoveButton(buttonID)
 function clearIntro()
 {
     $("#intro-container").empty();    
-}//clearPage
+}//clearIntro
+
+
+// A function to remove all elements used in the question
+// and answers container (except for the button), in order to introduce the first
+// round of question and answers.
+function clearQuestionAndAnswers()
+{
+    $("#q-and-a-container").find("*").not(".button").remove();    
+}//clearQuestionAndAnswers
+
 
 
 // Not assigned yet.
-function updateUIFinalResults()
+function displayFinalResults()
 {
+  $("#q-and-a-container").empty();
+  $("#outro-container").show();    
 }
 
 // -------------------------- STOP TOUCHING MY CODE AFTER HERE --------------------
