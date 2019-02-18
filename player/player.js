@@ -63,7 +63,7 @@ function setPlayerID(playerAndHostID)
     var playerIDhostIDArray = playerAndHostID.split("\n");
     //  assign the hostID and playerID  and the host time from the string array
     hostID = playerIDhostIDArray[0];
-    quizId = playerIDhostIDArray[2];
+    quizID = playerIDhostIDArray[2];
     playerID = playerIDhostIDArray[3];
     hostStartTime = Date.now() - parseInt(playerIDhostIDArray[1]);
     // get the start time
@@ -83,6 +83,7 @@ function setPlayerID(playerAndHostID)
 
 function pollForState(responseText)
 {
+  console.log(responseText);
   // get the state, time and possibly the new update score and put that into an array split by new lines
   var statesArray = responseText.split("\n");
 
@@ -157,11 +158,8 @@ function inputAnswer(answerSelected)
 // function to show the question to the player 
 function showQuestion(statesArray)
 {
-  if(!alreadyUpdatedQuestionNum)
-  {
-    currentQuestionNum++;
-    alreadyUpdatedQuestionNum = true;
-  } // if
+  alreadyUpdatedQuestionNum = false;
+
   currentQuestionText = statesArray[2];
   currentQuestionAnswers = {};
   currentQuestionAnswers["A"] = statesArray[3];
@@ -213,22 +211,29 @@ function  showAnswer(answersDictionary)
          } // case 1
      } // switch
   } // showAnswer
+
+
 // function to show the outro of when the quiz has ended
 function outro()
 {
   updateUIOutro();
 }
 
+
 // function to return feedback to the player
 function updateFeedbackState(feedback, isCorrectNum)
 {  
+   if(!alreadyUpdatedQuestionNum)
+  {
+    currentQuestionNum++;
+    alreadyUpdatedQuestionNum = true;
+  } // if
   var isCorrect = false;
   if(isCorrectNum == "1")
   {
     isCorrect = true;
     playerScore++;
   }
-  alreadyUpdatedQuestionNum = false;
   displayFeedback(feedback, isCorrect);  
 }  // end-updateFeedbackState
 
@@ -241,7 +246,7 @@ function displayQuestionAndAnswers()
   // Make visible the div container for the question and answers.
   $("#q-and-a-container").show();
   // Adds a header containing the current question.
-  $("#q-and-a-container").append("<h2>" + currentQuestionText + "</h2>");
+  $("#question").html(currentQuestionText);
 
   // A string variable to contain all answers, initially empty.
   var answers_collection = "";
@@ -250,7 +255,7 @@ function displayQuestionAndAnswers()
     answers_collection += (key + ": " + currentQuestionAnswers[key] + "<br />");
 
   // Adds a paragraph containing the current different possible answers.
-  $("#q-and-a-container").append("<p>" + answers_collection + "</p>");
+  $("#answers").html(answers_collection);
 }
 
 // A function which adds some text, within the q-and-a div

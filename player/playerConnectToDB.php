@@ -96,7 +96,7 @@
   } // insertNewPlayer
   
   // Polls for a change in state of the host, and returns the time.
-  // Will also return the player's current score if the state is feedback.
+  // Will also return the player's current score if the state is feedback.hp
   function pollForState($mysqli)
   {
     // Gets the state and time since start of the host.
@@ -128,20 +128,31 @@
                                                                             . "FROM questions "
                                                                             . "WHERE quiz_id = ? AND "
                                                                             . "order_num = ?;");
-    $selectQuestionID->bind_param("ss", $_GET["q"], $_GET["n"]);
+    $changeMe = strval(intval($_GET["n"]) - 1);
+    $selectQuestionID->bind_param("ss", $_GET["q"], $changeMe);
     $selectQuestionID->execute();
-    $questionID = $selectQuestionID->get_results()->fetch_assoc()["question_id"];
+    $selectQuestionIDResults = $selectQuestionID->get_result();
+    $questionID =  $selectQuestionIDResults->fetch_assoc()["question_id"];
     $selectQuestionID->close();
+
+    $selectPlayerAnswer = $mysqli->prepare("SELECT answer "
+                                                                            . "FROM players "
+                                                                            . "WHERE player_id = ?;");
+    $selectPlayerAnswer->bind_param("s", $_GET["p"]);
+    $selectPlayerAnswer->execute();
+    $selectPlayerAnswerResult = $selectPlayerAnswer->get_result();
+    $answer =  $selectPlayerAnswerResult->fetch_assoc()["answer"];
+    $selectPlayerAnswer->close();
     
     $selectCorrectAnswer = $mysqli->prepare("SELECT is_correct, feedback "
                                                                               . "FROM answers "
                                                                               . "WHERE letter = ? AND "
                                                                               . " question_id = ?;");
-    $selectCorrectAnswer->bind_param("s", $questionID);
+    $selectCorrectAnswer->bind_param("ss", $answer, $questionID);
     $selectCorrectAnswer->execute();
-    $selectCorrectAnswerData = 
-                                                  $selectCorrectAnswer->get_result()->fetch_assoc();
-    echo $selectCorrectAnswerData["is_correct"];
+    $selectCorrectAnswerResult = $selectCorrectAnswer->get_result();
+    $selectCorrectAnswerData = $selectCorrectAnswerResult->fetch_assoc();
+    echo "\n" . $selectCorrectAnswerData["is_correct"];
     echo "\n" . $selectCorrectAnswerData["feedback"];
     $selectCorrectAnswer->close();
   } // outputFeedback
@@ -154,10 +165,10 @@
                                                                             . "order_num = ?;");
     $selectQuestionText->bind_param("ss", $_GET["q"], $_GET["n"]);
     $selectQuestionText->execute();
-    $selectQuestionResults = $selectQuestionText->get_results();
+    $selectQuestionResults = $selectQuestionText->get_result();
     $selectQuestionData = $selectQuestionResults->fetch_assoc();
     $questionID = $selectQuestionData["question_id"];
-    echo $selectQuestionData["text"];
+    echo "\n" . $selectQuestionData["text"];
     $selectQuestionText->close();
     
     $selectAnswersText = $mysqli->prepare("SELECT text FROM answers "
@@ -165,9 +176,9 @@
                                                                          . "ORDER BY letter;");
     $selectAnswersText->bind_param("s", $questionID);
     $selectAnswersText->execute();
-    $selectAnswersResult = $selectAnswerText->get_result();
+    $selectAnswersResult = $selectAnswersText->get_result();
     $firstRow = $selectAnswersResult -> fetch_assoc();
-    echo $firstRow["text"];
+    echo "\n" . $firstRow["text"];
     // Outputs all the other answers
     while($row = $selectAnswersResult->fetch_assoc())
       echo "\n" . $row["text"];
