@@ -135,7 +135,7 @@ function getNextQuestion()
 {
     currentQuestionNum++;
     if(currentQuestionNum > numQuestions)
-      showFinalResults();
+      showOutro();
     else
       requestDataFromDB(askQuestion, "hostConnectToDB.php?a=us&h=" + hostID
                                   + "&n=" + currentQuestionNum + "&s=question&t="
@@ -177,18 +177,18 @@ function askQuestion(returnedText)
 
 function pollForAnswersDataReturned(returnedText)
 {
-   splitReturnedText = returnedText.split("\n");
-   var numAnswersGiven = 0;
-   for(idAnswerPair in splitReturnedText)
-   {
-     var id = idAnswerPair.split(",")[0];
-     var answer = idAnswerPair.split(",")[1];
-     if(answer != "-")
+  splitReturnedText = returnedText.split("\n");
+  var numAnswersGiven = 0;
+  for(idAnswerPair in splitReturnedText)
+  {
+    var id = idAnswerPair.split(",")[0];
+    var answer = idAnswerPair.split(",")[1];
+    if(answer != "-")
       numAnswersGiven++;
-     players[id].currentAnswer = answer; 
-   } // for
-
-    updateUIPlayersAnswered(numAnswersGiven);
+      players[id].currentAnswer = answer; 
+  } // for
+  updatePlayerAnswers(numAnswersGiven);
+  $("#numberOfAnswers").show();
 }
 
 function updateFeedback()
@@ -202,12 +202,12 @@ function updateFeedback()
   displayQuestionResults();
 } // updateFeedback
 
-function showFinalResults()
+function showOutro()
 {
   updateDataInDB("hostConnectToDB.php?a=us&h=" + hostID + "&s=feedback"
                                  + "&t=" + getTimeSinceStart());
-  displayFinalResults();
-} // showFinalResults
+  displayOutro();
+} // showOutro
 
 //---------------------- MANNE + ROMANS + PRAEVEEN ------------------------------
 //--------------- IMPLEMENT ALL THESE FUNCTIONS PLZ THX -------------------
@@ -275,8 +275,8 @@ $(document).ready(function() {
     clearIntro();
     // Call the function to start the quiz.
     startQuiz();
-    // Hide the next question button before showing the container
-    // for the question and answers.
+    // Hide the next question button before showing the 
+    // div container for the question and answers.
     $("#next-button").hide();
     // Show all the elements in the question and answer container.
     $("#q-and-a-container").show()
@@ -284,33 +284,38 @@ $(document).ready(function() {
 
   // Display the feedback upon clicking the 'next' button.
   $("#reveal-button").click(function() {
-    console.log("reveal button clicked");
+    // Display the correct answer and maybe feedback.
     updateFeedback();
+    // Hide the reveal button.
     $(this).hide();
+    // Show instead the next button.
     $("#next-button").show();
   });
 
   // Display the next question upon clicking the 'next' button.
   $("#next-button").click(function() {
+    // Remove all question and answer elements from page.
     clearQuestionAndAnswers();
+    // Fetch and display the next question with its answers.
     getNextQuestion();
+    // Hide the next button.
     $(this).hide();
+    // Show instead the reveal button.
     $("#reveal-button").show();
   });
 });
 
 // Romans' + Manne
+
+// A function to display the fetched question and answers.
 function displayQuestionAndAnswers()
 {
-  // Clears the feedback, so that the next question and answers can be displayed.
-  //clearCurrent();
-
   // Adds a header containing the current question.
   $("#q-and-a-container").append("<h2>" + currentQuestionText + "</h2>");
 
-  // A variable to contain all answers in string, initially empty.
+  // A string variable to contain all answers, initially empty.
   var answers_collection = "";
-  // Add the answers onto string, one at a time.
+  // Add the answers onto a string, one at a time.
   for (var key in currentQuestionAnswers)
     answers_collection += (key + ": " + currentQuestionAnswers[key] + "<br />");
 
@@ -318,28 +323,41 @@ function displayQuestionAndAnswers()
   $("#q-and-a-container").append("<p>" + answers_collection + "</p>");
 }
 
-// Romans' + Manne
-function updateUIPlayersAnswered(numOfPlayers)
+
+// A function which updates the number of players who have currently
+// answered the question. (Not during feedback stage!)
+function updatePlayerAnswers(numOfAnswers)
 {
-    $("#q-and-a-container").append("<p>Number of responses:" + numOfPlayers + "</p>");
-}
+    $("#numberOfAnswers").html("Answers so far: " + numOfAnswers);
+}  // end-updatePlayerAnswers
 
-// Romans' + Manne
 
-// Adds a paragraph containing the correct answer upon function call.
+// A function which displays the number of players who
+// selected each answer respectively. (During feedback stage!)
+function displayPlayerAnswers()
+{
+  $("#numberOfAnswers").
+  $("#q-and-a-container").append("<p>Number of responses:" + numOfPlayers + "</p>");
+}  // end-displayPlayerAnswers
+
+
+// A function which adds some text, within the q-and-a div
+// container, which contains the correct answer.
 function displayQuestionResults()
 {
-  $("#q-and-a-container")
-    .append("<p>The correct answer is "
-                   + currentQuestionAnswers[currentQuestionCorrectAnswer] + "</p>");
-}
+  $("#q-and-a-container").append("<p>The correct answer is "
+    + currentQuestionAnswers[currentQuestionCorrectAnswer] + "</p>");
+}  // end-displayQuestionResults
 
+
+/* not used atm
 //Romans'
 function updateUIRemoveButton(buttonID)
 {
     var element = document.getElementById(buttonID);
     element.parentNode.removeChild(element);
 }//removeButton
+*/
 
 
 // A function to remove all elements used in the intro, in order to
@@ -347,25 +365,26 @@ function updateUIRemoveButton(buttonID)
 function clearIntro()
 {
     $("#intro-container").empty();    
-}//clearIntro
+}  // end-clearIntro
 
 
 // A function to remove all elements used in the question
-// and answers container (except for the button), in order to introduce the first
+// and answers container (except for buttons), in order to introduce the first
 // round of question and answers.
 function clearQuestionAndAnswers()
 {
     $("#q-and-a-container").find("*").not(".button").remove();    
-}//clearQuestionAndAnswers
+}  // end-clearQuestionAndAnswers
 
 
-
-// Not assigned yet.
-function displayFinalResults()
+// A function which displays the outro page.
+function displayOutro()
 {
+  // Remove all content used for displaying the questions and answers.
   $("#q-and-a-container").empty();
+  // Make visible the contents of the outro container div.
   $("#outro-container").show();    
-}
+}  // end-displayOutro
 
 // -------------------------- STOP TOUCHING MY CODE AFTER HERE --------------------
 // --------------------- THX GOODBYE HAVE FUN DON'T TOUCH MY CODE -----------
