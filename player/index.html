@@ -2,13 +2,23 @@
 <html>
 <head>
 	<title></title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script src="../misc/connectToDB.js"></script>
 	<script src="player.js"></script>
-	<script src="temp.js"></script>
 </head>
 <body>
-	<input id="quiz-code-player" type="text" placeholder="Quiz Code"/>
-	<input id="player-screen-name" type="text" placeholder="Screen Name"/>
-	<button id="host-button" onclick="tryToJoin(selectQuizCode(), selectScreenName());">Join Quiz</button>
+  <div id="intro-container">
+    <div id="join-option">
+	    <input id="quiz-code-player" type="text" placeholder="Quiz Code"/>
+	    <input id="player-screen-name" type="text" placeholder="Screen Name"/>
+	    <button id="join-button">Join Quiz</button>
+    </div>
+  </div>
+  <div id="q-and-a-container">
+  </div>
+  <div id="outro-container">
+  </div>
+  <p id="error-message">
+  </p>
 </body>
 </html> 

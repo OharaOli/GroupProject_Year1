@@ -191,7 +191,7 @@ function pollForAnswersDataReturned(returnedText)
   $("#numberOfAnswers").show();
 }
 
-function updateFeedbackStage()
+function updateFeedbackState()
 {
   clearInterval(pollForAnswersInterval);
   answerSelections = { "A": 0, "B": 0, "C": 0, "D": 0 }
@@ -206,7 +206,7 @@ function updateFeedbackStage()
                                 + "&t=" + getTimeSinceStart());
                                 
   displayFeedback(answerSelections);
-} // updateFeedbackStage
+} // updateFeedbackState
 
 function showOutro()
 {
@@ -248,10 +248,12 @@ function updateIntroUI()
 $(document).ready(function() {
   // Initially hide the start quiz button.
   $("#start-button").hide();
+  // Initially hide the number of players.
+  $("#number-of-players-connected").hide();
   // Initially hide the current question and answers.
   $("#q-and-a-container").hide()
   // Initially hide the outro content.
-  $("#outro-container").hide();    
+  $("#outro-container").hide();
 
   // Upon clicking the 'Host Quiz' button...
   $("#host-button").click(function() {
@@ -272,6 +274,8 @@ $(document).ready(function() {
       // Since quiz has been created, the host can now start it,
       // which is why the start button is now shown.
       $("#start-button").show();
+      // Show the number of players connected.
+      $("#number-of-players-connected").show();
     }  // end-if
   });
 
@@ -285,13 +289,13 @@ $(document).ready(function() {
     // div container for the question and answers.
     $("#next-button").hide();
     // Show all the elements in the question and answer container.
-    $("#q-and-a-container").show()
+    $("#q-and-a-container").show();
   });
 
   // Display the feedback upon clicking the 'next' button.
   $("#reveal-button").click(function() {
     // Display the correct answer and maybe feedback.
-    updateFeedbackStage();
+    updateFeedbackState();
     // Hide the reveal button.
     $(this).hide();
     // Show instead the next button.
@@ -348,13 +352,19 @@ function displayPlayerAnswers()
 
 
 // A function which adds some text, within the q-and-a div
-// container, which contains the correct answer.
+// container, which contains the correct answer and who answered what.
 function displayFeedback(answerSelections)
 {
+  // Loop through answers.
   for(answerSelection in answerSelections)
+    // To make sure (for some reason) answer D is
+    //selected when only A and B are available.
     if(answerSelection in currentQuestionAnswers)
-      $("#q-and-a-container").append("<p>Number of  " + answerSelection + "s: " + answerSelections[answerSelection]);
+      // Display the number of players who chose each answer respectively.
+      $("#q-and-a-container").append("<p>Number of  " +
+        answerSelection + "s: " + answerSelections[answerSelection]);
 
+  // Display the correct answer.
   $("#q-and-a-container").append("<p>The correct answer is "
     + currentQuestionAnswers[currentQuestionCorrectAnswer] + "</p>");
 }  // end-displayFeedback
@@ -391,9 +401,12 @@ function clearQuestionAndAnswers()
 // A function which displays the outro page.
 function displayOutro()
 {
+  // For every player in quiz session...
   for (var index in players)
+    // ...make sure they are either connected or has some points.
     if (players[index].connected || players[index].score > 0)
-      $("#score-list").append("<li>" + players[index].screenName + ": " + players[index].score + "</li>")      
+      $("#score-list").append("<li>" + players[index].screenName + ": "
+                                                         + players[index].score + "</li>")      
 
   // Remove all content used for displaying the questions and answers.
   $("#q-and-a-container").empty();
