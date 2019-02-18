@@ -154,7 +154,8 @@
                                                                             . "order_num = ?;");
     $selectQuestionText->bind_param("ss", $_GET["q"], $_GET["n"]);
     $selectQuestionText->execute();
-    $selectQuestionData = $selectQuestionText->get_results()->fetch_assoc();
+    $selectQuestionResults = $selectQuestionText->get_results();
+    $selectQuestionData = $selectQuestionResults->fetch_assoc();
     $questionID = $selectQuestionData["question_id"];
     echo $selectQuestionData["text"];
     $selectQuestionText->close();
