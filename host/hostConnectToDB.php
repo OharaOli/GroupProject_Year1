@@ -15,7 +15,7 @@
     die("Connection failed.");
     
    // Updates the time if the action is not inserting the initial host entry. 
-  if($_GET["a"] != "gh")
+  if($_GET["a"] != "ghnq")
     updateTime($mysqli);
    
   // Runs the correct function depending on the type of action.
@@ -61,7 +61,7 @@
     
     $sql = "SELECT * FROM questions WHERE quiz_id = ?;";
     $result = sqlWithResult1($mysqli, $sql, $_GET["q"]);
-    echo "\n" . result->num_rows;
+    echo "\n" . $result->num_rows;
   } // insertNewHost
   
   function pollForPlayers($mysqli)
@@ -72,7 +72,7 @@
     if($result->num_rows > 0)
     {
       // Echos out the first line so that the new lines are in the right place.
-      $firstRow = $result -> fetch_assoc();
+      $firstRow = $result->fetch_assoc();
       echo $firstRow["player_id"] . "," . $firstRow["screen_name"] . "," . 
                   $firstRow["time_since_start"];
       // Outputs all the other lines.
@@ -92,7 +92,7 @@
   {
     $sql = "SELECT player_id, answer FROM players WHERE "
                 . "host_id = ? AND connected = 1 AND answer <> '-';";
-    $result = sqlWithResult($mysqli, $sql, $_GET["h"]);
+    $result = sqlWithResult1($mysqli, $sql, $_GET["h"]);
     if($result->num_rows > 0)
     {
       $firstRow = $result->fetch_assoc();
@@ -119,8 +119,8 @@
                 . "WHERE quiz_id = ? AND order_num = ?;";
     $result = sqlWithResult2($mysqli, $sql, $_GET["q"], $_GET["n"]);   
     $questionData = $result->fetch_assoc();
-    $questionID = $selectQuestionData["question_id"];
-    echo $selectQuestionData["text"];
+    $questionID = $questionData["question_id"];
+    echo $questionData["text"];
    
     $sql = "SELECT letter FROM answers "
                 . "WHERE question_id = ? AND is_correct = 1;";
