@@ -27,7 +27,7 @@ var quizID;
 var currentQuestionNum = 1;
 var currentQuestionAnswers;
 var currentQuestionText;
-var alreadyUpdatedQuestionNum = false;
+var currentState = "intro";
 
 function tryToJoin(quizCode, screenName)
 {
@@ -101,18 +101,12 @@ function pollForState(responseText)
   else
   {
     // use  a switch statement to pick which function will run based on the state
-    switch(statesArray[0])
-    {
-        case "question":
-          showQuestion(statesArray);
-          break;
-        case "feedback":
-          updateFeedbackState(statesArray[3], statesArray[2]); 
-          break;
-        case"outro":
-           outro();
-           break;
-     }  // switch
+    if(statesArray[0] == "question" && currentState != "question")
+      showQuestion(statesArray);
+    else if(statesArray[0] == "feedback" && currentState != feedback)
+      updateFeedbackState(statesArray[3], statesArray[2]);
+    else if(statesArray[0] == "outro" && currentState != "outro")
+      outro();
   } // else
 } //pollForState
 
@@ -158,8 +152,8 @@ function inputAnswer(answerSelected)
 // function to show the question to the player 
 function showQuestion(statesArray)
 {
-  alreadyUpdatedQuestionNum = false;
-
+  currentState = "question";
+  
   currentQuestionText = statesArray[2];
   currentQuestionAnswers = {};
   currentQuestionAnswers["A"] = statesArray[3];
@@ -223,11 +217,8 @@ function outro()
 // function to return feedback to the player
 function updateFeedbackState(feedback, isCorrectNum)
 {  
-   if(!alreadyUpdatedQuestionNum)
-  {
-    currentQuestionNum++;
-    alreadyUpdatedQuestionNum = true;
-  } // if
+  currentState = "feedback";
+  currentQuestionNum++;
   var isCorrect = false;
   if(isCorrectNum == "1")
   {

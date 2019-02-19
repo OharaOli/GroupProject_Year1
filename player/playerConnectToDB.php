@@ -128,8 +128,7 @@
                                                                             . "FROM questions "
                                                                             . "WHERE quiz_id = ? AND "
                                                                             . "order_num = ?;");
-    $changeMe = strval(intval($_GET["n"]) - 1);
-    $selectQuestionID->bind_param("ss", $_GET["q"], $changeMe);
+    $selectQuestionID->bind_param("ss", $_GET["q"], $_GET["n"]);
     $selectQuestionID->execute();
     $selectQuestionIDResults = $selectQuestionID->get_result();
     $questionID =  $selectQuestionIDResults->fetch_assoc()["question_id"];
