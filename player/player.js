@@ -86,7 +86,6 @@ function setPlayerID(playerAndHostID)
 
 function pollForState(responseText)
 {
-  console.log(responseText);
   // get the state, time and possibly the new update score and put that
   // into an array split by new lines
   var statesArray = responseText.split("\n");
@@ -140,9 +139,10 @@ $(document).ready(function() {
   $("#answer-button-container :button").click(function() {
     // Store the value of this button in a variable.    
     var answerSelected = $(this).val();
+    // Make the selected answer text visible.
+    $("#selected-answer-message").show();
     // Display the selected answer.
-    $("#q-and-a-container")
-      .append("<p>You have selected " + answerSelected + ".</p>");
+    $("#selected-answer-message").html("You have selected " + answerSelected);
     // Call the function which sends the currently selected answer to DB.
     inputAnswer(answerSelected);
   });
@@ -228,12 +228,15 @@ function displayQuestionAndAnswers()
 
 
 // A function to remove all elements used in the question
-// and answers container (except for all answer buttons),
-// in order to introduce the next round of question and answers.
+// and answers container (except for all answer buttons and the 
+// selected answer message), in order to introduce the next
+// round of question and answers.
 function clearQuestionAndAnswers()
 {
   $("#q-and-a-container")
-    .contents(":not(#answer-button-container)").remove();    
+    .contents(":not(#answer-button-container, #selected-answer-message)").remove();
+  // Hide the selected answer message since we are leaving feedback state.
+  $("#selected-answer-message").hide();
 }  // end-clearQuestionAndAnswers
 
 
@@ -281,6 +284,8 @@ function updateOutroState()
 {
   // Set the current state to reflect that it is now the outro.
   currentState = "outro";
+  // No longer needs to poll for state when in outro as the quiz is over.
+  clearInterval(pollForStateInterval);
   // Call the function which actually makes the transition.
   displayOutro();
 }  // end-updateOutroState
