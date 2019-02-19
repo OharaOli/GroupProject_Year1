@@ -282,7 +282,7 @@ $(document).ready(function() {
   // Upon clicking the 'Start Quiz' button...
   $("#start-button").click(function() {
     // ...remove all elements used in the intro.
-    clearIntro();
+    $("#intro-container").empty(); 
     // Call the function to start the quiz.
     startQuiz();
     // Hide the next question button before showing the 
@@ -380,17 +380,9 @@ function updateUIRemoveButton(buttonID)
 */
 
 
-// A function to remove all elements used in the intro, in order to
-// introduce the first round of question and answers.
-function clearIntro()
-{
-    $("#intro-container").empty();    
-}  // end-clearIntro
-
-
 // A function to remove all elements used in the question
 // and answers container (except for buttons and the number of answers),
-// in order to introduce the first round of question and answers.
+// in order to introduce the next round of question and answers.
 function clearQuestionAndAnswers()
 {
   $("#q-and-a-container")
