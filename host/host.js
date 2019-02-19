@@ -11,10 +11,12 @@ import { Player, giveAnswer, checkTime }  from "./PlayerClass.js";
 // The time in milliseconds for poll delays.
 var POLL_FOR_PLAYERS_DELAY = 500;
 var POLL_FOR_ANSWERS_DELAY = 500;
+var UPDATE_TIME_DELAY = 1500;
 
 // References to intervals so that they can be stopped later.
 var pollForPlayersInterval; 
 var pollForAnswersInterval;
+var updateTimeInterval;
 
 // A dictionary of all players in the game - disconnected or connected.
 var players = {};
@@ -165,6 +167,8 @@ function askQuestion(returnedText)
     case 1: currentQuestionAnswers["A"] = splitReturnedText[2]; 
   } // switch
   */
+  //if(updateTimeInterval != undefined)
+    clearInterval(updateTimeInterval);
   pollForAnswersInterval = setInterval(function() { requestDataFromDB(
                                       pollForAnswersDataReturned, 
                                       "hostConnectToDB.php?a=pfa&h=" + hostID + "&t=" 
@@ -194,6 +198,9 @@ function pollForAnswersDataReturned(returnedText)
 function updateFeedbackState()
 {
   clearInterval(pollForAnswersInterval);
+  updateTimeInterval = setInterval(function() { updateDataInDB(
+            "hostConnectToDB.php?a=ut&h=" + hostID + "&t= " + getTimeSinceStart()); 
+                                                            }, UPDATE_TIME_DELAY);
   answerSelections = { "A": 0, "B": 0, "C": 0, "D": 0 }
   for(key in players)
   {
@@ -210,6 +217,7 @@ function updateFeedbackState()
 
 function showOutro()
 {
+  clearInterval(pollForAnswersInterval);
   updateDataInDB("hostConnectToDB.php?a=us&h=" + hostID + "&s=outro"
                                  + "&t=" + getTimeSinceStart());
   displayOutro();
