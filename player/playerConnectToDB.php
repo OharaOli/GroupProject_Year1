@@ -89,8 +89,8 @@
   function pollForState($mysqli)
   {
     $sql = "SELECT state, time_since_start FROM hosts WHERE host_id = ?;";
-    $stateData = sqlWithResult1($mysqli, $sql, $_GET["h"]);
-    $hostStateData = $pollForStateResult->fetch_assoc();
+    $result = sqlWithResult1($mysqli, $sql, $_GET["h"]);
+    $hostStateData = $result->fetch_assoc();
     // Saves the host state
     $hostState = $hostStateData["state"];
     // Outputs the state and time since start.
@@ -129,13 +129,13 @@
     $result = sqlWithResult2($mysqli, $sql, $_GET["q"], $_GET["n"]);
     
     $questionData = $result->fetch_assoc();
-    $questionID = $selectQuestionData["question_id"];
-    echo $selectQuestionData["text"];
+    $questionID = $questionData["question_id"];
+    echo $questionData["text"];
     
     $sql = "SELECT text FROM answers WHERE question_id = ? "
                 . "ORDER BY letter;";
     $result = sqlWithResult1($mysqli, $sql, $questionID);
-    while($row = $selectAnswersResult->fetch_assoc())
+    while($row = $result->fetch_assoc())
       echo "\n" . $row["text"];
   } // outputQuestion
   

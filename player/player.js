@@ -54,7 +54,7 @@ function setPlayerID(playerAndHostID)
   // if string starts with a -,  then give an exception to the html page
   if (playerAndHostID.startsWith("-"))
   {
-    $("#error-message").html("Quiz code does not exist");
+    displayQuizCodeNotFound(true);
     alreadyJoined = false;
   } // if
   else
@@ -84,11 +84,14 @@ function setPlayerID(playerAndHostID)
 function pollForState(responseText)
 {
   console.log(responseText);
-  // get the state, time and possibly the new update score and put that into an array split by new lines
+  // get the state, time and possibly the new update score and put that
+  // into an array split by new lines
   var statesArray = responseText.split("\n");
 
-  // if the value we get from the database is greater than 10 seconds, then we should disconnect self
-  if (Math.abs((Date.now() - hostStartTime) - parseInt(statesArray[1])) > MAX_HOST_DIFF_TIME)
+  // if the value we get from the database is greater than 10 seconds,
+  // then we should disconnect self
+  if (Math.abs((Date.now() - hostStartTime) - parseInt(statesArray[1]))
+                        > MAX_HOST_DIFF_TIME && currentState != "outro")
   {     
     // update the data in the database by calling the JS function and then call the php
     // function that  disconnects self
@@ -103,7 +106,8 @@ function pollForState(responseText)
     // use  a switch statement to pick which function will run based on the state
     if(statesArray[0] == "question" && currentState != "question")
       requestDataFromDB(updateQuestionState, "playerConnectToDB.php?a=gq&n="
-        + currentQuestionNum + "&q=" + quizID + "&t=" + getTimeSinceStart());
+        + currentQuestionNum + "&q=" + quizID 
+        + "&t=" + getTimeSinceStart() + "&p=" + playerID);
     else if(statesArray[0] == "feedback" && currentState != "feedback")
         requestDataFromDB(updateFeedbackState, "playerConnectToDB.php?a=gf&q="
           + quizID + "&n=" + currentQuestionNum + "&p="
@@ -122,6 +126,8 @@ $(document).ready(function() {
   $("#q-and-a-container").hide()
   // Initially hide the outro content.
   $("#outro-container").hide();
+  // Initially hide any error of unfound quiz code.
+  displayQuizCodeNotFound(false);
 
   // When the join button is clicked.
   $("#join-button").click(function() {
@@ -135,10 +141,11 @@ $(document).ready(function() {
 });
 
 
-
 // A function which updates the state to intro.
 function updateIntroState()
 {
+  // Remove any error of unfound quiz code.
+  displayQuizCodeNotFound(false);
   // Set the current state to reflect that it is not the intro.
   currentState = "intro";
   // Call the function to actually transition to the intro.
@@ -238,7 +245,6 @@ function updateFeedbackState(returnedText)
 // container, which contains the correct answer.
 function displayFeedback(feedback, isCorrect)
 {
-
   if (isCorrect)
     // If the answer was correct, then inform of that.
     $("#q-and-a-container").append("<p>You selected the correct answer.</p>");
@@ -248,9 +254,10 @@ function displayFeedback(feedback, isCorrect)
   else
     // If an answer was not selected, then inform of that.
     $("#q-and-a-container").append("<p>You did not select an answer.</p>");
-
-  // In any case, display the available feedback.
-  $("#q-and-a-container").append("<p>" + feedback + "</p>");
+  
+  if(currentQuestionAnswerSelected != "-")
+    // In any case, display the available feedback.
+    $("#q-and-a-container").append("<p>" + feedback + "</p>");
 }  // end-displayFeedback
 
 
@@ -275,6 +282,17 @@ function displayOutro()
   $("#outro-container").append("<p>Your score is " + playerScore + ".");
 }  // end-displayOutro
 
+
+// A function which displays an error message of an unfound quiz code.
+function displayQuizCodeNotFound(isVisible)
+{
+  if (isVisible)
+    // Display error code.
+    $("#error-message-quiz-code-not-found").show();
+  else
+    // Hide error code.
+    $("#error-message-quiz-code-not-found").hide();
+}  // end-displayQuizCodeNotFound
 // ----------- END OF UPDATING STUFF -----------------------------------------
 
 function testForErrors(errors)
