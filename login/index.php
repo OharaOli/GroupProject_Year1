@@ -57,18 +57,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
                     {
                        $loginSuccess = true;
                     } //else
-            } // else
-  	} // else
- }
+                 } // else
+  	      } // else
+     }//else
    // if password input is empty, inform the user
-  	if (empty($_POST["password"]))
-    	  $loginError = "The password field is empty!"; 
-	else 
-  	{
-       // send the entered password to the webpage itself
-        $enteredPassword = $_POST["password"];
-     } // else
-
 } //  if ($_SERVER["REQUEST_METHOD"] == "POST") 
 
 // if login success is true, then redirect page to welcome page
