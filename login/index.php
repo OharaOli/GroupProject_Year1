@@ -2,6 +2,7 @@
 // start session for the login page
 session_start();
 require_once('../misc/config.inc.php');
+require_once('../misc/sqlFunctions.php');
 
 $mysqli = new mysqli($database_host, $database_user,
                                         $database_pass, $group_dbname);
@@ -34,17 +35,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
             else
             {
                 // if the username is valid, then check from db users if the username exists. 
-                $sql_get = "SELECT Username FROM users WHERE Username=\"$username\";";
-                $sql_execute = $mysqli->query($sql_get);
-                $result = $sql_execute -> fetch_assoc();
+                $sql_get = "SELECT Username FROM users WHERE Username=(?);";
+               // get the password which matches the username
+                $result = mysqli_fetch_assoc(sqlWithResult1($mysqli ,$sql_get, $username));
                // if username does not exist echo an error
                 if ($result == "")
                     $loginError  = "No such username";
                 else
                 {
                     // if username is present in the system, then check database for the password
-                    $sql_get_pass = "SELECT Password FROM users WHERE Username=\"$username\";";
-                    $encryptedPass = ( $mysqli->query($sql_get_pass) -> fetch_assoc());
+                    $sql_get_pass = "SELECT Password FROM users WHERE Username=(?);";
+                    // get the encrypted password form the database and put it ot he variable encryptedPass
+                    $encryptedPass = mysqli_fetch_assoc(sqlWithResult1($mysqli ,$sql_get_pass, $username));
 
                     // encrypt the password that was input by the user, then compare with the encypted password in DB
                     if (!password_verify( $_POST["password"], $encryptedPass['Password']))
