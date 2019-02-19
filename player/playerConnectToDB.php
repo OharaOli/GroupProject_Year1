@@ -35,7 +35,7 @@
       break; 
     // Updates the answer stored..
     case "ua":
-      insertAnswers($mysqli); 
+      insertAnswer($mysqli); 
       break;
     case "gq":
       outputQuestion($mysqli);
@@ -117,8 +117,8 @@
                   .  "WHERE letter = ? AND  question_id = ?;";
       $result = sqlWithResult2($mysqli, $sql, $answerLetter, $questionID);
       $answerData = $result->fetch_assoc();
-      echo $selectCorrectAnswerData["is_correct"];
-      echo "\n" . $selectCorrectAnswerData["feedback"];
+      echo $answerData["is_correct"];
+      echo "\n" . $answerData["feedback"];
     } // else
   } // outputFeedback
   
@@ -149,7 +149,7 @@
   // Inserts the given answer into the table.
   function insertAnswer($mysqli)
   {
-    $sql ="INSERT INTO players(answer) VALUES (?) WHERE player_id= ?;";
+    $sql ="UPDATE players SET answer = ? WHERE player_id = ?;";
     sqlWithoutResult2($mysqli, $sql, $_GET["w"], $_GET["p"]);
   } // insertAnswer
 ?>

@@ -22,13 +22,15 @@ var alreadyJoined = false;
 var quizCode;
 // The selected screen name;
 var screenName;
-
+//
 var quizID;
 var currentQuestionNum = 1;
 var currentQuestionAnswers;
 var currentQuestionText;
 var currentQuestionAnswerSelected;
+var currentQuestionNumAnswers;
 var currentState = null;
+
 
 function tryToJoin(quizCode, screenName)
 {
@@ -41,6 +43,7 @@ function tryToJoin(quizCode, screenName)
    } // if
 
 } // tryToJoin
+
 
 // Returns the time since the host was started.
 function getTimeSinceStart()
@@ -79,7 +82,7 @@ function setPlayerID(playerAndHostID)
     updateIntroState();
   } // else
 } //setPlayerID    
-    
+
 
 function pollForState(responseText)
 {
@@ -120,12 +123,6 @@ function pollForState(responseText)
 
 // Execute the code when the page is ready.
 $(document).ready(function() {
-  // Initially hide the contents of the intro container div.
-  $("#intro-container").show();
-  // Initially hide the current question and answers.
-  $("#q-and-a-container").hide()
-  // Initially hide the outro content.
-  $("#outro-container").hide();
   // Initially hide any error of unfound quiz code.
   displayQuizCodeNotFound(false);
 
@@ -137,6 +134,17 @@ $(document).ready(function() {
     screenName = $("#player-screen-name").val();
     // Attempt to join the quiz with the inputted code and name.
     tryToJoin(quizCode, screenName);
+  });
+
+  // Upon clicking on a particular answer button...
+  $("#answer-button-container :button").click(function() {
+    // Store the value of this button in a variable.    
+    var answerSelected = $(this).val();
+    // Display the selected answer.
+    $("#q-and-a-container")
+      .append("<p>You have selected " + answerSelected + ".</p>");
+    // Call the function which sends the currently selected answer to DB.
+    inputAnswer(answerSelected);
   });
 });
 
@@ -166,12 +174,13 @@ function displayIntro()
 
 
 // function to call when an answer is inputted
-function inputAnswer(answerSelected)
+function inputAnswer(requiredAnswer)
 {
-    currentQuestionAnswerSelected = answerSelected;
+    currentQuestionAnswerSelected = requiredAnswer;
     updateDataInDB("playerConnectToDB.php?a=ua&p=" + playerID +"&t=" 
-                                       + getTimeSinceStart() + "&w=" + answerSelected);
+                                       + getTimeSinceStart() + "&w=" + requiredAnswer);
 }  // end-inputAnswer
+
 
 // function to show the question to the player 
 function updateQuestionState(returnedText)
@@ -180,6 +189,7 @@ function updateQuestionState(returnedText)
   currentState = "question";
   currentQuestionAnswerSelected = "-";
   
+  currentQuestionNumAnswers = statesArray.length - 1;
   currentQuestionText = statesArray[0];
   currentQuestionAnswers = {};
   currentQuestionAnswers["A"] = statesArray[1];
@@ -200,27 +210,30 @@ function displayQuestionAndAnswers()
   $("#intro-container").empty();
   // Empty the previous question and answers container div.
   clearQuestionAndAnswers();
+  // Set the answer selections buttons to visible,
+  // depending on number of answers for the particular question.
+  $("#answer-button-container :button:lt(" + currentQuestionNumAnswers + ")").show();
   // Show the contents of the question and answers container div.
   $("#q-and-a-container").show();
   // Adds a header containing the current question.
-  $("#q-and-a-container").append("<h2>" + currentQuestionText + "</h2>");
+  $("#q-and-a-container").prepend("<h2>" + currentQuestionText + "</h2>");
   // A string variable to contain all answers, initially empty.
   var answers_collection = "";
   // Add the answers onto a string, one at a time.
   for (var key in currentQuestionAnswers)
     answers_collection += (key + ": " + currentQuestionAnswers[key] + "<br />");
   // Adds a paragraph containing the current different possible answers.
-  $("#q-and-a-container").append("<p>" + answers_collection + "</p>");
+  $("<p>" + answers_collection + "</p>").insertAfter("#q-and-a-container h2");
 }  // end-displayQuestionAndAnswers
 
 
 // A function to remove all elements used in the question
-// and answers container (for exceptions, add .not()),
+// and answers container (except for all answer buttons),
 // in order to introduce the next round of question and answers.
 function clearQuestionAndAnswers()
 {
   $("#q-and-a-container")
-    .find("*").remove();    
+    .contents(":not(#answer-button-container)").remove();    
 }  // end-clearQuestionAndAnswers
 
 
@@ -245,6 +258,8 @@ function updateFeedbackState(returnedText)
 // container, which contains the correct answer.
 function displayFeedback(feedback, isCorrect)
 {
+  // Hide the answer selection buttons while feedback is displayed.
+  $("#answer-button-container :button").hide();
   if (isCorrect)
     // If the answer was correct, then inform of that.
     $("#q-and-a-container").append("<p>You selected the correct answer.</p>");
@@ -293,6 +308,7 @@ function displayQuizCodeNotFound(isVisible)
     // Hide error code.
     $("#error-message-quiz-code-not-found").hide();
 }  // end-displayQuizCodeNotFound
+
 // ----------- END OF UPDATING STUFF -----------------------------------------
 
 function testForErrors(errors)

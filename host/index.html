@@ -1,31 +1,36 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title></title>
+  <title></title>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="../misc/connectToDB.js"></script>
   <script src="../player/player.js"></script>
   <script src="playerClass.js"></script>
   <script src="host.js"></script>
+  <style>
+  .hidden {
+    display: none;  
+  }
+  </style>
 </head>
 <body>
-  <div id="intro-container">
+  <div id="host-option">
+    <input id="quiz-code-host" type="text" placeholder="Quiz Code"/>
+    <button id="host-button">Host Quiz</button>
+  </div>
+  <div id="intro-container" class="hidden">
     <h4 id="state-display"></h4>
-    <button id="start-button">Start Quiz</button>
-    <h4 id="number-of-players-connected">0 players are currently connected.</h4>
+    <button id="start-button" class="hidden">Start Quiz</button>
+    <h4 id="number-of-players-connected" class="hidden">0 players are currently connected.</h4>
     <ul id="player-list">
     </ul>
-    <div id="host-option">
-      <input id="quiz-code-host" type="text" placeholder="Quiz Code"/>
-      <button id="host-button">Host Quiz</button>
-    </div>
   </div>
-  <div id="q-and-a-container">
+  <div id="q-and-a-container" class="hidden">
     <p id="numberOfAnswers">Answers so far: 0</p>
-    <button id="reveal-button" class="button">Reveal Answer</button>
-    <button id="next-button" class="button">Next Question</button>
+    <button id="reveal-button">Reveal Answer</button>
+    <button id="next-button">Next Question</button>
   </div>
-  <div id="outro-container">
+  <div id="outro-container" class="hidden">
     <h4>this is the outro</h4>
     <ul id="score-list">
     </ul>

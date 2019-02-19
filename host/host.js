@@ -246,15 +246,6 @@ function updateIntroUI()
 
 // Execute the code when the page is ready.
 $(document).ready(function() {
-  // Initially hide the start quiz button.
-  $("#start-button").hide();
-  // Initially hide the number of players.
-  $("#number-of-players-connected").hide();
-  // Initially hide the current question and answers.
-  $("#q-and-a-container").hide()
-  // Initially hide the outro content.
-  $("#outro-container").hide();
-
   // Upon clicking the 'Host Quiz' button...
   $("#host-button").click(function() {
     // Check that the length of the characters in the input feld is
@@ -264,6 +255,8 @@ $(document).ready(function() {
       // Remove the ability to host another quiz.
       // The button and input field are contained within a div parent element.
       $("#host-option").hide();
+      // Show the intro container div contents.
+      $("#intro-container").show();
       // Store the value of the quiz code input field in quizCode.
       quizCode = $("#quiz-code-host").val();
       // Call the function to start the quiz, passing quizCode as argument.
@@ -386,7 +379,7 @@ function updateUIRemoveButton(buttonID)
 function clearQuestionAndAnswers()
 {
   $("#q-and-a-container")
-    .find("*").not(".button").not("#numberOfAnswers").remove();    
+    .find("*").not(":button").not("#numberOfAnswers").remove();    
 }  // end-clearQuestionAndAnswers
 
 
