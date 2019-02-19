@@ -27,7 +27,8 @@ var quizID;
 var currentQuestionNum = 1;
 var currentQuestionAnswers;
 var currentQuestionText;
-var alreadyUpdatedQuestionNum = false;
+var currentQuestionAnswerSelected;
+var currentState = null;
 
 function tryToJoin(quizCode, screenName)
 {
@@ -53,12 +54,11 @@ function setPlayerID(playerAndHostID)
   // if string starts with a -,  then give an exception to the html page
   if (playerAndHostID.startsWith("-"))
   {
-    $("#error-message").html("Quiz code does not exist");
+    displayQuizCodeNotFound(true);
     alreadyJoined = false;
   } // if
   else
   {
-
    // split the string in the parameter into different positions in an array by new line seperator
     var playerIDhostIDArray = playerAndHostID.split("\n");
     //  assign the hostID and playerID  and the host time from the string array
@@ -76,7 +76,7 @@ function setPlayerID(playerAndHostID)
                                        + "&q=" + quizID + "&n=" + currentQuestionNum); 
                                                   }, POLL_FOR_STATE_DELAY);
 
-
+    updateIntroState();
   } // else
 } //setPlayerID    
     
@@ -84,11 +84,14 @@ function setPlayerID(playerAndHostID)
 function pollForState(responseText)
 {
   console.log(responseText);
-  // get the state, time and possibly the new update score and put that into an array split by new lines
+  // get the state, time and possibly the new update score and put that
+  // into an array split by new lines
   var statesArray = responseText.split("\n");
 
-  // if the value we get from the database is greater than 10 seconds, then we should disconnect self
-  if (Math.abs((Date.now() - hostStartTime) - parseInt(statesArray[1])) > MAX_HOST_DIFF_TIME)
+  // if the value we get from the database is greater than 10 seconds,
+  // then we should disconnect self
+  if (Math.abs((Date.now() - hostStartTime) - parseInt(statesArray[1]))
+                        > MAX_HOST_DIFF_TIME && currentState != "outro")
   {     
     // update the data in the database by calling the JS function and then call the php
     // function that  disconnects self
@@ -101,135 +104,135 @@ function pollForState(responseText)
   else
   {
     // use  a switch statement to pick which function will run based on the state
-    switch(statesArray[0])
-    {
-        case "question":
-          showQuestion(statesArray);
-          break;
-        case "feedback":
-          updateFeedbackState(statesArray[3], statesArray[2]); 
-          break;
-        case"outro":
-           outro();
-           break;
-     }  // switch
+    if(statesArray[0] == "question" && currentState != "question")
+      requestDataFromDB(updateQuestionState, "playerConnectToDB.php?a=gq&n="
+        + currentQuestionNum + "&q=" + quizID 
+        + "&t=" + getTimeSinceStart() + "&p=" + playerID);
+    else if(statesArray[0] == "feedback" && currentState != "feedback")
+        requestDataFromDB(updateFeedbackState, "playerConnectToDB.php?a=gf&q="
+          + quizID + "&n=" + currentQuestionNum + "&p="
+          + playerID + "&t=" + getTimeSinceStart());
+    else if(statesArray[0] == "outro" && currentState != "outro")
+      updateOutroState();
   } // else
 } //pollForState
 
 
 // Execute the code when the page is ready.
 $(document).ready(function() {
+  // Initially hide the contents of the intro container div.
+  $("#intro-container").show();
   // Initially hide the current question and answers.
   $("#q-and-a-container").hide()
   // Initially hide the outro content.
   $("#outro-container").hide();
+  // Initially hide any error of unfound quiz code.
+  displayQuizCodeNotFound(false);
 
-
-
+  // When the join button is clicked.
   $("#join-button").click(function() {
-    // __
+    // Extract the quiz code entered in the input field into a variable.
     quizCode = $("#quiz-code-player").val();
+    // Extract the quiz code entered in the input field into a variable.
     screenName = $("#player-screen-name").val();
-
+    // Attempt to join the quiz with the inputted code and name.
     tryToJoin(quizCode, screenName);
-
-     // Remove the ability to host another quiz.
-     // The button and input fields are contained within a div parent element.
-     $("#join-option").hide();
-
-    //__
-    $("#intro-container").append("<p>Waiting for the host to start.</p>");
   });
-
-
 });
 
 
+// A function which updates the state to intro.
+function updateIntroState()
+{
+  // Remove any error of unfound quiz code.
+  displayQuizCodeNotFound(false);
+  // Set the current state to reflect that it is not the intro.
+  currentState = "intro";
+  // Call the function to actually transition to the intro.
+  displayIntro();
+}  // end-updateIntroState
 
 
+// A function which transitions the page to the intro state.
+function displayIntro()
+{
+  $("#intro-container").show();
+  // Remove the ability to join another quiz.
+  // The button and input fields are contained within this div.
+  $("#join-option").hide();
+  // Display a message which informs that the host has to start the quiz.
+  $("#intro-container").append("<p>Waiting for the host to start.</p>");
+}  // end-displayIntro
 
-// function to call when an answer is input
+
+// function to call when an answer is inputted
 function inputAnswer(answerSelected)
 {
+    currentQuestionAnswerSelected = answerSelected;
     updateDataInDB("playerConnectToDB.php?a=ua&p=" + playerID +"&t=" 
                                        + getTimeSinceStart() + "&w=" + answerSelected);
-}
+}  // end-inputAnswer
 
 // function to show the question to the player 
-function showQuestion(statesArray)
+function updateQuestionState(returnedText)
 {
-  alreadyUpdatedQuestionNum = false;
-
-  currentQuestionText = statesArray[2];
+  statesArray = returnedText.split("\n");
+  currentState = "question";
+  currentQuestionAnswerSelected = "-";
+  
+  currentQuestionText = statesArray[0];
   currentQuestionAnswers = {};
-  currentQuestionAnswers["A"] = statesArray[3];
-  currentQuestionAnswers["B"] = statesArray[4];
-  if(statesArray.length >= 6)
-    currentQuestionAnswers["C"] = statesArray[5];
-  if(statesArray.length == 7)
-    currentQuestionAnswers["D"] = statesArray[6];
+  currentQuestionAnswers["A"] = statesArray[1];
+  currentQuestionAnswers["B"] = statesArray[2];
+  if(statesArray.length >= 4)
+    currentQuestionAnswers["C"] = statesArray[3];
+  if(statesArray.length == 5)
+    currentQuestionAnswers["D"] = statesArray[4];
 
   displayQuestionAndAnswers();
-} // showQuestion
+}  // end-updateQuestionState
 
 
-// function thats the answers from the players 
-function  showAnswer(answersDictionary)
- {
-    var count = 0;
-       for(var key in answersDictionary)
-         count++;
-          
-      // sets all the answers to hidden, then set display based on the length of dictionary
-      $("#answer1").hide();
-      $("#answer2").hide();
-      $("#answer3").hide();
-      $("#answer4").hide();
-
-      // if there are 5 answers,  show the option for the 5 answers and put the value of answers to the buttons
-      switch(count)
-       {
-         case 4:
-         {
-           $("#answer4").show();
-           $("#answer4").html(answersDictionary['d']);
-         } // case 4
-         case 3:
-         {
-           $("#answer3").show();
-           $("#answer3").html(answersDictionary['c']);
-         }  // case 3
-         case 2:
-         {
-           $("#answer2").show();
-           $("#answer2").html(answersDictionary['b']);
-         } // case 2 
-        case 1:
-        {
-           $("#answer1").show();
-           $("#answer1").html(answersDictionary['a']);
-         } // case 1
-     } // switch
-  } // showAnswer
-
-
-// function to show the outro of when the quiz has ended
-function outro()
+// A function to display the fetched question and answers.
+function displayQuestionAndAnswers()
 {
-  updateUIOutro();
-}
+  // Remove the contents of the intro container div.
+  $("#intro-container").empty();
+  // Empty the previous question and answers container div.
+  clearQuestionAndAnswers();
+  // Show the contents of the question and answers container div.
+  $("#q-and-a-container").show();
+  // Adds a header containing the current question.
+  $("#q-and-a-container").append("<h2>" + currentQuestionText + "</h2>");
+  // A string variable to contain all answers, initially empty.
+  var answers_collection = "";
+  // Add the answers onto a string, one at a time.
+  for (var key in currentQuestionAnswers)
+    answers_collection += (key + ": " + currentQuestionAnswers[key] + "<br />");
+  // Adds a paragraph containing the current different possible answers.
+  $("#q-and-a-container").append("<p>" + answers_collection + "</p>");
+}  // end-displayQuestionAndAnswers
+
+
+// A function to remove all elements used in the question
+// and answers container (for exceptions, add .not()),
+// in order to introduce the next round of question and answers.
+function clearQuestionAndAnswers()
+{
+  $("#q-and-a-container")
+    .find("*").remove();    
+}  // end-clearQuestionAndAnswers
 
 
 // function to return feedback to the player
-function updateFeedbackState(feedback, isCorrectNum)
+function updateFeedbackState(returnedText)
 {  
-   if(!alreadyUpdatedQuestionNum)
-  {
-    currentQuestionNum++;
-    alreadyUpdatedQuestionNum = true;
-  } // if
+  var isCorrectBool = returnedText.split("\n")[0];
+  var feedback = returnedText.split("\n")[1];
+  currentState = "feedback";
+  currentQuestionNum++;
   var isCorrect = false;
-  if(isCorrectNum == "1")
+  if(isCorrectBool == "1")
   {
     isCorrect = true;
     playerScore++;
@@ -237,48 +240,59 @@ function updateFeedbackState(feedback, isCorrectNum)
   displayFeedback(feedback, isCorrect);  
 }  // end-updateFeedbackState
 
-// ---- UPDATE THIS WITH ALL YOUR JUICY FUNCTIONS ---
-// ------------------- MR PRAEVEEN DO THIS!!!! ---------------------
-
-// A function to display the fetched question and answers.
-function displayQuestionAndAnswers()
-{
-  // Make visible the div container for the question and answers.
-  $("#q-and-a-container").show();
-  // Adds a header containing the current question.
-  $("#question").html(currentQuestionText);
-
-  // A string variable to contain all answers, initially empty.
-  var answers_collection = "";
-  // Add the answers onto a string, one at a time.
-  for (var key in currentQuestionAnswers)
-    answers_collection += (key + ": " + currentQuestionAnswers[key] + "<br />");
-
-  // Adds a paragraph containing the current different possible answers.
-  $("#answers").html(answers_collection);
-}
 
 // A function which adds some text, within the q-and-a div
 // container, which contains the correct answer.
 function displayFeedback(feedback, isCorrect)
 {
   if (isCorrect)
+    // If the answer was correct, then inform of that.
     $("#q-and-a-container").append("<p>You selected the correct answer.</p>");
-  else
+  else if (currentQuestionAnswerSelected != "-")
+    // If the answer was incorrect, then inform of that.
     $("#q-and-a-container").append("<p>You selected an incorrect answer.</p>");
-
-  $("#q-and-a-container").append("<p>" + feedback + "</p>");
+  else
+    // If an answer was not selected, then inform of that.
+    $("#q-and-a-container").append("<p>You did not select an answer.</p>");
+  
+  if(currentQuestionAnswerSelected != "-")
+    // In any case, display the available feedback.
+    $("#q-and-a-container").append("<p>" + feedback + "</p>");
 }  // end-displayFeedback
 
 
-function updateUIAnswer(feedback, isCorrect)
+// function to show the outro of when the quiz has ended
+function updateOutroState()
 {
-}
+  // Set the current state to reflect that it is now the outro.
+  currentState = "outro";
+  // Call the function which actually makes the transition.
+  displayOutro();
+}  // end-updateOutroState
 
-function updateUIOutro()
+
+// A function which displays the outro state on the page.
+function displayOutro()
 {
-}
+  // The question and answers container div is no longer needed.
+  $("#q-and-a-container").empty();
+  // Show the outro container div.
+  $("#outro-container").show();
+  // Display the player's score.
+  $("#outro-container").append("<p>Your score is " + playerScore + ".");
+}  // end-displayOutro
 
+
+// A function which displays an error message of an unfound quiz code.
+function displayQuizCodeNotFound(isVisible)
+{
+  if (isVisible)
+    // Display error code.
+    $("#error-message-quiz-code-not-found").show();
+  else
+    // Hide error code.
+    $("#error-message-quiz-code-not-found").hide();
+}  // end-displayQuizCodeNotFound
 // ----------- END OF UPDATING STUFF -----------------------------------------
 
 function testForErrors(errors)
