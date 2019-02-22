@@ -17,6 +17,8 @@ var UPDATE_TIME_DELAY = 1500;
 var pollForPlayersInterval; 
 var pollForAnswersInterval;
 var updateTimeInterval;
+// The timer interval.
+var timerInterval;
 
 // A dictionary of all players in the game - disconnected or connected.
 var players = {};
@@ -32,9 +34,11 @@ var currentQuestionNum = 0;
 // The question text that the host is currently on.
 var currentQuestionText;
 // The answers to the question the host is currently on.
-var currentQuestionAnswers; 
+var currentQuestionAnswers;
 // The letter of the correct answer. 
 var currentQuestionCorrectAnswer;
+// The time limit, in seconds, set for the question. (__initially 10 for testing purposes__)
+var currentQuestionTimeLimit = 10;
 // Determines if the current page already has a host started on it.
 var alreadyStarted = false;
 // The code used by players to connect, created by the host.
@@ -176,7 +180,7 @@ function askQuestion(returnedText)
                                                   }, POLL_FOR_ANSWERS_DELAY);
   
   displayQuestionAndAnswers();
-  
+  startTimer();
 } // askQuestion
 
 function pollForAnswersDataReturned(returnedText)
@@ -295,26 +299,71 @@ $(document).ready(function() {
 
   // Display the feedback upon clicking the 'next' button.
   $("#reveal-button").click(function() {
-    // Display the correct answer and maybe feedback.
-    updateFeedbackState();
-    // Hide the reveal button.
-    $(this).hide();
-    // Show instead the next button.
-    $("#next-button").show();
+    // End question and move on to the feedback state.
+    endQuestion();
   });
 
   // Display the next question upon clicking the 'next' button.
   $("#next-button").click(function() {
-    // Remove all question and answer elements from page.
-    clearQuestionAndAnswers();
-    // Fetch and display the next question with its answers.
-    getNextQuestion();
-    // Hide the next button.
-    $(this).hide();
-    // Show instead the reveal button.
-    $("#reveal-button").show();
+    // Ends the feedback state and moves on to the next question.
+    startQuestion();
   });
 });
+
+
+// Ends the feedback state and moves on to the next question.
+function startQuestion() {
+  // Remove all question and answer elements from page.
+  clearQuestionAndAnswers();
+  // Fetch and display the next question with its answers.
+  getNextQuestion();
+  // Hide the next button.
+  $("#next-button").hide();
+  // Show instead the reveal button.
+  $("#reveal-button").show();
+}  // end-startQuestion
+
+
+// Ends the current question and moves on to the feedback state.
+function endQuestion() {
+  // Clear the timer interval, in case timer has stopped.
+  if(timerInterval != undefined)
+    clearInterval(timerInterval);
+  // Hide the timer, since countdown has been aborted.
+  $("#timer").hide();
+  // Display the correct answer and maybe feedback.
+  updateFeedbackState();
+  // Hide the reveal button.
+  $("#reveal-button").hide();
+  // Show instead the next button.
+  $("#next-button").show(); 
+}  // end-endQuestion
+
+
+// Starts the timer countdown (1 second at a time).
+function startTimer() {
+  // The time left until countdown is 0.
+  var timeLeft = currentQuestionTimeLimit;
+  // Show the timer countdown.
+  $("#timer").show();
+  // A function which decrements the countdown by 1, displays
+  // it and if it has run out, then ends the question.
+  var updateTimer = function() {
+    $("#timer").html(timeLeft);
+    if (timeLeft < 0)
+    {
+      endQuestion();
+      return;
+    }  // end-if
+    timeLeft--;
+  }  // end-updateTimerFunction
+  // Call the updateTimer function once at first, to
+  // start countdown immediately.
+  updateTimer();
+  // Afterwards, call it once every second.
+  timerInterval  = setInterval(updateTimer, 1000);
+}  // end-startTimer
+
 
 // Romans' + Manne
 
@@ -381,13 +430,16 @@ function updateUIRemoveButton(buttonID)
 */
 
 
-// A function to remove all elements used in the question
-// and answers container (except for buttons and the number of answers),
+// A function to remove all elements used in the question and
+// answers container (except for buttons, the number of answers and timer),
 // in order to introduce the next round of question and answers.
 function clearQuestionAndAnswers()
 {
+  // Remove what is no longer required.
   $("#q-and-a-container")
-    .find("*").not(":button").not("#numberOfAnswers").remove();    
+    .find("*").not(":button").not("#numberOfAnswers").not("#timer").remove();
+    // Hide the timer.
+    $("#timer").hide;
 }  // end-clearQuestionAndAnswers
 
 
