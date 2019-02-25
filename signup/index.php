@@ -71,7 +71,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
  { 
     $_SESSION["username"] = $username;
     // redirect to welcome.php 
-     header("Location: welcome.php"); 
+     header("Location: ../hub/index.php"); 
      exit();
 }  // if  
 
