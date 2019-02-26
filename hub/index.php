@@ -25,26 +25,31 @@
     }
 
     $username = $_SESSION['username'];
-    //sqlWithResult1($mysqli, "SELECT user_id FROM users WHERE username= ;", $username, $hashedPass);
-    $list = mysqli_fetch_assoc(sqlWithResult1($mysqli, "SELECT quiz_id, name FROM quizzes WHERE users.username = (?) AND quizzes.user_id = users.user_id ;", $username));
-    echo $list;
-    
+    $list2 = mysqli_fetch_assoc(sqlWithResult1($mysqli, "SELECT user_id FROM users WHERE username= (?);", $username));
+    $user_id = $list2['user_id'];
+    $result = sqlWithResult1($mysqli, "SELECT quiz_id, name FROM quizzes WHERE user_id = (?);", $user_id);
 
-     
 ?>
 
 <!DOCTYPE HTML>
 <html lang ="en">  
 <head>
       <title>Hub</title>
-
-
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="./hubButtons.js"> </script>
 </head>
 <body>
-<h1>The Hub. </h1>
+<h1>The QuizHub. </h1>
 <!--REDIRECTION SHOULD BE CHANGED TO THE QUIZ CREATOR PAGE-->
-<form method="post" action="../index.html">
+<form method="post" action="../">
 <input type="submit" name = "CREATE NEW" value = "Create New">
 </form>
+<div id="Quiz_List"></div>
+<?php     
+while($row = $result->fetch_assoc())
+ {
+        echo   '<script> placeQuiz(' . $row['quiz_id'] . ", '" . $row['name'] . "');</script>";
+}
+?>
 </body>
 </html>
