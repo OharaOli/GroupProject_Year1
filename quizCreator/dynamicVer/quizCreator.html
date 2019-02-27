@@ -273,19 +273,20 @@ Quiz creator
          var description_3 = descriptions[2];
          var description_4 = descriptions[3];
 
+         alert(quizName.value);
          alert(question.value);
-         alert(relatedNodeID.value);
-         alert(answer_1.value);
-         alert(switch_1);
-         alert(description_1.value);
+         //alert(relatedNodeID.value);
+         //alert(answer_1.value);
+         //alert(switch_1);
+         //alert(description_1.value);
 
-         requestDataFromDB(testForErrors, "./test.php?quizName=TESTNAME&question=TESTQUESTION");
+         //requestDataFromDB(testForErrors, "./createQuiz.php?quizName=TESTNAME&question=TESTQUESTION");
          
-         /*
+         
          //Error occurs after this point
          //Use an Ajax call to an external php script to send the data
          $.ajax({
-            url: "createquiz.php",
+            url: "createQuiz.php",
             cache: false,
             type: "post",
             data: 
@@ -311,7 +312,7 @@ Quiz creator
                document.getElementById("ajax_return").innerHTML = data;
             } //success function
          }) //ajax
-      */
+      
       } //for
    } //upload_data   
 
