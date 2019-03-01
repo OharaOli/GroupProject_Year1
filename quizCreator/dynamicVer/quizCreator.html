@@ -186,9 +186,12 @@ Quiz creator
     <button onclick="addQuestionRow('creatorForQ1')">Add question</button>
     <button onclick="deleteQuestionRow('creatorForQ1')">Delete question</button>
     <!-- Submit button -->
-    <button onclick="upload_data()">Submit</button>
+    <button onclick="upload_quiz()">Submit</button>
     <!-- return string to be displayed -->
     <p id="ajax_return"></p>
+    <p id="return_quiz_id"></p>
+    <p id="return_question_id"></p>
+    <p id="return_statement"></p>
 </div>
 
 
@@ -209,116 +212,140 @@ Quiz creator
 //The function will retrieve the data for each row in turn and send it to the 
 //database via an ajax call to a php function.
 
-   function upload_data() {
+   function upload_quiz() {
       //Return the name of the quiz being submitted
       var quizName = document.getElementById('quizNameID');
+      var quizID = null;
 
+      //Only stores the quiz name once so runs before the for loop below
+       $.ajax({
+         url: "insertQuizName.php",
+         cache: false,
+         type: "post",
+         data:
+         {
+            quizName: quizName.value
+         }, //data
+         success: function(data)
+         {
+            quizID = data;
+            document.getElementById("return_quiz_id").innerHTML = "Added quiz";
+            upload_questions(data);
+         } //success function
+      }) //ajax
+   } //upload_quiz
+   
+   
+   
+   
+      
+   function upload_questions(quiz_id) {
       //Loop for the number of rows in the table
       numberOfRows = document.getElementById("creatorForQ1").rows.length - 1;
+      var questionID = null;
+      
       for (i = 0; i < numberOfRows; i++)
       {
+		 //Set the question number so that it can be used in answer call
+		 var current_question_number = i;
+		 
          //Use i to construct the ID of each row
          questionID = "q" + i;   
          relatedNodeID = "rn" + i;
          
-         //Construct the ID of the answer table to be searched
-         var answerTableID = "answersTableQ" + i; 
-
-         //Initialise an array to store the answer, switch and description values
-         var answers = [];
-         var switches = [];
-         var descriptions = [];
-
-         //Retrieving the answers seperately because they are dynamic
-         numberOfAnswers = document.getElementById(answerTableID).rows.length;
-         for (n = 0; n < numberOfAnswers; n++)
-         {
-            //Use i and n to construct the ID of each answer, switch and description
-            answerID = "ans" + i + n;   
-            switchID = "swc" + i + n; 
-            descriptionID = "dc" + i + n; 
-            
-            //Retrieve the answer using the constructed ID and push it to the array   
-            answerToPush = document.getElementById(answerID);
-            answers.push(answerToPush);
-           
-            //Push either true or false based on the checkbox
-            switchChecked = document.getElementById(switchID);
-            if (switchChecked.checked == true)
-               switchToPush = true;
-            else
-               switchToPush = false;
-            switches.push(switchToPush);
-            
-            //Retrieve the description using the constructed ID and push it to the array
-            descriptionToPush = document.getElementById(descriptionID);
-            descriptions.push(descriptionToPush);
-         }//for 
-         
          //Use the constructed IDs and arrays to access the data
          var question = document.getElementById(questionID);
          var relatedNodeID = document.getElementById(relatedNodeID);
-         var answer_1 = answers[0];
-         var answer_2 = answers[1];
-         var answer_3 = answers[2];
-         var answer_4 = answers[3];
-            
-         var switch_1 = switches[0];
-         var switch_2 = switches[1];
-         var switch_3 = switches[2];
-         var switch_4 = switches[3];
-
-         var description_1 = descriptions[0];
-         var description_2 = descriptions[1];
-         var description_3 = descriptions[2];
-         var description_4 = descriptions[3];
-
-         alert(question.value);
-         alert(relatedNodeID.value);
-         alert(answer_1.value);
-         alert(switch_1);
-         alert(description_1.value);
-
-         requestDataFromDB(testForErrors, "./test.php?quizName=TESTNAME&question=TESTQUESTION");
-         
-         /*
-         //Error occurs after this point
+       
          //Use an Ajax call to an external php script to send the data
          $.ajax({
-            url: "createquiz.php",
+			async: false,
+            url: "insertQuestions.php",
             cache: false,
             type: "post",
             data: 
             {
-               quizName: quizName.value,
                question: question.value,
                relatedNodeID: relatedNodeID.value,
-               answer_1: answer_1.value,
-               answer_2: answer_2.value,
-               answer_3: answer_3.value,
-               answer_4: answer_4.value,
-               switch_1: switch_1.value,
-               switch_2: switch_2.value,
-               switch_3: switch_3.value,
-               switch_4: switch_4.value,
-               description_1: description_1.value,
-               description_2: description_2.value,
-               description_3: description_3.value,
-               description_4: description_4.value
+               quiz_id: quiz_id
             }, //data
             success: function(data) 
             {
-               document.getElementById("ajax_return").innerHTML = data;
+               questionID = data;
+               document.getElementById("return_question_id").innerHTML = "Added question";
+               upload_answers(data, current_question_number);
             } //success function
          }) //ajax
-      */
+      
       } //for
-   } //upload_data   
+   } //upload_questions  
+   
+   
+   
+   
+   function upload_answers(question_id, i) {
+      //Store the answer letters in an array
+      var letter = ["A","B","C","D"];
+      
+      //Loop through the four answers, storing one at a time
+      for (n = 0; n <= 4; n++)
+      { 
+         
+         //Use i and n to construct the ID of each answer, switch and description
+         answerID = "ans" + i + n;   
+         switchID = "swc" + i + n; 
+         descriptionID = "dc" + i + n; 
+            
+         //Retrieve the answer using the constructed ID   
+         answer = document.getElementById(answerID);
+         
+         alert("Test before");
+           
+         //Push either true or false based on the checkbox
+         switchChecked = document.getElementById(switchID);
+         if (switchChecked.checked == true)
+            switchBit = 1;
+         else
+            switchBit = 0;
+            
+         //Retrieve the description using the constructed ID and push it to the array
+         description = document.getElementById(descriptionID);
+         
+        
+         //Use an Ajax call to an external php script to send the data
+         $.ajax({
+			async: false,
+            url: "insertAnswers.php",
+            cache: false,
+            type: "post",
+            data: 
+            {
+               answer: answer.value,
+               switchBit: switchBit.value,
+               description: description.value,
+               letter: letter[n],
+               question_id: question_id
+            }, //data
+            success: function(data) 
+            {
+               document.getElementById("return_statement").innerHTML = data;
+            } //success function
+         }) //ajax
+         
+         alert("Test after");
+     
+      }//for 
+         
+   } //upload_answers
+   
+   
+   
 
   function testForErrors(returnedText)
   {
     console.log(returnedText);
   }
+  
 
 </script>
 
