@@ -25,10 +25,13 @@
     }
 
     $username = $_SESSION['username'];
-    $quizCode =  $_SESSION['quizCode'];
-    $list2 = mysqli_fetch_assoc(sqlWithResult1($mysqli, "SELECT user_id FROM users WHERE username= (?);", $username));
-    $user_id = $list2['user_id'];
-    $result = sqlWithResult1($mysqli, "SELECT quiz_id, name FROM quizzes WHERE user_id = (?);", $user_id);
+    $userIDList = mysqli_fetch_assoc(sqlWithResult1($mysqli, "SELECT user_id FROM users WHERE username= (?);", $username));
+    $user_id = $userIDList['user_id'];
+
+    $quizCodeList = mysqli_fetch_assoc(sqlWithResult1($mysqli, "SELECT quizCode FROM users WHERE username= (?);", $username));
+    $quizCode = $quizCodeList['quizCode'];
+
+    $quizIDandNameList = sqlWithResult1($mysqli, "SELECT quiz_id, name FROM quizzes WHERE user_id = (?);", $user_id);
 
 ?>
 
@@ -45,6 +48,9 @@
 <?php
   echo "<script> $('#QuizCode').append('<h2> Quiz Code: " . $quizCode . "</h2>'); </script>"; 
 ?>
+<form method="post" action="../">
+<input type="submit" name = "CREATE NEW" value = "Create New">
+</form>
 
 <!--REDIRECTION SHOULD BE CHANGED TO THE QUIZ CREATOR PAGE-->
 <form method="post" action="../">
@@ -52,7 +58,7 @@
 </form>
 <div id="Quiz_List"></div>
 <?php     
-while($row = $result->fetch_assoc())
+while($row = $quizIDandNameList ->fetch_assoc())
  {
         echo   '<script> placeQuiz(' . $row['quiz_id'] . ", '" . $row['name'] . "');</script>";
 }
