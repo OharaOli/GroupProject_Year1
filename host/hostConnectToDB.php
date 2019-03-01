@@ -61,7 +61,11 @@
     
     $sql = "SELECT * FROM questions WHERE quiz_id = ?;";
     $result = sqlWithResult1($mysqli, $sql, $_GET["q"]);
-    echo "\n" . $result->num_rows;
+    echo " \n" . $result->num_rows;
+    
+    $sql = "SELECT name FROM quizzes WHERE quiz_id = ?;";
+    $result = sqlWithResult1($mysqli, $sql, $_GET["q"]);
+    echo " \n" . $result->fetch_assoc()["name"];
   } // insertNewHost
   
   function pollForPlayers($mysqli)
@@ -73,11 +77,11 @@
     {
       // Echos out the first line so that the new lines are in the right place.
       $firstRow = $result->fetch_assoc();
-      echo $firstRow["player_id"] . "," . $firstRow["screen_name"] . "," . 
+      echo $firstRow["player_id"] . " \\" . $firstRow["screen_name"] . " \\" . 
                   $firstRow["time_since_start"];
       // Outputs all the other lines.
       while($row = $result->fetch_assoc())
-        echo "\n" . $row["player_id"] . "," . $row["screen_name"] . "," . 
+        echo " \n" . $row["player_id"] . " \\" . $row["screen_name"] . " \\" . 
                   $row["time_since_start"];
       } // if
   } // pollForPlayers
@@ -96,9 +100,9 @@
     if($result->num_rows > 0)
     {
       $firstRow = $result->fetch_assoc();
-      echo $firstRow["player_id"] . "," . $firstRow["answer"];
+      echo $firstRow["player_id"] . " \\" . $firstRow["answer"];
       while($row = $result->fetch_assoc())
-        echo "\n" .  $row["player_id"] . "," . $row["answer"]; 
+        echo " \n" .  $row["player_id"] . " \\" . $row["answer"]; 
     } // if
   } // pollForAnswers
   
@@ -115,22 +119,26 @@
     $sql = "UPDATE players SET answer = '-' WHERE host_id = ?;";
     sqlWithoutResult1($mysqli, $sql, $_GET["h"]);  
 
-    $sql = "SELECT question_id, text FROM questions "
+    $sql = "SELECT question_id, text, linked_answer, time FROM questions "
                 . "WHERE quiz_id = ? AND order_num = ?;";
     $result = sqlWithResult2($mysqli, $sql, $_GET["q"], $_GET["n"]);   
     $questionData = $result->fetch_assoc();
     $questionID = $questionData["question_id"];
     echo $questionData["text"];
+    echo " \n" . $questionData["linked_answer"];
+    echo " \n" . $questionData["time"];
    
     $sql = "SELECT letter FROM answers "
                 . "WHERE question_id = ? AND is_correct = 1;";
     $result = sqlWithResult1($mysqli, $sql, $questionID);
-    echo "\n" . $result->fetch_assoc()["letter"];
+    echo " \n" . $result->fetch_assoc()["letter"];
+    while($row = $result->fetch_assoc())
+      echo $row["letter"];
     
-    $sql = "SELECT text FROM answers "
+    $sql = "SELECT text, answer_id FROM answers "
                 . "WHERE question_id = ? ORDER BY letter;";
     $result = sqlWithResult1($mysqli, $sql, $questionID);
     while($row = $result->fetch_assoc())
-      echo "\n" . $row["text"];
+      echo " \n" . $row["text"] . " \\" .  $row["answer_id"];
   } // outputQuestion
 ?>

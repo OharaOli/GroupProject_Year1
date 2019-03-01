@@ -7,7 +7,7 @@ DROP TABLE IF EXISTS players;
 
 CREATE TABLE hosts(
   host_id int NOT NULL AUTO_INCREMENT,
-  quiz_code VARCHAR(5) NOT NULL,
+  quiz_code VARCHAR(6) NOT NULL,
   quiz_id int NOT NULL,
   state ENUM("intro", "question", "feedback", "outro") NOT NULL DEFAULT "intro",
   time_since_start int NOT NULL DEFAULT 0,

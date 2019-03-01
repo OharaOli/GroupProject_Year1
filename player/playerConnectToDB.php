@@ -74,9 +74,9 @@
     } // if 
     $hostStateData = $result->fetch_assoc();
     $hostID =  $hostStateData["host_id"];
-    echo $hostID . "\n";
-    echo $hostStateData["time_since_start"] . "\n";
-    echo $hostStateData["quiz_id"] . "\n";
+    echo $hostID . " \n";
+    echo $hostStateData["time_since_start"] . " \n";
+    echo $hostStateData["quiz_id"] . " \n";
     
     $sql = "INSERT INTO players (host_id, screen_name) VALUES (?,?);";
     sqlWithoutResult2($mysqli, $sql, $hostID, $_GET["n"]);
@@ -94,7 +94,7 @@
     // Saves the host state
     $hostState = $hostStateData["state"];
     // Outputs the state and time since start.
-    echo $hostState . "\n";
+    echo $hostState . " \n";
     echo $hostStateData["time_since_start"];
   } // pollForState
   
@@ -110,7 +110,7 @@
     $answerLetter =  $result->fetch_assoc()["answer"];
     
     if($answerLetter == "-")
-      echo "0\nYou did not provide an answer.";
+      echo "0 \nYou did not provide an answer.";
     else 
     {
       $sql = "SELECT is_correct, feedback FROM answers "
@@ -118,7 +118,7 @@
       $result = sqlWithResult2($mysqli, $sql, $answerLetter, $questionID);
       $answerData = $result->fetch_assoc();
       echo $answerData["is_correct"];
-      echo "\n" . $answerData["feedback"];
+      echo " \n" . $answerData["feedback"];
     } // else
   } // outputFeedback
   
@@ -136,7 +136,7 @@
                 . "ORDER BY letter;";
     $result = sqlWithResult1($mysqli, $sql, $questionID);
     while($row = $result->fetch_assoc())
-      echo "\n" . $row["text"];
+      echo " \n" . $row["text"];
   } // outputQuestion
   
   // Disconnects oneself from the table.

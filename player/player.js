@@ -63,7 +63,7 @@ function setPlayerID(playerAndHostID)
   else
   {
    // split the string in the parameter into different positions in an array by new line seperator
-    var playerIDhostIDArray = playerAndHostID.split("\n");
+    var playerIDhostIDArray = playerAndHostID.split(" \n");
     //  assign the hostID and playerID  and the host time from the string array
     hostID = playerIDhostIDArray[0];
     quizID = playerIDhostIDArray[2];
@@ -88,7 +88,7 @@ function pollForState(responseText)
 {
   // get the state, time and possibly the new update score and put that
   // into an array split by new lines
-  var statesArray = responseText.split("\n");
+  var statesArray = responseText.split(" \n");
 
   // if the value we get from the database is greater than 10 seconds,
   // then we should disconnect self
@@ -185,7 +185,7 @@ function inputAnswer(requiredAnswer)
 // function to show the question to the player 
 function updateQuestionState(returnedText)
 {
-  statesArray = returnedText.split("\n");
+  statesArray = returnedText.split(" \n");
   currentState = "question";
   currentQuestionAnswerSelected = "-";
   
@@ -243,8 +243,8 @@ function clearQuestionAndAnswers()
 // function to return feedback to the player
 function updateFeedbackState(returnedText)
 {  
-  var isCorrectBool = returnedText.split("\n")[0];
-  var feedback = returnedText.split("\n")[1];
+  var isCorrectBool = returnedText.split(" \n")[0];
+  var feedback = returnedText.split(" \n")[1];
   currentState = "feedback";
   currentQuestionNum++;
   var isCorrect = false;

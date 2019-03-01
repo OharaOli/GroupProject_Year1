@@ -28,7 +28,7 @@ function Player(screenName, initialTimeValue)
 function giveAnswer(correctAnswer)
 {
   // Only increases the score if the correct answer given.
-  if(this.currentAnswer == correctAnswer)
+  if(correctAnswer.includes(this.currentAnswer))
     this.score += 1;
   // Clears the answer for the next question.
   this.currentAnswer = "-";

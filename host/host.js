@@ -35,10 +35,10 @@ var currentQuestionNum = 0;
 var currentQuestionText;
 // The answers to the question the host is currently on.
 var currentQuestionAnswers;
-// The letter of the correct answer. 
-var currentQuestionCorrectAnswer;
-// The time limit, in seconds, set for the question. (__initially 10 for testing purposes__)
-var currentQuestionTimeLimit = 10;
+// The letters of the correct answers. 
+var currentQuestionCorrectAnswers;
+// The time limit, in seconds, set for the question. 
+var currentQuestionTimeLimit;
 // Determines if the current page already has a host started on it.
 var alreadyStarted = false;
 // The code used by players to connect, created by the host.
@@ -47,6 +47,10 @@ var quizCode;
 var numberOfConnectedPlayers;
 // The ID of the quiz that the host is currently hosting.
 var quizID;
+// A dictionary of the previous answer IDs and their texts.
+var previousAnswers = {};
+// The text of the previous answer that the current one links to.
+var currentQuestionLinkedAnswer;
 
 // Starts the host and initialises it in the database.
 function startHost(requiredQuizCode, requiredQuizID = 1)
@@ -74,12 +78,13 @@ function getTimeSinceStart()
 function setHostIDAndNumQuestions(returnedText)
 {
   // Assigns the host ID for the quiz.
-  hostID = returnedText.split("\n")[0];
+  hostID = returnedText.split(" \n")[0];
   // Assigns the number of questions.
-  numQuestions = parseInt(returnedText.split("\n")[1]);
+  numQuestions = parseInt(returnedText.split(" \n")[1]);
+  // Puts the quiz name as answer 0.
+  previousAnswers["0"] = returnedText.split(" \n")[2];
   // Sets the start time.
   startTime = Date.now();
-  
   // Polls the database for new players at a predefined interval.
   // Saves it in a variable so it can be stopped later.
   pollForPlayersInterval = setInterval(function() { requestDataFromDB(
@@ -97,15 +102,14 @@ function pollForPlayersDataReturned(returnedText)
   // Each of these values is separated by a comma.
 
   // Separates all the players.
-  var receivedPlayers = returnedText.split("\n");
+  var receivedPlayers = returnedText.split(" \n");
   // Loops through each player ID that is connected to the host.
   for(playerIDIndex = 0; playerIDIndex < receivedPlayers.length; ++playerIDIndex)
   {
     // Gets the three values from the single player entry.
-    var playerID = receivedPlayers[playerIDIndex].split(",")[0];
-    var screenName = receivedPlayers[playerIDIndex].split(",")[1];
-    var timeSinceStart = receivedPlayers[playerIDIndex].split(",")[2];
-
+    var playerID = receivedPlayers[playerIDIndex].split(" \\")[0];
+    var screenName = receivedPlayers[playerIDIndex].split(" \\")[1];
+    var timeSinceStart = receivedPlayers[playerIDIndex].split(" \\")[2];
     // If the player has already been registered.
     if(playerID in players)
     {
@@ -146,22 +150,26 @@ function getNextQuestion()
       requestDataFromDB(askQuestion, "hostConnectToDB.php?a=us&h=" + hostID
                                   + "&n=" + currentQuestionNum + "&s=question&t="
                                   + getTimeSinceStart() + "&q=" + quizID); 
-} // getQuestionData
+} // getNextQuestion
 
 function askQuestion(returnedText)
 {
-  splitReturnedText = returnedText.split("\n");
+  splitReturnedText = returnedText.split(" \n");
   currentQuestionText = splitReturnedText[0];
-  currentQuestionCorrectAnswer = splitReturnedText[1];
+  currentQuestionLinkedAnswer = previousAnswers[splitReturnedText[1]];
+  currentQuestionTimeLimit = splitReturnedText[2];
+  currentQuestionCorrectAnswers = splitReturnedText[3].split('');
   currentQuestionAnswers = {};
-  
-  currentQuestionAnswers["A"] = splitReturnedText[2]; 
-  currentQuestionAnswers["B"] = splitReturnedText[3];
-  if(splitReturnedText.length >= 5)
-    currentQuestionAnswers["C"] = splitReturnedText[4]; 
-  if(splitReturnedText.length == 6)
-    currentQuestionAnswers["D"] = splitReturnedText[5]; 
-
+  currentQuestionAnswers["A"] = splitReturnedText[4].split(" \\")[0];
+  currentQuestionAnswers["B"] = splitReturnedText[5].split(" \\")[0];
+  if(splitReturnedText.length >= 7)
+    currentQuestionAnswers["C"] = splitReturnedText[6].split(" \\")[0]; 
+  if(splitReturnedText.length == 8)
+    currentQuestionAnswers["D"] = splitReturnedText[7].split(" \\")[0];
+  // Records past questions.
+  for(answerIndex = 4; answerIndex < splitReturnedText.length; answerIndex++)
+    previousAnswers[splitReturnedText[answerIndex].split(" \\")[1]] 
+                                                            = splitReturnedText[answerIndex].split(" \\")[0];
  /*
   switch(splitReturnedText.length - 2)
   {
@@ -172,7 +180,7 @@ function askQuestion(returnedText)
   } // switch
   */
   //if(updateTimeInterval != undefined)
-    clearInterval(updateTimeInterval);
+  clearInterval(updateTimeInterval);
   pollForAnswersInterval = setInterval(function() { requestDataFromDB(
                                       pollForAnswersDataReturned, 
                                       "hostConnectToDB.php?a=pfa&h=" + hostID + "&t=" 
@@ -185,18 +193,18 @@ function askQuestion(returnedText)
 
 function pollForAnswersDataReturned(returnedText)
 {
-  splitReturnedText = returnedText.split("\n");
+  splitReturnedText = returnedText.split(" \n");
   var numAnswersGiven = 0;
+  
   for(var splitIndex = 0; splitIndex < splitReturnedText.length; splitIndex++)
   {
-    var id = splitReturnedText[splitIndex].split(",")[0];
-    var answer =splitReturnedText[splitIndex].split(",")[1];
+    var id = splitReturnedText[splitIndex].split(" \\")[0];
+    var answer = splitReturnedText[splitIndex].split(" \\")[1];
     if(answer != "-" && answer in currentQuestionAnswers)
       numAnswersGiven++;
     players[id].currentAnswer = answer; 
   } // for
   updatePlayerAnswers(numAnswersGiven);
-  $("#numberOfAnswers").show();
 }
 
 function updateFeedbackState()
@@ -210,7 +218,7 @@ function updateFeedbackState()
   {
     if(players[key].currentAnswer != "-")
       answerSelections[players[key].currentAnswer]++;
-    players[key].giveAnswer(currentQuestionCorrectAnswer);
+    players[key].giveAnswer(currentQuestionCorrectAnswers);
   }
   
   updateDataInDB("hostConnectToDB.php?a=us&h=" + hostID + "&s=feedback"
@@ -228,7 +236,6 @@ function showOutro()
 } // showOutro
 
 //---------------------- MANNE + ROMANS + PRAEVEEN ------------------------------
-//--------------- IMPLEMENT ALL THESE FUNCTIONS PLZ THX -------------------
 
 // Manne's
 
@@ -262,7 +269,7 @@ $(document).ready(function() {
   $("#host-button").click(function() {
     // Check that the length of the characters in the input feld is
     // exactly 5. (trim removes whitespace)
-    if ($.trim($("#quiz-code-host").val()).length == 5)
+    if ($.trim($("#quiz-code-host").val()).length == 6)
     {
       // Remove the ability to host another quiz.
       // The button and input field are contained within a div parent element.
@@ -370,6 +377,12 @@ function startTimer() {
 // A function to display the fetched question and answers.
 function displayQuestionAndAnswers()
 {
+  // Shows the answers so far and sets the initial value to 0.
+  $("#numberOfAnswers").show();
+  updatePlayerAnswers(0);
+  // Displays the answer that this question links to.
+  $("#q-and-a-container").append(
+                                         "<h3>" + currentQuestionLinkedAnswer + "</h3>");
   // Adds a header containing the current question.
   $("#q-and-a-container").append("<h2>" + currentQuestionText + "</h2>");
 
@@ -381,30 +394,24 @@ function displayQuestionAndAnswers()
 
   // Adds a paragraph containing the current different possible answers.
   $("#q-and-a-container").append("<p>" + answers_collection + "</p>");
-}
+} // displayQuestionAndAnswers
 
 
 // A function which updates the number of players who have currently
 // answered the question. (Not during feedback stage!)
 function updatePlayerAnswers(numOfAnswers)
 {
+
     $("#numberOfAnswers").html("Answers so far: " + numOfAnswers);
 }  // end-updatePlayerAnswers
-
-
-// A function which displays the number of players who
-// selected each answer respectively. (During feedback stage!)
-function displayPlayerAnswers()
-{
-  $("#numberOfAnswers").
-  $("#q-and-a-container").append("<p>Number of responses:" + numOfPlayers + "</p>");
-}  // end-displayPlayerAnswers
 
 
 // A function which adds some text, within the q-and-a div
 // container, which contains the correct answer and who answered what.
 function displayFeedback(answerSelections)
 {
+  // Hides the number of answers given.
+  $("#numberOfAnswers").hide();
   // Loop through answers.
   for(answerSelection in answerSelections)
     // To make sure (for some reason) answer D is
@@ -413,12 +420,24 @@ function displayFeedback(answerSelections)
       // Display the number of players who chose each answer respectively.
       $("#q-and-a-container").append("<p>Number of  " +
         answerSelection + "s: " + answerSelections[answerSelection]);
-
-  // Display the correct answer.
-  $("#q-and-a-container").append("<p>The correct answer is "
-    + currentQuestionAnswers[currentQuestionCorrectAnswer] + "</p>");
+  // Displays the correct answers.
+  if(currentQuestionCorrectAnswers.length > 1)
+  {
+    var answersToOutput = "<p>The correct answers are ";
+    for(answerIndex = 0; answerIndex < currentQuestionCorrectAnswers.length - 1;
+          answerIndex++)
+      answersToOutput += 
+        currentQuestionAnswers[currentQuestionCorrectAnswers[answerIndex]] 
+        + " and ";
+    answersToOutput +=
+      currentQuestionAnswers[currentQuestionCorrectAnswers
+      [currentQuestionCorrectAnswers.length - 1]] + ".</p>";
+    $("#q-and-a-container").append(answersToOutput);
+  } // if 
+  else 
+    $("#q-and-a-container").append("<p>The correct answer is "
+      + currentQuestionAnswers[currentQuestionCorrectAnswers[0]] + "</p>");
 }  // end-displayFeedback
-
 
 /* not used atm
 //Romans'
@@ -458,11 +477,3 @@ function displayOutro()
   // Make visible the contents of the outro container div.
   $("#outro-container").show();    
 }  // end-displayOutro
-
-// -------------------------- STOP TOUCHING MY CODE AFTER HERE --------------------
-// --------------------- THX GOODBYE HAVE FUN DON'T TOUCH MY CODE -----------
-
-function testForErrors(error)
-{
-  document.write(error + "\n");
-} // testForErrors
