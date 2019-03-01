@@ -66,16 +66,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
   	}//else
 }//if
 
-// if login success is true, then redirect page to welcome page
+// if login success is true, generate a quiz number, and inset it to database. Also, senf the quiz code and user name to the hun
  if ($signedUp)
- { 
-    $quizNumber = generateRandomNumber($mysqli);
+ {  
+   // generate a quiz number
+    $quizCode = generateRandomNumber($mysqli);
+   // send the username to hub
     $_SESSION["username"] = $username;
-     sqlWithoutResult3($mysqli, "INSERT INTO  users (username, password, quizCode) VALUES (?, ?,?);", $username, $hashedPass,$quizNumber);
-    // redirect to welcome.php 
-     // header("Location: ../hub/index.php"); 
-     // exit();
-     echo $quizNumber;
+      // insert quizcode, user name and password into database
+     sqlWithoutResult3($mysqli, "INSERT INTO  users (username, password, quizCode) VALUES (?, ?,?);", $username, $hashedPass,$quizCode);
+     // redirect to welcome.php 
+     header("Location: ../hub/index.php"); 
+     exit();
+    
 }  // if  
 
 function generateRandomNumber($mysqli)
