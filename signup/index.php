@@ -69,13 +69,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
 // if login success is true, then redirect page to welcome page
  if ($signedUp)
  { 
-    $quizNumber = generateRandomNumber($mysqli);
+    $quizCode = generateRandomNumber($mysqli);
     $_SESSION["username"] = $username;
-     sqlWithoutResult3($mysqli, "INSERT INTO  users (username, password, quizCode) VALUES (?, ?,?);", $username, $hashedPass,$quizNumber);
-    // redirect to welcome.php 
-     // header("Location: ../hub/index.php"); 
-     // exit();
-     echo $quizNumber;
+     sqlWithoutResult3($mysqli, "INSERT INTO  users (username, password, quizCode) VALUES (?, ?,?);", $username, $hashedPass,$quizCode);
+    //redirect to welcome.php 
+     header("Location: ../hub/index.php"); 
+     exit();
 }  // if  
 
 function generateRandomNumber($mysqli)
