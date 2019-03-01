@@ -26,7 +26,7 @@
     function exceptions_error_handler() 
     {
         //Temporarily login page, SHOULD BE CHANGED TO MAIN INDEX PAGE
-        header("Location: ../index.html");
+        header("Location: ../");
         exit();   
     }
 
