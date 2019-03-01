@@ -8,7 +8,7 @@ require_once("../misc/sqlFunctions.php");
 
 //opening  connection to database 
 $mysqli = new mysqli($database_host, $database_user,
-                                        $database_pass, $group_dbname);
+                                        $database_pass, $group_dbnames[0]);
 
 // Check for errors before doing anything else
 if($mysqli -> connect_error) 
@@ -54,7 +54,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
                     //Encrypt password
                     $hashedPass = password_hash($_POST["password"], PASSWORD_DEFAULT);
                     //Insert the username and password into database
-                    sqlWithoutResult2($mysqli, "INSERT INTO  users (username, password) VALUES (?, ?);", $username, $hashedPass);
+
                     //Sign up has been successful
                     $signedUp = true;
                 }//else if
@@ -69,11 +69,28 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
 // if login success is true, then redirect page to welcome page
  if ($signedUp)
  { 
+    $quizNumber = generateRandomNumber($mysqli);
     $_SESSION["username"] = $username;
+     sqlWithoutResult3($mysqli, "INSERT INTO  users (username, password, quizCode) VALUES (?, ?,?);", $username, $hashedPass,$quizNumber);
     // redirect to welcome.php 
-     header("Location: ../hub/index.php"); 
-     exit();
+     // header("Location: ../hub/index.php"); 
+     // exit();
+     echo $quizNumber;
 }  // if  
+
+function generateRandomNumber($mysqli)
+{
+  $gotValidQuizCode = false;
+  while (! $gotValidQuizCode) 
+  {
+    $randomNumber = rand(0,999999);
+    $randomNumber  = str_pad($randomNumber, 6 ,'0', STR_PAD_LEFT);
+    $result = mysqli_fetch_assoc(sqlWithResult1($mysqli, "SELECT quizCode FROM users WHERE quizCode=(?);", $randomNumber));
+     if ($result == "")
+        $gotValidQuizCode = true;
+  }
+  return  $randomNumber ;
+}
 
 ?>
 
