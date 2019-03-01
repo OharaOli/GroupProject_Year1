@@ -41,5 +41,26 @@ function placeQuiz(quizID, quizName)
 
 });
 
+}//function placeQuiz
+
+function showQuizCodeForm()
+{
+
+    document.getElementById("quizCodeForm").style.display="block";
+
+     var input = document.createElement("input");
+     input.setAttribute("type", "text");
+     input.setAttribute("name", "quizCode");
+    
+     var submit = document.createElement("input");
+     submit.setAttribute("type", "submit");
+     submit.setAttribute("name", "submitCode");
+     submit.setAttribute("value", "Change Quiz Code");
+
+     document.getElementById("quizCodeForm").appendChild(input);
+     document.getElementById("quizCodeForm").appendChild(submit);
+
+     $("#initialQuizCodeButton").remove();
+
 }
 

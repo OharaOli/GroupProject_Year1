@@ -13,6 +13,12 @@
     if($mysqli -> connect_error) 
       die("Connection failed.");
 
+    if ($_SERVER["REQUEST_METHOD"] == "POST") 
+    {
+        $quizCode = $_POST['quizCode'];
+        
+    }
+
     //https://stackoverflow.com/questions/5373780/how-to-catch-this-error-notice-undefined-offset-0
     //^ code to help with catching 'notices' (undefined variable notice)
     set_error_handler('exceptions_error_handler');
@@ -34,27 +40,29 @@
     $quizIDandNameList = sqlWithResult1($mysqli, "SELECT quiz_id, name FROM quizzes WHERE user_id = (?);", $user_id);
 
 ?>
-
+ 
 <!DOCTYPE HTML>
 <html lang ="en">  
 <head>
       <title>Hub</title>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  <script src="./hubButtons.js"> </script>
+  <script src="./hub.js"> </script>
 </head>
 <body>
-<h1>The QuizHub. </h1>
+<h1>The Hub. </h1>
 <div = id="QuizCode"></div>
-<?php
-  echo "<script> $('#QuizCode').append('<h2> Quiz Code: " . $quizCode . "</h2>'); </script>"; 
-?>
-<form method="post" action="../">
-<input type="submit" name = "CREATE NEW" value = "Create New">
-</form>
+    <?php
+      echo "<script> $('#QuizCode').append('<h2> Quiz Code: " . $quizCode . "</h2>'); </script>"; 
+    ?>
 
+    <form id = "quizCodeForm" method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>" >
+    </form>
+
+    <button onclick="showQuizCodeForm()" id="initialQuizCodeButton"> Change Quiz Code </button>
+<br />
 <!--REDIRECTION SHOULD BE CHANGED TO THE QUIZ CREATOR PAGE-->
 <form method="post" action="../">
-<input type="submit" name = "CREATE NEW" value = "Create New">
+<input type="submit" name = "Create New" value = "CREATE NEW">
 </form>
 <div id="Quiz_List"></div>
 <?php     
