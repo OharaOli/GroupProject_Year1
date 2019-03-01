@@ -25,6 +25,7 @@
     }
 
     $username = $_SESSION['username'];
+    $quizCode =  $_SESSION['quizCode'];
     $list2 = mysqli_fetch_assoc(sqlWithResult1($mysqli, "SELECT user_id FROM users WHERE username= (?);", $username));
     $user_id = $list2['user_id'];
     $result = sqlWithResult1($mysqli, "SELECT quiz_id, name FROM quizzes WHERE user_id = (?);", $user_id);
@@ -40,6 +41,11 @@
 </head>
 <body>
 <h1>The QuizHub. </h1>
+<div = id="QuizCode"></div>
+<?php
+  echo "<script> $('#QuizCode').append('<h2> Quiz Code: " . $quizCode . "</h2>'); </script>"; 
+?>
+
 <!--REDIRECTION SHOULD BE CHANGED TO THE QUIZ CREATOR PAGE-->
 <form method="post" action="../">
 <input type="submit" name = "CREATE NEW" value = "Create New">
