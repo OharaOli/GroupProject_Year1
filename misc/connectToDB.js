@@ -9,11 +9,14 @@ function requestDataFromDB(stateChangeFunction, phpFile)
   var xhttp = new XMLHttpRequest();
   // Assigns the function to be called when data is returned successfully.
   xhttp.onreadystatechange = function() {
-    // Checks the data is sent successfully and is not blank.
-    if(xhttp.readyState == 4 && xhttp.status == 200 && xhttp.responseText != "")
+    // Checks the data is sent successfully and is not whitespace.
+    if(xhttp.readyState == 4 && xhttp.status == 200 
+       && xhttp.responseText.trim() != "")
     {  
-      // Calls the given function.
-      stateChangeFunction(xhttp.responseText);
+      console.log(xhttp.responseText.trim());
+      // Calls the given function with the response text. Trims the text to remove 
+      // initial/trailing newlines which might get sent by the server.
+      stateChangeFunction(xhttp.responseText.trim());
     }
   };
   // Determines which file to send to.
