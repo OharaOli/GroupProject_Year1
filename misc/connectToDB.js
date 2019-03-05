@@ -13,7 +13,6 @@ function requestDataFromDB(stateChangeFunction, phpFile)
     if(xhttp.readyState == 4 && xhttp.status == 200 
        && xhttp.responseText.trim() != "")
     {  
-      console.log(xhttp.responseText.trim());
       // Calls the given function with the response text. Trims the text to remove 
       // initial/trailing newlines which might get sent by the server.
       stateChangeFunction(xhttp.responseText.trim());
