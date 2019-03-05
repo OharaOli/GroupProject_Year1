@@ -10,14 +10,16 @@ CREATE TABLE hosts(
   quiz_code VARCHAR(6) NOT NULL,
   quiz_id int NOT NULL,
   state ENUM("intro", "question", "feedback", "outro") NOT NULL DEFAULT "intro",
-  time_since_start int NOT NULL DEFAULT 0,
+  start_time DATETIME NOT NULL DEFAULT NOW(),
+  last_update DATETIME NOT NULL DEFAULT NOW(),
   PRIMARY KEY (host_id));
 
 CREATE TABLE players(
   player_id int NOT NULL AUTO_INCREMENT,
   host_id int NOT NULL,
   answer ENUM("A", "B", "C", "D", "-") NOT NULL DEFAULT "-",
-  time_since_start int NOT NULL DEFAULT 0,
+  start_time DATETIME NOT NULL DEFAULT NOW(),
+  last_update DATETIME NOT NULL DEFAULT NOW(),
   screen_name VARCHAR(20) NOT NULL,
   connected BIT NOT NULL DEFAULT 1,
   PRIMARY KEY(player_id));

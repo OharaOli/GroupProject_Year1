@@ -6,12 +6,6 @@ var playerID;
 var hostID;
 // delay for each state delay
 var POLL_FOR_STATE_DELAY = 500;
-// maximum difference in time for the host before disconnecting
-var MAX_HOST_DIFF_TIME = 10000;
-// host start time
-var hostStartTime;
-// the start time of the player
-var startTime;
 // interval for polling the state
 var pollForStateInterval;
 // create the variable for the player's score
@@ -44,14 +38,6 @@ function tryToJoin(quizCode, screenName)
 
 } // tryToJoin
 
-
-// Returns the time since the host was started.
-function getTimeSinceStart()
-{
-  // Calculates and returns the time since start.
-  return Date.now() - startTime;
-} // getTimeSinceStart
-
 function setPlayerID(playerAndHostID)
 {
   // if string starts with a -,  then give an exception to the html page
@@ -64,19 +50,15 @@ function setPlayerID(playerAndHostID)
   {
    // split the string in the parameter into different positions in an array by new line seperator
     var playerIDhostIDArray = playerAndHostID.split(" \n");
-    //  assign the hostID and playerID  and the host time from the string array
+    //  assign the host, quiz and player IDs
     hostID = playerIDhostIDArray[0];
-    quizID = playerIDhostIDArray[2];
-    playerID = playerIDhostIDArray[3];
-    hostStartTime = Date.now() - parseInt(playerIDhostIDArray[1]);
-    // get the start time
-    startTime = Date.now();
+    quizID = playerIDhostIDArray[1];
+    playerID = playerIDhostIDArray[2];
 
     pollForStateInterval = setInterval(function() { requestDataFromDB(
                                       pollForState, 
-                                      "playerConnectToDB.php?a=pfs&h=" + hostID + "&t=" 
-                                       + getTimeSinceStart() + "&p=" + playerID 
-                                       + "&q=" + quizID + "&n=" + currentQuestionNum); 
+                                      "playerConnectToDB.php?a=pfs&h=" + hostID +"&p=" 
+                                      + playerID + "&q=" + quizID + "&n=" + currentQuestionNum); 
                                                   }, POLL_FOR_STATE_DELAY);
 
     updateIntroState();
@@ -86,18 +68,11 @@ function setPlayerID(playerAndHostID)
 
 function pollForState(responseText)
 {
-  // get the state, time and possibly the new update score and put that
-  // into an array split by new lines
   var statesArray = responseText.split(" \n");
 
-  // if the value we get from the database is greater than 10 seconds,
-  // then we should disconnect self
-  if (Math.abs((Date.now() - hostStartTime) - parseInt(statesArray[1]))
-                        > MAX_HOST_DIFF_TIME && currentState != "outro")
+  // If the host has disconnected according to the server.
+  if (statesArray[1] == "0")
   {     
-    // update the data in the database by calling the JS function and then call the php
-    // function that  disconnects self
-    updateDataInDB("playerConnectToDB.php?a=ds&p=" + playerID);
     // Stops polling for player 
     clearInterval(pollForStateInterval);
     // Gives an error message. 
@@ -108,12 +83,10 @@ function pollForState(responseText)
     // use  a switch statement to pick which function will run based on the state
     if(statesArray[0] == "question" && currentState != "question")
       requestDataFromDB(updateQuestionState, "playerConnectToDB.php?a=gq&n="
-        + currentQuestionNum + "&q=" + quizID 
-        + "&t=" + getTimeSinceStart() + "&p=" + playerID);
+        + currentQuestionNum + "&q=" + quizID + "&p=" + playerID);
     else if(statesArray[0] == "feedback" && currentState != "feedback")
         requestDataFromDB(updateFeedbackState, "playerConnectToDB.php?a=gf&q="
-          + quizID + "&n=" + currentQuestionNum + "&p="
-          + playerID + "&t=" + getTimeSinceStart());
+          + quizID + "&n=" + currentQuestionNum + "&p=" + playerID);
     else if(statesArray[0] == "outro" && currentState != "outro")
       updateOutroState();
   } // else
@@ -177,8 +150,8 @@ function displayIntro()
 function inputAnswer(requiredAnswer)
 {
     currentQuestionAnswerSelected = requiredAnswer;
-    updateDataInDB("playerConnectToDB.php?a=ua&p=" + playerID +"&t=" 
-                                       + getTimeSinceStart() + "&w=" + requiredAnswer);
+    updateDataInDB("playerConnectToDB.php?a=ua&p=" + playerID 
+                                  + "&w=" + requiredAnswer);
 }  // end-inputAnswer
 
 
@@ -318,7 +291,7 @@ function displayQuizCodeNotFound(isVisible)
 
 function testForErrors(errors)
 {
-  document.write(errors + "\n");
+  console.log(errors + "\n");
 }
 
 

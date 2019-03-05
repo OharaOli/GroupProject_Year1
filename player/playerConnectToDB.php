@@ -51,8 +51,8 @@
   // Updates the host's time since start value in the database.
   function updateTime($mysqli)
   {  
-    $sql = "UPDATE players SET time_since_start = ? WHERE player_id = ?;";
-    sqlWithoutResult2($mysqli, $sql, $_GET["t"], $_GET["p"]);
+    $sql = "UPDATE players SET last_update = NOW() WHERE player_id = ?;";
+    sqlWithoutResult1($mysqli, $sql, $_GET["p"]);
   } // updateTime
   
   // Attempts to insert a new player into the database based on quiz code.
@@ -60,9 +60,11 @@
   // Otherwise returns '-'.
   function insertNewPlayer($mysqli)
   {
-    $sql = "SELECT host_id, time_since_start, quiz_id FROM hosts "
-                . "WHERE quiz_code = ? AND state = 'intro' "
-                . "ORDER BY host_id DESC LIMIT 1;";
+    $sql = "SELECT host_id, quiz_id FROM hosts "
+                . "WHERE quiz_code = ? AND state = 'intro' AND ABS( "
+                . "TIME_TO_SEC(TIMEDIFF(last_update, start_time)) - "
+                . "TIME_TO_SEC(TIMEDIFF(NOW(), start_time))) "
+                . "<= 10 ORDER BY host_id DESC LIMIT 1;";
     $result = sqlWithResult1($mysqli, $sql, $_GET["c"]);
     
     // If a host that matches the quiz code was not found.
@@ -75,7 +77,6 @@
     $hostStateData = $result->fetch_assoc();
     $hostID =  $hostStateData["host_id"];
     echo $hostID . " \n";
-    echo $hostStateData["time_since_start"] . " \n";
     echo $hostStateData["quiz_id"] . " \n";
     
     $sql = "INSERT INTO players (host_id, screen_name) VALUES (?,?);";
@@ -88,14 +89,18 @@
   // Will also return the player's current score if the state is feedback.hp
   function pollForState($mysqli)
   {
-    $sql = "SELECT state, time_since_start FROM hosts WHERE host_id = ?;";
+    $sql = "SELECT state, CASE WHEN ABS("
+                . "TIME_TO_SEC(TIMEDIFF(last_update, start_time)) - "
+                . "TIME_TO_SEC(TIMEDIFF(NOW(), start_time))) "
+                . "<= 10 THEN 1 ELSE 0 END AS stay_connected "
+                . "FROM hosts WHERE host_id = ?;";
     $result = sqlWithResult1($mysqli, $sql, $_GET["h"]);
     $hostStateData = $result->fetch_assoc();
-    // Saves the host state
-    $hostState = $hostStateData["state"];
     // Outputs the state and time since start.
-    echo $hostState . " \n";
-    echo $hostStateData["time_since_start"];
+    echo $hostStateData["state"] . " \n";
+    echo $hostStateData["stay_connected"];
+    if($hostStateData["stay_connected"] == "0")
+      disconnectSelf($mysqli);
   } // pollForState
   
   function outputFeedback($mysqli)

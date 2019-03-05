@@ -15,14 +15,14 @@
     die("Connection failed.");
     
    // Updates the time if the action is not inserting the initial host entry. 
-  if($_GET["a"] != "ghnq")
+  if($_GET["a"] != "gh")
     updateTime($mysqli);
    
   // Runs the correct function depending on the type of action.
   switch($_GET["a"])
   {
     // Insert new host and get host ID and number of questions..
-    case "ghnq": 
+    case "gh": 
       insertNewHost($mysqli);
       break; 
     // Update state.
@@ -48,16 +48,16 @@
 
   // Updates the host's time since start value in the database.
   function updateTime($mysqli)
-  {  
-    $sql = "UPDATE hosts SET time_since_start = ? WHERE host_id = ?;";
-    sqlWithoutResult2($mysqli, $sql, $_GET["t"], $_GET["h"]);
+  { 
+    $sql = "UPDATE hosts SET last_update = NOW() WHERE host_id = ?;";
+    sqlWithoutResult1($mysqli, $sql, $_GET["h"]);
   } // updateTime
   
   function insertNewHost($mysqli)
   {
     $sql = "INSERT INTO hosts (quiz_code, quiz_id)  VALUES (?, ?);";
     sqlWithoutResult2($mysqli, $sql, $_GET["c"], $_GET["q"]);
-    echo  mysqli_insert_id($mysqli);
+    echo mysqli_insert_id($mysqli);
     
     $sql = "SELECT * FROM questions WHERE quiz_id = ?;";
     $result = sqlWithResult1($mysqli, $sql, $_GET["q"]);
@@ -70,7 +70,11 @@
   
   function pollForPlayers($mysqli)
   {
-    $sql = "SELECT player_id, screen_name, time_since_start "
+    
+    $sql = "SELECT player_id, screen_name, CASE WHEN ABS("
+                . "TIME_TO_SEC(TIMEDIFF(last_update, start_time)) - "
+                . "TIME_TO_SEC(TIMEDIFF(NOW(), start_time))) "
+                . "<= 6 THEN 1 ELSE 0 END AS stay_connected "
                 . "FROM players WHERE host_id = ? AND connected = 1;";
     $result = sqlWithResult1($mysqli, $sql, $_GET["h"]);
     if($result->num_rows > 0)
@@ -78,12 +82,13 @@
       // Echos out the first line so that the new lines are in the right place.
       $firstRow = $result->fetch_assoc();
       echo $firstRow["player_id"] . " \\" . $firstRow["screen_name"] . " \\" . 
-                  $firstRow["time_since_start"];
+                  $firstRow["stay_connected"];
       // Outputs all the other lines.
       while($row = $result->fetch_assoc())
         echo " \n" . $row["player_id"] . " \\" . $row["screen_name"] . " \\" . 
-                  $row["time_since_start"];
-      } // if
+                  $row["stay_connected"];
+      disconnectPlayers($mysqli);
+    } // if
   } // pollForPlayers
   
   function disconnectPlayer($mysqli)
@@ -92,17 +97,32 @@
     sqlWithoutResult1($mysqli, $sql, $_GET["p"]);
   } // disconnectPlayer
   
+  function disconnectPlayers($mysqli)
+  {
+    $sql = "UPDATE players SET connected = 0 WHERE ABS("
+               . "TIME_TO_SEC(TIMEDIFF(last_update, start_time)) - "
+               . "TIME_TO_SEC(TIMEDIFF(NOW(), start_time))) "
+               . "> 6 AND host_id = ? AND connected = 1;";
+    sqlWithoutResult1($mysqli, $sql, $_GET["h"]);
+  } // disconnectPlayers
+  
   function pollForAnswers($mysqli)
   {
-    $sql = "SELECT player_id, answer FROM players WHERE "
-                . "host_id = ? AND connected = 1 AND answer <> '-';";
+    $sql = "SELECT player_id, answer, CASE WHEN ABS("
+                . "TIME_TO_SEC(TIMEDIFF(last_update, start_time)) - "
+                . "TIME_TO_SEC(TIMEDIFF(NOW(), start_time))) "
+                . "<= 6 THEN 1 ELSE 0 END AS stay_connected FROM players "
+                . "WHERE host_id = ? AND connected = 1 AND answer <> '-';";
     $result = sqlWithResult1($mysqli, $sql, $_GET["h"]);
     if($result->num_rows > 0)
     {
       $firstRow = $result->fetch_assoc();
-      echo $firstRow["player_id"] . " \\" . $firstRow["answer"];
+      echo $firstRow["player_id"] . " \\" . $firstRow["answer"]
+                . " \\" . $firstRow["stay_connected"];
       while($row = $result->fetch_assoc())
-        echo " \n" .  $row["player_id"] . " \\" . $row["answer"]; 
+        echo " \n" .  $row["player_id"] . " \\" . $row["answer"] 
+                 . " \\" . $row["stay_connected"];   
+      disconnectPlayers($mysqli);
     } // if
   } // pollForAnswers
   
@@ -141,4 +161,3 @@
     while($row = $result->fetch_assoc())
       echo " \n" . $row["text"] . " \\" .  $row["answer_id"];
   } // outputQuestion
-?>
