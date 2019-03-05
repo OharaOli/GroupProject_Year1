@@ -13,11 +13,6 @@
     if($mysqli -> connect_error) 
       die("Connection failed.");
 
-    if ($_SERVER["REQUEST_METHOD"] == "POST") 
-    {
-        $quizCode = $_POST['quizCode'];
-        
-    }
 
     //https://stackoverflow.com/questions/5373780/how-to-catch-this-error-notice-undefined-offset-0
     //^ code to help with catching 'notices' (undefined variable notice)
@@ -29,8 +24,39 @@
         header("Location: ../");
         exit();   
     }
-
+    // get the username from login or sign up
     $username = $_SESSION['username'];
+     // error if the user has put an invalid quiz code
+     $quizCodeEntryError = "";
+    if ($_SERVER["REQUEST_METHOD"] == "POST") 
+    {
+        $quizCode = $_POST['quizCode'];
+       // if the quiz code is  not letters or a mixture of letters and numbers and not equal to 6
+       if (!preg_match("/^[a-zA-Z0-9]*$/",$quizCode) or strlen($quizCode)  != 6) 
+       {
+          // error in the quiz code
+         $quizCodeEntryError = "Your quiz code needs to have no special characters and has to be 6 characters long ";
+      } // if 
+      else
+      {
+            //Try to fetch the quizcode from the database and if it returns something other than an empty list, that means username exists
+            $result = mysqli_fetch_assoc(sqlWithResult1($mysqli, "SELECT quizCode FROM users WHERE quizCode=(?);", $quizCode));
+
+           // if quiz code exists put in an error
+            if ($result != '')
+                $quizCodeEntryError   = "The quiz code already exists.";
+           else 
+              //Insert the username and password into database
+             sqlWithoutResult2($mysqli, "UPDATE users SET quizCode=(?) WHERE username=(?);", strtoupper($quizCode),$username);
+           
+
+       } // else
+        
+   } // if
+
+
+
+
     $userIDList = mysqli_fetch_assoc(sqlWithResult1($mysqli, "SELECT user_id FROM users WHERE username= (?);", $username));
     $user_id = $userIDList['user_id'];
 
@@ -50,9 +76,9 @@
 </head>
 <body>
 <h1>The Hub. </h1>
-<div = id="QuizCode"></div>
+<div = id="QuizCodeDiv"></div>
     <?php
-      echo "<script> $('#QuizCode').append('<h2> Quiz Code: " . $quizCode . "</h2>'); </script>"; 
+      echo "<script> $('#QuizCodeDiv').append('<h2> Quiz Code: " . $quizCode . "</h2>'); </script>"; 
     ?>
 
     <form id = "quizCodeForm" method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>" >
@@ -60,6 +86,15 @@
 
     <button onclick="showQuizCodeForm()" id="initialQuizCodeButton"> Change Quiz Code </button>
 <br />
+
+<?php 
+    if ($_SERVER["REQUEST_METHOD"] == "POST") 
+    {
+        if ($quizCodeEntryError != '')
+            echo $quizCodeEntryError;
+    }//if
+?>
+
 <!--REDIRECTION SHOULD BE CHANGED TO THE QUIZ CREATOR PAGE-->
 <form method="post" action="../">
 <input type="submit" name = "Create New" value = "CREATE NEW">

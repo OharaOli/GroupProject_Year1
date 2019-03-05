@@ -53,7 +53,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
                 {
                     //Encrypt password
                     $hashedPass = password_hash($_POST["password"], PASSWORD_DEFAULT);
-                    //Insert the username and password into database
+
 
                     //Sign up has been successful
                     $signedUp = true;
@@ -71,6 +71,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
  { 
     $quizNumber = generateRandomNumber($mysqli);
     $_SESSION["username"] = $username;
+     //Insert the username and password into database
      sqlWithoutResult3($mysqli, "INSERT INTO  users (username, password, quizCode) VALUES (?, ?,?);", $username, $hashedPass,$quizNumber);
      //redirect to welcome.php 
      header("Location: ../hub/index.php"); 

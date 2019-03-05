@@ -10,6 +10,7 @@ function placeQuiz(quizID, quizName)
     form.setAttribute("method", "post");
     form.setAttribute("action", "../host/");
 
+
      var input = document.createElement("input");
      input.setAttribute("type", "hidden");
      input.setAttribute("name", "quizID");
