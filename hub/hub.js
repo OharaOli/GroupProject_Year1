@@ -1,7 +1,7 @@
-function placeQuiz(quizID, quizName)
+function placeQuiz(quizID, quizName, quizCode)
 {
   $(document).ready(function() {
-
+  // show the quiz based on the quizes present in the DB
   $("#Quiz_List").append("<p>" + quizName);
   $("#Quiz_List").append("<button id='host" + quizID + "'>Host</button> ");
 
@@ -10,13 +10,21 @@ function placeQuiz(quizID, quizName)
     form.setAttribute("method", "post");
     form.setAttribute("action", "../host/");
 
-
+     // when  the button is pressed, send the quiz ID to the host page
      var input = document.createElement("input");
      input.setAttribute("type", "hidden");
      input.setAttribute("name", "quizID");
      input.setAttribute("value", quizID);
 
+     //when the button is pressed send the quiz code to host page
+     var inputQuizCode = document.createElement("input");
+     inputQuizCode.setAttribute("type", "hidden");
+     inputQuizCode.setAttribute("name", "quizCode");
+     inputQuizCode.setAttribute("value", quizCode);
+ 
+    // when the button is pressed, send the
      form.appendChild(input);
+     form.appendChild(inputQuizCode);
      document.body.appendChild(form);
      form.submit();
 } );

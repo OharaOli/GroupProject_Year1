@@ -1,3 +1,8 @@
+<?php
+  if(!isset($_POST["quizCode"]) || !isset($_POST["quizID"])) // || not logged in
+    header("location: ../");
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -17,7 +22,16 @@
   <div id="host-option">
     <input id="quiz-code-host" type="text" placeholder="Quiz Code"/>
     <button id="host-button">Host Quiz</button>
-  </div>
+  </div> 
+
+
+  <script> $(document).ready(function() {
+    var quizCode = <?php echo json_encode($_POST['quizCode']); ?>;
+    var quizID = <?php echo json_encode($_POST['quizID']); ?>;
+    startHost(quizCode, quizID);
+  });
+  </script>
+
   <div id="intro-container" class="hidden">
     <h4 id="state-display"></h4>
     <button id="start-button" class="hidden">Start Quiz</button>

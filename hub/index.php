@@ -56,13 +56,13 @@
 
 
 
-
+    // get the user id for the user from the userID list
     $userIDList = mysqli_fetch_assoc(sqlWithResult1($mysqli, "SELECT user_id FROM users WHERE username= (?);", $username));
     $user_id = $userIDList['user_id'];
-
+     // get the quiz code for the user
     $quizCodeList = mysqli_fetch_assoc(sqlWithResult1($mysqli, "SELECT quizCode FROM users WHERE username= (?);", $username));
     $quizCode = $quizCodeList['quizCode'];
-
+   // get the quiz IDs list and name of quizzes from the quizzes table using the user id related to the quiz
     $quizIDandNameList = sqlWithResult1($mysqli, "SELECT quiz_id, name FROM quizzes WHERE user_id = (?);", $user_id);
 
 ?>
@@ -76,17 +76,18 @@
 </head>
 <body>
 <h1>The Hub. </h1>
+<!--Show the quiz code of the user-->
 <div = id="QuizCodeDiv"></div>
     <?php
       echo "<script> $('#QuizCodeDiv').append('<h2> Quiz Code: " . $quizCode . "</h2>'); </script>"; 
     ?>
-
+<!--Allow the user to change the quiz code-->
     <form id = "quizCodeForm" method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>" >
     </form>
 
     <button onclick="showQuizCodeForm()" id="initialQuizCodeButton"> Change Quiz Code </button>
 <br />
-
+<!--If there is an error caused by the changing of the quiz code, echo an error-->
 <?php 
     if ($_SERVER["REQUEST_METHOD"] == "POST") 
     {
@@ -103,7 +104,7 @@
 <?php     
 while($row = $quizIDandNameList ->fetch_assoc())
  {
-        echo   '<script> placeQuiz(' . $row['quiz_id'] . ", '" . $row['name'] . "');</script>";
+        echo   '<script> placeQuiz(' . $row['quiz_id'] . ",'" . $row['name'] . "', '" . $quizCode . "');</script>";
 }
 ?>
 </body>
