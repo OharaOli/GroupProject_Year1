@@ -99,6 +99,7 @@ function addQuestionRow(givenTable) {
 
   addAnswerRow(answerTableName,lastRowIndex);
 
+
   /*
   //then add four answer cells
   var ansCell1 = row.insertCell(2);
@@ -163,7 +164,7 @@ function addAnswerRow(givenTable, givenQuestionNum)
     //second Cell is just an answer
     var answerCell = row.insertCell(1);
     answerCell.innerHTML = "<input type='text' name='Answer' id='ans"
-                            + givenQuestionNum + i + "'>"
+                            + givenQuestionNum + i + "' placeholder='Type answer here'>"
 
     //third cell is the switch
     var switchCell = row.insertCell(2);
@@ -173,7 +174,7 @@ function addAnswerRow(givenTable, givenQuestionNum)
     //the last cell is for the descriptions
     var descriptionCell = row.insertCell(3);
     descriptionCell.innerHTML = "<input type='text' name='Description' id='dc"
-                            + givenQuestionNum + i + "'>"
+                            + givenQuestionNum + i + "' placeholder='Type description here'>"
   }
 
 } // function addAnswerRow for given table id
