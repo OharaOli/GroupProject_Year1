@@ -60,7 +60,7 @@
   // Otherwise returns '-'.
   function insertNewPlayer($mysqli)
   {
-    $sql = "SELECT host_id, quiz_id FROM hosts "
+    $sql = "SELECT host_id FROM hosts "
                 . "WHERE quiz_code = ? AND state = 'intro' AND ABS( "
                 . "TIME_TO_SEC(TIMEDIFF(last_update, start_time)) - "
                 . "TIME_TO_SEC(TIMEDIFF(NOW(), start_time))) "
@@ -77,7 +77,6 @@
     $hostStateData = $result->fetch_assoc();
     $hostID =  $hostStateData["host_id"];
     echo $hostID . " \n";
-    echo $hostStateData["quiz_id"] . " \n";
     
     $sql = "INSERT INTO players (host_id, screen_name) VALUES (?,?);";
     sqlWithoutResult2($mysqli, $sql, $hostID, $_GET["n"]);
@@ -96,20 +95,24 @@
                 . "FROM hosts WHERE host_id = ?;";
     $result = sqlWithResult1($mysqli, $sql, $_GET["h"]);
     $hostStateData = $result->fetch_assoc();
-    // Outputs the state and time since start.
-    echo $hostStateData["state"] . " \n";
-    echo $hostStateData["stay_connected"];
+    $hostState = $hostStateData["state"]
+    echo $hostState;
+    echo " \n" . $hostStateData["stay_connected"];
     if($hostStateData["stay_connected"] == "0")
       disconnectSelf($mysqli);
   } // pollForState
   
+  function getCurrentQuestionID($mysqli) 
+  {
+    $sql = "SELECT current_question_id FROM hosts WHERE host_id = ?;";
+    $result = sqlWithResult1($mysqli, $sql, $_GET["h"]);
+    return $result->fetch_assoc()["current_question_id"];
+  } // getCurrentQuestionID
+  
   function outputFeedback($mysqli)
   {
-    $sql = "SELECT question_id FROM questions "
-                . "WHERE quiz_id = ? AND order_num = ?;";
-    $result = sqlWithResult2($mysqli, $sql, $_GET["q"], $_GET["n"]);
-    $questionID =  $result->fetch_assoc()["question_id"];
-
+    $questionID = getCurrentQuestionID($mysqli);
+    
     $sql = "SELECT answer FROM players WHERE player_id = ?;";
     $result = sqlWithResult1($mysqli, $sql, $_GET["p"]);
     $answerLetter =  $result->fetch_assoc()["answer"];
@@ -119,8 +122,8 @@
     else 
     {
       $sql = "SELECT is_correct, feedback FROM answers "
-                  .  "WHERE letter = ? AND  question_id = ?;";
-      $result = sqlWithResult2($mysqli, $sql, $answerLetter, $questionID);
+             . "WHERE letter = $answerLetter AND  question_id = $questionID;";
+      $result = sqlWithResult0($mysqli, $sql);
       $answerData = $result->fetch_assoc();
       echo $answerData["is_correct"];
       echo " \n" . $answerData["feedback"];
@@ -129,17 +132,16 @@
   
   function outputQuestion($mysqli)
   {
-    $sql =  "SELECT question_id, text FROM questions "
-                 . "WHERE quiz_id = ? AND order_num = ?;";
-    $result = sqlWithResult2($mysqli, $sql, $_GET["q"], $_GET["n"]);
+    $questionID = getCurrentQuestionID($mysqli);
     
+    $sql =  "SELECT text FROM questions WHERE question_id = $questionID;";
+    $result = sqlWithResult0($mysqli, $sql);
     $questionData = $result->fetch_assoc();
-    $questionID = $questionData["question_id"];
     echo $questionData["text"];
     
-    $sql = "SELECT text FROM answers WHERE question_id = ? "
-                . "ORDER BY letter;";
-    $result = sqlWithResult1($mysqli, $sql, $questionID);
+    $sql = "SELECT text FROM answers WHERE question_id = $questionID "
+           . "ORDER BY letter;";
+    $result = sqlWithResult0($mysqli, $sql);
     while($row = $result->fetch_assoc())
       echo " \n" . $row["text"];
   } // outputQuestion

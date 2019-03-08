@@ -9,7 +9,8 @@ CREATE TABLE hosts(
   host_id int NOT NULL AUTO_INCREMENT,
   quiz_code VARCHAR(6) NOT NULL,
   quiz_id int NOT NULL,
-  state ENUM("intro", "question", "feedback", "outro") NOT NULL DEFAULT "intro",
+  state ENUM("intro", "floating", "question", "feedback", "outro") NOT NULL DEFAULT "intro",
+  current_question_id int NOT NULL default 0,
   start_time DATETIME NOT NULL DEFAULT NOW(),
   last_update DATETIME NOT NULL DEFAULT NOW(),
   PRIMARY KEY (host_id));

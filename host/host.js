@@ -6,7 +6,6 @@
     for QuizMapp. It requires a number of file inclusions to function:
     JQUERY library
     ../misc/connectToDB.js
-    ./playerClass.js
 
     The host operates in a number of states:
     Intro: in this state the host polls for players to join the quiz sesson.
@@ -50,6 +49,8 @@ var timerInterval;
 // --------------------------------------------------------------------------------------------
 // A dictionary of all players in the game - disconnected or connected.
 var players = {};
+// A 2D array representing the coordinates of all the questions.
+var questions = [];
 // The ID of the host that is currently running.
 var hostID;
 // The name of the quiz being played.
@@ -59,14 +60,6 @@ var numQuestions;
 // The question number that the host is currently on.
 // Initially set to 0 (not a question) but incremented before fetching next.
 var currentQuestionNum = 0;
-// The question text that the host is currently on.
-var currentQuestionText;
-// The answers to the question the host is currently on.
-var currentQuestionAnswers;
-// The letters of the correct answers. 
-var currentQuestionCorrectAnswers;
-// The time limit, in seconds, set for the question. 
-var currentQuestionTimeLimit;
 // Determines if the current page already has a host started on it.
 var alreadyStarted = false;
 // The code used by players to connect, created by the host.
@@ -75,17 +68,16 @@ var quizCode;
 var numberOfConnectedPlayers = 0;
 // The ID of the quiz that the host is currently hosting.
 var quizID;
-// A dictionary of the previous answer IDs and their texts.
-var previousAnswers = {};
-// The text of the previous answer that the current one links to.
-var currentQuestionLinkedAnswer;
+// The x-coordinate in the plane where the host is currently looking at.
+// Initialised to -1 as the view is originally in the intro state.
+var xCoord = -1;
+// The y-coordinate in the plane where the host is currently looking at.
+var yCoord = 0;
 
 // Code written by Alex.
-// -----------------------------------------------------------------------------------------
-
+// -------------------------------------------------------------------------
 // Starts the host and initialises it in the database.
-// If no quiz ID is entered the default is the test quiz with ID 1.
-function startHost(requiredQuizCode, requiredQuizID = 1)
+function startHost(requiredQuizCode, requiredQuizID)
 {
   // Only starts the host if one has not already been started on the page.
   if(!alreadyStarted) 
@@ -113,19 +105,50 @@ function setHostDetails(returnedText)
 {
   // Returned text will have the following form, separated by " \n":
   // Line 0 - the host ID.
-  // Line 1 - the number of questions.
-  // Line 2 - the quiz name.
+  // Line 1 - the quiz name.
+  // Line 2 onwards - all the questions, each taking up 6 lines in 
+  // the following order:
+  // Question ID, text, x coordinate, y coordinate, time, answers.
+  // Answers are separated by " \\" and have the following information:
+  // Letter (A/B/C/D), is correct (1 or 0), text. No spaces between all 3.
   
   // Assigns the host ID for the quiz.
   hostID = returnedText.split(" \n")[0];
-  // Assigns the number of questions.
-  numQuestions = parseInt(returnedText.split(" \n")[1]);
   // Stores the quiz name.
-  quizName = returnedText.split(" \n")[2];
-  // Puts the quiz name as answer 0. While it is not a proper answer it is used
-  // as such in how questions are linked to previous answers as unlinked
-  // questions are considered child nodes of the quiz name.
-  previousAnswers["0"] = quizName;
+  quizName = returnedText.split(" \n")[1];
+  // Iterates through each question, 6 pieces of data at a time.
+  for(index = 2; index < returnedText.length; index += 6)
+  {
+    // Gets the ID at relative index 0.
+    var id = returnedText[index];
+    // Gets the text at relative index 1.
+    var text = returnedText[index + 1];
+    // Gets the x-coordinate at relative index 2.
+    var x = parseInt(returnedText[index + 2]);
+    // Gets the y-coordinate at relative index 3.
+    var y = parseInt(returnedtext[index + 3]);
+    // Gets the time at relative index 4.
+    var time = parseInt(returnedText[index + 4]);
+    // Gets the set of answers at relative index 5.
+    var answers = returnedText[index + 5].split(" \\");
+    // Creates a dictionary of answers to populate.
+    var answerDict = {}
+    // Iterates through each answer.
+    for(int answerIndex = 0; answerIndex < answers.length; answerIndex++)
+    {
+      // Gets the letter as the first character.
+      var letter = answers[answerIndex].charAt(0);
+      // Determines whether the answer is correct using the second character.
+      var isCorrect = answers[answerIndex].charAt(1);
+      // Gets the text using the remainder of the characters.
+      var text = answers[answerIndex].substring(2);
+      // Creates a new answer object and adds it to the answer dictionary.
+      answerDict[letter] = new Answer(letter, isCorrect, text);
+    } // for
+    // Creates a new question object and adds it to the 2D question array.
+    questions[x][y] = new Question(id, text, answerDict, time);
+  } // for
+   
   // Polls the database for new players.
   // Saves it in a variable so it can be stopped later.
   // The (a)ction is (p)oll (f)or (p)layers (pfp), the (h)ost is the host's ID.
@@ -210,90 +233,36 @@ function startQuiz()
 {
   // Stops polling for new players.
   clearInterval(pollForPlayersInterval);
-  // Gets the first question to be asked.
-  getNextQuestion();
+  // Starts an interval for simply updating the time in the database as otherwise
+  // a lack of updates would indicate to a player that the host has disconnected.
+  // The (a)ction is (u)pdating the (t)ime (ut) and the (h)ost ID is the host's ID.
+  updateTimeInterval = setInterval(function() { updateDataInDB(
+            "hostConnectToDB.php?a=ut&h=" + hostID); }, UPDATE_TIME_DELAY);
 } // startQuiz
-
-
-// Gets the sequentially next question to be asked.
-function getNextQuestion()
-{
-  // Increments the current question number so it is that of the next one.
-  currentQuestionNum++;
-  // If the quiz has no more questions to be asked.
-  if(currentQuestionNum > numQuestions)
-    // Shows the outro as there are no more questions.
-    showOutro();
-  // Otherwise there are more questions.
-  else
-    // Updates the state in the database so that players also get the next question.
-    // It also fetches all the required information for the next question.
-    // The (a)ction is (u)pdate (s)tate (us), the (h)ost ID is the host's ID, the 
-    // question (n)umber is the number of the question that needs to be fetched,
-    // the new (s)tate is question and the (q)uiz ID is the ID of the quiz the 
-    // question needs to be fetched from.
-    requestDataFromDB(askQuestion, "hostConnectToDB.php?a=us&h=" + hostID
-                                + "&n=" + currentQuestionNum + "&s=question&q=" + quizID); 
-} // getNextQuestion
 
 
 // Handles the data associated with the question to be asked, and performs
 // the required actions to display it.
-function askQuestion(returnedText)
+function startQuestion()
 {
-  // Returned text will have the following form, separated by " \n":
-  // Line 0 - the text of the question.
-  // Line 1 - the ID of the answer the question links to.
-  // Line 2 - the time limit for the question.
-  // Line 3 - the letters of the correct answers, all in a row. Example is 
-  // 'AC' if A and C are the correct answers, or 'B' if it is the only correct one.
-  // Line 4-7 - the answers to the question. There are a minimum of 2 answers
-  // and a maximum of 4. They are ordered A-D. The answers are split into two
-  // pieces of data separated by " //", with the first detail being the answer text
-  // and the second being the ID of the answer.
-  
-  // Splits the text into its individual parts.
-  splitReturnedText = returnedText.split(" \n");
-  // Stores the text of the question.
-  currentQuestionText = splitReturnedText[0];
-  // Stores the answer the question is linked to by using the returned text
-  // as the key to the dictionary of previous answers.
-  currentQuestionLinkedAnswer = previousAnswers[splitReturnedText[1]];
-  // Stores the time limit of the question.
-  currentQuestionTimeLimit = splitReturnedText[2];
-  // Stores all the correct answers in an array.
-  currentQuestionCorrectAnswers = splitReturnedText[3].split('');
-  // Stores all the previous questions in an empty dictionary as it may
-  // contain information from a previous question.
-  currentQuestionAnswers = {};
-  // Adds A and B to the answer dictionary as they are guaranteed to exist.
-  currentQuestionAnswers["A"] = splitReturnedText[4].split(" \\")[0];
-  currentQuestionAnswers["B"] = splitReturnedText[5].split(" \\")[0];
-  // If the returned text is long enough then there will be a third answer.
-  if(splitReturnedText.length >= 7)
-    // Adds answer C to the answer dictionary.
-    currentQuestionAnswers["C"] = splitReturnedText[6].split(" \\")[0]; 
-  // If the returned text is long enough then there will be a fourth answer.
-  if(splitReturnedText.length == 8)
-    // Adds answer D to the answer dictionary.
-    currentQuestionAnswers["D"] = splitReturnedText[7].split(" \\")[0];
-  // For each answer, saves it to the dictionary of previous answers.
-  for(answerIndex = 4; answerIndex < splitReturnedText.length; answerIndex++)
-    // Saves the answer with the ID as the key and the text as the value.
-    previousAnswers[splitReturnedText[answerIndex].split(" \\")[1]] 
-                                                            = splitReturnedText[answerIndex].split(" \\")[0];
-
   // Stops the interval for updating the time in the database from feedback state.
   clearInterval(updateTimeInterval);
+  
+  // Updates the state in the database so that players also get the next question.
+  // It also fetches all the required information for the next question.
+  // The (a)ction is (u)pdate (s)tate (us), the (h)ost ID is the host's ID, the 
+  // question (n)umber is the number of the question that needs to be fetched,
+  // the new (s)tate is question and the (q)uiz ID is the ID of the quiz the 
+  // question needs to be fetched from.
+  updateDataInDB(askQuestion, "hostConnectToDB.php?a=us&h=" + hostID 
+                 + "&s=question&q=" + questions[xCoord][yCoord]); 
+
   // Starts the interval for polling for answers in the database.
   // The (a)ction is (p)olling (f)or (a)nswers, the (h)ost ID is the host's ID.
-  pollForAnswersInterval = setInterval(function() { requestDataFromDB(
-                                      pollForAnswersDataReturned, 
+  pollForAnswersInterval = setInterval(function() { updateDataInDB( 
                                       "hostConnectToDB.php?a=pfa&h=" + hostID); 
                                                   }, POLL_FOR_ANSWERS_DELAY);
-  
-  // Updates the UI for displaying the question.
-  displayQuestionAndAnswers();
+  // DISABLE MOVING TO ANOTHER SPACE
   // Starts the countdown timer for the question.
   startTimer();
 } // askQuestion
@@ -381,10 +350,6 @@ function updateFeedbackState()
 // Handles the required functionality for the outro state.
 function showOutro()
 {
-  // Clears the previous interval for polling for answers.
-  // Another interval for updating the time is not required as the outro state
-  // is the final state and so it does not matter to players if the host is connected.
-  clearInterval(pollForAnswersInterval);
   // Makes a final update to the database to inform players of the outro state.
   // The (a)ction is (u)pdating the (s)tate, the (h)ost ID is the host's ID, and the
   // new (s)tate is the outro state.
@@ -393,6 +358,107 @@ function showOutro()
   displayOutro();
 } // showOutro
 
+// Functions for moving the plain of view.
+// -----------------------------------------------------------------
+
+// Moves the current question to the left.
+function goLeft()
+{
+  // Ensures that the current question does not go back into the intro state.
+  if(xCoord > 0)
+  {
+    // Moves the x coordinate one space to the left.
+    xCoord -= 1;
+    // Moves the y coordinate to the first question in the stack.
+    yCoord = 0;
+  } // if
+} // goLeft
+
+// Moves the current question to the right.
+function goRight()
+{
+  // Stops polling for players if leaving the intro state.
+  
+  // Ensures the current question does not go beyond the outro state. 
+  if(xCoord < questions.length)
+  {
+    // Moves the x coordinate one space to the right.
+    xCoord += 1;
+    // Moves the y coordinate to the first question in the stack.
+    yCoord = 0;
+  } // if
+} // goRight
+
+// Moves the current question up one space.
+function goUp()
+{
+  // Ensures the current question is not the first in the stack.
+  if(yCoord > 0)
+    // Moves the current question up one space.
+    yCoord -= 1;
+} // goUp
+
+// Moves the current question down one space.
+function goDown()
+{
+  // Ensures the current question does not go beyond the bottom of the stack.
+  if(yCoord < questions[xCoord].length - 1)
+    // Moves the current question down one space.
+    yCoord += 1;
+} // goDown
+
+// Object constructors.
+// -----------------------------------------------------------------
+
+// Question class constructor.
+function Question(id, text, answers, timeLimit)
+{
+  // The ID of the question.
+  this.id = id;
+  // The text describing the question.
+  this.text = text;
+  // A dictionary of all the answers, with the key being the letter.
+  this.answers = answers;
+  // The maximum amount of time allocated per question.
+  this.timeLimit = timeLimit;
+} // Question 
+
+// Answer class constructor.
+function Answer(letter, isCorrect, text)
+{
+  this.text = text;
+  if(isCorrect == "1")
+    this.isCorrect = true;
+  else
+    this.isCorrect = false;
+  this.letter = letter;
+} // Answer
+
+// Player class constructor.
+function Player(screenName)
+{
+  // The name of the player which will be displayed on the screen.
+  this.screenName = screenName;
+  // The score which will be displayed on the screen. 
+  this.score = 0;
+  // Determines if the player is connected.
+  this.connected = true;
+  // The answer to the most previous question. Initially this will be nothing.
+  this.currentAnswer = "-";
+  
+  // Assigns the class methods.
+  this.giveAnswer = giveAnswer;
+} // Player constructor
+
+// Calculates a player's score depending if they gave the correct answer.
+function giveAnswer(correctAnswer)
+{
+  // Only increases the score if the correct answer given.
+  if(correctAnswer.includes(this.currentAnswer))
+    this.score += 1;
+  // Clears the answer for the next question.
+  this.currentAnswer = "-";
+} // giveAnswer
 
 // Code written by Manne.
 // --------------------------------------------------------------------------------------
@@ -432,7 +498,7 @@ $(document).ready(function() {
       // Store the value of the quiz code input field in quizCode.
       quizCode = $("#quiz-code-host").val();
       // Call the function to start the quiz, passing quizCode as argument.
-      startHost(quizCode);
+      startHost(quizCode, 1);
       // Display the quiz code chosen by the host.
       $("#state-display").text("Quiz with quiz code: "
                                                + quizCode + " has been created.");

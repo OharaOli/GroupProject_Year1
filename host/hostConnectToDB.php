@@ -59,14 +59,39 @@
     sqlWithoutResult2($mysqli, $sql, $_GET["c"], $_GET["q"]);
     echo mysqli_insert_id($mysqli);
     
-    $sql = "SELECT * FROM questions WHERE quiz_id = ?;";
-    $result = sqlWithResult1($mysqli, $sql, $_GET["q"]);
-    echo " \n" . $result->num_rows;
-    
     $sql = "SELECT name FROM quizzes WHERE quiz_id = ?;";
     $result = sqlWithResult1($mysqli, $sql, $_GET["q"]);
     echo " \n" . $result->fetch_assoc()["name"];
+
+    $sql = "SELECT question_id, text, x_coord, y_coord, time FROM questions "
+                . "WHERE quiz_id = ? ORDER BY x_coord, y_coord;";
+    $questionResult = sqlWithResult1($mysqli, $sql, $_GET["q"]);   
+    while($questionData = $questionResult->fetch_assoc())
+    {
+      $questionID = $questionData["question_id"];
+      echo " \n" . $questionID;
+      echo " \n" . $questionData["text"];
+      echo " \n" . $questionData["x_coord"];
+      echo " \n" . $questionData["y_coord"];
+      echo " \n" . $questionData["time"];
+      
+      $sql = "SELECT text, is_correct, letter FROM answers "
+             . "WHERE question_id = $questionID ORDER BY letter;";
+      $answerResult =  sqlWithResult0($mysqli, $sql);
+      $row = $answerResult->fetch_assoc();
+      echo " \n" . $row["letter"] . $row["is_correct"] . $row["letter"];
+      while($row = $answerResult->fetch_assoc())
+        echo " \\" . $row["letter"] . $row["is_correct"] . $row["letter"];
+    } // while
+    
+    clearAnswers($mysqli);
   } // insertNewHost
+  
+  function clearAnswers($mysqli)
+  {
+    $sql = "UPDATE players SET answer = '-' WHERE host_id = ?;";
+    sqlWithoutResult1($mysqli, $sql, $_GET["h"]);
+  } // clearAnswers
   
   function pollForPlayers($mysqli)
   {
@@ -131,33 +156,9 @@
     $sql = "UPDATE hosts SET state = ? WHERE host_id = ?;";
     sqlWithoutResult2($mysqli, $sql, $_GET["s"], $_GET["h"]);
     if($_GET["s"] == "question")
-      getQuestion($mysqli);
+    {
+      clearAnswers($mysqli);
+      $sql = "UPDATE hosts SET current_question_id = ? WHERE host_id = ?;";
+      sqlWithoutResult2($mysqli, $sql, $_GET["q"], $_GET["h"]);
+    } // if
   } // updateState
-  
-  function getQuestion($mysqli)
-  {
-    $sql = "UPDATE players SET answer = '-' WHERE host_id = ?;";
-    sqlWithoutResult1($mysqli, $sql, $_GET["h"]);  
-
-    $sql = "SELECT question_id, text, linked_answer, time FROM questions "
-                . "WHERE quiz_id = ? AND order_num = ?;";
-    $result = sqlWithResult2($mysqli, $sql, $_GET["q"], $_GET["n"]);   
-    $questionData = $result->fetch_assoc();
-    $questionID = $questionData["question_id"];
-    echo $questionData["text"];
-    echo " \n" . $questionData["linked_answer"];
-    echo " \n" . $questionData["time"];
-   
-    $sql = "SELECT letter FROM answers "
-                . "WHERE question_id = ? AND is_correct = 1;";
-    $result = sqlWithResult1($mysqli, $sql, $questionID);
-    echo " \n" . $result->fetch_assoc()["letter"];
-    while($row = $result->fetch_assoc())
-      echo $row["letter"];
-    
-    $sql = "SELECT text, answer_id FROM answers "
-                . "WHERE question_id = ? ORDER BY letter;";
-    $result = sqlWithResult1($mysqli, $sql, $questionID);
-    while($row = $result->fetch_assoc())
-      echo " \n" . $row["text"] . " \\" .  $row["answer_id"];
-  } // outputQuestion

@@ -16,8 +16,7 @@ var alreadyJoined = false;
 var quizCode;
 // The selected screen name;
 var screenName;
-//
-var quizID;
+
 var currentQuestionNum = 1;
 var currentQuestionAnswers;
 var currentQuestionText;
@@ -52,14 +51,12 @@ function setPlayerID(playerAndHostID)
     var playerIDhostIDArray = playerAndHostID.split(" \n");
     //  assign the host, quiz and player IDs
     hostID = playerIDhostIDArray[0];
-    quizID = playerIDhostIDArray[1];
-    playerID = playerIDhostIDArray[2];
+    playerID = playerIDhostIDArray[1];
 
     pollForStateInterval = setInterval(function() { requestDataFromDB(
                                       pollForState, 
                                       "playerConnectToDB.php?a=pfs&h=" + hostID +"&p=" 
-                                      + playerID + "&q=" + quizID + "&n=" + currentQuestionNum); 
-                                                  }, POLL_FOR_STATE_DELAY);
+                                      + playerID); }, POLL_FOR_STATE_DELAY);
 
     updateIntroState();
   } // else
@@ -89,6 +86,8 @@ function pollForState(responseText)
           + quizID + "&n=" + currentQuestionNum + "&p=" + playerID);
     else if(statesArray[0] == "outro" && currentState != "outro")
       updateOutroState();
+    else if(statesArray[0] == "floating" && currentState != "floating")
+      updateFloatingState();
   } // else
 } //pollForState
 
@@ -175,6 +174,12 @@ function updateQuestionState(returnedText)
   displayQuestionAndAnswers();
 }  // end-updateQuestionState
 
+function updateFloatingState()
+{
+  // Do something to indicate the host is floating.
+  currentState = "floating"
+} // updateFloatingState
+
 
 // A function to display the fetched question and answers.
 function displayQuestionAndAnswers()
@@ -257,8 +262,6 @@ function updateOutroState()
 {
   // Set the current state to reflect that it is now the outro.
   currentState = "outro";
-  // No longer needs to poll for state when in outro as the quiz is over.
-  clearInterval(pollForStateInterval);
   // Call the function which actually makes the transition.
   displayOutro();
 }  // end-updateOutroState

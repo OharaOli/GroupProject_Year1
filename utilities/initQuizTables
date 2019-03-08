@@ -15,9 +15,9 @@ CREATE TABLE  quizzes(
 CREATE TABLE questions(
   question_id int NOT NULL AUTO_INCREMENT,
   quiz_id int NOT NULL,
-  order_num int NOT NULL, 
   text VARCHAR(255) NOT NULL,
-  linked_answer int NOT NULL,
+  x_coord int NOT NULL,
+  y_coord int NOT NULL,
   time int NOT NULL,
   PRIMARY KEY(question_ID));
   
@@ -31,10 +31,10 @@ CREATE TABLE answers(
   PRIMARY KEY(answer_id));
   
 INSERT INTO quizzes(name, user_id) VALUES("Test Quiz", 1);
-INSERT INTO questions VALUES (NULL, 1, 1, "What is 9 squared?", 0, 10),
-                                                   (NULL, 1, 2, "What is the capital of England?", 0, 10),
-                                                   (NULL, 1, 3, "When was the London fire?", 5, 15), 
-                                                   (NULL, 1, 4, "What bear colours exist?", 0, 10);
+INSERT INTO questions VALUES (NULL, 1, "What is 9 squared?", 0, 0 10),
+                             (NULL, 1, "What is the capital of England?", 1, 0, 10),
+                             (NULL, 1, "When was the London fire?", 1, 1, 15), 
+                             (NULL, 1, "What bear colours exist?", 2, 0, 10);
 INSERT INTO answers VALUES
   (NULL, 1, "81", "9 times 9 is equal to 81.", 1, "A"),
   (NULL, 1, "3", "3 is the square root of 9.", 0, "B"),
