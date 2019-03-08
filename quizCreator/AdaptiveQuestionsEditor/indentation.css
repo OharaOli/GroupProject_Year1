@@ -1,8 +1,3 @@
-input.correctCheckbox
-{
-
-}
-
 
 table.rootQTable
 {
@@ -11,9 +6,74 @@ table.rootQTable
 
 }
 
-
-table.linkQTable
+table.subQTable
 {
-  margin-left: 40px;
+
+}
+
+
+table.AnswersTable
+{
+
+}
+
+
+div.subQDiv
+{
+  margin-left: 177px;
+
+}
+
+
+
+
+
+input.correctCheckbox
+{
+
+}
+
+
+input.addSubQButton
+{
+
+
+}
+
+input.addRootQButton
+{
+  width: 500px;
+  height: 50px;
+
+  margin-left: 67px;
+
+}
+
+
+input.questionField
+{
+
+
+
+}
+
+
+input.timeLimitField
+{
+
+
+
+}
+
+input.answerField
+{
+
+
+
+}
+
+input.answerDescriptionField
+{
+
 
 }

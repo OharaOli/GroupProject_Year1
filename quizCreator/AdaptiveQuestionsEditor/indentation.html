@@ -1,17 +1,19 @@
 <!DOCTYPE html>
-<!-- Jonas Feb 8, 2019 -->
 <html>
 <title>
 Quiz creator
 </title>
 <head>
   <!-- Accessing javascript from a separate file -->
-  <!-- plug in for jQuery connections -->
-  <script type="text/javascript" src="./jquery.connections.js"> </script>
 
   <!-- plug in for jQuery -->
   <script type="text/javascript" src="./jquery-3.3.1.min.js"> </script>
-  
+  <!-- plug in for jQuery connections -->
+
+  <script type="text/javascript" src="./jquery.connections.js"> </script>
+
+
+
   <script type="text/javascript" src="./indentation.js"> </script>
 
   <!-- Accessing Css from a separate file -->
@@ -22,12 +24,12 @@ Quiz creator
 
 
 
-<div style="width: 650px; margin: auto;" id="QuizEditor">
+<div style="width: 800px; margin: auto;" id="QuizEditor">
 
   <!-- buttons for editing order and submission -->
   <div>
-    <input type="button" value="edit order"> </input>
     <input type="button" value="submit"> </input>
+    <input type="button" value="edit root question order" onClick="editRootQOrder()"> </input>
   </div>
   <br/>
 
@@ -42,33 +44,33 @@ Quiz creator
       </tr>
       <tr>
         <td> Q1 </td>
-        <td> <input type="text"> </input> </td>
-        <td> <input type="text"> </input> </td>
+        <td> <input class="questionField" type="text"> </input> </td>
+        <td> <input class="timeLimitField" type="text"> </input> </td>
         <td>
-          <table id="rootQAnswersQ1" class="rootQAnswers" border="1"> <!-- answer table -->
+          <table id="AnswersTableQ1" class="AnswersTable" border="1"> <!-- answer table -->
             <tr> <!--A-->
               <td> A </td>
               <td> <input class="correctnessCheckBox" type="checkbox"> </input></td>
-              <td> <input type="text" placeholder="Answer"> </input></td>
-              <td rowspan="4"> <input type="text" placeholder="description"> </input> </td>
+              <td> <input class="answerField" type="text" placeholder="Answer"> </input></td>
+              <td rowspan="4"> <input class="answerDescriptionField" type="text" placeholder="description"> </input> </td>
             </tr>
 
             <tr> <!--B-->
               <td> B </td>
               <td> <input class="correctnessCheckBox" type="checkbox"> </input></td>
-              <td> <input type="text" placeholder="Answer"> </input></td>
+              <td> <input class="answerField" type="text" placeholder="Answer"> </input></td>
             </tr>
 
             <tr> <!--C-->
               <td> C </td>
               <td> <input class="correctnessCheckBox" type="checkbox"> </input></td>
-              <td> <input type="text" placeholder="Answer"> </input></td>
+              <td> <input class="answerField" type="text" placeholder="Answer"> </input></td>
             </tr>
 
             <tr> <!--D-->
               <td> D </td>
               <td> <input class="correctnessCheckBox"  type="checkbox"> </input></td>
-              <td> <input type="text" placeholder="Answer"> </input></td>
+              <td> <input class="answerField" type="text" placeholder="Answer"> </input></td>
             </tr>
           </table> <!-- answer table-->
         </td> <!-- the 4th column of the question table -->
@@ -77,13 +79,15 @@ Quiz creator
 
     <!-- button for adding link question -->
     <br/>
-    <input style="margin-left: 40px" type="button" value="add link question" onClick="addLinkQuestion(this)"></input>
-  </div> <!-- Q1Wrapper -->
+    <div class="subQDiv" id="subQDivQ1" data-numOfSubQSoFar="0">
+      <input class="addSubQButton" type="button" value="+" onClick="addSubQuestion(this)"></input>
+    </div>
+  </div> <!-- rootQDivQ1 -->
 
 
 
   <br/>
-  <input type="button" value="add root question" onClick="addRootQuestion(this)"> </input>
+  <input id="addRootQButton" style="display: block" class="addRootQButton" type="button" value="add root question" onClick="addRootQuestion(this)"> </input>
 </div> <!-- QuizEditor -->
 
 <br/>
