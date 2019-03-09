@@ -7,11 +7,10 @@
 <html>
 <head>
   <title></title>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  <script src="../misc/connectToDB.js"></script>
-  <script src="../player/player.js"></script>
-  <script src="playerClass.js"></script>
-  <script src="host.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js" type="text/javascript"></script>
+  <script src="../misc/connectToDB.js" type="text/javascript"></script>
+  <script src="../player/player.js" type="text/javascript"></script>
+  <link rel="stylesheet" type="text/css" href="../reveal.js-master/css/reveal.css">
   <style>
   .hidden {
     display: none;  
@@ -19,10 +18,19 @@
   </style>
 </head>
 <body>
-  <div id="host-option">
+  <div class="reveal">
+    <div class="slides">
+    </div>
+  </div>
+
+
+
+
+
+  <!--div id="host-option">
     <input id="quiz-code-host" type="text" placeholder="Quiz Code"/>
     <button id="host-button">Host Quiz</button>
-  </div> 
+  </div--> 
 
 
   <script> $(document).ready(function() {
@@ -32,7 +40,7 @@
   });
   </script>
 
-  <div id="intro-container" class="hidden">
+  <!--div id="intro-container" class="hidden">
     <h4 id="state-display"></h4>
     <button id="start-button" class="hidden">Start Quiz</button>
     <h4 id="number-of-players-connected" class="hidden">0 players are currently connected.</h4>
@@ -49,6 +57,8 @@
     <h4>this is the outro</h4>
     <ul id="score-list">
     </ul>
-  </div>
+  </div-->
+  <script src="../reveal.js-master/js/reveal.js" type="text/javascript"></script>
+  <script src="host.js" type="text/javascript"></script>
 </body>
 </html> 

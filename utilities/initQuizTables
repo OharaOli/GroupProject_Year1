@@ -31,10 +31,11 @@ CREATE TABLE answers(
   PRIMARY KEY(answer_id));
   
 INSERT INTO quizzes(name, user_id) VALUES("Test Quiz", 1);
-INSERT INTO questions VALUES (NULL, 1, "What is 9 squared?", 0, 0 10),
+INSERT INTO questions VALUES (NULL, 1, "What is 9 squared?", 0, 0, 10),
                              (NULL, 1, "What is the capital of England?", 1, 0, 10),
                              (NULL, 1, "When was the London fire?", 1, 1, 15), 
-                             (NULL, 1, "What bear colours exist?", 2, 0, 10);
+                             (NULL, 1, "What bear colours exist?", 2, 0, 10),
+                             (NULL, 1, "What letter does London start with?", 1, 2, 10);
 INSERT INTO answers VALUES
   (NULL, 1, "81", "9 times 9 is equal to 81.", 1, "A"),
   (NULL, 1, "3", "3 is the square root of 9.", 0, "B"),
@@ -46,7 +47,9 @@ INSERT INTO answers VALUES
   (NULL, 3, "2095", "The current year is not even 2095 yet!", 0, "B"),
   (NULL, 4, "Brown", "Brown bears exist.", 1, "A"),
   (NULL, 4, "Pink", "Pink bears are not real.", 0, "B"),
-  (NULL, 4, "Black", "Black bears exist.", 1, "C");
+  (NULL, 4, "Black", "Black bears exist.", 1, "C"),
+  (NULL, 5, "L", "London starts with the letter 'L'.", 1, "A"),
+  (NULL, 5, "O", "'O' is the second letter in London, not the first.", 0, "B");
 
 INSERT INTO quizzes(name, user_id) VALUES("Something", 1);
 INSERT INTO quizzes(name, user_id) VALUES("SomethingElse", 1);

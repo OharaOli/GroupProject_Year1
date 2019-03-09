@@ -19,6 +19,7 @@
     are no more questions in the quiz).
 */
 
+
 // The time in milliseconds for poll delays.
 // -------------------------------------------------------------------------------------
 // This is the delay between polling for players in the intro state.
@@ -76,6 +77,7 @@ var yCoord = 0;
 
 // Code written by Alex.
 // -------------------------------------------------------------------------
+
 // Starts the host and initialises it in the database.
 function startHost(requiredQuizCode, requiredQuizID)
 {
@@ -111,44 +113,51 @@ function setHostDetails(returnedText)
   // Question ID, text, x coordinate, y coordinate, time, answers.
   // Answers are separated by " \\" and have the following information:
   // Letter (A/B/C/D), is correct (1 or 0), text. No spaces between all 3.
-  
+
+  // The returned text split by newlines.
+  var splitText = returnedText.split(" \n");
   // Assigns the host ID for the quiz.
-  hostID = returnedText.split(" \n")[0];
+  hostID = splitText[0];
   // Stores the quiz name.
-  quizName = returnedText.split(" \n")[1];
+  quizName = splitText[1];
   // Iterates through each question, 6 pieces of data at a time.
-  for(index = 2; index < returnedText.length; index += 6)
+  for(var index = 2; index < splitText.length; index += 6)
   {
     // Gets the ID at relative index 0.
-    var id = returnedText[index];
+    var id = splitText[index];
     // Gets the text at relative index 1.
-    var text = returnedText[index + 1];
+    var questionText = splitText[index + 1];
     // Gets the x-coordinate at relative index 2.
-    var x = parseInt(returnedText[index + 2]);
+    var x = parseInt(splitText[index + 2]);
     // Gets the y-coordinate at relative index 3.
-    var y = parseInt(returnedtext[index + 3]);
+    var y = parseInt(splitText[index + 3]);
     // Gets the time at relative index 4.
-    var time = parseInt(returnedText[index + 4]);
+    var time = parseInt(splitText[index + 4]);
     // Gets the set of answers at relative index 5.
-    var answers = returnedText[index + 5].split(" \\");
+    var answers = splitText[index + 5].split(" \\");
     // Creates a dictionary of answers to populate.
-    var answerDict = {}
+    var answerDict = {};
     // Iterates through each answer.
-    for(int answerIndex = 0; answerIndex < answers.length; answerIndex++)
+    for(var answerIndex = 0; answerIndex < answers.length; answerIndex++)
     {
       // Gets the letter as the first character.
       var letter = answers[answerIndex].charAt(0);
       // Determines whether the answer is correct using the second character.
       var isCorrect = answers[answerIndex].charAt(1);
       // Gets the text using the remainder of the characters.
-      var text = answers[answerIndex].substring(2);
+      var answerText = answers[answerIndex].substring(2);
       // Creates a new answer object and adds it to the answer dictionary.
-      answerDict[letter] = new Answer(letter, isCorrect, text);
+      answerDict[letter] = new Answer(letter, isCorrect, answerText);
     } // for
-    // Creates a new question object and adds it to the 2D question array.
-    questions[x][y] = new Question(id, text, answerDict, time);
+    // If the x coordinate indicates a new root question.
+    if(x >= questions.length)
+      // Adds the question as a new array of questions.
+      questions.push([new Question(id, questionText, answerDict, time)]);
+    // Otherwise it is a subquestion.
+    else
+      // Adds the question to the existing array for that root question.
+      questions[x].push(new Question(id, questionText, answerDict, time));
   } // for
-   
   // Polls the database for new players.
   // Saves it in a variable so it can be stopped later.
   // The (a)ction is (p)oll (f)or (p)layers (pfp), the (h)ost is the host's ID.
@@ -156,6 +165,9 @@ function setHostDetails(returnedText)
                                       pollForPlayersDataReturned, 
                                       "hostConnectToDB.php?a=pfp&h=" + hostID); 
                                                   }, POLL_FOR_PLAYERS_DELAY);
+
+  // Generates the slides.
+  generateSlides();
 } // setHostDetails
 
 
@@ -173,7 +185,7 @@ function pollForPlayersDataReturned(returnedText)
   // Separates all the players.
   var receivedPlayers = returnedText.split(" \n");
   // Loops through each player that is connected to the host.
-  for(playerIndex = 0; playerIndex < receivedPlayers.length; playerIndex++)
+  for(var playerIndex = 0; playerIndex < receivedPlayers.length; playerIndex++)
   {
     // Gets the three details from the single player entry.
     var playerID = receivedPlayers[playerIndex].split(" \\")[0];
@@ -254,7 +266,7 @@ function startQuestion()
   // question (n)umber is the number of the question that needs to be fetched,
   // the new (s)tate is question and the (q)uiz ID is the ID of the quiz the 
   // question needs to be fetched from.
-  updateDataInDB(askQuestion, "hostConnectToDB.php?a=us&h=" + hostID 
+  updateDataInDB("hostConnectToDB.php?a=us&h=" + hostID 
                  + "&s=question&q=" + questions[xCoord][yCoord]); 
 
   // Starts the interval for polling for answers in the database.
@@ -263,9 +275,11 @@ function startQuestion()
                                       "hostConnectToDB.php?a=pfa&h=" + hostID); 
                                                   }, POLL_FOR_ANSWERS_DELAY);
   // DISABLE MOVING TO ANOTHER SPACE
+  // Calls a function which displays UI for question asked.
+  displayQuestionState();
   // Starts the countdown timer for the question.
   startTimer();
-} // askQuestion
+} // startQuestion
 
 
 // Handles the list of player answers returned from the server.
@@ -358,54 +372,6 @@ function showOutro()
   displayOutro();
 } // showOutro
 
-// Functions for moving the plain of view.
-// -----------------------------------------------------------------
-
-// Moves the current question to the left.
-function goLeft()
-{
-  // Ensures that the current question does not go back into the intro state.
-  if(xCoord > 0)
-  {
-    // Moves the x coordinate one space to the left.
-    xCoord -= 1;
-    // Moves the y coordinate to the first question in the stack.
-    yCoord = 0;
-  } // if
-} // goLeft
-
-// Moves the current question to the right.
-function goRight()
-{
-  // Stops polling for players if leaving the intro state.
-  
-  // Ensures the current question does not go beyond the outro state. 
-  if(xCoord < questions.length)
-  {
-    // Moves the x coordinate one space to the right.
-    xCoord += 1;
-    // Moves the y coordinate to the first question in the stack.
-    yCoord = 0;
-  } // if
-} // goRight
-
-// Moves the current question up one space.
-function goUp()
-{
-  // Ensures the current question is not the first in the stack.
-  if(yCoord > 0)
-    // Moves the current question up one space.
-    yCoord -= 1;
-} // goUp
-
-// Moves the current question down one space.
-function goDown()
-{
-  // Ensures the current question does not go beyond the bottom of the stack.
-  if(yCoord < questions[xCoord].length - 1)
-    // Moves the current question down one space.
-    yCoord += 1;
-} // goDown
 
 // Object constructors.
 // -----------------------------------------------------------------
@@ -421,18 +387,46 @@ function Question(id, text, answers, timeLimit)
   this.answers = answers;
   // The maximum amount of time allocated per question.
   this.timeLimit = timeLimit;
+  
+  // Adds the function for returning an array of correct answers.
+  this.getCorrectAnswers = getCorrectAnswers;
 } // Question 
+
+
+// Returns an array of all the correct letters for a question.
+function getCorrectAnswers()
+{
+  // Creates an empty array which will hold all the correct answer letters.
+  var correctLetters = [];
+  // Iterates through each answer.
+  for(letter in this.answers)
+  {
+    // If the answer for that letter is correct.
+    if(answers[letter].isCorrect)
+      // Adds that letter as a correct answer.
+      correctLetters.push(letter);
+  } // for
+  // Returns the array of correct letters.
+  return correctLetters;
+} // getCorrectAnswers
+
 
 // Answer class constructor.
 function Answer(letter, isCorrect, text)
 {
+  // The text representing the description of the answer.
   this.text = text;
+  // If the given correct answer is a "1".
   if(isCorrect == "1")
+    // Then the answer is correct.
     this.isCorrect = true;
   else
+    // Otherwise the answer is incorrect.
     this.isCorrect = false;
+  // Assigns the letter that the answer represents.
   this.letter = letter;
 } // Answer
+
 
 // Player class constructor.
 function Player(screenName)
@@ -450,6 +444,7 @@ function Player(screenName)
   this.giveAnswer = giveAnswer;
 } // Player constructor
 
+
 // Calculates a player's score depending if they gave the correct answer.
 function giveAnswer(correctAnswer)
 {
@@ -460,30 +455,74 @@ function giveAnswer(correctAnswer)
   this.currentAnswer = "-";
 } // giveAnswer
 
+
 // Code written by Manne.
 // --------------------------------------------------------------------------------------
 
-// A function to update the UI of intro state.
-function updateIntroUI()
+
+
+function displayQuestionState()
 {
-    // List is reset as well to be empty, to avoid duplicates.
-    $("#player-list").text("");
-    // For every player in quiz...
-    for(var index in players) 
-      // ...check if they are connected.
-      if (players[index].connected) 
-        // If they are connected, add a list element, containing the
-        //  player's screen name, to the list.
-        $("#player-list").append("<li>" + players[index].screenName
-                                                  + " has connected!</li>");
-    // Display the number of players that are currently connected.
-    $("#number-of-players-connected").text("" + numberOfConnectedPlayers
-                                                                          + " players are currently connected.");
-} // end-updateIntroUI()
+  for (letter in questions[xCoord][yCoord].answers)
+    $("#" + xCoord + "-" + yCoord).append("<p>" + letter + ":\t" + questions[xCoord][yCoord].answers[letter].text + "</p>");
+
+}  // end-displayQuestionState
+
+
+function addStartButtonToSlide(requiredX, requiredY)
+{
+  $("#" + requiredX + "-" + requiredY).append("<button class='start-button'>Start Question</button");
+
+}  // end-addButtonToSlide
+
+function generateSlides()
+{
+  for (var xIndex = 0; xIndex < questions.length; xIndex++)
+    for (var yIndex = 0; yIndex < questions[xIndex].length; yIndex++)
+    {
+      if (yIndex == 0)
+      {
+        $(".slides").append("<section id='root" + xIndex + "'><section id='" + xIndex + "-0" + "'>" + questions[xIndex][0].text + "</section></section>");
+      }  // end-if
+      else
+      {
+        $("#root" + xIndex).append("<section id='" + xIndex + "-" + yIndex + "'>" + questions[xIndex][yIndex].text + "</section>");
+      }  // end-else
+      addStartButtonToSlide(xIndex, yIndex);
+     }  // end-for    
+  // __
+  Reveal.initialize();
+}  // end-generateSlides
+
+
+Reveal.addEventListener('slidechanged', function(event) {
+  xCoord = parseInt($(event.currentSlide).attr('id').split("-")[0]);
+  yCoord = parseInt($(event.currentSlide).attr('id').split("-")[1]);
+  oldXCoord = parseInt($(event.previousSlide).attr('id').split("-")[0]);
+  oldYCoord = parseInt($(event.previousSlide).attr('id').split("-")[1]);
+  if(xCoord != oldXCoord && yCoord > 0)
+  {
+    for(var toGoUp = yCoord; toGoUp > 0; toGoUp--)
+      Reveal.up();
+    yCoord = 0;
+  } // if
+    
+  console.log(xCoord + ":" + yCoord);
+// event.previousSlide, event.currentSlide, event.indexh, event.indexv
+});
+  
 
 
 // Execute the code when the page is ready.
 $(document).ready(function() {
+
+
+
+  $(".start-button").click(function() {
+    startQuestion();
+  });
+  
+
   // Upon clicking the 'Host Quiz' button...
   $("#host-button").click(function() {
     // Check that the length of the characters in the input feld is
@@ -537,6 +576,7 @@ $(document).ready(function() {
 });
 
 
+/*
 // Ends the feedback state and moves on to the next question.
 function startQuestion() {
   // Remove all question and answer elements from page.
@@ -547,7 +587,28 @@ function startQuestion() {
   $("#next-button").hide();
   // Show instead the reveal button.
   $("#reveal-button").show();
-}  // end-startQuestion
+}  // end-startQuestion */
+
+
+
+// A function to update the UI of intro state.
+function updateIntroUI()
+{
+    // List is reset as well to be empty, to avoid duplicates.
+    $("#player-list").text("");
+    // For every player in quiz...
+    for(var index in players) 
+      // ...check if they are connected.
+      if (players[index].connected) 
+        // If they are connected, add a list element, containing the
+        //  player's screen name, to the list.
+        $("#player-list").append("<li>" + players[index].screenName
+                                                  + " has connected!</li>");
+    // Display the number of players that are currently connected.
+    $("#number-of-players-connected").text("" + numberOfConnectedPlayers
+                                                                          + " players are currently connected.");
+} // end-updateIntroUI()
+
 
 
 // Ends the current question and moves on to the feedback state.

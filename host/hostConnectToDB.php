@@ -79,12 +79,10 @@
              . "WHERE question_id = $questionID ORDER BY letter;";
       $answerResult =  sqlWithResult0($mysqli, $sql);
       $row = $answerResult->fetch_assoc();
-      echo " \n" . $row["letter"] . $row["is_correct"] . $row["letter"];
+      echo " \n" . $row["letter"] . $row["is_correct"] . $row["text"];
       while($row = $answerResult->fetch_assoc())
-        echo " \\" . $row["letter"] . $row["is_correct"] . $row["letter"];
+        echo " \\" . $row["letter"] . $row["is_correct"] . $row["text"];
     } // while
-    
-    clearAnswers($mysqli);
   } // insertNewHost
   
   function clearAnswers($mysqli)
