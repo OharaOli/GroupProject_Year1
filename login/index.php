@@ -68,8 +68,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
  { 
     $_SESSION["username"] = $username;
     // redirect to welcome.php 
-     header("Location: ../hub/index.php"); 
-     exit();
+    header( 'Location: http://10.2.232.132/GroupHostTest/hub/index.php' );
+    //header("Location: ../hub/index.php"); 
+    exit();
 }  // if  
 
 
