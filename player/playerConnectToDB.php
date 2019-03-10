@@ -109,6 +109,7 @@
     return $result->fetch_assoc()["current_question_id"];
   } // getCurrentQuestionID
   
+ 
   function outputFeedback($mysqli)
   {
     $questionID = getCurrentQuestionID($mysqli);
@@ -117,18 +118,20 @@
     $result = sqlWithResult1($mysqli, $sql, $_GET["p"]);
     $answerLetter =  $result->fetch_assoc()["answer"];
     
+    
     if($answerLetter == "-")
       echo "0 \nYou did not provide an answer.";
     else 
     {
       $sql = "SELECT is_correct, feedback FROM answers "
-             . "WHERE letter = $answerLetter AND  question_id = $questionID;";
+             . "WHERE letter = '$answerLetter' AND question_id = $questionID;";
       $result = sqlWithResult0($mysqli, $sql);
       $answerData = $result->fetch_assoc();
       echo $answerData["is_correct"];
       echo " \n" . $answerData["feedback"];
-    } // else
+    } // else 
   } // outputFeedback
+  
   
   function outputQuestion($mysqli)
   {
@@ -146,12 +149,14 @@
       echo " \n" . $row["text"];
   } // outputQuestion
   
+  
   // Disconnects oneself from the table.
   function disconnectSelf($mysqli)
   {
     $sql = "UPDATE players SET connected = 0 WHERE player_id = ?;";
     sqlWithoutResult1($mysqli, $sql, $_GET["p"]);
   } // disocnnectSelf
+  
   
   // Inserts the given answer into the table.
   function insertAnswer($mysqli)

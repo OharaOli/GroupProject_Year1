@@ -226,7 +226,6 @@ function updateFeedbackState(returnedText)
 {  
   var isCorrectBool = returnedText.split(" \n")[0];
   var feedback = returnedText.split(" \n")[1];
-  currentQuestionNum++;
   var isCorrect = false;
   if(isCorrectBool == "1")
   {

@@ -19,10 +19,6 @@
   </style>
 </head>
 <body>
-  <div class="reveal">
-    <div class="slides">
-    </div>
-  </div>
 
 
 
@@ -38,17 +34,24 @@
     var quizCode = <?php echo json_encode($_POST['quizCode']); ?>;
     var quizID = <?php echo json_encode($_POST['quizID']); ?>;
     startHost(quizCode, quizID);
-  });
+    });
   </script>
 
-  <!--div id="intro-container" class="hidden">
+  <div id="intro-container">
     <h4 id="state-display"></h4>
-    <button id="start-button" class="hidden">Start Quiz</button>
-    <h4 id="number-of-players-connected" class="hidden">0 players are currently connected.</h4>
+    <h2>Quiz Code: <?php echo $_POST['quizCode'];?></h2>
+    <button id="start-button">Start Quiz</button>
+    <h4 id="number-of-players-connected">0 players are currently connected.</h4>
     <ul id="player-list">
     </ul>
   </div>
-  <div id="q-and-a-container" class="hidden">
+  
+  <div class="reveal">
+    <div class="slides">
+    </div>
+  </div>
+  
+  <!--<div id="q-and-a-container" class="hidden">
     <h3 id="timer"></h3>
     <p id="numberOfAnswers">Answers so far: 0</p>
     <button id="reveal-button">Reveal Answer</button>

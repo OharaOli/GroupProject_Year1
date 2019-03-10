@@ -73,8 +73,6 @@ var quizID;
 var xCoord = 0;
 // The y-coordinate in the plane where the host is currently looking at.
 var yCoord = 0;
-// Determines if the host is currently in the floating state.
-var isFloating = false;
 
 // Code written by Alex.
 // -------------------------------------------------------------------------
@@ -243,7 +241,10 @@ function startQuiz()
 {
   // Stops polling for new players.
   clearInterval(pollForPlayersInterval);
-  enterFloatingState();
+  // Changes the host's state to floating as it is initially navigating.
+  // The (a)ction is (u)pdating the (s)tate, the (h)ost ID is the host's ID, and the
+  // new (s)tate is the floating state.
+  updateDataInDB("hostConnectToDB.php?a=us&h=" + hostID + "&s=floating");
   // Starts an interval for simply updating the time in the database as otherwise
   // a lack of updates would indicate to a player that the host has disconnected.
   // The (a)ction is (u)pdating the (t)ime (ut) and the (h)ost ID is the host's ID.
@@ -258,7 +259,7 @@ function startQuestion()
 {
   // Stops the interval for updating the time in the database from feedback state.
   clearInterval(updateTimeInterval);
-  isFloating = false;
+  
   // Updates the state in the database so that players also get the next question.
   // It also fetches all the required information for the next question.
   // The (a)ction is (u)pdate (s)tate (us), the (h)ost ID is the host's ID, the 
@@ -270,17 +271,24 @@ function startQuestion()
 
   // Starts the interval for polling for answers in the database.
   // The (a)ction is (p)olling (f)or (a)nswers, the (h)ost ID is the host's ID.
-  pollForAnswersInterval = setInterval(function() { requestDataFromDB(
-                                      pollForAnswersDataReturned, 
+  pollForAnswersInterval = setInterval(function() { updateDataInDB( 
                                       "hostConnectToDB.php?a=pfa&h=" + hostID); 
                                                   }, POLL_FOR_ANSWERS_DELAY);
-
+  // DISABLE MOVING TO ANOTHER SPACE
   // Calls a function which displays UI for question asked.
-  displayQuestionState();
+  updateQuestionState();
   
   // Starts the countdown timer for the question.
   startTimer();
 } // startQuestion
+
+// Ends the current question and moves on to the feedback state.
+function endQuestion() {
+
+  toggleNavigation(true);
+  updateFeedbackState();
+  clearInterval(timerInterval);
+}  // end-endQuestion
 
 
 // Handles the list of player answers returned from the server.
@@ -313,7 +321,7 @@ function pollForAnswersDataReturned(returnedText)
       setPlayerAsDisconnected();
     // If the answer was actually an answer (and not an unanswered '-')
     // and the answer is a possible answer out of the list of letters in the question.
-    else if(answer != "-" && answer in questions[xCoord][yCoord].answers)
+    else if(answer != "-" && answer in currentQuestionAnswers)
     {
       // Increases the number of answers given.
       numAnswersGiven++;
@@ -330,16 +338,8 @@ function pollForAnswersDataReturned(returnedText)
 // Handles the required functionality for the feedback state.
 function updateFeedbackState()
 {
-  // Clears the timer interval.
-  clearInterval(timerInterval);
   // Clears the interval for polling for answers.
   clearInterval(pollForAnswersInterval);
-  
-  // Updates the state in the database to be in the feedback state.
-  // The (a)ction is (u)pdating the (s)tate, the (h)ost ID is the host's ID, and the 
-  // new (s)tate is the feedback state.
-  updateDataInDB("hostConnectToDB.php?a=us&h=" + hostID + "&s=feedback");
-  
   // Starts an interval for simply updating the time in the database as otherwise
   // a lack of updates would indicate to a player that the host has disconnected.
   // The (a)ction is (u)pdating the (t)ime (ut) and the (h)ost ID is the host's ID.
@@ -357,9 +357,13 @@ function updateFeedbackState()
       answerSelections[players[key].currentAnswer]++;
     // Gives the correct answers to the player object in the dictionary so
     // that their score can be updated depending on if they got the answer correct.
-    players[key].giveAnswer(questions[xCoord][yCoord].getCorrectAnswers());
+    players[key].giveAnswer(currentQuestionCorrectAnswers);
   } // for
   
+  // Updates the state in the database to be in the feedback state.
+  // The (a)ction is (u)pdating the (s)tate, the (h)ost ID is the host's ID, and the 
+  // new (s)tate is the feedback state.
+  updateDataInDB("hostConnectToDB.php?a=us&h=" + hostID + "&s=feedback");
   
   // Displays the required UI for the feedback state.
   displayFeedbackState(answerSelections);
@@ -369,7 +373,6 @@ function updateFeedbackState()
 // Handles the required functionality for the outro state.
 function showOutro()
 {
-  isFloating = false;
   // Makes a final update to the database to inform players of the outro state.
   // The (a)ction is (u)pdating the (s)tate, the (h)ost ID is the host's ID, and the
   // new (s)tate is the outro state.
@@ -377,16 +380,6 @@ function showOutro()
   // Displays the required UI for the outro state.
   displayOutro();
 } // showOutro
-
-
-function enterFloatingState()
-{
-  // Changes the host's state to floating as it is initially navigating.
-  // The (a)ction is (u)pdating the (s)tate, the (h)ost ID is the host's ID, and the
-  // new (s)tate is the floating state.
-  updateDataInDB("hostConnectToDB.php?a=us&h=" + hostID + "&s=floating");
-  isFloating = true;
-} // enterFloatingState
 
 
 // Object constructors.
@@ -418,7 +411,7 @@ function getCorrectAnswers()
   for(letter in this.answers)
   {
     // If the answer for that letter is correct.
-    if(this.answers[letter].isCorrect)
+    if(answers[letter].isCorrect)
       // Adds that letter as a correct answer.
       correctLetters.push(letter);
   } // for
@@ -457,7 +450,7 @@ function Player(screenName)
   this.currentAnswer = "-";
   
   // Assigns the class methods.
-  this.giveAnswer = giveAnswer;
+  this.s = giveAnswer;
 } // Player constructor
 
 
@@ -478,8 +471,7 @@ function giveAnswer(correctAnswer)
 function getCoords()
 {
   return xCoord + "-" + yCoord;
-} // getCoords
-
+} // getCoord
 
 function toggleNavigation(booleanState)
 {
@@ -493,30 +485,25 @@ function toggleNavigation(booleanState)
 }  // end-toggleNavitatioN
 
 
-function displayQuestionState()
+
+function updateQuestionState()
 {
   toggleNavigation(false);
-  $("#" + getCoords()).append("<p id='number-of-answers'></p>");
+  displayQuestionState();
+}  // end-updateQuestionState
+
+
+function displayQuestionState()
+{
+  $("#question-" + getCoords()).append("<p id='number-of-answers'></p>");
   updatePlayerAnswers(0);
   for (letter in questions[xCoord][yCoord].answers)
-    $("#" + getCoords()).append("<div class='answerbox'><p>" + letter + ":\t" + questions[xCoord][yCoord].answers[letter].text + "</p></div>");
+    $("#question-" + xCoord + "-" + yCoord).append("<div class='answerbox'><p>" + letter + ":\t" + questions[xCoord][yCoord].answers[letter].text + "</p></div>");
 }  // end-displayQuestionState
-
-
-// A function which updates the number of players who have currently
-// answered the question. (Not during feedback stage!)
-function updatePlayerAnswers(numOfAnswers)
-{
-
-    $("#number-of-answers")
-      .text("Answers so far: " + numOfAnswers);
-}  // end-updatePlayerAnswers
 
 
 function displayFeedbackState(answerSelections)
 {
-  toggleNavigation(true);
-  $("#stop-" + getCoords()).remove();
   $("#timer").remove();
   $("#number-of-answers").remove();
 
@@ -525,7 +512,7 @@ function displayFeedbackState(answerSelections)
     //selected when only A and B are available.
     if(answerSelection in questions[xCoord][yCoord].answers)
       // Display the number of players who chose each answer respectively.
-      $("#" + getCoords()).append("<p>Number of  " +
+      $("#" + xCoord + "-" + yCoord).append("<p>Number of  " +
         answerSelection + "s: " + answerSelections[answerSelection]);
 
 }  // end-displayFeedbackState
@@ -576,13 +563,35 @@ function addStartButtonToSlide(requiredX, requiredY)
   $("#start-" + requiredX + "-" + requiredY).click(function() {
     $(this).attr("id", "stop-" + requiredX + "-" + requiredY).text("Stop Question").unbind("click");
     $(this).click(function() {
-      updateFeedbackState();
+      $(this).remove();
+      endQuestion();
     });
     startQuestion();
   });
 
   
 }  // end-addButtonToSlide
+
+/*
+function generateIntroSlide()
+{
+  toggleNavigation(false);
+  $(".slides").append("<section id='intro-slide'></section>");
+  $("#intro-slide").append("<h2>Quiz Code: " + quizCode + "</h2>");
+  $("#intro-slide").append("<h4 id='number-of-players-connected'> 0 players are currently connected.</h4>");
+  $("#intro-slide").append("<ul id='player-list'></ul>");
+  $("#intro-slide").append("<button id='intro-button'>Start Quiz</button>");
+  $("#intro-button").click(function() {
+    Reveal.right();
+    Reveal.right();
+    $("#intro-slide").remove();
+    toggleNavigation(true);
+    Reveal.left();
+  });
+  
+  //#number-of-players-connected
+}//end-generateIntroSlide
+*/
 
 
 function generateSlides()
@@ -596,7 +605,7 @@ function generateSlides()
       }  // end-if
       else
       {
-        $("#root" + xIndex).append("<section id='" + xIndex + "-" + yIndex + "'><h2>" + questions[xIndex][yIndex].text + "</h2></section>");
+        $("#root" + xIndex).append("<section id='" + xIndex + "-" + yIndex + "'><h2 id='question-" + xIndex + "-" + yIndex + "'>" + questions[xIndex][yIndex].text + "</h2></section>");
       }  // end-else
       addStartButtonToSlide(xIndex, yIndex);
      }  // end-for    
@@ -618,9 +627,6 @@ Reveal.addEventListener('slidechanged', function(event) {
     yCoord = 0;
   } // if
   
-  if(!isFloating)
-    enterFloatingState();
-  
 // event.previousSlide, event.currentSlide, event.indexh, event.indexv
 });
 
@@ -630,14 +636,14 @@ function startTimer() {
   // The time left until countdown is 0.
   var timeLeft = questions[xCoord][yCoord].timeLimit;
   // Show the timer countdown.
-  $("#" + getCoords()).append("<h3 id='timer'></h3>");
+  $("#" + xCoord + "-" + yCoord).append("<h3 id='timer'></h3>");
   // A function which decrements the countdown by 1, displays
   // it and if it has run out, then ends the question.
   var updateTimer = function() {
     $("#timer").html(timeLeft);
     if (timeLeft < 0)
     {
-      updateFeedbackState();
+      endQuestion();
       return;
     }  // end-if
     timeLeft--;
@@ -652,8 +658,39 @@ function startTimer() {
 
 
 
+
+
 // Execute the code when the page is ready.
 $(document).ready(function() {
+
+  /*
+  // Upon clicking the 'Host Quiz' button...
+  $("#host-button").click(function() {
+    // Check that the length of the characters in the input feld is
+    // exactly 5. (trim removes whitespace)
+    if ($.trim($("#quiz-code-host").val()).length == 6)
+    {
+      // Remove the ability to host another quiz.
+      // The button and input field are contained within a div parent element.
+      $("#host-option").hide();
+      // Show the intro container div contents.
+      $("#intro-container").show();
+      // Store the value of the quiz code input field in quizCode.
+      quizCode = $("#quiz-code-host").val();
+      // Call the function to start the quiz, passing quizCode as argument.
+      startHost(quizCode, 1);
+      // Display the quiz code chosen by the host.
+      $("#state-display").text("Quiz with quiz code: "
+                                               + quizCode + " has been created.");
+      // Since quiz has been created, the host can now start it,
+      // which is why the start button is now shown.
+      $("#start-button").show();
+      // Show the number of players connected.
+      $("#number-of-players-connected").show();
+    }  // end-if
+  });
+  */
+
   // Upon clicking the 'Start Quiz' button...
   $("#start-button").click(function() {
     // Starts the functional part of the quiz.
@@ -663,7 +700,36 @@ $(document).ready(function() {
     // Call the function to start the quiz.
     generateSlides();
   });
+
+  /*
+  // Display the feedback upon clicking the 'next' button.
+  $("#reveal-button").click(function() {
+    // End question and move on to the feedback state.
+    endQuestion();
+  });
+
+  
+  // Display the next question upon clicking the 'next' button.
+  $("#next-button").click(function() {
+    // Ends the feedback state and moves on to the next question.
+    startQuestion();
+  });
+  */
 });
+
+
+/*
+// Ends the feedback state and moves on to the next question.
+function startQuestion() {
+  // Remove all question and answer elements from page.
+  clearQuestionAndAnswers();
+  // Fetch and display the next question with its answers.
+  getNextQuestion();
+  // Hide the next button.
+  $("#next-button").hide();
+  // Show instead the reveal button.
+  $("#reveal-button").show();
+}  // end-startQuestion */
 
 
 
@@ -686,7 +752,96 @@ function updateIntroUI()
 } // end-updateIntroUI()
 
 
+
+// A function to display the fetched question and answers.
+function displayQuestionAndAnswers()
+{
+  // Shows the answers so far and sets the initial value to 0.
+  $("#numberOfAnswers").show();
+  updatePlayerAnswers(0);
+  // Displays the answer that this question links to.
+  $("#q-and-a-container").append(
+                                         "<h3>" + currentQuestionLinkedAnswer + "</h3>");
+  // Adds a header containing the current question.
+  $("#q-and-a-container").append("<h2>" + currentQuestionText + "</h2>");
+
+  // A string variable to contain all answers, initially empty.
+  var answers_collection = "";
+  // Add the answers onto a string, one at a time.
+  for (var key in currentQuestionAnswers)
+    answers_collection += (key + ": " + currentQuestionAnswers[key] + "<br />");
+
+  // Adds a paragraph containing the current different possible answers.
+  $("#q-and-a-container").append("<p>" + answers_collection + "</p>");
+} // displayQuestionAndAnswers
+
+
+// A function which updates the number of players who have currently
+// answered the question. (Not during feedback stage!)
+function updatePlayerAnswers(numOfAnswers)
+{
+
+    $("#question-" + getCoords())
+      .text("Answers so far: " + numOfAnswers);
+}  // end-updatePlayerAnswers
+
+
 /*
+// A function which adds some text, within the q-and-a div
+// container, which contains the correct answer and who answered what.
+function displayFeedback(answerSelections)
+{
+  // Hides the number of answers given.
+  $("#numberOfAnswers").hide();
+  // Loop through answers.
+  for(answerSelection in answerSelections)
+    // To make sure (for some reason) answer D is
+    //selected when only A and B are available.
+    if(answerSelection in currentQuestionAnswers)
+      // Display the number of players who chose each answer respectively.
+      $("#q-and-a-container").append("<p>Number of  " +
+        answerSelection + "s: " + answerSelections[answerSelection]);
+  // If there is more than one correct answer.
+  if(currentQuestionCorrectAnswers.length > 1)
+  {
+    // Forms a string that shows all the correct answers.
+    var answersToOutput = "<p>The correct answers are ";
+    // Iterates through each correct answer except the last.
+    for(answerIndex = 0; answerIndex < currentQuestionCorrectAnswers.length - 1;
+          answerIndex++)
+      // Adds the text for that correct answer to the string.
+      answersToOutput += 
+        currentQuestionAnswers[currentQuestionCorrectAnswers[answerIndex]] 
+        + " and ";
+    // Adds the final correct answer seperately as it does not end with an 'and'.
+    answersToOutput +=
+      currentQuestionAnswers[currentQuestionCorrectAnswers
+      [currentQuestionCorrectAnswers.length - 1]] + ".</p>";
+    // Displays the correct answers by appending it to the page.
+    $("#q-and-a-container").append(answersToOutput);
+  } // if 
+  // Otherwise there is only one correct answer.
+  else 
+    // That correct answer can simply be displayed.
+    $("#q-and-a-container").append("<p>The correct answer is "
+      + currentQuestionAnswers[currentQuestionCorrectAnswers[0]] + "</p>");
+}  // end-displayFeedback
+*/
+
+
+// A function to remove all elements used in the question and
+// answers container (except for buttons, the number of answers and timer),
+// in order to introduce the next round of question and answers.
+function clearQuestionAndAnswers()
+{
+  // Remove what is no longer required.
+  $("#q-and-a-container")
+    .find("*").not(":button").not("#numberOfAnswers").not("#timer").remove();
+    // Hide the timer.
+    $("#timer").hide;
+}  // end-clearQuestionAndAnswers
+
+
 // A function which displays the outro page.
 function displayOutro()
 {
@@ -702,4 +857,3 @@ function displayOutro()
   // Make visible the contents of the outro container div.
   $("#outro-container").show();    
 }  // end-displayOutro
-*/
