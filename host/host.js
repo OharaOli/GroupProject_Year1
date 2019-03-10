@@ -270,7 +270,7 @@ function startQuestion()
   // the new (s)tate is question and the (q)uiz ID is the ID of the quiz the 
   // question needs to be fetched from.
   updateDataInDB("hostConnectToDB.php?a=us&h=" + hostID 
-                 + "&s=question&q=" + questions[xCoord][yCoord]); 
+                 + "&s=question&q=" + questions[xCoord][yCoord].id); 
 
   // Starts the interval for polling for answers in the database.
   // The (a)ction is (p)olling (f)or (a)nswers, the (h)ost ID is the host's ID.
@@ -505,7 +505,7 @@ function updateFeedbackState()
 function displayQuestionState()
 {
   for (letter in questions[xCoord][yCoord].answers)
-    $("#question-" + xCoord + "-" + yCoord).after("<p class='answerbox'>" + letter + ":\t" + questions[xCoord][yCoord].answers[letter].text + "</p>");
+    $("#question-" + xCoord + "-" + yCoord).append("<div class='answerbox'><p>" + letter + ":\t" + questions[xCoord][yCoord].answers[letter].text + "</p></div>");
 }  // end-displayQuestionState
 
 
@@ -550,7 +550,7 @@ function generateSlides()
     {
       if (yIndex == 0)
       {
-        $(".slides").append("<section id='root" + xIndex + "'><section id='" + xIndex + "-0" + "'><h2 id='question-" + xIndex + "-0" + "'>" + questions[xIndex][0].text + "</h2></section>");
+        $(".slides").append("<section id='root" + xIndex + "'><section id='" + xIndex + "-0" + "'><div id='question-" + xIndex + "-0" + "'><h2>" + questions[xIndex][0].text + "</h2></div></section>");
       }  // end-if
       else
       {
