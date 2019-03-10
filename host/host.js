@@ -543,14 +543,35 @@ function addStartButtonToSlide(requiredX, requiredY)
   
 }  // end-addButtonToSlide
 
+
+function generateIntroSlide()
+{
+  toggleNavigation(false);
+  $(".slides").append("<section id='intro-slide'></section>");
+  $("#intro-slide").append("<h2>Quiz Code: " + quizCode + "</h2>");
+  $("#intro-slide").append("<h4 id='number-of-players-connected'> 0 players are currently connected.</h4>");
+  $("#intro-slide").append("<ul id='player-list'></ul>");
+  $("#intro-slide").append("<button id='intro-button'>Start Quiz</button>");
+  $("#intro-button").click(function() {
+    toggleNavigation(true);
+    Reveal.right();
+    $("#intro-slide").remove();
+  });
+  
+  //#number-of-players-connected
+}//end-generateIntroSlide
+
+
 function generateSlides()
 {
+  generateIntroSlide()
+  
   for (var xIndex = 0; xIndex < questions.length; xIndex++)
     for (var yIndex = 0; yIndex < questions[xIndex].length; yIndex++)
     {
       if (yIndex == 0)
       {
-        $(".slides").append("<section id='root" + xIndex + "'><section id='" + xIndex + "-0" + "'><div id='question-" + xIndex + "-0" + "'><h2>" + questions[xIndex][0].text + "</h2></div></section>");
+        $(".slides").append("<section id='root" + xIndex + "'><section id='" + xIndex + "-0" + "'><div id='question-" + xIndex + "-0" + "'><h2>" + questions[xIndex][0].text + "</h2></div></section></section>");
       }  // end-if
       else
       {
@@ -566,14 +587,19 @@ function generateSlides()
 Reveal.addEventListener('slidechanged', function(event) {
   xCoord = parseInt($(event.currentSlide).attr('id').split("-")[0]);
   yCoord = parseInt($(event.currentSlide).attr('id').split("-")[1]);
+  
+  /*
   oldXCoord = parseInt($(event.previousSlide).attr('id').split("-")[0]);
   oldYCoord = parseInt($(event.previousSlide).attr('id').split("-")[1]);
+ 
   if(xCoord != oldXCoord && yCoord > 0)
   {
     for(var toGoUp = yCoord; toGoUp > 0; toGoUp--)
       Reveal.up();
     yCoord = 0;
   } // if
+  */
+  
 // event.previousSlide, event.currentSlide, event.indexh, event.indexv
 });
 
