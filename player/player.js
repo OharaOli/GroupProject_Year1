@@ -1,6 +1,6 @@
 // Written by Praeveen and Alex
 
-// The ID of the player currently playing the game 
+// The ID of the player currently playing the game
 var playerID;
 // The ID of the host of which the player is currently in the quiz in
 var hostID;
@@ -56,14 +56,14 @@ function setPlayerID(playerAndHostID)
     playerID = playerIDhostIDArray[2];
 
     pollForStateInterval = setInterval(function() { requestDataFromDB(
-                                      pollForState, 
-                                      "playerConnectToDB.php?a=pfs&h=" + hostID +"&p=" 
-                                      + playerID + "&q=" + quizID + "&n=" + currentQuestionNum); 
+                                      pollForState,
+                                      "playerConnectToDB.php?a=pfs&h=" + hostID +"&p="
+                                      + playerID + "&q=" + quizID + "&n=" + currentQuestionNum);
                                                   }, POLL_FOR_STATE_DELAY);
 
     updateIntroState();
   } // else
-} //setPlayerID    
+} //setPlayerID
 
 
 function pollForState(responseText)
@@ -72,12 +72,12 @@ function pollForState(responseText)
 
   // If the host has disconnected according to the server.
   if (statesArray[1] == "0")
-  {     
-    // Stops polling for player 
+  {
+    // Stops polling for player
     clearInterval(pollForStateInterval);
-    // Gives an error message. 
+    // Gives an error message.
     document.write("Host disconnected.");
-  } // if      
+  } // if
   else
   {
     // use  a switch statement to pick which function will run based on the state
@@ -110,7 +110,7 @@ $(document).ready(function() {
 
   // Upon clicking on a particular answer button...
   $("#answer-button-container :button").click(function() {
-    // Store the value of this button in a variable.    
+    // Store the value of this button in a variable.
     var answerSelected = $(this).val();
     // Make the selected answer text visible.
     $("#selected-answer-message").show();
@@ -150,18 +150,18 @@ function displayIntro()
 function inputAnswer(requiredAnswer)
 {
     currentQuestionAnswerSelected = requiredAnswer;
-    updateDataInDB("playerConnectToDB.php?a=ua&p=" + playerID 
+    updateDataInDB("playerConnectToDB.php?a=ua&p=" + playerID
                                   + "&w=" + requiredAnswer);
 }  // end-inputAnswer
 
 
-// function to show the question to the player 
+// function to show the question to the player
 function updateQuestionState(returnedText)
 {
   statesArray = returnedText.split(" \n");
   currentState = "question";
   currentQuestionAnswerSelected = "-";
-  
+
   currentQuestionNumAnswers = statesArray.length - 1;
   currentQuestionText = statesArray[0];
   currentQuestionAnswers = {};
@@ -201,7 +201,7 @@ function displayQuestionAndAnswers()
 
 
 // A function to remove all elements used in the question
-// and answers container (except for all answer buttons and the 
+// and answers container (except for all answer buttons and the
 // selected answer message), in order to introduce the next
 // round of question and answers.
 function clearQuestionAndAnswers()
@@ -215,7 +215,7 @@ function clearQuestionAndAnswers()
 
 // function to return feedback to the player
 function updateFeedbackState(returnedText)
-{  
+{
   var isCorrectBool = returnedText.split(" \n")[0];
   var feedback = returnedText.split(" \n")[1];
   currentState = "feedback";
@@ -226,7 +226,7 @@ function updateFeedbackState(returnedText)
     isCorrect = true;
     playerScore++;
   }
-  displayFeedback(feedback, isCorrect);  
+  displayFeedback(feedback, isCorrect);
 }  // end-updateFeedbackState
 
 
@@ -245,7 +245,7 @@ function displayFeedback(feedback, isCorrect)
   else
     // If an answer was not selected, then inform of that.
     $("#q-and-a-container").append("<p>You did not select an answer.</p>");
-  
+
   if(currentQuestionAnswerSelected != "-")
     // In any case, display the available feedback.
     $("#q-and-a-container").append("<p>" + feedback + "</p>");
@@ -293,5 +293,3 @@ function testForErrors(errors)
 {
   console.log(errors + "\n");
 }
-
-

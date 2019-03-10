@@ -1,6 +1,6 @@
-/* 
-    Written by Alex Bowker-Lonnecker (quiz session functionality) 
-    and Manne Hedlund (frontend user interface) for COMP10120. 
+/*
+    Written by Alex Bowker-Lonnecker (quiz session functionality)
+    and Manne Hedlund (frontend user interface) for COMP10120.
 
     This file handles all the functionality and graphics of the host page
     for QuizMapp. It requires a number of file inclusions to function:
@@ -10,13 +10,13 @@
 
     The host operates in a number of states:
     Intro: in this state the host polls for players to join the quiz sesson.
-    Question: in this state the host displays a question and polls for 
-    answers from the connected players. 
+    Question: in this state the host displays a question and polls for
+    answers from the connected players.
     Feedback: in this state the host gives feedback on the previously asked
     question by displaying the correct answer(s).
     Outro: in this state the host displays the players' scores.
-    The host moves from intro, to question. to feedback and then either 
-    to question (if there are more questions to be asked) or outro (if there 
+    The host moves from intro, to question. to feedback and then either
+    to question (if there are more questions to be asked) or outro (if there
     are no more questions in the quiz).
 */
 
@@ -36,16 +36,16 @@ var UPDATE_TIME_DELAY = 1500;
 // References to intervals so that they can be stopped later.
 // -------------------------------------------------------------------------------------------
 // The interval used for polling for players in the intro state.
-var pollForPlayersInterval; 
+var pollForPlayersInterval;
 // The interval used for polling for answers in the question state.
 var pollForAnswersInterval;
 // The interval used to update the time in the database in the feedback state.
 var updateTimeInterval;
-// The interval for the timer which determines how much time there is 
+// The interval for the timer which determines how much time there is
 // left to answer the current question.
 var timerInterval;
 
-// A large number of global variables are used to ease in access of 
+// A large number of global variables are used to ease in access of
 // important data associated with the quiz.
 // --------------------------------------------------------------------------------------------
 // A dictionary of all players in the game - disconnected or connected.
@@ -63,9 +63,9 @@ var currentQuestionNum = 0;
 var currentQuestionText;
 // The answers to the question the host is currently on.
 var currentQuestionAnswers;
-// The letters of the correct answers. 
+// The letters of the correct answers.
 var currentQuestionCorrectAnswers;
-// The time limit, in seconds, set for the question. 
+// The time limit, in seconds, set for the question.
 var currentQuestionTimeLimit;
 // Determines if the current page already has a host started on it.
 var alreadyStarted = false;
@@ -88,7 +88,7 @@ var currentQuestionLinkedAnswer;
 function startHost(requiredQuizCode, requiredQuizID = 1)
 {
   // Only starts the host if one has not already been started on the page.
-  if(!alreadyStarted) 
+  if(!alreadyStarted)
   {
     // Sets the host to have started.
     alreadyStarted = true;
@@ -98,10 +98,10 @@ function startHost(requiredQuizCode, requiredQuizID = 1)
     quizID = requiredQuizID;
     // Makes a request to the server to create a new host in the hosts table
     // and return the host ID made, the number of questions and the quiz name.
-    // The (a)ction is (g)et (h)ost (gh) details, the quiz (c)ode is the code that 
-    // players will use to reference the host, and the (q)uiz ID is the ID of the 
+    // The (a)ction is (g)et (h)ost (gh) details, the quiz (c)ode is the code that
+    // players will use to reference the host, and the (q)uiz ID is the ID of the
     // quiz that is being hosted.
-    requestDataFromDB(setHostDetails, "hostConnectToDB.php?a=gh&c=" 
+    requestDataFromDB(setHostDetails, "hostConnectToDB.php?a=gh&c="
                                          + quizCode + "&q=" + quizID);
   } // if
 } // startHost
@@ -115,7 +115,7 @@ function setHostDetails(returnedText)
   // Line 0 - the host ID.
   // Line 1 - the number of questions.
   // Line 2 - the quiz name.
-  
+
   // Assigns the host ID for the quiz.
   hostID = returnedText.split(" \n")[0];
   // Assigns the number of questions.
@@ -130,8 +130,8 @@ function setHostDetails(returnedText)
   // Saves it in a variable so it can be stopped later.
   // The (a)ction is (p)oll (f)or (p)layers (pfp), the (h)ost is the host's ID.
   pollForPlayersInterval = setInterval(function() { requestDataFromDB(
-                                      pollForPlayersDataReturned, 
-                                      "hostConnectToDB.php?a=pfp&h=" + hostID); 
+                                      pollForPlayersDataReturned,
+                                      "hostConnectToDB.php?a=pfp&h=" + hostID);
                                                   }, POLL_FOR_PLAYERS_DELAY);
 } // setHostDetails
 
@@ -161,7 +161,7 @@ function pollForPlayersDataReturned(returnedText)
       // Disconnects the host's representation of the player.
       setPlayerAsDisconnected(playerID);
     // Otherwise they have not yet been added to the dictionary.
-    else if(!(playerID in players)) 
+    else if(!(playerID in players))
     {
       // It creates a new player and adds it to the dictionary.
       players[playerID] = new Player(screenName);
@@ -169,7 +169,7 @@ function pollForPlayersDataReturned(returnedText)
       numberOfConnectedPlayers++;
     } // else
   } // for
-  
+
   // Updates the UI for the intro state.
   updateIntroUI();
 } // pollForPlayersDataReturned
@@ -228,12 +228,12 @@ function getNextQuestion()
   else
     // Updates the state in the database so that players also get the next question.
     // It also fetches all the required information for the next question.
-    // The (a)ction is (u)pdate (s)tate (us), the (h)ost ID is the host's ID, the 
+    // The (a)ction is (u)pdate (s)tate (us), the (h)ost ID is the host's ID, the
     // question (n)umber is the number of the question that needs to be fetched,
-    // the new (s)tate is question and the (q)uiz ID is the ID of the quiz the 
+    // the new (s)tate is question and the (q)uiz ID is the ID of the quiz the
     // question needs to be fetched from.
     requestDataFromDB(askQuestion, "hostConnectToDB.php?a=us&h=" + hostID
-                                + "&n=" + currentQuestionNum + "&s=question&q=" + quizID); 
+                                + "&n=" + currentQuestionNum + "&s=question&q=" + quizID);
 } // getNextQuestion
 
 
@@ -245,13 +245,13 @@ function askQuestion(returnedText)
   // Line 0 - the text of the question.
   // Line 1 - the ID of the answer the question links to.
   // Line 2 - the time limit for the question.
-  // Line 3 - the letters of the correct answers, all in a row. Example is 
+  // Line 3 - the letters of the correct answers, all in a row. Example is
   // 'AC' if A and C are the correct answers, or 'B' if it is the only correct one.
   // Line 4-7 - the answers to the question. There are a minimum of 2 answers
   // and a maximum of 4. They are ordered A-D. The answers are split into two
   // pieces of data separated by " //", with the first detail being the answer text
   // and the second being the ID of the answer.
-  
+
   // Splits the text into its individual parts.
   splitReturnedText = returnedText.split(" \n");
   // Stores the text of the question.
@@ -272,7 +272,7 @@ function askQuestion(returnedText)
   // If the returned text is long enough then there will be a third answer.
   if(splitReturnedText.length >= 7)
     // Adds answer C to the answer dictionary.
-    currentQuestionAnswers["C"] = splitReturnedText[6].split(" \\")[0]; 
+    currentQuestionAnswers["C"] = splitReturnedText[6].split(" \\")[0];
   // If the returned text is long enough then there will be a fourth answer.
   if(splitReturnedText.length == 8)
     // Adds answer D to the answer dictionary.
@@ -280,7 +280,7 @@ function askQuestion(returnedText)
   // For each answer, saves it to the dictionary of previous answers.
   for(answerIndex = 4; answerIndex < splitReturnedText.length; answerIndex++)
     // Saves the answer with the ID as the key and the text as the value.
-    previousAnswers[splitReturnedText[answerIndex].split(" \\")[1]] 
+    previousAnswers[splitReturnedText[answerIndex].split(" \\")[1]]
                                                             = splitReturnedText[answerIndex].split(" \\")[0];
 
   // Stops the interval for updating the time in the database from feedback state.
@@ -288,10 +288,10 @@ function askQuestion(returnedText)
   // Starts the interval for polling for answers in the database.
   // The (a)ction is (p)olling (f)or (a)nswers, the (h)ost ID is the host's ID.
   pollForAnswersInterval = setInterval(function() { requestDataFromDB(
-                                      pollForAnswersDataReturned, 
-                                      "hostConnectToDB.php?a=pfa&h=" + hostID); 
+                                      pollForAnswersDataReturned,
+                                      "hostConnectToDB.php?a=pfa&h=" + hostID);
                                                   }, POLL_FOR_ANSWERS_DELAY);
-  
+
   // Updates the UI for displaying the question.
   displayQuestionAndAnswers();
   // Starts the countdown timer for the question.
@@ -306,14 +306,14 @@ function pollForAnswersDataReturned(returnedText)
   // A list of player answers on each line, details separated as follows by " \\":
   // Detail 0 - the ID of the player who gave the answer.
   // Detail 1 - the letter of the answer they gave.
-  // Detail 2 - if the player is still connected to the server. 1 if they are 
+  // Detail 2 - if the player is still connected to the server. 1 if they are
   // still connected and 0 if they are disconnected.
-  
+
   // Splits the returned text into its individual parts.
   splitReturnedText = returnedText.split(" \n");
   // Counts the number of answers given.
   var numAnswersGiven = 0;
-  
+
   // Iterates through each player and the answer they gave.
   for(splitIndex = 0; splitIndex < splitReturnedText.length; splitIndex++)
   {
@@ -334,10 +334,10 @@ function pollForAnswersDataReturned(returnedText)
       // Increases the number of answers given.
       numAnswersGiven++;
       // Sets the relevant player object's current answer to be the one given.
-      players[playerID].currentAnswer = answer; 
+      players[playerID].currentAnswer = answer;
     } // if
   } // for
-  
+
   // Updates the UI for the number of answers given so far.
   updatePlayerAnswers(numAnswersGiven);
 } // pollForAnswersDataReturned
@@ -353,7 +353,7 @@ function updateFeedbackState()
   // The (a)ction is (u)pdating the (t)ime (ut) and the (h)ost ID is the host's ID.
   updateTimeInterval = setInterval(function() { updateDataInDB(
             "hostConnectToDB.php?a=ut&h=" + hostID); }, UPDATE_TIME_DELAY);
-            
+
   // Counts the frequency of answers for each letter.
   answerSelections = { "A": 0, "B": 0, "C": 0, "D": 0 }
   // Iterates through each player.
@@ -367,12 +367,12 @@ function updateFeedbackState()
     // that their score can be updated depending on if they got the answer correct.
     players[key].giveAnswer(currentQuestionCorrectAnswers);
   } // for
-  
+
   // Updates the state in the database to be in the feedback state.
-  // The (a)ction is (u)pdating the (s)tate, the (h)ost ID is the host's ID, and the 
+  // The (a)ction is (u)pdating the (s)tate, the (h)ost ID is the host's ID, and the
   // new (s)tate is the feedback state.
   updateDataInDB("hostConnectToDB.php?a=us&h=" + hostID + "&s=feedback");
-  
+
   // Displays the required UI for the feedback state.
   displayFeedback(answerSelections);
 } // updateFeedbackState
@@ -403,9 +403,9 @@ function updateIntroUI()
     // List is reset as well to be empty, to avoid duplicates.
     $("#player-list").text("");
     // For every player in quiz...
-    for(var index in players) 
+    for(var index in players)
       // ...check if they are connected.
-      if (players[index].connected) 
+      if (players[index].connected)
         // If they are connected, add a list element, containing the
         //  player's screen name, to the list.
         $("#player-list").append("<li>" + players[index].screenName
@@ -422,6 +422,7 @@ $(document).ready(function() {
   $("#host-button").click(function() {
     // Check that the length of the characters in the input feld is
     // exactly 5. (trim removes whitespace)
+    console.log($("#quiz-code-host").val())
     if ($.trim($("#quiz-code-host").val()).length == 6)
     {
       // Remove the ability to host another quiz.
@@ -447,10 +448,10 @@ $(document).ready(function() {
   // Upon clicking the 'Start Quiz' button...
   $("#start-button").click(function() {
     // ...remove all elements used in the intro.
-    $("#intro-container").empty(); 
+    $("#intro-container").empty();
     // Call the function to start the quiz.
     startQuiz();
-    // Hide the next question button before showing the 
+    // Hide the next question button before showing the
     // div container for the question and answers.
     $("#next-button").hide();
     // Show all the elements in the question and answer container.
@@ -496,7 +497,7 @@ function endQuestion() {
   // Hide the reveal button.
   $("#reveal-button").hide();
   // Show instead the next button.
-  $("#next-button").show(); 
+  $("#next-button").show();
 }  // end-endQuestion
 
 
@@ -580,8 +581,8 @@ function displayFeedback(answerSelections)
     for(answerIndex = 0; answerIndex < currentQuestionCorrectAnswers.length - 1;
           answerIndex++)
       // Adds the text for that correct answer to the string.
-      answersToOutput += 
-        currentQuestionAnswers[currentQuestionCorrectAnswers[answerIndex]] 
+      answersToOutput +=
+        currentQuestionAnswers[currentQuestionCorrectAnswers[answerIndex]]
         + " and ";
     // Adds the final correct answer seperately as it does not end with an 'and'.
     answersToOutput +=
@@ -589,9 +590,9 @@ function displayFeedback(answerSelections)
       [currentQuestionCorrectAnswers.length - 1]] + ".</p>";
     // Displays the correct answers by appending it to the page.
     $("#q-and-a-container").append(answersToOutput);
-  } // if 
+  } // if
   // Otherwise there is only one correct answer.
-  else 
+  else
     // That correct answer can simply be displayed.
     $("#q-and-a-container").append("<p>The correct answer is "
       + currentQuestionAnswers[currentQuestionCorrectAnswers[0]] + "</p>");
@@ -619,10 +620,10 @@ function displayOutro()
     // ...make sure they are either connected or has some points.
     if (players[index].connected || players[index].score > 0)
       $("#score-list").append("<li>" + players[index].screenName + ": "
-                                                         + players[index].score + "</li>")      
+                                                         + players[index].score + "</li>")
 
   // Remove all content used for displaying the questions and answers.
   $("#q-and-a-container").empty();
   // Make visible the contents of the outro container div.
-  $("#outro-container").show();    
+  $("#outro-container").show();
 }  // end-displayOutro
