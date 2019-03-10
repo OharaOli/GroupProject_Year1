@@ -95,7 +95,7 @@
                 . "FROM hosts WHERE host_id = ?;";
     $result = sqlWithResult1($mysqli, $sql, $_GET["h"]);
     $hostStateData = $result->fetch_assoc();
-    $hostState = $hostStateData["state"]
+    $hostState = $hostStateData["state"];
     echo $hostState;
     echo " \n" . $hostStateData["stay_connected"];
     if($hostStateData["stay_connected"] == "0")

@@ -17,7 +17,6 @@ var quizCode;
 // The selected screen name;
 var screenName;
 
-var currentQuestionNum = 1;
 var currentQuestionAnswers;
 var currentQuestionText;
 var currentQuestionAnswerSelected;
@@ -73,21 +72,33 @@ function pollForState(responseText)
     // Stops polling for player 
     clearInterval(pollForStateInterval);
     // Gives an error message. 
-    document.write("Host disconnected.");
+    displayHostDisconnected();
   } // if      
   else
   {
     // use  a switch statement to pick which function will run based on the state
     if(statesArray[0] == "question" && currentState != "question")
-      requestDataFromDB(updateQuestionState, "playerConnectToDB.php?a=gq&n="
-        + currentQuestionNum + "&q=" + quizID + "&p=" + playerID);
+    {
+      currentState = "question";
+      requestDataFromDB(updateQuestionState, "playerConnectToDB.php?a=gq"
+       + "&p=" + playerID + "&h=" + hostID);
+     } // if
     else if(statesArray[0] == "feedback" && currentState != "feedback")
-        requestDataFromDB(updateFeedbackState, "playerConnectToDB.php?a=gf&q="
-          + quizID + "&n=" + currentQuestionNum + "&p=" + playerID);
+    {
+      currentState = "feedback";
+      requestDataFromDB(updateFeedbackState, "playerConnectToDB.php?a=gf"
+       + "&p=" + playerID + "&h=" + hostID);
+    } // else if
     else if(statesArray[0] == "outro" && currentState != "outro")
+    {
+      currentState = "outro";
       updateOutroState();
+    } // else if
     else if(statesArray[0] == "floating" && currentState != "floating")
+    {
+      currentState = "floating";
       updateFloatingState();
+    } // else if
   } // else
 } //pollForState
 
@@ -158,7 +169,6 @@ function inputAnswer(requiredAnswer)
 function updateQuestionState(returnedText)
 {
   statesArray = returnedText.split(" \n");
-  currentState = "question";
   currentQuestionAnswerSelected = "-";
   
   currentQuestionNumAnswers = statesArray.length - 1;
@@ -174,18 +184,13 @@ function updateQuestionState(returnedText)
   displayQuestionAndAnswers();
 }  // end-updateQuestionState
 
-function updateFloatingState()
-{
-  // Do something to indicate the host is floating.
-  currentState = "floating"
-} // updateFloatingState
-
-
 // A function to display the fetched question and answers.
 function displayQuestionAndAnswers()
 {
   // Remove the contents of the intro container div.
   $("#intro-container").empty();
+  // Hides the floating state.
+  $("#floating-container").hide();
   // Empty the previous question and answers container div.
   clearQuestionAndAnswers();
   // Set the answer selections buttons to visible,
@@ -223,7 +228,6 @@ function updateFeedbackState(returnedText)
 {  
   var isCorrectBool = returnedText.split(" \n")[0];
   var feedback = returnedText.split(" \n")[1];
-  currentState = "feedback";
   currentQuestionNum++;
   var isCorrect = false;
   if(isCorrectBool == "1")
@@ -260,8 +264,6 @@ function displayFeedback(feedback, isCorrect)
 // function to show the outro of when the quiz has ended
 function updateOutroState()
 {
-  // Set the current state to reflect that it is now the outro.
-  currentState = "outro";
   // Call the function which actually makes the transition.
   displayOutro();
 }  // end-updateOutroState
@@ -271,12 +273,20 @@ function updateOutroState()
 function displayOutro()
 {
   // The question and answers container div is no longer needed.
-  $("#q-and-a-container").empty();
+  $("#q-and-a-container").hide();
   // Show the outro container div.
   $("#outro-container").show();
   // Display the player's score.
   $("#outro-container").append("<p>Your score is " + playerScore + ".");
 }  // end-displayOutro
+
+
+function updateFloatingState()
+{
+  $("#q-and-a-container").hide();
+  $("#outro-container").hide();
+  $("#floating-container").show();
+} // updateFloatingState
 
 
 // A function which displays an error message of an unfound quiz code.
@@ -289,6 +299,17 @@ function displayQuizCodeNotFound(isVisible)
     // Hide error code.
     $("#error-message-quiz-code-not-found").hide();
 }  // end-displayQuizCodeNotFound
+
+
+// A function which displays a message for host disconnecting.
+function displayHostDisconnected()
+{
+  // Display host disconnected error code.
+  $("#error-message-host-disconnected").show();
+  $("#intro-container").empty();
+  $("#q-and-a-container").empty();
+  $("#floating-container").empty();
+} // displayHostDisconnected
 
 // ----------- END OF UPDATING STUFF -----------------------------------------
 
