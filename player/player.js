@@ -187,8 +187,6 @@ function updateQuestionState(returnedText)
 // A function to display the fetched question and answers.
 function displayQuestionAndAnswers()
 {
-  // Remove the contents of the intro container div.
-  $("#intro-container").empty();
   // Hides the floating state.
   $("#floating-container").hide();
   // Empty the previous question and answers container div.
@@ -283,6 +281,7 @@ function displayOutro()
 
 function updateFloatingState()
 {
+  $("#intro-container").empty();
   $("#q-and-a-container").hide();
   $("#outro-container").hide();
   $("#floating-container").show();
