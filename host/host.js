@@ -71,7 +71,10 @@ var numberOfConnectedPlayers = 0;
 var quizID;
 // The x-coordinate in the plane where the host is currently looking at.
 // Initialised to -1 as the view is originally in the intro state.
-var xCoord = -1;
+//var xCoord = -1;
+// While we dont have an intro state yet, initially set to 0.
+var xCoord = 0;
+
 // The y-coordinate in the plane where the host is currently looking at.
 var yCoord = 0;
 
@@ -276,10 +279,21 @@ function startQuestion()
                                                   }, POLL_FOR_ANSWERS_DELAY);
   // DISABLE MOVING TO ANOTHER SPACE
   // Calls a function which displays UI for question asked.
-  displayQuestionState();
+  updateQuestionState();
+  
   // Starts the countdown timer for the question.
   startTimer();
 } // startQuestion
+
+// Ends the current question and moves on to the feedback state.
+function endQuestion() {
+
+  toggleNavigation(true);
+  updateFeedbackState();
+
+  if(timerInterval != undefined)
+    clearInterval(timerInterval);
+}  // end-endQuestion
 
 
 // Handles the list of player answers returned from the server.
@@ -441,7 +455,7 @@ function Player(screenName)
   this.currentAnswer = "-";
   
   // Assigns the class methods.
-  this.giveAnswer = giveAnswer;
+  this.s = giveAnswer;
 } // Player constructor
 
 
@@ -459,20 +473,74 @@ function giveAnswer(correctAnswer)
 // Code written by Manne.
 // --------------------------------------------------------------------------------------
 
+function toggleNavigation(booleanState)
+{
+  Reveal.configure({
+    controls: booleanState,
+    progress: booleanState,
+    keyboard: booleanState,
+    overview: booleanState,
+    touch: booleanState
+  });  
+}  // end-toggleNavitatioN
+
+
+
+function updateQuestionState()
+{
+
+  toggleNavigation(false);
+  displayQuestionState();
+}  // end-updateQuestionState
+
+
+function updateFeedbackState()
+{
+  displayFeedbackState();
+
+}  // end-updateFeedbackState
+
 
 
 function displayQuestionState()
 {
   for (letter in questions[xCoord][yCoord].answers)
-    $("#" + xCoord + "-" + yCoord).append("<p>" + letter + ":\t" + questions[xCoord][yCoord].answers[letter].text + "</p>");
-
+    $("#question-" + xCoord + "-" + yCoord).after("<p class='answerbox'>" + letter + ":\t" + questions[xCoord][yCoord].answers[letter].text + "</p>");
 }  // end-displayQuestionState
+
+
+function displayFeedbackState()
+{
+  $("#timer").hide();
+
+
+  for(answerSelection in answerSelections)
+    // To make sure (for some reason) answer D is
+    //selected when only A and B are available.
+    if(answerSelection in currentQuestionAnswers)
+      // Display the number of players who chose each answer respectively.
+      $("#" + xCoord + "-" + yCoord).append("<p>Number of  " +
+        answerSelection + "s: " + answerSelections[answerSelection]);
+
+}  // end-displayFeedbackState
+
+
 
 
 function addStartButtonToSlide(requiredX, requiredY)
 {
-  $("#" + requiredX + "-" + requiredY).append("<button class='start-button'>Start Question</button");
+  $("#" + requiredX + "-" + requiredY).append("<button id='start-" + requiredX + "-" + requiredY + "'>Start Question</button");
 
+  $("#start-" + requiredX + "-" + requiredY).click(function() {
+    $(this).attr("id", "stop-" + requiredX + "-" + requiredY).text("Stop Question").unbind("click");
+    $(this).click(function() {
+      $(this).remove();
+      endQuestion();
+    });
+    startQuestion();
+  });
+
+  
 }  // end-addButtonToSlide
 
 function generateSlides()
@@ -482,11 +550,11 @@ function generateSlides()
     {
       if (yIndex == 0)
       {
-        $(".slides").append("<section id='root" + xIndex + "'><section id='" + xIndex + "-0" + "'>" + questions[xIndex][0].text + "</section></section>");
+        $(".slides").append("<section id='root" + xIndex + "'><section id='" + xIndex + "-0" + "'><h2 id='question-" + xIndex + "-0" + "'>" + questions[xIndex][0].text + "</h2></section>");
       }  // end-if
       else
       {
-        $("#root" + xIndex).append("<section id='" + xIndex + "-" + yIndex + "'>" + questions[xIndex][yIndex].text + "</section>");
+        $("#root" + xIndex).append("<section id='" + xIndex + "-" + yIndex + "'><h2 id='question-" + xIndex + "-" + yIndex + "'>" + questions[xIndex][yIndex].text + "</h2></section>");
       }  // end-else
       addStartButtonToSlide(xIndex, yIndex);
      }  // end-for    
@@ -506,22 +574,42 @@ Reveal.addEventListener('slidechanged', function(event) {
       Reveal.up();
     yCoord = 0;
   } // if
-    
-  console.log(xCoord + ":" + yCoord);
 // event.previousSlide, event.currentSlide, event.indexh, event.indexv
 });
-  
+
+
+// Starts the timer countdown (1 second at a time).
+function startTimer() {
+  // The time left until countdown is 0.
+  var timeLeft = questions[xCoord][yCoord].timeLimit;
+  // Show the timer countdown.
+  $("#" + xCoord + "-" + yCoord).append("<h3 id='timer'></h3>");
+  // A function which decrements the countdown by 1, displays
+  // it and if it has run out, then ends the question.
+  var updateTimer = function() {
+    $("#timer").html(timeLeft);
+    if (timeLeft < 0)
+    {
+      endQuestion();
+      return;
+    }  // end-if
+    timeLeft--;
+  }  // end-updateTimerFunction
+  // Call the updateTimer function once at first, to
+  // start countdown immediately.
+  updateTimer();
+  // Afterwards, call it once every second.
+  timerInterval  = setInterval(updateTimer, 1000);
+}  // end-startTimer
+
+
+
+
 
 
 // Execute the code when the page is ready.
 $(document).ready(function() {
 
-
-
-  $(".start-button").click(function() {
-    startQuestion();
-  });
-  
 
   // Upon clicking the 'Host Quiz' button...
   $("#host-button").click(function() {
@@ -611,47 +699,6 @@ function updateIntroUI()
 
 
 
-// Ends the current question and moves on to the feedback state.
-function endQuestion() {
-  // Clear the timer interval, in case timer has stopped.
-  if(timerInterval != undefined)
-    clearInterval(timerInterval);
-  // Hide the timer, since countdown has been aborted.
-  $("#timer").hide();
-  // Display the correct answer and maybe feedback.
-  updateFeedbackState();
-  // Hide the reveal button.
-  $("#reveal-button").hide();
-  // Show instead the next button.
-  $("#next-button").show(); 
-}  // end-endQuestion
-
-
-// Starts the timer countdown (1 second at a time).
-function startTimer() {
-  // The time left until countdown is 0.
-  var timeLeft = currentQuestionTimeLimit;
-  // Show the timer countdown.
-  $("#timer").show();
-  // A function which decrements the countdown by 1, displays
-  // it and if it has run out, then ends the question.
-  var updateTimer = function() {
-    $("#timer").html(timeLeft);
-    if (timeLeft < 0)
-    {
-      endQuestion();
-      return;
-    }  // end-if
-    timeLeft--;
-  }  // end-updateTimerFunction
-  // Call the updateTimer function once at first, to
-  // start countdown immediately.
-  updateTimer();
-  // Afterwards, call it once every second.
-  timerInterval  = setInterval(updateTimer, 1000);
-}  // end-startTimer
-
-
 // A function to display the fetched question and answers.
 function displayQuestionAndAnswers()
 {
@@ -680,7 +727,8 @@ function displayQuestionAndAnswers()
 function updatePlayerAnswers(numOfAnswers)
 {
 
-    $("#numberOfAnswers").html("Answers so far: " + numOfAnswers);
+    $("#" + xCoord + "-" + yCoord)
+      .append("<p id='number-of-answers'>Answers so far: " + numOfAnswers + "</p>");
 }  // end-updatePlayerAnswers
 
 

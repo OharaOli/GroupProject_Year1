@@ -11,6 +11,7 @@
   <script src="../misc/connectToDB.js" type="text/javascript"></script>
   <script src="../player/player.js" type="text/javascript"></script>
   <link rel="stylesheet" type="text/css" href="../reveal.js-master/css/reveal.css">
+  <link rel="stylesheet" type="text/css" href="host.css">
   <style>
   .hidden {
     display: none;  
