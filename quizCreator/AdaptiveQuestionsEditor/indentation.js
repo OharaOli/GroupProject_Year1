@@ -25,13 +25,26 @@ function addSubQuestion(givenButton)
   //create a new linkQuestion table
   var linkQTable = createSubQTable(parentQId, numOfSubQSoFar);
 
+  //create wrapper for this new subQ
+  var individualSubQDiv = document.createElement('div');
 
-  //append the table to the the parent rootQTableDiv
-  givenButton.insertAdjacentElement('beforebegin', linkQTable);
+  //create delete button and appen to the div
+  var deleteSubQButton = document.createElement('input');
+  deleteSubQButton.setAttribute('class', 'deleteQButton');
+  deleteSubQButton.setAttribute('type', 'button');
+  deleteSubQButton.setAttribute('value', 'X');
+  deleteSubQButton.setAttribute('onClick', 'deleteSubQuestion(this)')
+
+  individualSubQDiv.appendChild(deleteSubQButton);
+
+  //append the table to the div
+  individualSubQDiv.appendChild(linkQTable);
 
   var carrigeReturn = document.createElement('br');
 
-  givenButton.insertAdjacentElement('beforebegin', carrigeReturn);
+  individualSubQDiv.appendChild(carrigeReturn);
+
+  givenButton.insertAdjacentElement('beforebegin', individualSubQDiv);
 
 
 } // function addSubQuestion
@@ -48,14 +61,31 @@ function addRootQuestion(givenButton)
   rootQDiv.setAttribute('id', 'rootQDiv' + numOfRootQSoFar);
   rootQDiv.setAttribute('data-QId', 'Q' + numOfRootQSoFar);
 
+  //button for deleting the question
+  var deleteRootQButton = document.createElement('input');
+  deleteRootQButton.setAttribute('class', 'deleteQButton');
+  deleteRootQButton.setAttribute('type', 'button');
+  deleteRootQButton.setAttribute('value', 'X');
+  deleteRootQButton.setAttribute('onClick', 'deleteRootQuestion(this)');
+
+  rootQDiv.appendChild(deleteRootQButton);
+
   //append the root question table to the wrapper
   rootQDiv.appendChild(createRootQTable(numOfRootQSoFar));
 
+  //button for hiding the subquesions
+  var addSubQButton = document.createElement('input');
+  addSubQButton.setAttribute('type', 'button');
+  addSubQButton.setAttribute('value', 'V');
+  addSubQButton.setAttribute('onClick', 'hideSubQButton(this)');
+
+  rootQDiv.appendChild(addSubQButton);
   // a wrapper for sub questions
   var subQDiv = document.createElement('div');
   subQDiv.setAttribute('id', 'subQDiv' + 'Q' + numOfRootQSoFar);
   subQDiv.setAttribute('data-numOfSubQSoFar', '0');
   subQDiv.setAttribute('class', 'subQDiv');
+  subQDiv.setAttribute('style', 'display: block;')
 
   //append 'add sub question' button to the wrapper
   var addSubQButton = document.createElement('input');
@@ -70,13 +100,6 @@ function addRootQuestion(givenButton)
   //append the button to the wrapper
   subQDiv.appendChild(addSubQButton);
 
-  //if all of the sub questions are hidden, this should also come out as hidden
-  if(isAllSubQHidden)
-  {
-    //all of the subquestions are hidden
-    subQDiv.style.display = "none";
-
-  }
 
   var carrigeReturn1 = document.createElement('br');
   rootQDiv.appendChild(carrigeReturn1);
@@ -84,15 +107,47 @@ function addRootQuestion(givenButton)
   //append the wrapper for sub question to the wrapper for the root question
   rootQDiv.appendChild(subQDiv);
 
+  //for some white space
+  var carrigeReturn2 = document.createElement('br');
+  rootQDiv.appendChild(carrigeReturn2);
+
   //append the wrapper right before where the button is situated
   givenButton.insertAdjacentElement('beforebegin', rootQDiv);
 
-  //for some white space
-  var carrigeReturn2 = document.createElement('br');
-  givenButton.insertAdjacentElement('beforebegin', carrigeReturn2);
+
 
 
 } // addQuestion
+
+
+
+//funciton for removing a question, given a button
+function deleteRootQuestion(givenButton)
+{
+
+  //update the total num of root questions
+  numOfRootQSoFar--;
+
+  // remove the parent root q div
+  givenButton.parentNode.remove();
+
+
+
+
+}
+
+
+function deleteSubQuestion(givenButton)
+{
+  //update the num of sub questions so far
+  var numOfSubQSoFar = parseInt(givenButton.parentNode.parentNode.getAttribute('data-numOfSubQSoFar'));
+  numOfSubQSoFar--;
+
+  givenButton.parentNode.parentNode.setAttribute('data-numOfSubQSoFar', numOfSubQSoFar);
+
+  //delete the parent
+  givenButton.parentNode.remove();
+} // deleteSubQuestion
 
 //function for creating the answer table with given index
 //function for creating question Table
@@ -348,7 +403,7 @@ function editRootQOrder()
 
 function hideAddRootQButton()
 {
-  hideORShowById("addRootQButton");
+  hideOrShowById("addRootQButton");
 
   if(isAddRootQButtonHidden)
   {
@@ -360,6 +415,19 @@ function hideAddRootQButton()
   }
 } // function hideAddRootButton\
 
+
+
+//function for the hideSubQButton
+function hideSubQButton(givenButton)
+{
+  hideSubQuestions(givenButton);
+
+  if(givenButton.value == "V")
+    givenButton.value = ">";
+  else
+    givenButton.value = "V";
+
+}
 
 
 //function for hiding all the answers
@@ -378,6 +446,14 @@ function hideAllSubQuestions()
   }
 
 } // function hideAllSubQuestions
+
+
+//function for individually hiding the sub questions
+function hideSubQuestions(givenButton)
+{
+  hideOrShowByElement(givenButton.nextElementSibling.nextElementSibling)
+
+}
 
 
 
@@ -401,7 +477,7 @@ function hideORShowByClass(givenClassId)
   } // for loop
 }
 
-function hideORShowById(givenId)
+function hideOrShowById(givenId)
 {
 
   var element = document.getElementById(givenId);
@@ -418,3 +494,18 @@ function hideORShowById(givenId)
   }
 
 }
+
+function hideOrShowByElement(givenElement)
+{
+  if(givenElement.style.display == "block")
+  {
+
+    givenElement.style.display = "none";
+
+  }
+  else
+  {
+    givenElement.style.display = "block";
+  }
+
+} // function hideOrShowByElement

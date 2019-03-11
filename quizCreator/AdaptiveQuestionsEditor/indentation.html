@@ -28,12 +28,13 @@ Quiz creator
 
   <!-- buttons for editing order and submission -->
   <div>
-    <input type="button" value="submit"> </input>
-    <input type="button" value="edit root question order" onClick="editRootQOrder()"> </input>
+    <input type="button" value="submit (working on)"> </input>
+    <input type="button" value="edit root question order (working on)" > </input> <!--onClick="editRootQOrder()" -->
   </div>
   <br/>
 
   <div id="rootQDivQ1" data-QId="Q1">
+    <input class="deleteQButton" type="button" value="X" onclick="deleteRootQuestion(this)"> </input>
     <table id="rootQTableQ1" border="1" class="rootQTable" data-indent="0">
       <!-- Labels for quiz master -->
       <tr>
@@ -76,10 +77,12 @@ Quiz creator
         </td> <!-- the 4th column of the question table -->
       </tr> <!-- the only row of the question table -->
     </table> <!-- Q1Table -->
+    <input type="button" value="V" onclick="hideSubQButton(this)"> </input>
+
 
     <!-- button for adding link question -->
     <br/>
-    <div class="subQDiv" id="subQDivQ1" data-numOfSubQSoFar="0">
+    <div style="display: block;" class="subQDiv" id="subQDivQ1" data-numOfSubQSoFar="0">
       <input class="addSubQButton" type="button" value="+" onClick="addSubQuestion(this)"></input>
     </div>
   </div> <!-- rootQDivQ1 -->
