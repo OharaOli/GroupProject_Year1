@@ -1,15 +1,116 @@
-<!DOCTYPE html>
+<!DOCTYPE HTML>
+<!--
+	Landed by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>Landed by HTML5 UP</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="../styling/assets/css/main.css" />
+    <link rel="stylesheet" href="../styling/assets_custome/css/custome.css" />
+		<noscript><link rel="stylesheet" href="../styling/assets/css/noscript.css" /></noscript>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  	<script src="../misc/connectToDB.js"></script>
+  	<script src="player.js"></script>
+
+    <style>
+    .hidden {
+      display: none;
+    }
+		.answers-styling p{
+			text-align: left!important;
+		}
+		.small{
+			margin-bottom: 1em;
+			margin-top: 1em;
+		}
+    </style>
+
+  </head>
+	<body class="is-preload landing">
+		<div id="page-wrapper">
+
+			<!-- Header -->
+				<header id="header">
+					<h1 id="logo"><a>QuizMapp</a></h1>
+					<nav id="nav">
+						<ul>
+							<li><a href="../signup">Sign Up</a></li>
+							<li><a href="../login" class="button primary">Login</a></li>
+						</ul>
+					</nav>
+				</header>
+
+			<!-- Banner -->
+				<section id="banner">
+					<div class="content">
+						<header>
+
+              <div id="join-option" class="join-option-form">
+								<span class="resize"><img src="../styling/images/poster/posterLogo.png"  alt="" /></span>
+	               <input id="quiz-code-player"  type="text" placeholder="Quiz Code">
+							   <input id="player-screen-name" type="text" style="margin-top: 20px" placeholder="Screen Name">
+	               <button id="join-button" class="button primary fit small">Join Quiz</button>
+              </div>
+              <!-- ss -->
+              <div id="intro-container" class="hidden ">
+              </div>
+              <div id="q-and-a-container" class="hidden answers-styling">
+                <div id="answer-button-container" class="">
+
+									<div class="row">
+										<div class="col-3 col-12-medium">
+											<button value="A" class="hidden button primary fit small">A</button>
+										</div>
+										<div class="col-3 col-12-medium">
+											<button value="B" class="hidden button primary fit small">B</button>
+										</div>
+										<div class="col-3 col-12-medium">
+											<button value="C" class="hidden button primary fit small">C</button>
+										</div>
+										<div class="col-3 col-12-medium">
+											<button value="D" class="hidden button primary fit small">D</button>
+										</div>
+									</div>
+
+                </div>
+                <p id="selected-answer-message" class="hidden"></p>
+              </div>
+              <div id="outro-container" class="hidden">
+              </div>
+							<p id="error-message-quiz-code-not-found" class="hidden">Quiz code does not exist.</p>
+						  <p id="error-message-host-disconnected" class="hidden">Host disconnected.</p>
+              <!-- ss -->
+            </header>
+					</div>
+				</section>
+		</div>
+
+		<!-- Scripts -->
+			<script src="../styling/assets/js/jquery.min.js"></script>
+			<script src="../styling/assets/js/jquery.scrolly.min.js"></script>
+			<script src="../styling/assets/js/jquery.dropotron.min.js"></script>
+			<script src="../styling/assets/js/jquery.scrollex.min.js"></script>
+			<script src="../styling/assets/js/browser.min.js"></script>
+			<script src="../styling/assets/js/breakpoints.min.js"></script>
+			<script src="../styling/assets/js/util.js"></script>
+			<script src="../styling/assets/js/main.js"></script>
+
+	</body>
+</html>
+
+
+<!-- <!DOCTYPE html>
 <html>
 <head>
 	<title></title>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script src="../misc/connectToDB.js"></script>
 	<script src="player.js"></script>
-  <style>
-  .hidden {
-    display: none;
-  }
-  </style>
 </head>
 <body>
   <div id="join-option">
@@ -36,4 +137,4 @@
   <p id="error-message-quiz-code-not-found" class="hidden">Quiz code does not exist.</p>
   <p id="error-message-host-disconnected" class="hidden">Host disconnected.</p>
 </body>
-</html> 
+</html> -->
