@@ -67,18 +67,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
  if ($loginSuccess)
  {
     $_SESSION["username"] = $username;
-<<<<<<< HEAD
     // redirect to welcome.php 
     header( 'Location: ../hub' );
     //header("Location: ../hub/index.php"); 
     exit();
 }  // if  
-=======
-    // redirect to welcome.php
-     header("Location: ../hub/index.php");
-     exit();
-}  // if
->>>>>>> Add bootstrap
+
 
 
 ?>
