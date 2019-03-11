@@ -1,7 +1,7 @@
 input.deleteQButton
 {
 
-  
+
 }
 
 
@@ -57,15 +57,22 @@ input.addRootQButton
 }
 
 
-input.questionField
+textarea.questionField
 {
-
+  width: 200px;
+  height: 70px;
 
 
 }
 
+textarea.answerDescriptionField
+{
+  width: 200px;
+  height: 70px;
 
-input.timeLimitField
+}
+
+select.timeLimitList
 {
 
 

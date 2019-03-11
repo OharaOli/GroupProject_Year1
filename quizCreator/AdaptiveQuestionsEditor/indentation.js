@@ -180,16 +180,13 @@ function createRootQTable(givenNumOfRootQSoFar)
   indexCell.innerHTML = "Q" + givenNumOfRootQSoFar;
 
   var questionCell = questionRow.insertCell(1);
-  var questionField = document.createElement('input');
-  questionField.setAttribute('type', 'text');
+  var questionField = document.createElement('textarea');
   questionField.setAttribute('class', 'questionField');
+  questionField.setAttribute('placeholder', 'question');
   questionCell.appendChild(questionField);
 
   var timeLimitCell = questionRow.insertCell(2);
-  var timeLimitField = document.createElement('input');
-  timeLimitField.setAttribute('type', 'text');
-  timeLimitField.setAttribute('class', 'timeLimitField');
-  timeLimitCell.appendChild(timeLimitField);
+  timeLimitCell.appendChild(createTimeLimitList());
 
 
   var answersCell = questionRow.insertCell(3);
@@ -219,26 +216,20 @@ function createSubQTable(givenParentQId, givenNumOfSubQSoFar)
 
   //insert hierarchyCell
   var hierarchyCell = headerRow.insertCell(0);
-  hierarchyCell.innerHTML = "Sub" + givenNumOfSubQSoFar;
+  hierarchyCell.innerHTML = "<th> Sub" + givenNumOfSubQSoFar + "</th>";
 
   //insert question header
   var questionHeaderCell = headerRow.insertCell(1);
-  var questionHeader = document.createElement('th');
-  questionHeader.innerHTML = "Question";
-  questionHeaderCell.appendChild(questionHeader);
+  questionHeaderCell.innerHTML = "<th>Question </th>";
 
 
   //insert cell for the time limit
   var timeLimitHeaderCell = headerRow.insertCell(2);
-  var timeLimitHeader = document.createElement('th');
-  timeLimitHeader.innerHTML = "Time Limit";
-  timeLimitHeaderCell.appendChild(timeLimitHeader);
+  timeLimitHeaderCell.innerHTML = "<th> Time Limit </th>";
 
   //insertCell for the answers header
   var answersHeaderCell = headerRow.insertCell(3);
-  var answersHeader = document.createElement('th');
-  answersHeader.innerHTML = "Answers";
-  answersHeaderCell.appendChild(answersHeader);
+  answersHeaderCell.innerHTML = "<th> Answers </th>";
 
 
   // now the second row
@@ -250,17 +241,14 @@ function createSubQTable(givenParentQId, givenNumOfSubQSoFar)
   indexCell.innerHTML = subQIndex;
 
   var questionCell = questionRow.insertCell(1);
-  var questionField = document.createElement('input');
-  questionField.setAttribute('type', 'text');
+  var questionField = document.createElement('textarea');
   questionField.setAttribute('class', 'questionField');
+  questionField.setAttribute('placeholder', 'question');
   questionCell.appendChild(questionField);
 
 
   var timeLimitCell = questionRow.insertCell(2);
-  var timeLimitField = document.createElement('input');
-  timeLimitField.setAttribute('type', 'text');
-  timeLimitField.setAttribute('class', 'timeLimitField');
-  timeLimitCell.appendChild(timeLimitField);
+  timeLimitCell.appendChild(createTimeLimitList());
 
 
   var answerCell = questionRow.insertCell(3);
@@ -308,8 +296,7 @@ function createAnswersTable(givenQIndex)
   //need only one description Cell for the four cells
   var descriptionCell = rowA.insertCell(3);
   descriptionCell.setAttribute('rowspan', 4);
-  var descriptionField = document.createElement('input');
-  descriptionField.setAttribute('type', 'text');
+  var descriptionField = document.createElement('textarea');
   descriptionField.setAttribute('placeholder', 'description');
   descriptionField.setAttribute('class', 'answerDescriptionField');
   descriptionCell.appendChild(descriptionField);
@@ -509,3 +496,46 @@ function hideOrShowByElement(givenElement)
   }
 
 } // function hideOrShowByElement
+
+
+//function for creating time Limit list(drop-down selection)
+function createTimeLimitList()
+{
+  var timeLimitList = document.createElement('select');
+  timeLimitList.setAttribute('class', 'timeLimitList');
+
+  var option1 = document.createElement('option');
+  option1.setAttribute('value', '10');
+  option1.innerHTML = "10";
+
+  var option2 = document.createElement('option');
+  option2.setAttribute('value', '15');
+  option2.innerHTML = "15";
+
+
+  var option3 = document.createElement('option');
+  option3.setAttribute('value', '20');
+  option3.innerHTML = "20";
+
+
+  var option4 = document.createElement('option');
+  option4.setAttribute('value', '25');
+  option4.innerHTML = "25";
+
+
+  var option5 = document.createElement('option');
+  option5.setAttribute('value', '30');
+  option5.innerHTML = "30";
+
+
+  //append the iptions to the list
+  timeLimitList.appendChild(option1);
+  timeLimitList.appendChild(option2);
+  timeLimitList.appendChild(option3);
+  timeLimitList.appendChild(option4);
+  timeLimitList.appendChild(option5);
+
+  //return the list
+  return timeLimitList;
+
+}

@@ -45,15 +45,23 @@ Quiz creator
       </tr>
       <tr>
         <td> Q1 </td>
-        <td> <input class="questionField" type="text"> </input> </td>
-        <td> <input class="timeLimitField" type="text"> </input> </td>
+        <td> <textarea class="questionField"> </textarea> </td>
+        <td>
+          <select class="timeLimitList">
+            <option value="10">10</option>
+            <option value="15">15</option>
+            <option value="20">20</option>
+            <option value="25">25</option>
+            <option value="30">30</option>
+         </select>
+      </td>
         <td>
           <table id="AnswersTableQ1" class="AnswersTable" border="1"> <!-- answer table -->
             <tr> <!--A-->
               <td> A </td>
               <td> <input class="correctnessCheckBox" type="checkbox"> </input></td>
               <td> <input class="answerField" type="text" placeholder="Answer"> </input></td>
-              <td rowspan="4"> <input class="answerDescriptionField" type="text" placeholder="description"> </input> </td>
+              <td rowspan="4"> <textarea class="answerDescriptionField" placeholder="description for answers"> </textarea> </td>
             </tr>
 
             <tr> <!--B-->
