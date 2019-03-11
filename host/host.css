@@ -1,7 +1,7 @@
 #end-button {
   display: block;
   float: right;
-  margin-top: -300px;
+  margin-top: -100px;
 }
 
 .present .answerbox:last-child {
@@ -15,6 +15,7 @@
   height: 80px;
   background-color: lightblue;
   border: 1px solid black;
+  line-height: 80px;
 }
 
 .reveal h2 {
