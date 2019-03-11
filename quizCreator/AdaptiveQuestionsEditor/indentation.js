@@ -1,6 +1,9 @@
 // number of the root questions so far (those with no indentations)
 var numOfRootQSoFar = 1;
 
+
+
+
 var isAllSubQHidden = false;
 var isAddRootQButtonHidden = false;
 
@@ -13,6 +16,9 @@ function addSubQuestion(givenButton)
   //find the id of the parent question
   parentQId = givenButton.parentNode.parentNode.getAttribute('data-QId');
 
+  //find the x coordinate of the parent question
+  parentQX = givenButton.nextElementSibling.getAttribute('data-x');
+
   //get the number of sub questions
   numOfSubQSoFar = parseInt(givenButton.parentNode.getAttribute('data-numOfSubQSoFar'));
 
@@ -23,7 +29,7 @@ function addSubQuestion(givenButton)
   givenButton.parentNode.setAttribute('data-numOfSubQSoFar', numOfSubQSoFar);
 
   //create a new linkQuestion table
-  var linkQTable = createSubQTable(parentQId, numOfSubQSoFar);
+  var linkQTable = createSubQTable(parentQId, numOfSubQSoFar, parentQX);
 
   //create wrapper for this new subQ
   var individualSubQDiv = document.createElement('div');
@@ -156,6 +162,16 @@ function createRootQTable(givenNumOfRootQSoFar)
   var rootQTable = document.createElement('table');
   rootQTable.setAttribute('border', 1);
   rootQTable.setAttribute('id', 'rootQTable' + "Q" + givenNumOfRootQSoFar);
+  rootQTable.setAttribute('class', 'rootQTable');
+
+  //attributes for implemenation of data transfer to the data base
+  rootQTable.setAttribute('data-x', givenNumOfRootQSoFar);
+
+  //y-coordinate is always zero
+  rootQTable.setAttribute('data-y', '0');
+
+  //index for the question
+  rootQTable.setAttribute('data-index', 'Q' + givenNumOfRootQSoFar);
 
   // add header row
   var headerRow = rootQTable.insertRow(0);
@@ -199,7 +215,7 @@ function createRootQTable(givenNumOfRootQSoFar)
 
 
 //function for creeating linkQuestionTable
-function createSubQTable(givenParentQId, givenNumOfSubQSoFar)
+function createSubQTable(givenParentQId, givenNumOfSubQSoFar, givenParentQX)
 {
   var subQTable = document.createElement('table');
 
@@ -208,6 +224,11 @@ function createSubQTable(givenParentQId, givenNumOfSubQSoFar)
 
   //set the border
   subQTable.setAttribute('border', '1');
+
+  // set the x-coordinate and y-coordinate
+  subQTable.setAttribute('data-x', givenParentQX);
+  subQTable.setAttribute('data-y', givenNumOfSubQSoFar);
+  
 
 
 

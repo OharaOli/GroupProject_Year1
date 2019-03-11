@@ -16,6 +16,10 @@ Quiz creator
 
   <script type="text/javascript" src="./indentation.js"> </script>
 
+  <!-- javaScript for submission -->
+  <script type="text/javascript" src="./submission.js"> </script>
+
+
   <!-- Accessing Css from a separate file -->
   <link href="./indentation.css" rel="stylesheet" type="text/css">
 </head>
@@ -25,8 +29,8 @@ Quiz creator
 
 
 <div style="width: 800px; margin: auto;" id="QuizEditor">
-  <h1 contenteditable="true">
-    Quiz 1
+  <h1 id="quizHeader" contenteditable="true" data-quizId= "1">
+    Lorem ipsum
   </h1>
 
   <!-- buttons for editing order and submission -->
@@ -36,14 +40,14 @@ Quiz creator
   </div>
   <br/>
 
-  <div id="rootQDivQ1" data-QId="Q1">
+  <div class="rootQDiv" id="rootQDivQ1" data-QId="Q1">
     <input class="deleteQButton" type="button" value="X" onclick="deleteRootQuestion(this)"> </input>
-    <table id="rootQTableQ1" border="1" class="rootQTable" data-indent="0">
+    <table id="rootQTableQ1" border="1" class="rootQTable" data-index= "Q1" data-x="1" data-y="0">
       <!-- Labels for quiz master -->
       <tr>
         <th>Root</th>
         <th>Question</th>
-        <th>Time limit</th>
+        <th>Time limit</th>Quiz1
         <th>Answers</th>
       </tr>
       <tr>
@@ -106,6 +110,85 @@ Quiz creator
 
 <br/>
 
+
+<!-- table for storiing questions -->
+<div>
+question table (2dArray)
+  <table border="1">
+    <tr>
+      <th> quiz_id (integer) </th>
+      <th> text (string) </th>
+      <th> x_coord </th>
+      <th> y_coord </th>
+      <th> time </th>
+      <th> feedback </th>
+    </tr>
+    <tr>
+      <td> 1 </td>
+      <td> what is the capital city of the UK? </td>
+      <td> 1 </td>
+      <td> 0 </td>
+      <td> 20 </td>
+      <td> Paris is the capital city of France </td>
+    </tr>
+    <tr>
+      <td> 1 </td>
+      <td> what is the capital city of Korea? </td>
+      <td> 1 </td>
+      <td> 1 </td>
+      <td> 20 </td>
+      <td> lorem ipsum </td>
+    </tr>
+  </table>
+</div>
+
+<br/>
+
+
+<!-- table for storing answers -->
+<div>
+answer table (2d array)
+  <table border="1">
+    <tr>
+      <th> question_id (integer) </th>
+      <th> text (string) </th>
+      <th> is_correct </th>
+      <th> letter </th>
+    </tr>
+    <tr>
+      <td> 1 </td>
+      <td> London </td>
+      <td> true </td>
+      <td> A </td>
+
+    </tr>
+    <tr>
+      <td> 1 </td>
+      <td> Paris </td>
+      <td> false </td>
+      <td> B </td>
+    </tr>
+  </table>
+</div>
+
+
+</br>
+
+<!-- table for storing quizzes -->
+<div>
+quiz table (2d array)
+  <table border="1">
+    <tr>
+      <th> quiz_id </th>
+      <th> name </th>
+    </tr>
+    <tr>
+      <td> 1 </td>
+      <td> Lorem Ipsum </td>
+    </tr>
+
+  </table>
+</div>
 
 </body>
 
