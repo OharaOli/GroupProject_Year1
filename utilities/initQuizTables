@@ -19,37 +19,37 @@ CREATE TABLE questions(
   x_coord int NOT NULL,
   y_coord int NOT NULL,
   time int NOT NULL,
+  feedback VARCHAR(255) NOT NULL,
   PRIMARY KEY(question_ID));
   
 CREATE TABLE answers(
   answer_id int NOT NULL AUTO_INCREMENT,
   question_id int NOT NULL,
   text VARCHAR(255) NOT NULL,
-  feedback VARCHAR(255) NOT NULL,
   is_correct BIT NOT NULL,
   letter ENUM("A", "B", "C", "D") NOT NULL,
   PRIMARY KEY(answer_id));
   
 INSERT INTO quizzes(name, user_id) VALUES("Test Quiz", 1);
-INSERT INTO questions VALUES (NULL, 1, "What is 9 squared?", 0, 0, 10),
-                             (NULL, 1, "What is the capital of England?", 1, 0, 10),
-                             (NULL, 1, "When was the London fire?", 1, 1, 15), 
-                             (NULL, 1, "What bear colours exist?", 2, 0, 10),
-                             (NULL, 1, "What letter does London start with?", 1, 2, 10);
+INSERT INTO questions VALUES (NULL, 1, "What is 9 squared?", 0, 0, 10, "9 * 9  = 81."),
+                             (NULL, 1, "What is the capital of England?", 1, 0, 10, "London is the capital of England."),
+                             (NULL, 1, "When was the London fire?", 1, 1, 15, "The London fire was from 2nd September to 6th September in 1666."), 
+                             (NULL, 1, "What bear colours exist?", 2, 0, 10, "Brown and black bears appear naturally in the wild."),
+                         (NULL, 1, "What letter does London start with?", 1, 2, 10, "The first letter of London is the letter 'L'.");
 INSERT INTO answers VALUES
-  (NULL, 1, "81", "9 times 9 is equal to 81.", 1, "A"),
-  (NULL, 1, "3", "3 is the square root of 9.", 0, "B"),
-  (NULL, 2, "Manchester", "Manchester is not the capital of England.", 0, "A"),
-  (NULL, 2, "Paris", "Paris is the capital of France, not England.", 0, "B"),
-  (NULL, 2, "London", "London is the capital of England.", 1, "C"),
-  (NULL, 2, "Ireland", "Ireland is a country, not a city.", 0, "D"),
-  (NULL, 3, "1666", "The London fire was from 2nd September to 6th September in 1666.", 1, "A"),
-  (NULL, 3, "2095", "The current year is not even 2095 yet!", 0, "B"),
-  (NULL, 4, "Brown", "Brown bears exist.", 1, "A"),
-  (NULL, 4, "Pink", "Pink bears are not real.", 0, "B"),
-  (NULL, 4, "Black", "Black bears exist.", 1, "C"),
-  (NULL, 5, "L", "London starts with the letter 'L'.", 1, "A"),
-  (NULL, 5, "O", "'O' is the second letter in London, not the first.", 0, "B");
+  (NULL, 1, "81", 1, "A"),
+  (NULL, 1, "3", 0, "B"),
+  (NULL, 2, "Manchester", 0, "A"),
+  (NULL, 2, "Paris", 0, "B"),
+  (NULL, 2, "London", 1, "C"),
+  (NULL, 2, "Ireland", 0, "D"),
+  (NULL, 3, "1666", 1, "A"),
+  (NULL, 3, "2095", 0, "B"),
+  (NULL, 4, "Brown", 1, "A"),
+  (NULL, 4, "Pink", 0, "B"),
+  (NULL, 4, "Black", 1, "C"),
+  (NULL, 5, "L", 1, "A"),
+  (NULL, 5, "O", 0, "B");
 
 INSERT INTO quizzes(name, user_id) VALUES("Something", 1);
 INSERT INTO quizzes(name, user_id) VALUES("SomethingElse", 1);

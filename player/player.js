@@ -254,9 +254,8 @@ function displayFeedback(feedback, isCorrect)
     // If an answer was not selected, then inform of that.
     $("#q-and-a-container").append("<p>You did not select an answer.</p>");
   
-  if(currentQuestionAnswerSelected != "-")
-    // In any case, display the available feedback.
-    $("#q-and-a-container").append("<p>" + feedback + "</p>");
+  // In any case, display the available feedback.
+  $("#q-and-a-container").append("<p>" + feedback + "</p>");
 }  // end-displayFeedback
 
 

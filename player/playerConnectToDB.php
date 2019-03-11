@@ -120,16 +120,19 @@
     
     
     if($answerLetter == "-")
-      echo "0 \nYou did not provide an answer.";
+      echo "0";
     else 
     {
-      $sql = "SELECT is_correct, feedback FROM answers "
+      $sql = "SELECT is_correct FROM answers "
              . "WHERE letter = '$answerLetter' AND question_id = $questionID;";
       $result = sqlWithResult0($mysqli, $sql);
       $answerData = $result->fetch_assoc();
       echo $answerData["is_correct"];
-      echo " \n" . $answerData["feedback"];
     } // else 
+    
+    $sql = "SELECT feedback FROM questions WHERE question_id = $questionID;";
+    $result = sqlWithResult0($mysqli, $sql);
+    echo " \n" . $result->fetch_assoc()["feedback"];
   } // outputFeedback
   
   
