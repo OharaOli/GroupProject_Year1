@@ -367,16 +367,14 @@ function updateFeedbackState()
 
 
 // Handles the required functionality for the outro state.
-function showOutro()
+function endQuiz()
 {
-  isFloating = false;
   // Makes a final update to the database to inform players of the outro state.
   // The (a)ction is (u)pdating the (s)tate, the (h)ost ID is the host's ID, and the
   // new (s)tate is the outro state.
   updateDataInDB("hostConnectToDB.php?a=us&h=" + hostID + "&s=outro");
-  // Displays the required UI for the outro state.
-  displayOutro();
-} // showOutro
+  window.location = "../hub";
+} // endQuiz
 
 
 function enterFloatingState()
@@ -499,7 +497,8 @@ function displayQuestionState()
   $("#" + getCoords()).append("<p id='number-of-answers'></p>");
   updatePlayerAnswers(0);
   for (letter in questions[xCoord][yCoord].answers)
-    $("#" + getCoords()).append("<div class='answerbox'><p>" + letter + ":\t" + questions[xCoord][yCoord].answers[letter].text + "</p></div>");
+    $("#" + getCoords()).append("<div class='answerbox'><p>" + letter + ":\t" +
+        questions[xCoord][yCoord].answers[letter].text + "</p></div>");
 }  // end-displayQuestionState
 
 
@@ -592,14 +591,19 @@ function generateSlides()
     {
       if (yIndex == 0)
       {
-        $(".slides").append("<section id='root" + xIndex + "'><section id='" + xIndex + "-0" + "'><div id='question-" + xIndex + "-0" + "'><h2>" + questions[xIndex][0].text + "</h2></div></section></section>");
+        $(".slides").append("<section id='root" + xIndex + "'><section id='" + xIndex + "-0" + "'><button id='end-button'>End Quiz</button><h2>" + questions[xIndex][0].text + "</h2></section></section>");
       }  // end-if
       else
       {
-        $("#root" + xIndex).append("<section id='" + xIndex + "-" + yIndex + "'><h2>" + questions[xIndex][yIndex].text + "</h2></section>");
+        $("#root" + xIndex).append("<section id='" + xIndex + "-" + yIndex + "'><button id='end-button'>End Quiz</button><h2>" + questions[xIndex][yIndex].text + "</h2></section>");
       }  // end-else
       addStartButtonToSlide(xIndex, yIndex);
-     }  // end-for    
+     }  // end-for
+
+  $("#end-button").click(function() {
+    endQuiz();
+  });
+   
   // __
   Reveal.initialize();
 }  // end-generateSlides
@@ -654,6 +658,7 @@ function startTimer() {
 
 // Execute the code when the page is ready.
 $(document).ready(function() {
+
   // Upon clicking the 'Start Quiz' button...
   $("#start-button").click(function() {
     // Starts the functional part of the quiz.
@@ -684,22 +689,3 @@ function updateIntroUI()
   $("#number-of-players-connected").text("" + numberOfConnectedPlayers
                                          + " players are currently connected.");
 } // end-updateIntroUI()
-
-
-/*
-// A function which displays the outro page.
-function displayOutro()
-{
-  // For every player in quiz session...
-  for (var index in players)
-    // ...make sure they are either connected or has some points.
-    if (players[index].connected || players[index].score > 0)
-      $("#score-list").append("<li>" + players[index].screenName + ": "
-                                                         + players[index].score + "</li>")      
-
-  // Remove all content used for displaying the questions and answers.
-  $("#q-and-a-container").empty();
-  // Make visible the contents of the outro container div.
-  $("#outro-container").show();    
-}  // end-displayOutro
-*/

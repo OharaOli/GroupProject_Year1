@@ -1,13 +1,28 @@
-.answerbox {
-  display: inline-block;
-  width: 45%;
-  margin-left: ;
-  height: 100%;
-  background-color: lightblue;
+#end-button {
+  display: block;
+  float: right;
+  margin-top: -300px;
 }
 
-h2 {
-  font-size: 36px !important;
+.present .answerbox:last-child {
+  margin-right: 50px;
+}
+
+.present .answerbox {
+  display: inline-block;
+  width: 300px;
+  margin-left: 50px;
+  height: 80px;
+  background-color: lightblue;
+  border: 1px solid black;
+}
+
+.reveal h2 {
+  font-size: 62px !important;
+}
+
+.present {
+  
 }
 
 .present div:first-child {
