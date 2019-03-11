@@ -7,6 +7,8 @@
 <body>
 <script>
 
+
+
 //method to add a row onto quiz maker table
 function addQuestionRow() {
   //put quiz maker table into a variable
@@ -19,7 +21,6 @@ function addQuestionRow() {
 
   //set to 3 because the table starts with 3 rows by default
   //var nextRowIndex = 3;
-
 
 
   //inserts 6 cells each with their own text field
@@ -63,6 +64,44 @@ function deleteQuestionRow() {
   table.deleteRow(lastRowIndex-1);
 }
 
+
+
+function validation()
+{
+  //variable to select all the current question id's
+  var Questions = document.querySelectorAll('[id^=q]');
+  //variable to select all the current question id's
+  var RelatedNodes = document.querySelectorAll('[id^=rn]');
+  //variable to select all the current question id's
+  var Answers = document.querySelectorAll('[id^=ans]');
+  valid = true;
+ //loop through each question see if empty
+  for(var i in Questions){
+    if(Questions[i].value == "") {
+      valid = false;
+      document.getElementById('question_validation').innerHTML = "Please fill in ALL the questions";
+      break;
+    }
+  }
+ //loop through each node see if empty
+ for(var i in RelatedNodes){
+   if(RelatedNodes[i].value == "") {
+     valid = false;
+     document.getElementById('nodes_validation').innerHTML = "Please fill in ALL the RelatedNodes";
+     break;
+   }
+ }
+ //loop through each Answer see if empty
+   for(var i in Answers){
+     if(Answers[i].value == "") {
+       valid = false;
+       document.getElementById('answer_validation').innerHTML = "Please fill in ALL the answers";
+       break;
+     }
+}
+
+  return valid;
+}
 
 </script>
 
@@ -121,12 +160,14 @@ function deleteQuestionRow() {
   <button onclick="addQuestionRow()">Add question </button>
   <button onclick="deleteQuestionRow()">Delete question </button>
   <!-- Submit button -->
-  <button onclick="">Submit does nothing yet </button>
-
-
-
+  <button onclick="validation()">Submit does nothing yet </button>
+  <!-- Hold Error Message -->
+  <p style="color:red;" id="question_validation"></p>
+  <p style="color:red;" id="nodes_validation"></p>
+  <p style="color:red;" id="answer_validation"></p>
 
 </body>
 
 
 </html>
+
