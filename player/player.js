@@ -22,6 +22,7 @@ var currentQuestionText;
 var currentQuestionAnswerSelected;
 var currentQuestionNumAnswers;
 var currentState = null;
+var questionsAnswered = 0;
 
 
 function tryToJoin(quizCode, screenName)
@@ -232,6 +233,7 @@ function updateFeedbackState(returnedText)
     isCorrect = true;
     playerScore++;
   }
+  questionsAnswered++;
   displayFeedback(feedback, isCorrect);  
 }  // end-updateFeedbackState
 
@@ -261,6 +263,8 @@ function displayFeedback(feedback, isCorrect)
 // function to show the outro of when the quiz has ended
 function updateOutroState()
 {
+  // Stops polling for state as the quiz is over.
+  clearInterval(pollForStateInterval);
   // Call the function which actually makes the transition.
   displayOutro();
 }  // end-updateOutroState
@@ -274,7 +278,8 @@ function displayOutro()
   // Show the outro container div.
   $("#outro-container").show();
   // Display the player's score.
-  $("#outro-container").append("<p>Your score is " + playerScore + ".");
+  $("#outro-container").append("<p>You answered " + playerScore + "/"
+                                                       + questinsAnswered + " questions correctly.</p>");
 }  // end-displayOutro
 
 
