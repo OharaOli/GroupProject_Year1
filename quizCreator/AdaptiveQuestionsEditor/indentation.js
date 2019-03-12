@@ -1,5 +1,7 @@
 // number of the root questions so far (those with no indentations)
-var numOfRootQSoFar = 1;
+var numOfRootQSoFar = 0;
+var numOfSubQSoFar = 0;
+var numOfQSoFar = 0;
 
 
 
@@ -8,10 +10,14 @@ var isAllSubQHidden = false;
 var isAddRootQButtonHidden = false;
 
 
-
 //function for adding a linkQuestion
 function addSubQuestion(givenButton)
 {
+  numOfSubQSoFar++;
+  numOfQSoFar++;
+
+  //update the number of questions
+  document.getElementById('quizEditor').setAttribute('data-numOfQuestions', numOfQSoFar);
 
   //find the id of the parent question
   parentQId = givenButton.parentNode.parentNode.getAttribute('data-QId');
@@ -60,12 +66,16 @@ function addSubQuestion(givenButton)
 function addRootQuestion(givenButton)
 {
   numOfRootQSoFar++;
+  numOfQSoFar++;
 
+  //update the number of questions
+  document.getElementById('quizEditor').setAttribute('data-numOfQuestions', numOfQSoFar);
 
   //wrapper to contain the root question and all of the sub questions
   var rootQDiv = document.createElement('div');
   rootQDiv.setAttribute('id', 'rootQDiv' + numOfRootQSoFar);
   rootQDiv.setAttribute('data-QId', 'Q' + numOfRootQSoFar);
+
 
   //button for deleting the question
   var deleteRootQButton = document.createElement('input');
@@ -91,7 +101,8 @@ function addRootQuestion(givenButton)
   subQDiv.setAttribute('id', 'subQDiv' + 'Q' + numOfRootQSoFar);
   subQDiv.setAttribute('data-numOfSubQSoFar', '0');
   subQDiv.setAttribute('class', 'subQDiv');
-  subQDiv.setAttribute('style', 'display: block;')
+  subQDiv.setAttribute('style', 'display: block;');
+  subQDiv.setAttribute('data-x', numOfRootQSoFar);
 
   //append 'add sub question' button to the wrapper
   var addSubQButton = document.createElement('input');
@@ -196,7 +207,8 @@ function createRootQTable(givenX)
   indexCell.innerHTML = "Q" + givenX;
 
   var questionCell = questionRow.insertCell(1);
-  var questionField = document.createElement('textarea');
+  var questionField = document.createElement('input');
+  questionField.setAttribute('type', 'text');
   questionField.setAttribute('class', 'questionField');
   questionField.setAttribute('placeholder', 'question');
   questionCell.appendChild(questionField);
@@ -206,7 +218,7 @@ function createRootQTable(givenX)
 
 
   var answersCell = questionRow.insertCell(3);
-  answersCell.appendChild(createAnswersTable('Q' + givenX));
+  answersCell.appendChild(createAnswersTable(givenX, '0'));
 
   return rootQTable;
 } // function createQTable
@@ -261,7 +273,8 @@ function createSubQTable(givenX, givenY)
   indexCell.innerHTML = "Q" + givenX + "." + givenY;
 
   var questionCell = questionRow.insertCell(1);
-  var questionField = document.createElement('textarea');
+  var questionField = document.createElement('input');
+  questionField.setAttribute('type', 'text');
   questionField.setAttribute('class', 'questionField');
   questionField.setAttribute('placeholder', 'question');
   questionCell.appendChild(questionField);
@@ -290,7 +303,16 @@ function createAnswersTable(givenX, givenY)
   //set attributes
   aTable.setAttribute('id', 'answersTable' + givenX + "." + givenY);
   aTable.setAttribute('border', 1);
-  aTable.setAttribute('class', 'answersTable');
+  //To distinguish between answers for the root and answers for the sub
+  if(givenY == 0)
+  {
+    aTable.setAttribute('class', 'answersTableRoot');
+  }
+  else
+  {
+    aTable.setAttribute('class', 'answersTableSub');
+  }
+
   aTable.setAttribute('data-x', givenX);
   aTable.setAttribute('data-y', givenY);
 

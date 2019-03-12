@@ -1,6 +1,12 @@
+var numOfQSoFar;
+
+
+
+
 // function for the submit button
 function submit()
 {
+  numOfQSoFar = 0;
   alert(JSON.stringify(createQTableArray()));
   alert(JSON.stringify(createATableArrayAll()));
 
@@ -25,17 +31,22 @@ function createQArray(givenQTable)
 
 
   //locate the text, and push the text
-  qArray.push(givenQTable.rows[1].cells[1].childNodes[1].value);
+  qArray.push(givenQTable.rows[1].cells[1].childNodes[0].value);
 
   //now find the x coordinate and y coordinate, push them
   qArray.push(givenQTable.getAttribute('data-x'));
   qArray.push(givenQTable.getAttribute('data-y'));
 
-  //now to the feedback. for this you need to access the anserTable
-  var answersTable = document.getElementById('answersTable' + givenQTable.getAttribute('data-index'));
+  //now store the timelimit
+  qArray.push(givenQTable.rows[1].cells[2].childNodes[0].value);
+
+
+  var answersTable = document.getElementById('answersTable' + givenQTable.getAttribute('data-x')
+                                                            + "."
+                                                            + givenQTable.getAttribute('data-y'));
 
   //locate the feedback field, and push the value to the array
-  qArray.push(answersTable.rows[0].cells[3].childNodes[1].value);
+  qArray.push(answersTable.rows[0].cells[3].childNodes[0].value);
 
   // return the array
   return qArray;
@@ -79,7 +90,7 @@ function createQTableArray()
 
 
 //function for creating an array that stores information about
-// the answers of a particular question
+// the answers of a particular questione array
 function createATableArray(givenATable)
 {
 
@@ -88,18 +99,31 @@ function createATableArray(givenATable)
 
   //have to loop through the table to figure out which answers have
   //the inputs
-  for(var index=0; index < givenATable.rows.length; index++)
+  for(var index= 0; index < givenATable.rows.length; index++)
   {
     //look up the text cell
     //store the information in the cell only if the cell is not empty
     // if it is empty, just ignore that cell
-    if(givenTable.rows[index].cells[2].childNode.value != "")
+    if(givenATable.rows[index].cells[2].childNodes[0].value != "")
     {
-      aArray.push([givenTable.getAttribute('data-x'),
-                        givenTable.getAttribute('data-y'),
-                        givenTable.rows[index].cells[2].childNodes[1].value,
-                        givenTable.rows[index].cells[1].childNodes[1].checked,
-                        givenTable.rows[index].cells[0].innerHTML]);
+
+      var workArray = [numOfQSoFar,
+                       givenATable.rows[index].cells[2].childNodes[0].value,];
+      //transform the true and false to 1 and zero
+      if(givenATable.rows[index].cells[1].childNodes[0].checked == true)
+      {
+        workArray.push("1");
+      }
+      else
+      {
+        workArray.push("0");
+      }
+
+      //now push the index
+      workArray.push(givenATable.rows[index].cells[0].innerHTML);
+
+      //push the workarray to the whole array
+      aArray.push(workArray);
     } // if true part
   } // for loop
 
@@ -115,13 +139,23 @@ function createATableArrayAll()
 {
   var aTableArrayAll = [];
 
-  //get all of the answer tables
-  var aTables = document.getElementsByClassName('answersTable');
-
+  //get all of the answer tables for the root questions
+  var aTablesRoot = document.getElementsByClassName('answersTableRoot');
   //concatenate all of the answer tables
-  for(var index = 0; index < aTables.length; index++)
+  for(var index = 0; index < aTablesRoot.length; index++)
   {
-    aTableArrayAll.concat(createaArray(aTables[index]));
+    aTableArrayAll = aTableArrayAll.concat(createATableArray(aTablesRoot[index]));
+    numOfQSoFar++;
+  } // for loop
+
+
+  //get all of the answers table for the sub questions
+  var aTablesSub = document.getElementsByClassName('answersTableSub');
+  //concatenate all of the answer tables
+  for(var index = 0; index < aTablesSub.length; index++)
+  {
+    aTableArrayAll = aTableArrayAll.concat(createATableArray(aTablesSub[index]));
+    numOfQSoFar++;
   } // for loop
 
 

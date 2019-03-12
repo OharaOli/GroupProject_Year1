@@ -28,7 +28,7 @@ Quiz creator
 
 
 
-<div style="width: 800px; margin: auto;" id="QuizEditor">
+<div style="width: 800px; margin: auto;" id="quizEditor" data-numOfQuestions="0">
   <h1 id="quizHeader" contenteditable="true" data-quizId= "1">
     Lorem ipsum
   </h1>
@@ -38,71 +38,6 @@ Quiz creator
     <input type="button" value="submit" onClick="submit()"> </input>
     <input type="button" value="edit root question order (working on)" > </input> <!--onClick="editRootQOrder()" -->
   </div>
-  <br/>
-
-  <div class="rootQDiv" id="rootQDivQ1" data-QId="Q1">
-    <input class="deleteQButton" type="button" value="X" onclick="deleteRootQuestion(this)"> </input>
-    <table id="rootQTable1" border="1" class="rootQTable" data-index= "Q1" data-x="1" data-y="0">
-      <!-- Labels for quiz master -->
-      <tr>
-        <th>Root</th>
-        <th>Question</th>
-        <th>Time limit</th>
-        <th>Answers</th>
-      </tr>
-      <tr>
-        <td> Q1 </td>
-        <td> <input type='text' value='hello'>  </input> </td>
-        <td>
-          <select class="timeLimitList">
-            <option value="10">10</option>
-            <option value="15">15</option>
-            <option value="20">20</option>
-            <option value="25">25</option>
-            <option value="30">30</option>
-         </select>
-      </td>
-        <td>
-          <table id="answersTableQ1" class="answersTable" border="1" data-QId="1"> <!-- answer table -->
-            <tr> <!--A-->
-              <td> A </td>
-              <td> <input class="correctnessCheckBox" type="checkbox"> </input></td>
-              <td> <input class="answerField" type="text" placeholder="Answer"> </input></td>
-              <td rowspan="4"> <textarea class="answerDescriptionField" placeholder="description for answers"> </textarea> </td>
-            </tr>
-
-            <tr> <!--B-->
-              <td> B </td>
-              <td> <input class="correctnessCheckBox" type="checkbox"> </input></td>
-              <td> <input class="answerField" type="text" placeholder="Answer"> </input></td>
-            </tr>
-
-            <tr> <!--C-->
-              <td> C </td>
-              <td> <input class="correctnessCheckBox" type="checkbox"> </input></td>
-              <td> <input class="answerField" type="text" placeholder="Answer"> </input></td>
-            </tr>
-
-            <tr> <!--D-->
-              <td> D </td>
-              <td> <input class="correctnessCheckBox"  type="checkbox"> </input></td>
-              <td> <input class="answerField" type="text" placeholder="Answer"> </input></td>
-            </tr>
-          </table> <!-- answer table-->
-        </td> <!-- the 4th column of the question table -->
-      </tr> <!-- the only row of the question table -->
-    </table> <!-- Q1Table -->
-    <input type="button" value="V" onclick="hideSubQButton(this)"> </input>
-
-
-    <!-- button for adding link question -->
-    <br/>
-    <div style="display: block;" class="subQDiv" id="subQDivQ1" data-numOfSubQSoFar="0" data-x="1" data-y="0">
-      <input class="addSubQButton" type="button" value="+" onClick="addSubQuestion(this)"></input>
-    </div>
-  </div> <!-- rootQDivQ1 -->
-
-
 
   <br/>
   <input id="addRootQButton" style="display: block" class="addRootQButton" type="button" value="add root question" onClick="addRootQuestion(this)"> </input>
