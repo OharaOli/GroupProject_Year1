@@ -71,9 +71,10 @@
 <html lang ="en">
 <head>
   <title>Quiz Hub</title>
+  <script src="../misc/checkMobile.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="./hub.js"> </script>
-
+  
   <!-- bootstrap scripts and other stuff -->
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
@@ -131,13 +132,13 @@
     </form>
 
     <button class="button primary" onclick="showQuizCodeForm()" id="initialQuizCodeButton">CHANGE QUIZ CODE</button>
-<br />
+<br><br>
 <!--If there is an error caused by the changing of the quiz code, echo an error-->
 <?php
     if ($_SERVER["REQUEST_METHOD"] == "POST")
     {
         if ($quizCodeEntryError != '')
-            echo $quizCodeEntryError;
+            echo "<script> alert('".$quizCodeEntryError."')</script>";
     }//if
 ?>
 
@@ -145,14 +146,17 @@
 <form method="post" action="../">
 <input class="button primary" type="submit" name = "Create New" value = "CREATE NEW">
 </form>
-<div id="Quiz_List"></div>
+<!--div id="Quiz_List"></div-->
+<table id="quizzesTable">
 <?php
+$count = 0;
 while($row = $quizIDandNameList ->fetch_assoc())
  {
-        echo   '<script> placeQuiz(' . $row['quiz_id'] . ",'" . $row['name'] . "', '" . $quizCode . "');</script>";
+        $count++;
+        echo   "<tr class='Table_Row' id='row-" . $count . "'><script> placeQuiz(" . $row['quiz_id'] . ",'" . $row['name'] . "', '" . $quizCode . "', " . $count . ");</script></tr>";
 }
 ?>
-    </div>
+</table>
   </div><!--  close main -->
 </body>
 </html>

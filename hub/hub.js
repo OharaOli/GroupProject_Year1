@@ -1,10 +1,21 @@
-function placeQuiz(quizID, quizName, quizCode)
+function placeQuiz(quizID, quizName, quizCode, count)
 {
   $(document).ready(function() {
   // show the quiz based on the quizes present in the DB
-  $("#Quiz_List").append("<p>" + quizName);
-  $("#Quiz_List").append("<button id='host" + quizID + "'>Host</button> ");
+  //var rowNumber = document.getElementById('quizzesTable').rows.length;
+  //var table = document.getElementById("quizzesTable");
 
+  
+  //var rows = table.insertRow(rowNumber);
+  //var firstCell = rows.insertCell(0);
+  //firstCell.innerhtml = (''+ quizName);
+
+  $("#row-" + count).append("<td><h3>"+ quizName + " </h3></td>");
+  $("#row-" + count).append("<td><button class = 'HostButton' id='host" + quizID + "'>Host</button></td>");
+    $("#row-" + count).append("<td><button class = 'EditButton' id='edit" + quizID + "'>Edit</button> </td>");
+  //var secondCell = rows.inseWrtCell(1);
+  //secondCell.innerHTML = buttonHost;
+  
  $("#host" + quizID).click(function() {
     var form = document.createElement("form");
     form.setAttribute("method", "post");
@@ -28,8 +39,6 @@ function placeQuiz(quizID, quizName, quizCode)
      document.body.appendChild(form);
      form.submit();
 } );
-
-  $("#Quiz_List").append("<button id='edit" + quizID + "'>Edit</button> <br />");
 
  $("#edit" + quizID).click(function() {
     var form = document.createElement("form");
