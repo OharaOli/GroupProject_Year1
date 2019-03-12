@@ -191,7 +191,7 @@ function upload_quiz() {
    //Ajax call to store the quiz name (and temp account id) and call submit question with the id 
    $.ajax({
       async: false,
-      url: "insertQuizName.php",
+      url: "../tools/insertQuizName.php",
       cache: false,
       type: "post",
       data:
