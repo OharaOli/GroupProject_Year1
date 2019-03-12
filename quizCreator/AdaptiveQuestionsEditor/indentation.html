@@ -13,11 +13,15 @@ Quiz creator
   <script type="text/javascript" src="./jquery.connections.js"> </script>
 
 
-
   <script type="text/javascript" src="./indentation.js"> </script>
 
   <!-- javaScript for submission -->
   <script type="text/javascript" src="./submission.js"> </script>
+
+
+  <!-- javaScript for retrieval -->
+  <script type="text/javascript" src="./retrieve.js"> </script>
+
 
 
   <!-- Accessing Css from a separate file -->
@@ -29,7 +33,7 @@ Quiz creator
 
 
 <div style="width: 800px; margin: auto;" id="quizEditor" data-numOfQuestions="0">
-  <h1 id="quizHeader" contenteditable="true" data-quizId= "1">
+  <h1 id="quizHeader" contenteditable="true" data-quizId= "1" placeholder='required'>
     Lorem ipsum
   </h1>
 
@@ -37,6 +41,7 @@ Quiz creator
   <div>
     <input type="button" value="submit" onClick="submit()"> </input>
     <input type="button" value="edit root question order (working on)" > </input> <!--onClick="editRootQOrder()" -->
+    <input type="button" value="retrieve (test)" onClick="retrieve()"> </input>
   </div>
 
   <br/>
