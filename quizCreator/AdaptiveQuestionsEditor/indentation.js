@@ -17,7 +17,7 @@ function addSubQuestion(givenButton)
   parentQId = givenButton.parentNode.parentNode.getAttribute('data-QId');
 
   //find the x coordinate of the parent question
-  parentQX = givenButton.nextElementSibling.getAttribute('data-x');
+  parentQX = givenButton.parentNode.getAttribute('data-x');
 
   //get the number of sub questions
   numOfSubQSoFar = parseInt(givenButton.parentNode.getAttribute('data-numOfSubQSoFar'));
@@ -29,7 +29,7 @@ function addSubQuestion(givenButton)
   givenButton.parentNode.setAttribute('data-numOfSubQSoFar', numOfSubQSoFar);
 
   //create a new linkQuestion table
-  var linkQTable = createSubQTable(parentQId, numOfSubQSoFar, parentQX);
+  var linkQTable = createSubQTable(parentQX, numOfSubQSoFar);
 
   //create wrapper for this new subQ
   var individualSubQDiv = document.createElement('div');
@@ -157,21 +157,21 @@ function deleteSubQuestion(givenButton)
 
 //function for creating the answer table with given index
 //function for creating question Table
-function createRootQTable(givenNumOfRootQSoFar)
+function createRootQTable(givenX)
 {
   var rootQTable = document.createElement('table');
   rootQTable.setAttribute('border', 1);
-  rootQTable.setAttribute('id', 'rootQTable' + "Q" + givenNumOfRootQSoFar);
+  rootQTable.setAttribute('id', 'rootQTable' + "Q" + givenX);
   rootQTable.setAttribute('class', 'rootQTable');
 
   //attributes for implemenation of data transfer to the data base
-  rootQTable.setAttribute('data-x', givenNumOfRootQSoFar);
+  rootQTable.setAttribute('data-x', givenX);
 
   //y-coordinate is always zero
   rootQTable.setAttribute('data-y', '0');
 
   //index for the question
-  rootQTable.setAttribute('data-index', 'Q' + givenNumOfRootQSoFar);
+  rootQTable.setAttribute('data-index', 'Q' + givenX);
 
   // add header row
   var headerRow = rootQTable.insertRow(0);
@@ -193,7 +193,7 @@ function createRootQTable(givenNumOfRootQSoFar)
   // add question Row
   var questionRow = rootQTable.insertRow(1);
   var indexCell = questionRow.insertCell(0);
-  indexCell.innerHTML = "Q" + givenNumOfRootQSoFar;
+  indexCell.innerHTML = "Q" + givenX;
 
   var questionCell = questionRow.insertCell(1);
   var questionField = document.createElement('textarea');
@@ -206,7 +206,7 @@ function createRootQTable(givenNumOfRootQSoFar)
 
 
   var answersCell = questionRow.insertCell(3);
-  answersCell.appendChild(createAnswersTable('Q' + givenNumOfRootQSoFar));
+  answersCell.appendChild(createAnswersTable('Q' + givenX));
 
   return rootQTable;
 } // function createQTable
@@ -215,7 +215,7 @@ function createRootQTable(givenNumOfRootQSoFar)
 
 
 //function for creeating linkQuestionTable
-function createSubQTable(givenParentQId, givenNumOfSubQSoFar, givenParentQX)
+function createSubQTable(givenX, givenY)
 {
   var subQTable = document.createElement('table');
 
@@ -226,9 +226,9 @@ function createSubQTable(givenParentQId, givenNumOfSubQSoFar, givenParentQX)
   subQTable.setAttribute('border', '1');
 
   // set the x-coordinate and y-coordinate
-  subQTable.setAttribute('data-x', givenParentQX);
-  subQTable.setAttribute('data-y', givenNumOfSubQSoFar);
-  
+  subQTable.setAttribute('data-x', givenX);
+  subQTable.setAttribute('data-y', givenY);
+
 
 
 
@@ -237,7 +237,7 @@ function createSubQTable(givenParentQId, givenNumOfSubQSoFar, givenParentQX)
 
   //insert hierarchyCell
   var hierarchyCell = headerRow.insertCell(0);
-  hierarchyCell.innerHTML = "<th> Sub" + givenNumOfSubQSoFar + "</th>";
+  hierarchyCell.innerHTML = "<th> Sub" + givenY + "</th>";
 
   //insert question header
   var questionHeaderCell = headerRow.insertCell(1);
@@ -257,9 +257,8 @@ function createSubQTable(givenParentQId, givenNumOfSubQSoFar, givenParentQX)
   // add question Row
   var questionRow = subQTable.insertRow(1);
   var indexCell = questionRow.insertCell(0);
-  var subQIndex = givenParentQId + "." + givenNumOfSubQSoFar;
 
-  indexCell.innerHTML = subQIndex;
+  indexCell.innerHTML = "Q" + givenX + "." + givenY;
 
   var questionCell = questionRow.insertCell(1);
   var questionField = document.createElement('textarea');
@@ -275,7 +274,7 @@ function createSubQTable(givenParentQId, givenNumOfSubQSoFar, givenParentQX)
   var answerCell = questionRow.insertCell(3);
 
   //create an answer table and append it to the cell
-  answerCell.appendChild(createAnswersTable(subQIndex));
+  answerCell.appendChild(createAnswersTable(givenX, givenY));
 
   return subQTable;
 
@@ -283,15 +282,17 @@ function createSubQTable(givenParentQId, givenNumOfSubQSoFar, givenParentQX)
 
 
 //function for creating a table for the four answers
-function createAnswersTable(givenQIndex)
+function createAnswersTable(givenX, givenY)
 {
   //create aTable
   var aTable = document.createElement('table');
 
   //set attributes
-  aTable.setAttribute('id', 'answersTable' + givenQIndex);
+  aTable.setAttribute('id', 'answersTable' + givenX + "." + givenY);
   aTable.setAttribute('border', 1);
   aTable.setAttribute('class', 'answersTable');
+  aTable.setAttribute('data-x', givenX);
+  aTable.setAttribute('data-y', givenY);
 
   // row for the answer A
   var rowA = aTable.insertRow(0);
@@ -318,7 +319,7 @@ function createAnswersTable(givenQIndex)
   var descriptionCell = rowA.insertCell(3);
   descriptionCell.setAttribute('rowspan', 4);
   var descriptionField = document.createElement('textarea');
-  descriptionField.setAttribute('placeholder', 'description');
+  descriptionField.setAttribute('placeholder', 'feedback');
   descriptionField.setAttribute('class', 'answerDescriptionField');
   descriptionCell.appendChild(descriptionField);
 

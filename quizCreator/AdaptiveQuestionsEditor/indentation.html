@@ -35,24 +35,24 @@ Quiz creator
 
   <!-- buttons for editing order and submission -->
   <div>
-    <input type="button" value="submit (working on)"> </input>
+    <input type="button" value="submit" onClick="submit()"> </input>
     <input type="button" value="edit root question order (working on)" > </input> <!--onClick="editRootQOrder()" -->
   </div>
   <br/>
 
   <div class="rootQDiv" id="rootQDivQ1" data-QId="Q1">
     <input class="deleteQButton" type="button" value="X" onclick="deleteRootQuestion(this)"> </input>
-    <table id="rootQTableQ1" border="1" class="rootQTable" data-index= "Q1" data-x="1" data-y="0">
+    <table id="rootQTable1" border="1" class="rootQTable" data-index= "Q1" data-x="1" data-y="0">
       <!-- Labels for quiz master -->
       <tr>
         <th>Root</th>
         <th>Question</th>
-        <th>Time limit</th>Quiz1
+        <th>Time limit</th>
         <th>Answers</th>
       </tr>
       <tr>
         <td> Q1 </td>
-        <td> <textarea class="questionField" placeholder="question(required)"> </textarea> </td>
+        <td> <input type='text' value='hello'>  </input> </td>
         <td>
           <select class="timeLimitList">
             <option value="10">10</option>
@@ -63,7 +63,7 @@ Quiz creator
          </select>
       </td>
         <td>
-          <table id="AnswersTableQ1" class="AnswersTable" border="1"> <!-- answer table -->
+          <table id="AnswersTableQ1" class="AnswersTable" border="1" data-QId="1"> <!-- answer table -->
             <tr> <!--A-->
               <td> A </td>
               <td> <input class="correctnessCheckBox" type="checkbox"> </input></td>
@@ -97,7 +97,7 @@ Quiz creator
 
     <!-- button for adding link question -->
     <br/>
-    <div style="display: block;" class="subQDiv" id="subQDivQ1" data-numOfSubQSoFar="0">
+    <div style="display: block;" class="subQDiv" id="subQDivQ1" data-numOfSubQSoFar="0" data-x="1" data-y="0">
       <input class="addSubQButton" type="button" value="+" onClick="addSubQuestion(this)"></input>
     </div>
   </div> <!-- rootQDivQ1 -->

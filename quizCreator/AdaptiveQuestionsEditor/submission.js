@@ -1,21 +1,14 @@
-//function for creating 2d array
-function createTableArray(givenNumOfRows, givenNumOfColumns)
+// function for the submit button
+function submit()
 {
-  var tableArray = new Array(givenNumOfRows);
+  alert(JSON.stringify(createQTableArray()));
+  alert(JSON/stringify(createATableArrayAll()));
 
-  for(var index = 0; index < tableArray.length; index++)
-  {
-    tableArray[index] = new Array(givenNumOfColumns);
-  } // for loop
-
-  return tableArray;
+}
 
 
-  tableArray =
-[1, "what is the capital city of london?", 1, 0, 20, "yellow yellow"],
-[1, "what is the capital city of Korea?",  1, 1, 20, "green green"]]
 
-} // function create2DArray
+
 
 //------------------ array constructor methods --------------------------//
 //function for creating an array that stores all the information about a question
@@ -29,11 +22,9 @@ function createQArray(givenQTable)
   //just simply need to access them
   var qArray = [];
 
-  //push the quiz id
-  qArray.push(getQuizHeader().getAttribute('data-quizId'));
-
-  //now locate the text, and push the text#
-  qArray.push(givenQTable.rows[1].cells[1].childNode.innerHTML);
+  //locate the text, and push the text
+  alert(givenQTable.rows[1].cells[1].childNodes[0].value)
+  qArray.push(givenQTable.rows[1].cells[1].childNodes[0].value);
 
   //now find the x coordinate and y coordinate, push them
   qArray.push(givenQTable.getAttribute('data-x'));
@@ -57,7 +48,27 @@ function createQTableArray()
 {
   //use push method to dynamically add the Q arrays.
 
-  var qTableArray;
+  var qTableArray = [];
+
+  //now fill up the table using the createQArray function
+  // get all of the root Q tables
+  var rootQTables = document.getElementsByClassName('rootQTable');
+
+  //push the root QTables to the table array using for loop
+  for(var index= 0; index < rootQTables.length; index++)
+  {
+    qTableArray.push(createQArray(rootQTables[index]));
+  }// for loop
+
+
+  //get all of the sub Q tables
+  var subQTables = document.getElementsByClassName('subQTable');
+
+  //push the sub QTables to the table array using for loop
+  for(var index= 0; index < subQTables.length; index++)
+  {
+    qTableArray.push(createQArray(subQTables[index]));
+  }// for loop
 
   return qTableArray;
 
@@ -68,26 +79,54 @@ function createQTableArray()
 
 //function for creating an array that stores information about
 // the answers of a particular question
-function createAnswerArray(givenATable)
+function createATableArray(givenATable)
 {
 
+  //empty array for the rows
+  var aArray = [];
 
-    //now find the x coordinate and y coordinate, push them
-  var aArray;
+  //have to loop through the table to figure out which answers have
+  //the inputs
+  for(var index=0; index < givenATable.rows.length; index++)
+  {
+    //look up the text cell
+    //store the information in the cell only if the cell is not empty
+    // if it is empty, just ignore that cell
+    if(givenTable.rows[index].cells[2].childNode.value != "")
+    {
+      aArray.push([givenTable.getAttribute('data-x'),
+                        givenTable.getAttribute('data-y'),
+                        givenTable.rows[index].cells[2].childNode.value,
+                        givenTable.rows[index].cells[1].childNode.checked,
+                        givenTable.rows[index].cells[0].innerHTML]);
+    } // if true part
+  } // for loop
 
+  //return the table
   return aArray;
 
 
-} // function createAnswerArray
+} // function createATableArray
 
 
-//function for creating an answer array table
-function createATableArray()
+
+function createATableArrayAll()
 {
-    //now find the x coordinate and y coordinate, push them
-} // function crateATableArray
+  var aTableArrayAll = [];
+
+  //get all of the answer tables
+  var aTables = document.getElementsByClassName('answersTable');
+
+  //concatenate all of the answer tables
+  for(var index = 0; index < aTables.length; index++)
+  {
+    aTableArrayAll.concat(createaArray(aTables[index]));
+  } // for loop
 
 
+  return aTableArrayAll;
+
+} // function createATableArray
 //---------------------------------------------------------------------------
 
 
@@ -96,27 +135,12 @@ function createATableArray()
 
 
 
-//----------------------- accessor methods -----------------------------//
-//accessing the quiz header
-function getQuizHeader()
-{
-  //access the quiz header by id
-  var quizHeader = document.getElementById('quizHeader');
+//validation:
+/*
 
-  //return the element
-  return quizHeader;
-}
-
-//accessing the root question divs
-function getRootQDiv()
-{
-  //access the rootQDiv by class name
-  var rootQDivs = document.getElementsByClassName('rootQDiv');
-
-  // return an arrray of a ll root q divs
-  return rootQDivs;
-}
+all of the questionFields and feedBackField must be filled
+There must be at least 2 answer fields submitted
+For those answer cells with given text, the checkbox must be cheked.
 
 
-
-//--------------------------------------------------------------------------
+*/
