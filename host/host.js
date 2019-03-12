@@ -494,11 +494,12 @@ function toggleNavigation(booleanState)
 function displayQuestionState()
 {
   toggleNavigation(false);
-  $("#" + getCoords()).append("<p id='number-of-answers'></p>");
-  updatePlayerAnswers(0);
   for (letter in questions[xCoord][yCoord].answers)
-    $("#" + getCoords()).append("<div class='answerbox'><p>" + letter + ":\t" +
+    $("#" + getCoords()).append("<div class='answerbox'><p><span class='letter'>" + letter + "</span>" +
         questions[xCoord][yCoord].answers[letter].text + "</p></div>");
+
+  $("#" + getCoords()).append("<div id='number-of-answers'></div>");
+  updatePlayerAnswers(0);
 }  // end-displayQuestionState
 
 
@@ -515,18 +516,26 @@ function updatePlayerAnswers(numOfAnswers)
 function displayFeedbackState(answerSelections)
 {
   toggleNavigation(true);
-  $("#stop-" + getCoords()).remove();
+  $("#stop-" + getCoords()).css("visibility", "hidden");
   $(".timer-container").remove();
   $("#number-of-answers").remove();
 
+  var count = 0;
   for(answerSelection in answerSelections)
+  {
     // To make sure (for some reason) answer D is
     //selected when only A and B are available.
     if(answerSelection in questions[xCoord][yCoord].answers)
+    {
       // Display the number of players who chose each answer respectively.
       $("#" + getCoords()).append("<p>Number of  " +
         answerSelection + "s: " + answerSelections[answerSelection]);
 
+      $("#" + getCoords() + " .answerbox:eq(" + count + ")").prepend("<div class='bar-container'><div class='bar' id='bar-" + answerSelection + "-" + xCoord + "-" + yCoord + "'></div></div>");
+    }  // end-if
+
+    count++;
+  }  // end-for
 }  // end-displayFeedbackState
 
 /*
@@ -591,11 +600,11 @@ function generateSlides()
     {
       if (yIndex == 0)
       {
-        $(".slides").append("<section id='root" + xIndex + "'><section id='" + xIndex + "-0" + "'><button class='end-button'>End Quiz</button><h2>" + questions[xIndex][0].text + "</h2></section></section>");
+        $(".slides").append("<section id='root" + xIndex + "'><section id='" + xIndex + "-0" + "'><button class='end-button'>End Quiz</button><div class='question-container'><h2>" + questions[xIndex][0].text + "</h2></div></section></section>");
       }  // end-if
       else
       {
-        $("#root" + xIndex).append("<section id='" + xIndex + "-" + yIndex + "'><button class='end-button'>End Quiz</button><h2>" + questions[xIndex][yIndex].text + "</h2></section>");
+        $("#root" + xIndex).append("<section id='" + xIndex + "-" + yIndex + "'><button class='end-button'>End Quiz</button><div class='question-container'><h2>" + questions[xIndex][yIndex].text + "</h2></div></section>");
       }  // end-else
       addStartButtonToSlide(xIndex, yIndex);
      }  // end-for
@@ -639,7 +648,6 @@ Reveal.addEventListener('slidechanged', function(event) {
 function startTimer() {
   // The time left until countdown is 0.
   var timeLeft = questions[xCoord][yCoord].timeLimit;
-  var timeLeft = 100;
   // Show the timer countdown.
   $("#" + getCoords()).prepend("<div class='timer-container'><h3 id='timer'></h3></div>");
   // A function which decrements the countdown by 1, displays
