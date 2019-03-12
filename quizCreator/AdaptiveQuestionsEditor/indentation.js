@@ -134,7 +134,7 @@ function addRootQuestion(givenButton)
 
 
 
-} // addQuestion
+} // add root Question
 
 
 
@@ -151,7 +151,7 @@ function deleteRootQuestion(givenButton)
 
 
 
-}
+} // deleteRootQuestion
 
 
 function deleteSubQuestion(givenButton)
