@@ -516,7 +516,7 @@ function displayFeedbackState(answerSelections)
 {
   toggleNavigation(true);
   $("#stop-" + getCoords()).remove();
-  $("#timer").remove();
+  $(".timer-container").remove();
   $("#number-of-answers").remove();
 
   for(answerSelection in answerSelections)
@@ -570,7 +570,7 @@ function displayFeedbackState(answerSelections)
 
 function addStartButtonToSlide(requiredX, requiredY)
 {
-  $("#" + requiredX + "-" + requiredY).append("<button id='start-" + requiredX + "-" + requiredY + "'>Start Question</button");
+  $("#" + requiredX + "-" + requiredY).prepend("<button class='start-stop-button' id='start-" + requiredX + "-" + requiredY + "'>Start Question</button");
 
   $("#start-" + requiredX + "-" + requiredY).click(function() {
     $(this).attr("id", "stop-" + requiredX + "-" + requiredY).text("Stop Question").unbind("click");
@@ -591,21 +591,27 @@ function generateSlides()
     {
       if (yIndex == 0)
       {
-        $(".slides").append("<section id='root" + xIndex + "'><section id='" + xIndex + "-0" + "'><button id='end-button'>End Quiz</button><h2>" + questions[xIndex][0].text + "</h2></section></section>");
+        $(".slides").append("<section id='root" + xIndex + "'><section id='" + xIndex + "-0" + "'><button class='end-button'>End Quiz</button><h2>" + questions[xIndex][0].text + "</h2></section></section>");
       }  // end-if
       else
       {
-        $("#root" + xIndex).append("<section id='" + xIndex + "-" + yIndex + "'><button id='end-button'>End Quiz</button><h2>" + questions[xIndex][yIndex].text + "</h2></section>");
+        $("#root" + xIndex).append("<section id='" + xIndex + "-" + yIndex + "'><button class='end-button'>End Quiz</button><h2>" + questions[xIndex][yIndex].text + "</h2></section>");
       }  // end-else
       addStartButtonToSlide(xIndex, yIndex);
      }  // end-for
 
-  $("#end-button").click(function() {
+  $(".end-button").click(function() {
+    console.log("redirect");
     endQuiz();
   });
    
   // __
-  Reveal.initialize();
+  Reveal.initialize({
+  transition: 'slide',
+  backgroundTransition: 'slide',
+  width: "100%",
+  height: "100%"
+  });
 }  // end-generateSlides
 
 
@@ -620,7 +626,7 @@ Reveal.addEventListener('slidechanged', function(event) {
     for(var toGoUp = yCoord; toGoUp > 0; toGoUp--)
       Reveal.up();
     yCoord = 0;
-  } // if
+  } //  end-if
   
   if(!isFloating)
     enterFloatingState();
@@ -633,8 +639,9 @@ Reveal.addEventListener('slidechanged', function(event) {
 function startTimer() {
   // The time left until countdown is 0.
   var timeLeft = questions[xCoord][yCoord].timeLimit;
+  var timeLeft = 100;
   // Show the timer countdown.
-  $("#" + getCoords()).append("<h3 id='timer'></h3>");
+  $("#" + getCoords()).prepend("<div class='timer-container'><h3 id='timer'></h3></div>");
   // A function which decrements the countdown by 1, displays
   // it and if it has run out, then ends the question.
   var updateTimer = function() {

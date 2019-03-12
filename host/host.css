@@ -1,14 +1,42 @@
-#end-button {
+body {
+  background-color: lightgreen;
+}
+
+.end-button {
   display: block;
   float: right;
-  margin-top: -100px;
+  margin-top: 0;
 }
+
+.reveal .slides > section > section {
+  padding: 0;
+}
+
+section button {
+  display: inline-block;
+  width: 200px;
+  height: 50px;
+  font-size: 22px;
+}
+
+.start-stop-button {
+  float: left;
+}
+
+.timer-container {
+  display: inline-block;
+  background-color: red;
+  width: 50px;
+  height: 50px;
+  border-radius: ;
+}
+
 
 .present .answerbox:last-child {
   margin-right: 50px;
 }
 
-.present .answerbox {
+.present .answerbox, .past .answerbox, .future .answerbox {
   display: inline-block;
   width: 300px;
   margin-left: 50px;
@@ -16,19 +44,26 @@
   background-color: lightblue;
   border: 1px solid black;
   line-height: 80px;
+  text-align: center;
+}
+
+.reveal {
+  text-align: center;
 }
 
 .reveal h2 {
+  margin-top: 15%;
+  float: center;
   font-size: 62px !important;
 }
 
-.present {
-  
+.reveal.center .slides section {
+    min-height: 100% !important;
 }
 
 .present div:first-child {
-  height: 100%;
-  width: 100%;
   background-color: lightgreen;
   display: block;
+  position: absolute;
+  top: 50%;
 }
