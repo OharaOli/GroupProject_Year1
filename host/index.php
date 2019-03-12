@@ -12,6 +12,7 @@
   <script src="../misc/connectToDB.js" type="text/javascript"></script>
   <script src="../player/player.js" type="text/javascript"></script>
   <link rel="stylesheet" type="text/css" href="../reveal.js-master/css/reveal.css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
   <link rel="stylesheet" type="text/css" href="host.css">
   <style>
   .hidden {
@@ -40,7 +41,7 @@
 
   <div id="intro-container">
     <h4 id="state-display"></h4>
-    <h2>Quiz Code: <?php echo $_POST['quizCode'];?></h2>
+    <h2><span style="color:#CCC;">Quiz Code:</span> <?php echo $_POST['quizCode'];?></h2>
     <button id="start-button">Start Quiz</button>
     <h4 id="number-of-players-connected">0 players are currently connected.</h4>
     <ul id="player-list">
