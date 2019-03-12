@@ -132,16 +132,16 @@
     </form>
 
     <button class="button primary" onclick="showQuizCodeForm()" id="initialQuizCodeButton">CHANGE QUIZ CODE</button>
-<br><br>
+</br>
 <!--If there is an error caused by the changing of the quiz code, echo an error-->
 <?php
     if ($_SERVER["REQUEST_METHOD"] == "POST")
     {
         if ($quizCodeEntryError != '')
-            echo "<script> alert('".$quizCodeEntryError."')</script>";
+            echo "</br><h1>" .$quizCodeEntryError. "</h1>";
     }//if
 ?>
-
+</br>
 <!--REDIRECTION SHOULD BE CHANGED TO THE QUIZ CREATOR PAGE-->
 <form method="post" action="../">
 <input class="button primary" type="submit" name = "Create New" value = "CREATE NEW">

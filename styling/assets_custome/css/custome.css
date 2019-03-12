@@ -63,3 +63,10 @@
 
 }
 
+#quizCodeForm{
+   max-width: 300px;
+   margin-left: auto !important;
+   margin-right: auto !important;
+   text-align: center;
+}
+
