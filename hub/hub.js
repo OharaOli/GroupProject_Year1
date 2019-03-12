@@ -45,12 +45,18 @@ function placeQuiz(quizID, quizName, quizCode, count)
     form.setAttribute("method", "post");
 
     //THIS SHOULD BE CHANGED TO QUIZ EDITOR NOT LANDING PAGE
-    form.setAttribute("action", "../");
+    form.setAttribute("action", "../quizEditor");
 
      var input = document.createElement("input");
      input.setAttribute("type", "hidden");
      input.setAttribute("name", "quizID");
      input.setAttribute("value", quizID);
+     
+     //when the button is pressed send the quiz code to edit page
+     var inputQuizCode = document.createElement("input");
+     inputQuizCode.setAttribute("type", "hidden");
+     inputQuizCode.setAttribute("name", "quizCode");
+     inputQuizCode.setAttribute("value", quizCode);
 
      form.appendChild(input);
      document.body.appendChild(form);

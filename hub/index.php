@@ -13,10 +13,16 @@
     if($mysqli -> connect_error)
       die("Connection failed.");
 
-
+  if(!isset($_SESSION["username"]))
+  {
+    //redirects back to landing page so that variables can be set
+    //if the file is in a subfolder, goes back to the parent index
+    header("Location: ../");
+    exit();
+  }
     //https://stackoverflow.com/questions/5373780/how-to-catch-this-error-notice-undefined-offset-0
     //^ code to help with catching 'notices' (undefined variable notice)
-    set_error_handler('exceptions_error_handler');
+    // set_error_handler('exceptions_error_handler');
 
     function exceptions_error_handler()
     {
@@ -131,6 +137,7 @@
     <form id = "quizCodeForm" method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>" >
     </form>
 
+
     <button class="button primary" onclick="showQuizCodeForm()" id="initialQuizCodeButton">CHANGE QUIZ CODE</button>
 </br>
 <!--If there is an error caused by the changing of the quiz code, echo an error-->
@@ -143,7 +150,7 @@
 ?>
 </br>
 <!--REDIRECTION SHOULD BE CHANGED TO THE QUIZ CREATOR PAGE-->
-<form method="post" action="../">
+<form method="post" action="../quizCreator">
 <input class="button primary" type="submit" name = "Create New" value = "CREATE NEW">
 </form>
 <!--div id="Quiz_List"></div-->
