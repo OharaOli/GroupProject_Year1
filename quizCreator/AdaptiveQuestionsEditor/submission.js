@@ -2,7 +2,7 @@
 function submit()
 {
   alert(JSON.stringify(createQTableArray()));
-  alert(JSON/stringify(createATableArrayAll()));
+  alert(JSON.stringify(createATableArrayAll()));
 
 }
 
@@ -22,9 +22,10 @@ function createQArray(givenQTable)
   //just simply need to access them
   var qArray = [];
 
+
+
   //locate the text, and push the text
-  alert(givenQTable.rows[1].cells[1].childNodes[0].value)
-  qArray.push(givenQTable.rows[1].cells[1].childNodes[0].value);
+  qArray.push(givenQTable.rows[1].cells[1].childNodes[1].value);
 
   //now find the x coordinate and y coordinate, push them
   qArray.push(givenQTable.getAttribute('data-x'));
@@ -34,7 +35,7 @@ function createQArray(givenQTable)
   var answersTable = document.getElementById('answersTable' + givenQTable.getAttribute('data-index'));
 
   //locate the feedback field, and push the value to the array
-  qArray.push(answersTable.rows[0].cells[3].childNode.innerHTML);
+  qArray.push(answersTable.rows[0].cells[3].childNodes[1].value);
 
   // return the array
   return qArray;
@@ -96,8 +97,8 @@ function createATableArray(givenATable)
     {
       aArray.push([givenTable.getAttribute('data-x'),
                         givenTable.getAttribute('data-y'),
-                        givenTable.rows[index].cells[2].childNode.value,
-                        givenTable.rows[index].cells[1].childNode.checked,
+                        givenTable.rows[index].cells[2].childNodes[1].value,
+                        givenTable.rows[index].cells[1].childNodes[1].checked,
                         givenTable.rows[index].cells[0].innerHTML]);
     } // if true part
   } // for loop
