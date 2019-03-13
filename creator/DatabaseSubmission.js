@@ -1,38 +1,25 @@
-var numOfQSoFarSubmit;
+var numOfQSoFar;
+//Global variable for qTableArray
+var qTableArray;
 
-
-
-var qTableArrayTest;
-var aTableArrayAllTest;
-
-var deleteRootQButtons;
+var aTableArrayAll;
+//Current position in the answer array
+var answerIndex = 0;
 
 
 // function for the submit button
 function submit()
 {
-  numOfQSoFarSubmit = 0;
-  qTableArrayTest = createQTableArray();
-  aTableArrayAllTest = createATableArrayAll();
-
-  alert("submission complete");
-  alert("2D array of questions: "
-        + "\n" + JSON.stringify(qTableArrayTest));
-  alert("2D array of answers: "
-        + "\n" + JSON.stringify(aTableArrayAllTest));
-}
-
-function deleteAll()
-{
-  deleteRootQButtons = document.getElementsByClassName('deleteRootQButton');
-
-  //delete them all
-  for(var index = 0; index < deleteRootQButtons.length; index++)
-  {
-    deleteRootQuestion(deleteRootQButtons[index]);
-  }
+  numOfQSoFar = 0;
+  qTableArray = createQTableArray();
+  aTableArrayAll = createATableArrayAll();
+  upload_quiz();
+  
 
 }
+
+
+
 
 
 //------------------ array constructor methods --------------------------//
@@ -74,12 +61,14 @@ function createQArray(givenQTable)
 
 
 
+
 //function for creating the question table
 function createQTableArray()
 {
-  //use push method to dynamically add the Q arrays.
 
-  var qTableArray = [];
+  var qTableArray =[]; 
+   
+  //use push method to dynamically add the Q arrays.
 
   //now fill up the table using the createQArray function
   // get all of the root Q tables
@@ -126,7 +115,7 @@ function createATableArray(givenATable)
     if(givenATable.rows[index].cells[2].childNodes[0].value != "")
     {
 
-      var workArray = [numOfQSoFarSubmit,
+      var workArray = [numOfQSoFar,
                        givenATable.rows[index].cells[2].childNodes[0].value,];
       //transform the true and false to 1 and zero
       if(givenATable.rows[index].cells[1].childNodes[0].checked == true)
@@ -164,7 +153,7 @@ function createATableArrayAll()
   for(var index = 0; index < aTablesRoot.length; index++)
   {
     aTableArrayAll = aTableArrayAll.concat(createATableArray(aTablesRoot[index]));
-    numOfQSoFarSubmit++;
+    numOfQSoFar++;
   } // for loop
 
 
@@ -174,16 +163,139 @@ function createATableArrayAll()
   for(var index = 0; index < aTablesSub.length; index++)
   {
     aTableArrayAll = aTableArrayAll.concat(createATableArray(aTablesSub[index]));
-    numOfQSoFarSubmit++;
+    numOfQSoFar++;
   } // for loop
 
-
+  
   return aTableArrayAll;
 
 } // function createATableArray
 //---------------------------------------------------------------------------
 
 
+
+//Oliver O'Hara
+
+//JavaScript function intended to run when the submit button is pressed
+//The function will retrieve the data for each row in turn and send it to the 
+//database via an ajax call to a php function.
+
+
+
+//Store the name of the quiz and return the ID where its stored to store the questions
+function upload_quiz() {
+   //Return the name of the quiz being submitted
+   var quizName = document.getElementById('quizHeader').innerHTML;
+   var quizID = null;
+
+   //Ajax call to store the quiz name (and temp account id) and call submit question with the id 
+   $.ajax({
+      async: false,
+      url: "../tools/insertQuizName.php",
+      cache: false,
+      type: "post",
+      data:
+      {
+         quizName: quizName
+      }, //data
+      success: function(data)
+      {
+         quizID = data;
+         upload_questions(data);
+      } //success function
+   }) //ajax
+} //upload_quiz
+   
+   
+   
+   
+//Store the questions one at a time using the quiz ID, storing the answers after each one
+function upload_questions(quiz_ID) {
+   //Store the number of questions in the quiz
+   numberOfQuestions = document.getElementById("quizEditor").getAttribute("data-numOfQuestions");
+   numberOfQuestions = parseInt(numberOfQuestions);
+   var questionID = null;
+   
+   //Loop through the number of questions    
+   for (i = 0; i < numberOfQuestions; i++)
+   {
+      //Access the array storing the data for this question
+      var questionText = qTableArray[i][0];
+      var xCoord = qTableArray[i][1];
+      var yCoord = qTableArray[i][2];
+      var time = qTableArray[i][3];
+      var feedback = qTableArray[i][4];
+               
+      //Send the current question and then call the submit answer function for its answers
+      $.ajax({
+         async: false,
+         url: "../tools/insertQuestions.php",
+         cache: false,
+         type: "post",
+         data: 
+         {
+        	quiz_ID: quiz_ID,
+            questionText: questionText,
+            xCoord: xCoord,
+            yCoord: yCoord,
+            time: time,
+            feedback: feedback
+         }, //data
+         success: function(data) 
+         {
+	        questionID = data;
+            upload_answers(data)
+         } //success function
+      }) //ajax
+   } //for
+} //upload_questions  
+   
+   
+   
+   
+//Store the answers under the given question ID
+function upload_answers(question_ID) {
+   //While to check how many answers there are for the given question
+   while (answerIndex < aTableArrayAll.length && aTableArrayAll[answerIndex][0] == i)
+   {
+      //Access the array storing the data for this answer
+      var answerText = aTableArrayAll[answerIndex][1];
+      var isCorrect = aTableArrayAll[answerIndex][2];
+      var letter = aTableArrayAll[answerIndex][3];
+      answerIndex += 1;
+           
+      //Send each answer individually, storing it with the correct question id
+      $.ajax({
+	     async: false,
+         url: "../tools/insertAnswers.php",
+         cache: false,
+         type: "post",
+         data: 
+         {
+		    question_ID: question_ID,
+            answerText: answerText,
+            isCorrect: isCorrect,
+            letter: letter
+         }, //data
+         success: function(data) 
+         {
+            document.getElementById("upload_success").innerHTML = data;
+         } //success function
+      }) //ajax
+   } //while
+} //upload_questions 
+   
+   
+   
+   
+function id_returned(id) {
+   alert("ID returned in function: " + id);
+} //id_returned
+
+function testForErrors(returnedText)
+{
+   console.log(returnedText);
+}
 
 
 
