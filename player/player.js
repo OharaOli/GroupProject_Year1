@@ -278,7 +278,7 @@ function displayOutro()
   $("#outro-container").show();
   // Display the player's score.
   $("#outro-container").append("<p>You answered " + playerScore + "/"
-                                                       + questinsAnswered + " questions correctly.</p>");
+                                                       + questionsAnswered + " questions correctly.</p>");
 }  // end-displayOutro
 
 
