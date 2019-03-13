@@ -42,7 +42,7 @@ function addSubQuestion(givenButton)
 
   //create delete button and appen to the div
   var deleteSubQButton = document.createElement('input');
-  deleteSubQButton.setAttribute('class', 'deleteQButton');
+  deleteSubQButton.setAttribute('class', 'deleteSubQButton');
   deleteSubQButton.setAttribute('type', 'button');
   deleteSubQButton.setAttribute('value', 'X');
   deleteSubQButton.setAttribute('onClick', 'deleteSubQuestion(this)')
@@ -79,7 +79,7 @@ function addRootQuestion(givenButton)
 
   //button for deleting the question
   var deleteRootQButton = document.createElement('input');
-  deleteRootQButton.setAttribute('class', 'deleteQButton');
+  deleteRootQButton.setAttribute('class', 'deleteRootQButton');
   deleteRootQButton.setAttribute('type', 'button');
   deleteRootQButton.setAttribute('value', 'X');
   deleteRootQButton.setAttribute('onClick', 'deleteRootQuestion(this)');
@@ -98,7 +98,7 @@ function addRootQuestion(givenButton)
   rootQDiv.appendChild(addSubQButton);
   // a wrapper for sub questions
   var subQDiv = document.createElement('div');
-  subQDiv.setAttribute('id', 'subQDiv' + 'Q' + numOfRootQSoFar);
+  subQDiv.setAttribute('id', 'subQDiv' + numOfRootQSoFar);
   subQDiv.setAttribute('data-numOfSubQSoFar', '0');
   subQDiv.setAttribute('class', 'subQDiv');
   subQDiv.setAttribute('style', 'display: block;');
@@ -112,6 +112,7 @@ function addRootQuestion(givenButton)
   addSubQButton.setAttribute('value', '+');
   addSubQButton.setAttribute('onClick', 'addSubQuestion(this)');
   addSubQButton.setAttribute('class', 'addSubQButton');
+  addSubQButton.setAttribute('id', 'addSubQButton' + numOfRootQSoFar)
 
 
   //append the button to the wrapper

@@ -2,9 +2,8 @@
 //assuming I have the two arrays (question array, and answers array)
 //now what I want is retrieve exactly the same editor from these two arrays
 
-var qTableArray = createQTableArray();
-alert(qTableArray)
-var aTableArrayAll = createATableArrayAll();
+
+
 
 
 var numOfRootQSoFarRe= 0;
@@ -17,10 +16,9 @@ var numOfQSoFarRe = 0;
 function retrieve()
 {
 
-
 //retrieve the root questions
-retrieveRootQ();
-alert("button clicked")
+retrieveRootQ(qTableArrayTest);
+retrieveSubQ(qTableArrayTest);
 
 //retrieve the subquestions
 
@@ -41,24 +39,22 @@ alert("button clicked")
 //----------------------------------------------------------------------//
 
 
-function retrieveRootQ()
+function retrieveRootQ(givenQTableArray)
 {
 
   //variable to store an array of root questions
   var arrayOfRootQ = [];
 
   //get an array upto to the point where the y-coord is zero
-  for(var index = 0; index < qTableArray.length; index++)
+  for(var index = 0; index < givenQTableArray.length; index++)
   {
-    alert(qTableArray[index][2])
-    if(qTableArray[index][2] == 0)
+    if(givenQTableArray[index][2] == 0)
     {
-      arrayOfRootQ.push(qTableArray[index]);
+      arrayOfRootQ.push(givenQTableArray[index]);
 
     } // if true part
   } // for loop
 
-  alert(arrayOfRootQ);
 
   //get the add root q button
   var addRootQButton = document.getElementById('addRootQButton');
@@ -72,8 +68,9 @@ function retrieveRootQ()
   for(var index = 0; index < arrayOfRootQ.length; index++)
   {
     //update the variables
-    rootQText = arrayOfRootQ[index][1];
-    rootQTime = arrayOfRootQ[index][2];
+    rootQText = arrayOfRootQ[index][0];
+
+    rootQTime = arrayOfRootQ[index][3];
 
     addRootQuestionRe(addRootQButton, rootQText, rootQTime);
   } // for loop
@@ -82,20 +79,46 @@ function retrieveRootQ()
 
 
 
-function retrieveSubQ()
+function retrieveSubQ(givenQTableArray)
 {
-  //variable to store an array of root questions
   var arrayOfSubQ = [];
 
+  //variables to store the coordinates
+  var coordX;
+  var maxCoordYSoFar = 0;
+
+
+
   //get an array from the point the y value is not zero
-  for(var index = 0; index < qTableArray.length; index++)
+  for(var index = 0; index < givenQTableArray.length; index++)
   {
-    if(qTableArray[index][2] != 0)
+    if(givenQTableArray[index][2] != 0)
     {
-      arrayOfRootQ.push(qTableArray[index]);
+      arrayOfSubQ.push(givenQTableArray[index]);
     } // if true part
   } // for loop
 
+  var addSubQButton;
+  var subQText;
+  var subQTime;
+
+  for(var index = 0; index < arrayOfSubQ.length; index++)
+  {
+    //first access the sub question, and..
+    // figure out which root question it belongs to
+    coordX = arrayOfSubQ[index][1];
+
+    //grab the corresponding addsubquestion button
+    addSubQButton = document.getElementById('addSubQButton' + coordX);
+
+
+    //click the button (max y coord) times (it is 1-based)
+    subQText = arrayOfSubQ[index][0];
+    subQTime = arrayOfSubQ[index][3];
+
+    addSubQuestionRe(addSubQButton, subQText, subQTime);
+
+  } // outer for loop
 
 }
 
@@ -160,7 +183,7 @@ function addRootQuestionRe(givenButton, givenRootQText, givenRootQTime)
   rootQDiv.appendChild(addSubQButton);
   // a wrapper for sub questions
   var subQDiv = document.createElement('div');
-  subQDiv.setAttribute('id', 'subQDiv' + 'Q' + numOfRootQSoFarRe);
+  subQDiv.setAttribute('id', 'subQDiv' + numOfRootQSoFarRe);
   subQDiv.setAttribute('data-numOfSubQSoFar', '0');
   subQDiv.setAttribute('class', 'subQDiv');
   subQDiv.setAttribute('style', 'display: block;');
@@ -174,6 +197,7 @@ function addRootQuestionRe(givenButton, givenRootQText, givenRootQTime)
   addSubQButton.setAttribute('value', '+');
   addSubQButton.setAttribute('onClick', 'addSubQuestion(this)');
   addSubQButton.setAttribute('class', 'addSubQButton');
+  addSubQButton.setAttribute('id','addSubQButton' + numOfRootQSoFarRe)
 
 
   //append the button to the wrapper
@@ -263,7 +287,7 @@ function createRootQTableRe(givenX, givenRootQText, givenRootQTime)
 
 
 //function for creating time Limit list(drop-down selection)
-function createTimeLimitListRe(givenRootQTime)
+function createTimeLimitListRe(givenQTime)
 {
   var timeLimitList = document.createElement('select');
   timeLimitList.setAttribute('class', 'timeLimitList');
@@ -300,9 +324,131 @@ function createTimeLimitListRe(givenRootQTime)
   timeLimitList.appendChild(option5);
 
   //set the value to be the given input
-  timeLimitList.value = givenRootQTime;
+  timeLimitList.value = givenQTime;
 
   //return the list
   return timeLimitList;
 
 }
+
+
+
+//function for adding a linkQuestion
+function addSubQuestionRe(givenButton, givenSubQText, givenSubQTime)
+{
+  numOfSubQSoFarRe++;
+  numOfQSoFarRe++;
+
+  //update the number of questions
+  document.getElementById('quizEditor').setAttribute('data-numOfQuestions', numOfQSoFarRe);
+
+  //find the id of the parent question
+  parentQId = givenButton.parentNode.parentNode.getAttribute('data-QId');
+
+  //find the x coordinate of the parent question
+  parentQX = givenButton.parentNode.getAttribute('data-x');
+
+  //get the number of sub questions
+  numOfSubQSoFarRe = parseInt(givenButton.parentNode.getAttribute('data-numOfSubQSoFar'));
+
+  //increment one
+  numOfSubQSoFarRe++;
+
+  //update it
+  givenButton.parentNode.setAttribute('data-numOfSubQSoFar', numOfSubQSoFarRe);
+
+  //create a new linkQuestion table
+  var linkQTable = createSubQTableRe(parentQX, numOfSubQSoFarRe, givenSubQText, givenSubQTime);
+
+  //create wrapper for this new subQ
+  var individualSubQDiv = document.createElement('div');
+
+  //create delete button and appen to the div
+  var deleteSubQButton = document.createElement('input');
+  deleteSubQButton.setAttribute('class', 'deleteQButton');
+  deleteSubQButton.setAttribute('type', 'button');
+  deleteSubQButton.setAttribute('value', 'X');
+  deleteSubQButton.setAttribute('onClick', 'deleteSubQuestion(this)')
+
+  individualSubQDiv.appendChild(deleteSubQButton);
+
+  //append the table to the div
+  individualSubQDiv.appendChild(linkQTable);
+
+  var carrigeReturn = document.createElement('br');
+
+  individualSubQDiv.appendChild(carrigeReturn);
+
+  givenButton.insertAdjacentElement('beforebegin', individualSubQDiv);
+
+
+} // function addSubQuestion
+
+
+//function for creeating linkQuestionTable
+function createSubQTableRe(givenX, givenY, givenSubQText, givenSubQTime)
+{
+  var subQTable = document.createElement('table');
+
+  //set the class (for styling)
+  subQTable.setAttribute('class', 'subQTable')
+
+  //set the border
+  subQTable.setAttribute('border', '1');
+
+  // set the x-coordinate and y-coordinate
+  subQTable.setAttribute('data-x', givenX);
+  subQTable.setAttribute('data-y', givenY);
+
+
+
+
+  //insert headerRow
+  var headerRow = subQTable.insertRow(0);
+
+  //insert hierarchyCell
+  var hierarchyCell = headerRow.insertCell(0);
+  hierarchyCell.innerHTML = "<th> Sub" + givenY + "</th>";
+
+  //insert question header
+  var questionHeaderCell = headerRow.insertCell(1);
+  questionHeaderCell.innerHTML = "<th>Question </th>";
+
+
+  //insert cell for the time limit
+  var timeLimitHeaderCell = headerRow.insertCell(2);
+  timeLimitHeaderCell.innerHTML = "<th> Time Limit </th>";
+
+  //insertCell for the answers header
+  var answersHeaderCell = headerRow.insertCell(3);
+  answersHeaderCell.innerHTML = "<th> Answers </th>";
+
+
+  // now the second row
+  // add question Row
+  var questionRow = subQTable.insertRow(1);
+  var indexCell = questionRow.insertCell(0);
+
+  indexCell.innerHTML = "Q" + givenX + "." + givenY;
+
+  var questionCell = questionRow.insertCell(1);
+  var questionField = document.createElement('input');
+  questionField.setAttribute('type', 'text');
+  questionField.setAttribute('class', 'questionField');
+  questionField.setAttribute('placeholder', 'question');
+  questionField.setAttribute('value', givenSubQText);
+  questionCell.appendChild(questionField);
+
+
+  var timeLimitCell = questionRow.insertCell(2);
+  timeLimitCell.appendChild(createTimeLimitListRe(givenSubQTime));
+
+
+  var answerCell = questionRow.insertCell(3);
+
+  //create an answer table and append it to the cell
+  answerCell.appendChild(createAnswersTable(givenX, givenY));
+
+  return subQTable;
+
+} // function createSubQTable

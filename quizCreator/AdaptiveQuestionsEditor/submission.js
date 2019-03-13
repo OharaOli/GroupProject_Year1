@@ -1,19 +1,33 @@
-var numOfQSoFar;
+var numOfQSoFarSubmit;
 
 
+
+var qTableArrayTest;
+var aTableArrayAllTest;
+
+var deleteRootQButtons;
 
 
 // function for the submit button
 function submit()
 {
-  numOfQSoFar = 0;
-  alert(JSON.stringify(createQTableArray()));
-  alert(JSON.stringify(createATableArrayAll()));
-
+  numOfQSoFarSubmit = 0;
+  qTableArrayTest = createQTableArray();
+  aTableArrayAllTest = createATableArrayAll();
+  alert("submission complete")
 }
 
+function deleteAll()
+{
+  deleteRootQButtons = document.getElementsByClassName('deleteRootQButton');
 
+  //delete them all
+  for(var index = 0; index < deleteRootQButtons.length; index++)
+  {
+    deleteRootQuestion(deleteRootQButtons[index]);
+  }
 
+}
 
 
 //------------------ array constructor methods --------------------------//
@@ -107,7 +121,7 @@ function createATableArray(givenATable)
     if(givenATable.rows[index].cells[2].childNodes[0].value != "")
     {
 
-      var workArray = [numOfQSoFar,
+      var workArray = [numOfQSoFarSubmit,
                        givenATable.rows[index].cells[2].childNodes[0].value,];
       //transform the true and false to 1 and zero
       if(givenATable.rows[index].cells[1].childNodes[0].checked == true)
@@ -145,7 +159,7 @@ function createATableArrayAll()
   for(var index = 0; index < aTablesRoot.length; index++)
   {
     aTableArrayAll = aTableArrayAll.concat(createATableArray(aTablesRoot[index]));
-    numOfQSoFar++;
+    numOfQSoFarSubmit++;
   } // for loop
 
 
@@ -155,7 +169,7 @@ function createATableArrayAll()
   for(var index = 0; index < aTablesSub.length; index++)
   {
     aTableArrayAll = aTableArrayAll.concat(createATableArray(aTablesSub[index]));
-    numOfQSoFar++;
+    numOfQSoFarSubmit++;
   } // for loop
 
 
