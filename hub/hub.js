@@ -5,17 +5,19 @@ function placeQuiz(quizID, quizName, quizCode, count)
   //var rowNumber = document.getElementById('quizzesTable').rows.length;
   //var table = document.getElementById("quizzesTable");
 
-  
+
   //var rows = table.insertRow(rowNumber);
   //var firstCell = rows.insertCell(0);
   //firstCell.innerhtml = (''+ quizName);
-
-  $("#row-" + count).append("<td><h3>"+ quizName + " </h3></td>");
-  $("#row-" + count).append("<td><button class = 'HostButton' id='host" + quizID + "'>Host</button></td>");
-    $("#row-" + count).append("<td><button class = 'EditButton' id='edit" + quizID + "'>Edit</button> </td>");
+  $("#row-" + count).append("<div class='col-8 col-12-medium'><h3>"
+                            + quizName + "</h3></div>");
+  $("#row-" + count).append("<div class='col-2 col-12-medium'><button class = 'HostButton button small' id='host"
+                            + quizID + "'>Host</button></div>");
+  $("#row-" + count).append("<div class='col-2 col-12-medium'><button class = 'EditButton button small' id='edit"
+                            + quizID + "'>Edit</button></div>");
   //var secondCell = rows.inseWrtCell(1);
   //secondCell.innerHTML = buttonHost;
-  
+
  $("#host" + quizID).click(function() {
     var form = document.createElement("form");
     form.setAttribute("method", "post");
@@ -32,7 +34,7 @@ function placeQuiz(quizID, quizName, quizCode, count)
      inputQuizCode.setAttribute("type", "hidden");
      inputQuizCode.setAttribute("name", "quizCode");
      inputQuizCode.setAttribute("value", quizCode);
- 
+
     // when the button is pressed, send the
      form.appendChild(input);
      form.appendChild(inputQuizCode);
@@ -45,18 +47,12 @@ function placeQuiz(quizID, quizName, quizCode, count)
     form.setAttribute("method", "post");
 
     //THIS SHOULD BE CHANGED TO QUIZ EDITOR NOT LANDING PAGE
-    form.setAttribute("action", "../quizEditor");
+    form.setAttribute("action", "../");
 
      var input = document.createElement("input");
      input.setAttribute("type", "hidden");
      input.setAttribute("name", "quizID");
      input.setAttribute("value", quizID);
-     
-     //when the button is pressed send the quiz code to edit page
-     var inputQuizCode = document.createElement("input");
-     inputQuizCode.setAttribute("type", "hidden");
-     inputQuizCode.setAttribute("name", "quizCode");
-     inputQuizCode.setAttribute("value", quizCode);
 
      form.appendChild(input);
      document.body.appendChild(form);
@@ -67,24 +63,23 @@ function placeQuiz(quizID, quizName, quizCode, count)
 
 }//function placeQuiz
 
-function showQuizCodeForm()
-{
-
-    document.getElementById("quizCodeForm").style.display="block";
-
-     var input = document.createElement("input");
-     input.setAttribute("type", "text");
-     input.setAttribute("name", "quizCode");
-    
-     var submit = document.createElement("input");
-     submit.setAttribute("type", "submit");
-     submit.setAttribute("name", "submitCode");
-     submit.setAttribute("value", "Change Quiz Code");
-
-     document.getElementById("quizCodeForm").appendChild(input);
-     document.getElementById("quizCodeForm").appendChild(submit);
-
-     $("#initialQuizCodeButton").remove();
-
-}
-
+// function showQuizCodeForm()
+// {
+//
+//     document.getElementById("quizCodeForm").style.display="block";
+//
+//      var input = document.createElement("input");
+//      input.setAttribute("type", "text");
+//      input.setAttribute("name", "quizCode");
+//
+//      var submit = document.createElement("input");
+//      submit.setAttribute("type", "submit");
+//      submit.setAttribute("name", "submitCode");
+//      submit.setAttribute("value", "Change Quiz Code");
+//
+//      document.getElementById("quizCodeForm").appendChild(input);
+//      document.getElementById("quizCodeForm").appendChild(submit);
+//
+//      $("#initialQuizCodeButton").remove();
+//
+// }

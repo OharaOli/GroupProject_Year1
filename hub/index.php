@@ -13,16 +13,10 @@
     if($mysqli -> connect_error)
       die("Connection failed.");
 
-  if(!isset($_SESSION["username"]))
-  {
-    //redirects back to landing page so that variables can be set
-    //if the file is in a subfolder, goes back to the parent index
-    header("Location: ../");
-    exit();
-  }
+
     //https://stackoverflow.com/questions/5373780/how-to-catch-this-error-notice-undefined-offset-0
     //^ code to help with catching 'notices' (undefined variable notice)
-    // set_error_handler('exceptions_error_handler');
+    set_error_handler('exceptions_error_handler');
 
     function exceptions_error_handler()
     {
@@ -80,7 +74,7 @@
   <script src="../misc/checkMobile.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="./hub.js"> </script>
-  
+
   <!-- bootstrap scripts and other stuff -->
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
@@ -89,10 +83,6 @@
   <link rel="stylesheet" href="../styling/assets_custome/css/hub_custome.css" />
   <noscript><link rel="stylesheet" href="../styling/assets/css/noscript.css" /></noscript>
   <style media="screen">
-  #main {
-    text-align: center;
-  }
-
   </style>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="../misc/connectToDB.js"></script>
@@ -104,11 +94,6 @@
   <script src="host.js"></script>
   -->
 
-  <style>
-  .hidden {
-    display: none;
-  }
-  </style>
 </head>
 <body class="is-preload">
   <div id="page-wrapper">
@@ -122,48 +107,86 @@
         <div id="main" class="wrapper style1">
           <div class="container">
             <header class="major">
-              <h2>Welcome to the Hub</h2>
-              <p>Here You Can Manage Your Quizzes</p>
+              <h3>Welcome to the Hub</h3>
+              <p>Here you can manage your Quizzes</p>
+              <!--If there is an error caused by the changing of the quiz code, echo an error-->
             </header>
+            <?php
+                if ($_SERVER["REQUEST_METHOD"] == "POST")
+                {
+                    if ($quizCodeEntryError != ''){
+                          echo "<h3 class='codeErrorLine'>" .$quizCodeEntryError. "</h3>";
+                    }
+                }//if
+            ?>
 
-
+            <!-- <h2>Quiz Code: <?php# echo  $quizCode?></h2> -->
+            <?php
+              //echo "<script> $('#QuizCodeDiv').append('<h2> Quiz Code: " . $quizCode . "</h2>'); </script>";
+            ?>
 
 <div id="QuizCodeDiv"></div>
 
-    <?php
-      echo "<script> $('#QuizCodeDiv').append('<h3> Quiz Code: " . $quizCode . "</h3>'); </script>";
-    ?>
 <!--Allow the user to change the quiz code-->
-    <form id = "quizCodeForm" method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>" >
-    </form>
+    <!-- <form id = "quizCodeForm" method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>" >
+      <span>You can choose any 6 character Quiz Code that is not taken</span>
+      <input type="text" name="quizCode" value="<?php echo  $quizCode ?>">
+      <input class="button primary" type="submit" name="submitCode" value="Change Quiz Code">
+    </form> -->
 
+<!-- <button class="button primary" onclick="showQuizCodeForm()" id="initialQuizCodeButton">CHANGE QUIZ CODE</button>
 
-    <button class="button primary" onclick="showQuizCodeForm()" id="initialQuizCodeButton">CHANGE QUIZ CODE</button>
-</br>
-<!--If there is an error caused by the changing of the quiz code, echo an error-->
 <?php
     if ($_SERVER["REQUEST_METHOD"] == "POST")
     {
         if ($quizCodeEntryError != '')
-            echo "</br><h1>" .$quizCodeEntryError. "</h1>";
+
+            echo "<h3>" .$quizCodeEntryError. "</h3>";
     }//if
 ?>
-</br>
-<!--REDIRECTION SHOULD BE CHANGED TO THE QUIZ CREATOR PAGE-->
-<form method="post" action="../quizCreator">
-<input class="button primary" type="submit" name = "Create New" value = "CREATE NEW">
-</form>
+
 <!--div id="Quiz_List"></div-->
-<table id="quizzesTable">
+<div id="quizzesTable">
+    <div id='changeQuizIdRow'>
+      <form id = "quizCodeForm " style="width:100%" method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>" >
+        <div class='row' id="no-border">
+          <div class='col-8 col-12-medium'>
+            <h3 class='right'>Your Quiz Code: <?php echo $quizCode ?></h3>
+          </div>
+          <div class='col-2 col-12-medium'>
+            <input type="text" name="quizCode" value="<?php echo  $quizCode ?>">
+          </div>
+          <div class='col-2 col-12-medium'>
+            <input class="button primary" type="submit" name="submitCode" value="Change Quiz Code">
+          </div>
+        </div>
+      </form>
+    </div>
+
+
 <?php
 $count = 0;
 while($row = $quizIDandNameList ->fetch_assoc())
  {
-        $count++;
-        echo   "<tr class='Table_Row' id='row-" . $count . "'><script> placeQuiz(" . $row['quiz_id'] . ",'" . $row['name'] . "', '" . $quizCode . "', " . $count . ");</script></tr>";
-}
+   echo
+   "<div class='row' id='row-" . $count . "'>";
+   echo
+   "<script>placeQuiz(" . $row['quiz_id'] . ",'" . $row['name'] . "', '" . $quizCode . "', " . $count . ")</script>";
+   echo
+   "</div>";
+   $count += 1;
+ }
+
+        // echo   "<tr class='Table_Row' id='row-" . $count . "'>
+        // <script> placeQuiz(" . $row['quiz_id'] . ",'" . $row['name'] . "', '" . $quizCode . "', " . $count . ");</script>
+        // </tr>";
 ?>
-</table>
+
+</div>
+<!--REDIRECTION SHOULD BE CHANGED TO THE QUIZ CREATOR PAGE-->
+<form method="post" action="../">
+<input class="button primary right" type="submit" name = "Create New" value = "CREATE NEW">
+</form>
   </div><!--  close main -->
 </body>
 </html>
