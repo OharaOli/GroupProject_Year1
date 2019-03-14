@@ -4,6 +4,12 @@ session_start();
 require_once('../misc/config.inc.php');
 require_once('../misc/sqlFunctions.php');
 
+if (isset($_SESSION['username']))
+{
+  header("Location: ../hub");
+  exit();
+} // if
+
 $mysqli = new mysqli($database_host, $database_user,
                                         $database_pass, $group_dbnames[0]);
 
@@ -82,6 +88,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
 	<title>Login</title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<script src="misc/checkMobile.js"></script>
 <!--===============================================================================================-->
 	<link rel="icon" type="image/png" href="images/icons/favicon.ico"/>
 <!--===============================================================================================-->

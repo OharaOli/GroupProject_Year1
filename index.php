@@ -1,3 +1,13 @@
+<?php 
+  session_start();
+  // Redirects to hub if logged in.
+  if (isset($_SESSION['username']))
+  {
+    header("Location: ./hub");
+    exit();
+  } // if
+?>
+
 <!DOCTYPE HTML>
 <!--
 	Landed by HTML5 UP
@@ -10,6 +20,7 @@
 		<title>Quiz Mapp</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<script src="misc/checkMobile.js"></script>
 		<link rel="stylesheet" href="styling/assets/css/main.css" />
     <link rel="stylesheet" href="styling/assets_custome/css/custome.css" />
 		<noscript><link rel="stylesheet" href="styling/assets/css/noscript.css" /></noscript>

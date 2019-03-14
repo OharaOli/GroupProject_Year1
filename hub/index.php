@@ -1,10 +1,16 @@
 <?php
-    session_start();
-
     //Including the files
     require_once('../misc/config.inc.php');
     require_once("../misc/sqlFunctions.php");
-
+    
+    session_start();
+    
+    if(!isset($_SESSION['username']))
+    {
+      header("Location: ../");
+      exit();
+    } // if
+    
     //opening  connection to database
     $mysqli = new mysqli($database_host, $database_user,
                                             $database_pass, $group_dbnames[0]);
@@ -12,20 +18,9 @@
     // Check for errors before doing anything else
     if($mysqli -> connect_error)
       die("Connection failed.");
-
-
-    //https://stackoverflow.com/questions/5373780/how-to-catch-this-error-notice-undefined-offset-0
-    //^ code to help with catching 'notices' (undefined variable notice)
-    set_error_handler('exceptions_error_handler');
-
-    function exceptions_error_handler()
-    {
-       //Temporarily login page, SHOULD BE CHANGED TO MAIN INDEX PAGE
-       header("Location: ../");
-       exit();
-    }
-    // get the username from login or sign up
+    
     $username = $_SESSION['username'];
+      
      // error if the user has put an invalid quiz code
      $quizCodeEntryError = "";
     if ($_SERVER["REQUEST_METHOD"] == "POST")
@@ -162,8 +157,11 @@
         </div>
       </form>
     </div>
-
-
+    <form action="../player" method="post">
+         <div class='col-2 col-12-medium'>
+            <input class="button primary" type="submit" name="play" value = "Play"> 
+          </div>
+     </form>
 <?php
 $count = 0;
 while($row = $quizIDandNameList ->fetch_assoc())
