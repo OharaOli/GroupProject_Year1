@@ -79,16 +79,24 @@ function addRootQuestion(givenButton)
 
   //button for deleting the question
   var deleteRootQButton = document.createElement('input');
+<<<<<<< HEAD
   deleteRootQButton.setAttribute('class', 'deleteRootQButton');
   deleteRootQButton.setAttribute('type', 'button');
   deleteRootQButton.setAttribute('value', 'X');
   deleteRootQButton.setAttribute('onClick', 'deleteRootQuestion(this)');
 
+=======
+  deleteRootQButton.setAttribute('type', 'button');
+  deleteRootQButton.setAttribute('value', 'X');
+
+  //append the button to the wrapper
+>>>>>>> hide/show individual sub questions added. known error: edit root Q order does not work properly
   rootQDiv.appendChild(deleteRootQButton);
 
   //append the root question table to the wrapper
   rootQDiv.appendChild(createRootQTable(numOfRootQSoFar));
 
+<<<<<<< HEAD
   //button for hiding the subquesions
   var addSubQButton = document.createElement('input');
   addSubQButton.setAttribute('type', 'button');
@@ -96,13 +104,29 @@ function addRootQuestion(givenButton)
   addSubQButton.setAttribute('onClick', 'hideSubQButton(this)');
 
   rootQDiv.appendChild(addSubQButton);
+=======
+  //button for hide/show sub questions
+  var hideSubQButton = document.createElement('input');
+  hideSubQButton.setAttribute('type', 'button');
+  hideSubQButton.setAttribute('value','V');
+  hideSubQButton.setAttribute('onClick', 'hideSubQuestions(this)');
+
+  //append the button to the table
+  rootQDiv.appendChild(hideSubQButton);
+
+
+>>>>>>> hide/show individual sub questions added. known error: edit root Q order does not work properly
   // a wrapper for sub questions
   var subQDiv = document.createElement('div');
   subQDiv.setAttribute('id', 'subQDiv' + numOfRootQSoFar);
   subQDiv.setAttribute('data-numOfSubQSoFar', '0');
   subQDiv.setAttribute('class', 'subQDiv');
+<<<<<<< HEAD
   subQDiv.setAttribute('style', 'display: block;');
   subQDiv.setAttribute('data-x', numOfRootQSoFar);
+=======
+  subQDiv.setAttribute('style', 'display: block;')
+>>>>>>> hide/show individual sub questions added. known error: edit root Q order does not work properly
 
   //append 'add sub question' button to the wrapper
   var addSubQButton = document.createElement('input');
@@ -449,6 +473,7 @@ function hideAddRootQButton()
 
 
 
+<<<<<<< HEAD
 //function for the hideSubQButton
 function hideSubQButton(givenButton)
 {
@@ -463,6 +488,9 @@ function hideSubQButton(givenButton)
 
 
 //function for hiding all the answers
+=======
+//function for hiding all the sub questions
+>>>>>>> hide/show individual sub questions added. known error: edit root Q order does not work properly
 function hideAllSubQuestions()
 {
   //grab all the elements by class name
@@ -480,6 +508,7 @@ function hideAllSubQuestions()
 } // function hideAllSubQuestions
 
 
+<<<<<<< HEAD
 //function for individually hiding the sub questions
 function hideSubQuestions(givenButton)
 {
@@ -488,6 +517,28 @@ function hideSubQuestions(givenButton)
 }
 
 
+=======
+//function for hiding sub questions of a root question
+function hideSubQuestions(givenButton)
+{
+
+  //use the nextSibling property
+  hideORShowByElement(givenButton.nextElementSibling.nextElementSibling);
+
+
+  //change the shape of the button
+  if(givenButton.value == "V")
+  {
+    givenButton.value = ">";
+  }
+  else
+  {
+    givenButton.value = "V";
+  }
+
+} // function hideSubQuestions
+
+>>>>>>> hide/show individual sub questions added. known error: edit root Q order does not work properly
 
 function hideORShowByClass(givenClassId)
 {
@@ -527,7 +578,12 @@ function hideOrShowById(givenId)
 
 }
 
+<<<<<<< HEAD
 function hideOrShowByElement(givenElement)
+=======
+
+function hideORShowByElement(givenElement)
+>>>>>>> hide/show individual sub questions added. known error: edit root Q order does not work properly
 {
   if(givenElement.style.display == "block")
   {
@@ -539,6 +595,7 @@ function hideOrShowByElement(givenElement)
   {
     givenElement.style.display = "block";
   }
+<<<<<<< HEAD
 
 } // function hideOrShowByElement
 
@@ -584,3 +641,30 @@ function createTimeLimitList()
   return timeLimitList;
 
 }
+=======
+}
+
+
+
+
+
+// need a function that loops through all of the sub questions and updates the
+// ids with respect to the new order
+function updateSubQuestions()
+{
+
+
+
+
+} // function updateSubQuestions
+
+
+
+function updateSubQuestionTableIndex(givenSubQTable, givenNewIndex)
+{
+
+
+
+
+} // function update subquestionTable
+>>>>>>> hide/show individual sub questions added. known error: edit root Q order does not work properly
