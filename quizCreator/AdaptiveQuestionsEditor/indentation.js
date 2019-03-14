@@ -23,8 +23,7 @@ function addSubQuestion(givenButton, givenSubQText, givenSubQTime)
   parentQId = givenButton.parentNode.parentNode.getAttribute('data-QId');
 
   //find the x coordinate of the parent question
-  parentQX = givenButton.parentNode.getAttribute('data-x');
-
+  parentQX = givenButton.parentNode.parentNode.getAttribute('data-x');
   //get the number of sub questions
   numOfSubQSoFar = parseInt(givenButton.parentNode.getAttribute('data-numOfSubQSoFar'));
 
@@ -76,6 +75,8 @@ function addRootQuestion(givenButton, givenRootQText, givenRootQTime, givenRootQ
   var rootQDiv = document.createElement('div');
   rootQDiv.setAttribute('id', 'rootQDiv' + numOfRootQSoFar);
   rootQDiv.setAttribute('data-QId', 'Q' + numOfRootQSoFar);
+  rootQDiv.setAttribute('data-x', numOfRootQSoFar);
+  rootQDiv.setAttribute('data-y', 0);
 
 
   //button for deleting the question
@@ -110,11 +111,9 @@ function addRootQuestion(givenButton, givenRootQText, givenRootQTime, givenRootQ
   // hide/show individual sub questions added. known error: edit root Q order does not work properly
   // a wrapper for sub questions
   var subQDiv = document.createElement('div');
-  subQDiv.setAttribute('id', 'subQDiv' + numOfRootQSoFar);
   subQDiv.setAttribute('data-numOfSubQSoFar', '0');
   subQDiv.setAttribute('class', 'subQDiv');
   subQDiv.setAttribute('style', 'display: block;');
-  subQDiv.setAttribute('data-x', numOfRootQSoFar);
   subQDiv.setAttribute('style', 'display: block;')
   //hide/show individual sub questions added. known error: edit root Q order does not work properly
 
@@ -126,7 +125,6 @@ function addRootQuestion(givenButton, givenRootQText, givenRootQTime, givenRootQ
   addSubQButton.setAttribute('value', '+');
   addSubQButton.setAttribute('onClick', 'addSubQuestion(this)');
   addSubQButton.setAttribute('class', 'addSubQButton');
-  addSubQButton.setAttribute('id', 'addSubQButton' + numOfRootQSoFar)
 
 
   //append the button to the wrapper
@@ -153,33 +151,6 @@ function addRootQuestion(givenButton, givenRootQText, givenRootQTime, givenRootQ
 
 
 
-//funciton for removing a question, given a button
-function deleteRootQuestion(givenButton)
-{
-
-  //update the total num of root questions
-  numOfRootQSoFar--;
-
-  // remove the parent root q div
-  givenButton.parentNode.remove();
-
-
-
-
-} // deleteRootQuestion
-
-
-function deleteSubQuestion(givenButton)
-{
-  //update the num of sub questions so far
-  var numOfSubQSoFar = parseInt(givenButton.parentNode.parentNode.getAttribute('data-numOfSubQSoFar'));
-  numOfSubQSoFar--;
-
-  givenButton.parentNode.parentNode.setAttribute('data-numOfSubQSoFar', numOfSubQSoFar);
-
-  //delete the parent
-  givenButton.parentNode.remove();
-} // deleteSubQuestion
 
 //function for creating the answer table with given index
 //function for creating question Table
@@ -187,7 +158,7 @@ function createRootQTable(givenX, givenRootQText, givenRootQTime, givenRootQFeed
 {
   var rootQTable = document.createElement('table');
   rootQTable.setAttribute('border', 1);
-  rootQTable.setAttribute('id', 'rootQTable' + "Q" + givenX);
+  rootQTable.setAttribute('id', 'rootQTable' + givenX);
   rootQTable.setAttribute('class', 'rootQTable');
 
   //attributes for implemenation of data transfer to the data base

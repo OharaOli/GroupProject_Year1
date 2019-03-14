@@ -13,15 +13,9 @@ var numOfQSoFarRe = 0;
 function retrieve()
 {
 
-//retrieve the root questions
+//retrieve the root questions and sub questions
 retrieveRootQ(qTableArrayTest);
 retrieveSubQ(qTableArrayTest);
-
-//retrieve the subquestions
-//retrieve the answers for root Q
-
-
-//retrieve the answers for the sub Q
 
 } // function retrieve
 
