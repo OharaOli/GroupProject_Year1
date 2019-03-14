@@ -58,8 +58,16 @@
   // Attempts to insert a new player into the database based on quiz code.
   // Returns host ID, host time and player ID if succesful.
   // Otherwise returns '-'.
+  
   function insertNewPlayer($mysqli)
   {
+    if(!preg_match("/^[a-zA-Z0-9]*$/",$_GET["n"]) or preg_match("/^[0-9]*$/",$_GET["n"])
+       or strlen($_GET["n"]) < 4 or strlen($_GET["n"]) > 15)
+    {
+      echo "-Invalid screen name.";
+      return;
+    } // if
+    
     $sql = "SELECT host_id FROM hosts "
                 . "WHERE quiz_code = ? AND state = 'intro' AND ABS( "
                 . "TIME_TO_SEC(TIMEDIFF(last_update, start_time)) - "
@@ -71,7 +79,7 @@
     if($result->num_rows === 0)
     {
       // Then '-' is returned and no more data is selected.
-      echo "-";
+      echo "-Quiz code does not exist.";
       return;
     } // if 
     $hostStateData = $result->fetch_assoc();

@@ -42,7 +42,7 @@ function setPlayerID(playerAndHostID)
   // if string starts with a -,  then give an exception to the html page
   if (playerAndHostID.startsWith("-"))
   {
-    displayQuizCodeNotFound(true);
+    displayErrorMessage(playerAndHostID.substring(1));
     alreadyJoined = false;
   } // if
   else
@@ -106,9 +106,6 @@ function pollForState(responseText)
 
 // Execute the code when the page is ready.
 $(document).ready(function() {
-  // Initially hide any error of unfound quiz code.
-  displayQuizCodeNotFound(false);
-
   // When the join button is clicked.
   $("#join-button").click(function() {
     // Extract the quiz code entered in the input field into a variable.
@@ -136,8 +133,8 @@ $(document).ready(function() {
 // A function which updates the state to intro.
 function updateIntroState()
 {
-  // Remove any error of unfound quiz code.
-  displayQuizCodeNotFound(false);
+  // Clears the error message.
+  displayErrorMessage("");
   // Set the current state to reflect that it is not the intro.
   currentState = "intro";
   // Call the function to actually transition to the intro.
@@ -291,17 +288,12 @@ function updateFloatingState()
 } // updateFloatingState
 
 
-// A function which displays an error message of an unfound quiz code.
-function displayQuizCodeNotFound(isVisible)
+// A function which displays an error message.
+function displayErrorMessage(errorMessage)
 {
-  if (isVisible)
-    // Display error code.
-    $("#error-message-quiz-code-not-found").show();
-  else
-    // Hide error code.
-    $("#error-message-quiz-code-not-found").hide();
-}  // end-displayQuizCodeNotFound
-
+  $("#error-message").show();
+  $("#error-message").text(errorMessage);
+}  // displayErrorMessage
 
 // A function which displays a message for host disconnecting.
 function displayHostDisconnected()

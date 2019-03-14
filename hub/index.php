@@ -75,7 +75,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
   <link rel="stylesheet" href="../styling/assets/css/main.css" />
   <link rel="stylesheet" href="../styling/assets_custome/css/custome.css" />
-  <link rel="stylesheet" href="../styling/assets_custome/css/hub_custome.css" />
+  <!-- <link rel="stylesheet" href="../styling/assets_custome/css/hub_custome.css" />-->
   <noscript><link rel="stylesheet" href="../styling/assets/css/noscript.css" /></noscript>
   <style media="screen">
   </style>

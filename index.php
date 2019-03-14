@@ -17,7 +17,7 @@
 <html>
 	<head>
   	<!-- Landing page for the web app -->
-		<title>Quiz Mapp</title>
+		<title>QuizMapp</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<script>
