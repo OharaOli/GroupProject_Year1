@@ -23,7 +23,7 @@
 		<script>
 		  window.onload = function() {
       if(/Android|webOS|iPhone|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent))
-        window.location.href = "../player";
+        window.location.href = "./player";
       }; 
     </script>
 		<link rel="stylesheet" href="styling/assets/css/main.css" />
