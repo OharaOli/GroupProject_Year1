@@ -11,7 +11,7 @@ var isAddRootQButtonHidden = false;
 
 
 //function for adding a linkQuestion
-function addSubQuestion(givenButton)
+function addSubQuestion(givenButton, givenSubQText, givenSubQTime)
 {
   numOfSubQSoFar++;
   numOfQSoFar++;
@@ -35,7 +35,7 @@ function addSubQuestion(givenButton)
   givenButton.parentNode.setAttribute('data-numOfSubQSoFar', numOfSubQSoFar);
 
   //create a new linkQuestion table
-  var linkQTable = createSubQTable(parentQX, numOfSubQSoFar);
+  var linkQTable = createSubQTable(parentQX, numOfSubQSoFar, givenSubQText, givenSubQTime);
 
   //create wrapper for this new subQ
   var individualSubQDiv = document.createElement('div');
@@ -63,7 +63,7 @@ function addSubQuestion(givenButton)
 
 
 //function for adding a root question
-function addRootQuestion(givenButton)
+function addRootQuestion(givenButton, givenRootQText, givenRootQTime, givenRootQFeedback)
 {
   numOfRootQSoFar++;
   numOfQSoFar++;
@@ -79,32 +79,23 @@ function addRootQuestion(givenButton)
 
   //button for deleting the question
   var deleteRootQButton = document.createElement('input');
-<<<<<<< HEAD
   deleteRootQButton.setAttribute('class', 'deleteRootQButton');
   deleteRootQButton.setAttribute('type', 'button');
   deleteRootQButton.setAttribute('value', 'X');
   deleteRootQButton.setAttribute('onClick', 'deleteRootQuestion(this)');
 
-=======
   deleteRootQButton.setAttribute('type', 'button');
   deleteRootQButton.setAttribute('value', 'X');
 
   //append the button to the wrapper
->>>>>>> hide/show individual sub questions added. known error: edit root Q order does not work properly
+  // hide/show individual sub questions added. known error: edit root Q order does not work properly
   rootQDiv.appendChild(deleteRootQButton);
 
+
+  var rootQTable = createRootQTable(numOfRootQSoFar, givenRootQText, givenRootQTime, givenRootQFeedback);
   //append the root question table to the wrapper
-  rootQDiv.appendChild(createRootQTable(numOfRootQSoFar));
+  rootQDiv.appendChild(rootQTable);
 
-<<<<<<< HEAD
-  //button for hiding the subquesions
-  var addSubQButton = document.createElement('input');
-  addSubQButton.setAttribute('type', 'button');
-  addSubQButton.setAttribute('value', 'V');
-  addSubQButton.setAttribute('onClick', 'hideSubQButton(this)');
-
-  rootQDiv.appendChild(addSubQButton);
-=======
   //button for hide/show sub questions
   var hideSubQButton = document.createElement('input');
   hideSubQButton.setAttribute('type', 'button');
@@ -115,18 +106,16 @@ function addRootQuestion(givenButton)
   rootQDiv.appendChild(hideSubQButton);
 
 
->>>>>>> hide/show individual sub questions added. known error: edit root Q order does not work properly
+  // hide/show individual sub questions added. known error: edit root Q order does not work properly
   // a wrapper for sub questions
   var subQDiv = document.createElement('div');
   subQDiv.setAttribute('id', 'subQDiv' + numOfRootQSoFar);
   subQDiv.setAttribute('data-numOfSubQSoFar', '0');
   subQDiv.setAttribute('class', 'subQDiv');
-<<<<<<< HEAD
   subQDiv.setAttribute('style', 'display: block;');
   subQDiv.setAttribute('data-x', numOfRootQSoFar);
-=======
   subQDiv.setAttribute('style', 'display: block;')
->>>>>>> hide/show individual sub questions added. known error: edit root Q order does not work properly
+  //hide/show individual sub questions added. known error: edit root Q order does not work properly
 
   //append 'add sub question' button to the wrapper
   var addSubQButton = document.createElement('input');
@@ -157,7 +146,7 @@ function addRootQuestion(givenButton)
   givenButton.insertAdjacentElement('beforebegin', rootQDiv);
 
 
-
+  return rootQTable;
 
 } // add root Question
 
@@ -193,7 +182,7 @@ function deleteSubQuestion(givenButton)
 
 //function for creating the answer table with given index
 //function for creating question Table
-function createRootQTable(givenX)
+function createRootQTable(givenX, givenRootQText, givenRootQTime, givenRootQFeedback)
 {
   var rootQTable = document.createElement('table');
   rootQTable.setAttribute('border', 1);
@@ -236,14 +225,19 @@ function createRootQTable(givenX)
   questionField.setAttribute('type', 'text');
   questionField.setAttribute('class', 'questionField');
   questionField.setAttribute('placeholder', 'question');
+
+
+  if(givenRootQText != null)
+    questionField.setAttribute('value', givenRootQText);
+
   questionCell.appendChild(questionField);
 
   var timeLimitCell = questionRow.insertCell(2);
-  timeLimitCell.appendChild(createTimeLimitList());
+  timeLimitCell.appendChild(createTimeLimitList(givenRootQTime));
 
 
   var answersCell = questionRow.insertCell(3);
-  answersCell.appendChild(createAnswersTable(givenX, '0'));
+  answersCell.appendChild(createAnswersTable(givenX, '0', givenRootQFeedback));
 
   return rootQTable;
 } // function createQTable
@@ -252,7 +246,7 @@ function createRootQTable(givenX)
 
 
 //function for creeating linkQuestionTable
-function createSubQTable(givenX, givenY)
+function createSubQTable(givenX, givenY, givenSubQText, givenSubQTime, givenSubQFeedback)
 {
   var subQTable = document.createElement('table');
 
@@ -302,17 +296,21 @@ function createSubQTable(givenX, givenY)
   questionField.setAttribute('type', 'text');
   questionField.setAttribute('class', 'questionField');
   questionField.setAttribute('placeholder', 'question');
+
+  if(givenSubQText != null)
+    questionField.setAttribute('value', givenSubQText);
+
   questionCell.appendChild(questionField);
 
 
   var timeLimitCell = questionRow.insertCell(2);
-  timeLimitCell.appendChild(createTimeLimitList());
+  timeLimitCell.appendChild(createTimeLimitList(givenSubQTime));
 
 
   var answerCell = questionRow.insertCell(3);
 
   //create an answer table and append it to the cell
-  answerCell.appendChild(createAnswersTable(givenX, givenY));
+  answerCell.appendChild(createAnswersTable(givenX, givenY, givenSubQFeedback));
 
   return subQTable;
 
@@ -320,7 +318,7 @@ function createSubQTable(givenX, givenY)
 
 
 //function for creating a table for the four answers
-function createAnswersTable(givenX, givenY)
+function createAnswersTable(givenX, givenY, givenQFeedback)
 {
   //create aTable
   var aTable = document.createElement('table');
@@ -367,7 +365,14 @@ function createAnswersTable(givenX, givenY)
   descriptionCell.setAttribute('rowspan', 4);
   var descriptionField = document.createElement('textarea');
   descriptionField.setAttribute('placeholder', 'feedback');
+  descriptionField.setAttribute('type', 'text');
   descriptionField.setAttribute('class', 'answerDescriptionField');
+
+  if(givenQFeedback != null)
+  {
+    descriptionField.innerHTML = givenQFeedback;
+  }// if statement
+
   descriptionCell.appendChild(descriptionField);
 
 
@@ -473,7 +478,6 @@ function hideAddRootQButton()
 
 
 
-<<<<<<< HEAD
 //function for the hideSubQButton
 function hideSubQButton(givenButton)
 {
@@ -488,9 +492,8 @@ function hideSubQButton(givenButton)
 
 
 //function for hiding all the answers
-=======
 //function for hiding all the sub questions
->>>>>>> hide/show individual sub questions added. known error: edit root Q order does not work properly
+//hide/show individual sub questions added. known error: edit root Q order does not work properly
 function hideAllSubQuestions()
 {
   //grab all the elements by class name
@@ -508,16 +511,20 @@ function hideAllSubQuestions()
 } // function hideAllSubQuestions
 
 
-<<<<<<< HEAD
 //function for individually hiding the sub questions
 function hideSubQuestions(givenButton)
 {
   hideOrShowByElement(givenButton.nextElementSibling.nextElementSibling)
 
+  //update the value
+  //if(givenButton.value == "V")
+  //  givenButton.value = "V";
+//  else
+  //  givenButton.value = ">";
+
 }
 
 
-=======
 //function for hiding sub questions of a root question
 function hideSubQuestions(givenButton)
 {
@@ -538,7 +545,6 @@ function hideSubQuestions(givenButton)
 
 } // function hideSubQuestions
 
->>>>>>> hide/show individual sub questions added. known error: edit root Q order does not work properly
 
 function hideORShowByClass(givenClassId)
 {
@@ -578,12 +584,9 @@ function hideOrShowById(givenId)
 
 }
 
-<<<<<<< HEAD
-function hideOrShowByElement(givenElement)
-=======
+
 
 function hideORShowByElement(givenElement)
->>>>>>> hide/show individual sub questions added. known error: edit root Q order does not work properly
 {
   if(givenElement.style.display == "block")
   {
@@ -595,13 +598,12 @@ function hideORShowByElement(givenElement)
   {
     givenElement.style.display = "block";
   }
-<<<<<<< HEAD
 
 } // function hideOrShowByElement
 
 
 //function for creating time Limit list(drop-down selection)
-function createTimeLimitList()
+function createTimeLimitList(givenTimeLimit)
 {
   var timeLimitList = document.createElement('select');
   timeLimitList.setAttribute('class', 'timeLimitList');
@@ -637,12 +639,14 @@ function createTimeLimitList()
   timeLimitList.appendChild(option4);
   timeLimitList.appendChild(option5);
 
+  if(givenTimeLimit != null)
+    timeLimitList.value = givenTimeLimit;
+
   //return the list
   return timeLimitList;
 
 }
-=======
-}
+
 
 
 
@@ -667,4 +671,3 @@ function updateSubQuestionTableIndex(givenSubQTable, givenNewIndex)
 
 
 } // function update subquestionTable
->>>>>>> hide/show individual sub questions added. known error: edit root Q order does not work properly

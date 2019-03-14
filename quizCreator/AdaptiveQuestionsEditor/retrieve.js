@@ -3,9 +3,6 @@
 //now what I want is retrieve exactly the same editor from these two arrays
 
 
-
-
-
 var numOfRootQSoFarRe= 0;
 var numOfSubQSoFarRe = 0;
 var numOfQSoFarRe = 0;
@@ -21,14 +18,10 @@ retrieveRootQ(qTableArrayTest);
 retrieveSubQ(qTableArrayTest);
 
 //retrieve the subquestions
-
-
 //retrieve the answers for root Q
 
 
 //retrieve the answers for the sub Q
-
-
 
 } // function retrieve
 
@@ -62,9 +55,9 @@ function retrieveRootQ(givenQTableArray)
 
   var rootQText;
   var rootQTime;
-  var rootQAnsIndex;
-  var rootQAnsCorrect;
-
+  var rootQTable;
+  var rootQX;
+  var rootQY;
 
 
   //for each root Q array, virtually 'push the button;
@@ -75,11 +68,73 @@ function retrieveRootQ(givenQTableArray)
 
     rootQTime = arrayOfRootQ[index][3];
 
-    addRootQuestionRe(addRootQButton, rootQText, rootQTime);
+    rootQFeedback = arrayOfRootQ[index][4];
+
+    //add root questions, while at the same time get the rootQTable element
+    rootQTable = addRootQuestion(addRootQButton, rootQText, rootQTime, rootQFeedback);
+
+    //retrive the ansers for this root q, if there is any
+    retrieveRootQAns(rootQTable, aTableArrayAllTest);
   } // for loop
 
 }// retrieveRootQ
 
+
+function retrieveRootQAns(givenRootQTable, givenAnsTableArrayAll)
+{
+  var rootQX = givenRootQTable.getAttribute('data-x');
+  var rootQY = givenRootQTable.getAttribute('data-y');
+  var ansIndex;
+  var ansRow;
+  var ansText;
+  var ansCorrect;
+  var rootQAnsTable;
+
+
+  // loop through the ansers
+  for(var index = 0; index < givenAnsTableArrayAll.length; index++)
+  {
+    //the two coordinates must match
+    if(aTableArrayAllTest[index][1] == rootQX
+       && aTableArrayAllTest[index][2] == rootQY)
+    {
+      //match found
+      // find the ansIndex
+      ansIndex = aTableArrayAllTest[index][5];
+
+      //find the row
+      switch (ansIndex)
+      {
+        case "A": ansRow = 0;
+          break;
+        case "B": ansRow = 1;
+          break;
+        case "C": ansRow = 2;
+          break;
+        case "D": ansRow = 3;
+          break;
+        default:;
+      } // switch statement to determine the row
+
+      //get the text and correct value
+      ansText = aTableArrayAllTest[index][3];
+
+      if(aTableArrayAllTest[index][4] == "1")
+        ansCorrect = true;
+      else
+        ansCorrect = false;
+
+      //locate the ans table of the root Q
+      rootQAnsTable = givenRootQTable.rows[1].cells[3].childNodes[0];
+
+      //insert the the correct value (boolean) to the corresponding row
+      rootQAnsTable.rows[ansRow].cells[1].childNodes[0].checked = ansCorrect;
+
+      //the text as well
+      rootQAnsTable.rows[ansRow].cells[2].childNodes[0].value = ansText;
+    } // if statement
+  } // for loop
+} // function retrieveRootQAns
 
 
 function retrieveSubQ(givenQTableArray)
@@ -119,28 +174,13 @@ function retrieveSubQ(givenQTableArray)
     subQText = arrayOfSubQ[index][0];
     subQTime = arrayOfSubQ[index][3];
 
-    addSubQuestionRe(addSubQButton, subQText, subQTime);
+    addSubQuestion(addSubQButton, subQText, subQTime);
 
   } // outer for loop
 
-}
+} // retrieve sub question
 
 
-
-function retrieveRootQAnswers()
-{
-
-
-
-}
-
-function retrieveSubQAnswers()
-{
-
-
-
-
-}
 
 
 
@@ -150,7 +190,7 @@ function retrieveSubQAnswers()
 
 //-------------- function for handling buttons for retrieval ---------------
 //function for adding a root question
-function addRootQuestionRe(givenButton, givenRootQText, givenRootQTime)
+function addRootQuestionRe(givenButton, givenRootQText, givenRootQTime, givenRootQFeedback)
 {
   //update the number of questions
   numOfRootQSoFarRe++;
@@ -174,8 +214,10 @@ function addRootQuestionRe(givenButton, givenRootQText, givenRootQTime)
 
   rootQDiv.appendChild(deleteRootQButton);
 
+  //create root Q table and..
+  var rootQTable = createRootQTableRe(numOfRootQSoFarRe, givenRootQText, givenRootQTime, givenRootQFeedback);
   //append the root question table to the wrapper
-  rootQDiv.appendChild(createRootQTableRe(numOfRootQSoFarRe, givenRootQText, givenRootQTime));
+  rootQDiv.appendChild(rootQTable);
 
   //button for hiding the subquesions
   var addSubQButton = document.createElement('input');
@@ -221,6 +263,9 @@ function addRootQuestionRe(givenButton, givenRootQText, givenRootQTime)
   givenButton.insertAdjacentElement('beforebegin', rootQDiv);
 
 
+  //make this function return the root Q table
+  // so that I can add answers to it
+  return rootQTable;
 
 
 } // add root Question
@@ -229,7 +274,7 @@ function addRootQuestionRe(givenButton, givenRootQText, givenRootQTime)
 
 
 
-function createRootQTableRe(givenX, givenRootQText, givenRootQTime)
+function createRootQTableRe(givenX, givenRootQText, givenRootQTime, givenRootQFeedback)
 {
   var rootQTable = document.createElement('table');
   rootQTable.setAttribute('border', 1);
@@ -282,7 +327,7 @@ function createRootQTableRe(givenX, givenRootQText, givenRootQTime)
 
 
   var answersCell = questionRow.insertCell(3);
-  answersCell.appendChild(createAnswersTable(givenX, '0'));
+  answersCell.appendChild(createAnswersTable(givenX, '0', givenRootQFeedback));
 
   return rootQTable;
 } // function createQTable for retrieval
@@ -453,5 +498,4 @@ function createSubQTableRe(givenX, givenY, givenSubQText, givenSubQTime)
   answerCell.appendChild(createAnswersTable(givenX, givenY));
 
   return subQTable;
-
 } // function createSubQTable
