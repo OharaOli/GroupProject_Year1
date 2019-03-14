@@ -1,30 +1,52 @@
+@media screen and ( max-height: 350px ){
+
+
+}
+
 body {
   background-color: #2176ae;
   font-family: 'Roboto', sans-serif;
+  font-size: 16px;
 }
-
 
 #intro-container {
   text-align: center;
+  color: #FFF;
 }
 
 #start-button {
   margin-left: auto;
   margin-right: auto;
   display: block;
-  width: 200px;
-  height: 50px;
+  width: 10em;
+  height: 2.5em;
   background-color: #3BACE7;
-  font-size: 22px;
+  font-size: 56px;
   color: #FFF;
-  border-radius: 5px;
+  border-radius: 0.5em;
   border: none;
   cursor: pointer;
+  -webkit-box-shadow: 0px 5px 40px -25px rgba(0,0,0,0.75);
+  -moz-box-shadow: 0px 5px 40px -25px rgba(0,0,0,0.75);
+  box-shadow: 0px 5px 40px -25px rgba(0,0,0,0.75);
 }
 
 #intro-container h2 {
-  font-size: 5vw;
-  color: #FFF;
+  font-size: 5em;
+}
+
+#number-of-players-connected {
+  font-size: 3.5em;
+}
+
+#player-list {
+  line-height: 1.5em;
+  list-style-type: none;
+  font-size: 3em;
+}
+
+#player-list li:first-child {
+  margin-top: -1em;
 }
 
 #start-button:hover {
@@ -43,13 +65,13 @@ body {
 
 section button {
   display: inline-block;
-  width: 200px;
-  height: 50px;
-  font-size: 22px;
+  width: 10em;
+  height: 2.5em;
+  font-size: 1.5em;
   background-color: #3BACE7;
   color: #FFF;
   border: none;
-  border-radius: 5px;
+  border-radius: 0.25em;
   cursor: pointer;
 }
 
@@ -63,48 +85,38 @@ section button:hover {
 }
 
 .timer-container {
+  font-size: 3.5em !important;
   position: absolute;
   left: 0;
   right: 0;
   margin-left: auto !important;
   margin-right: auto !important;
   background-color: #3BACE7;
-  width: 10vw;
-  height: 10vw;
-  border: 0.5vw solid white !important;
+  width: 3em;
+  height: 3em;
+  border: 0.125em solid white !important;
   border-radius: 50%;
-  line-height: 10vw !important;
+  line-height: 3em !important;
 }
 
 .timer-container h3 {
-  font-size: 3.5vw;
   color: #FFF;
+  font-size: inherit;
 }
 
 .reveal {
   text-align: center;
 }
 
-.question-container {
-
-}
-
-
-@media screen and ( max-height: 350px ){
-  .reveal h2 {
-    margin-top: 35vh !important;
-  }
-}
-
 .reveal h2 {
-  margin-top: 30vh;
-  margin-bottom: 20vh;
-  font-size: 3vw !important;
+  margin-top: 4.5em;
+  margin-bottom: 1em;
+  font-size: 56px !important;
   background-color: #FFF;
   color: #222;
   display: inline-block;
-  padding: 3vw;
-  border-radius: 1vw;
+  padding: 1em;
+  border-radius: 0.25em;
   -webkit-box-shadow: 0px 5px 50px -15px rgba(0,0,0,0.75);
   -moz-box-shadow: 0px 5px 50px -15px rgba(0,0,0,0.75);
   box-shadow: 0px 5px 50px -15px rgba(0,0,0,0.75);
@@ -114,17 +126,26 @@ section button:hover {
     min-height: 100% !important;
 }
 
-/*.present .answerbox:last-child {
-  margin-right: 50px;
-}*/
+/*
+colors:
+blue - #3BACE7
+darkblue - #2176AE
+yellow - #FBE83B
+red - #FE6847
+green - #ACE73B
+orange - #FFB850
+*/
 
 .present .answerbox, .past .answerbox, .future .answerbox {
-  display: inline-block;
-  width: 23%;
+  position: relative;
+  padding: 0.75vh;
+  display: block;
+  width:  50%;
   margin-top: 0;
-  margin-left: 1%;
-  margin-right: 1%;
-  height: 50%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 1vh;
+  height: 8vh;
   background-color: #3BACE7;
   border-radius: 1vw;
   line-height: 8vh;
@@ -136,19 +157,30 @@ section button:hover {
   text-align: center;
   display: block;
   position: relative;
-  margin: 2% 2% 2% 20%;
   border-radius: 1vw;
-  vertical-align: ;
-  background-color: white;
+  background-color: #FFF;
+  margin-left: 10%;
+  width: 90%;
 }
-
+ 
 .letter {
   font-size: 3.5vw !important;
   position: absolute;
-  left: -18%;
+  left: -8.5%;
   width: 100%;
   text-align: left;
   color:  #FFF;
+}
+
+.selection-number {
+  font-size: 3.5vw !important;
+  color: #FFF;
+  position: absolute;
+  top: 0;
+  right: -1.25em;
+  margin-top: 0.125em !important;
+  opacity: 0;
+  transition: 1.5s opacity ease-out;
 }
 
 #number-of-answers {
@@ -160,17 +192,23 @@ section button:hover {
   color: #FFF;
 }
 
-/*.bar-container {
-  width: 100%;
-  height: 100px;
-  text-align: center;
+.answerbox .bar-container {
+  position: relative;
+  height: 8vh;
+  width: 90%;
+  border-radius: 1vw;
+  margin-top: -8vh;
+  margin-left: 10%;
+  background-color: #FFF;
+  opacity: 0;
+  transition: 1.5s opacity ease-out;
 }
 
-.bar {
-  margin-left: auto !important;
-  margin-right: auto !important;
-  display: block;
-  height: 100px;
-  width: 10%;
-  background-color: red;
-} */
+.answerbox .bar-container .bar {
+  position: absolute;
+  width: 0;
+  height: 100%;
+  border-radius: 1vw;
+  background-color: #000;
+  transition: 1.5s width ease-out;
+}

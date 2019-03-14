@@ -61,6 +61,8 @@ var numQuestions;
 // The question number that the host is currently on.
 // Initially set to 0 (not a question) but incremented before fetching next.
 var currentQuestionNum = 0;
+// The number of total answers given for the question.
+var currentQuestionNumOfAnswers = 0;
 // Determines if the current page already has a host started on it.
 var alreadyStarted = false;
 // The code used by players to connect, created by the host.
@@ -322,6 +324,7 @@ function pollForAnswersDataReturned(returnedText)
     } // if
   } // for
   
+  currentQuestionNumOfAnswers = numAnswersGiven;
   // Updates the UI for the number of answers given so far.
   updatePlayerAnswers(numAnswersGiven);
 } // pollForAnswersDataReturned
@@ -496,7 +499,7 @@ function displayQuestionState()
   toggleNavigation(false);
   for (letter in questions[xCoord][yCoord].answers)
     $("#" + getCoords()).append("<div class='answerbox'><p><span class='letter'>" + letter + "</span>" +
-        questions[xCoord][yCoord].answers[letter].text + "</p></div>");
+        questions[xCoord][yCoord].answers[letter].text + "<div class='bar-container'><div class='bar'></div></div></p></div>");
 
   $("#" + getCoords()).append("<div id='number-of-answers'></div>");
   updatePlayerAnswers(0);
@@ -518,23 +521,39 @@ function displayFeedbackState(answerSelections)
   toggleNavigation(true);
   $("#stop-" + getCoords()).css("visibility", "hidden");
   $(".timer-container").remove();
-  $("#number-of-answers").remove();
+  $("#number-of-answers").text("Total Answers: " + currentQuestionNumOfAnswers);
 
-  var count = 0;
-  for(answerSelection in answerSelections)
+  answerSelections = {"A": 54, "B": 32, "C": 4, "D": 16};
+  currentQuestionNumOfAnswers = 106;
+  letterIndex = 0;
+  for (var letter in questions[xCoord][yCoord].answers)
   {
-    // To make sure (for some reason) answer D is
-    //selected when only A and B are available.
-    if(answerSelection in questions[xCoord][yCoord].answers)
+    var percentage;
+    if (currentQuestionNumOfAnswers == 0)
+      percentage = "0%";
+    else
+      percentage = (answerSelections[letter] / currentQuestionNumOfAnswers) * 100 + "%";
+
+    $("#" + getCoords() + " .answerbox:eq(" + letterIndex + ")")
+      .append("<span class='selection-number'>" + answerSelections[letter] + "</span>");
+
+    $("#" + getCoords() + " .answerbox:eq(" + letterIndex + ") .bar")
+      .css({"width": percentage});
+
+    $("#" + getCoords() + " .answerbox:eq(" + letterIndex + ") .bar-container").css({"opacity": "0.1"}); 
+
+    $("#" + getCoords() + " .answerbox:eq(" + letterIndex + ") .selection-number").css({"opacity": "1"}); 
+
+    if (questions[xCoord][yCoord].answers[letter].isCorrect) {
+      $("#" + getCoords() + " .answerbox:eq(" + letterIndex + ")")
+        .css({"background-color": "#ACE73B"});
+    }
+    else
     {
-      // Display the number of players who chose each answer respectively.
-      $("#" + getCoords()).append("<p>Number of  " +
-        answerSelection + "s: " + answerSelections[answerSelection]);
-
-      $("#" + getCoords() + " .answerbox:eq(" + count + ")").prepend("<div class='bar-container'><div class='bar' id='bar-" + answerSelection + "-" + xCoord + "-" + yCoord + "'></div></div>");
-    }  // end-if
-
-    count++;
+      $("#" + getCoords() + " .answerbox:eq(" + letterIndex + ")")
+        .css({"background-color": "#FE6847"});
+    }
+    letterIndex++;
   }  // end-for
 }  // end-displayFeedbackState
 
@@ -692,15 +711,35 @@ function updateIntroUI()
 {
   // List is reset as well to be empty, to avoid duplicates.
   $("#player-list").text("");
+
   // For every player in quiz...
   for(var index in players) 
     // ...check if they are connected.
-    if (players[index].connected) 
+    if (players[index].connected)
+    {
+      
+      if ($("#player-list li").length == 10)
+      {
+        $("#player-list li:last-child").remove();
+      }
+
       // If they are connected, add a list element, containing the
       //  player's screen name, to the list.
-      $("#player-list").append("<li>" + players[index].screenName
-                                                + " has connected!</li>");
-  // Display the number of players that are currently connected.
-  $("#number-of-players-connected").text("" + numberOfConnectedPlayers
-                                         + " players are currently connected.");
+      $("#player-list").prepend("<li>" + players[index].screenName + "</li>");
+      $("#player-list").prepend("<li>" + players[index].screenName + "</li>");
+      $("#player-list").prepend("<li>" + players[index].screenName + "</li>");
+      $("#player-list").prepend("<li>" + players[index].screenName + "</li>");
+      $("#player-list").prepend("<li>" + players[index].screenName + "</li>");
+      $("#player-list").prepend("<li>" + players[index].screenName + "</li>");
+      $("#player-list").prepend("<li>" + players[index].screenName + "</li>");
+      $("#player-list").prepend("<li>" + players[index].screenName + "</li>");
+    }  // end-if
+  
+  // Display the number of players that are currently connected, and make sure
+  // sentence is grammatically correct when only 1 player is connected.
+  if (numberOfConnectedPlayers == 1)
+    $("#number-of-players-connected").text("1 player is currently connected.");
+  else
+    $("#number-of-players-connected").text("" + numberOfConnectedPlayers
+                                                                          + " players are currently connected.");
 } // end-updateIntroUI()
