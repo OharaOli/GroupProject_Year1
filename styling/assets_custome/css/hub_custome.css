@@ -111,6 +111,9 @@ input.button.primary.right{
   height: 0.2em;
   max-width: 50em;
   width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;  
 }
 
 #no-border.row{

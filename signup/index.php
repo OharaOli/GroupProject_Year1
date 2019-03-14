@@ -39,7 +39,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
         //Regex taken from https://www.w3schools.com/php/php_form_url_email.asp
         if (!preg_match("/^[a-zA-Z0-9]*$/",$username) or preg_match("/^[0-9]*$/",$username) or strlen($username) < 3 or strlen($username) > 16)
         {
-            $signupErrorMessage = "The username must contain at least 1 letter, not contain special chars and be between 3 and 16 characters.";
+            $signupErrorMessage = "The username must contain at least 1 letter, contain no special characters, and must be between 3 and 16 characters long.";
         }//if
         else
         {
@@ -47,7 +47,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
             $result = mysqli_fetch_assoc(sqlWithResult1($mysqli, "SELECT username FROM users WHERE username=(?);", $username));
 
             if ($result != '')
-                $signupErrorMessage  = "The username already exists.";
+                $signupErrorMessage  = "That username already exists.";
             else
             {
                 //Make sure the password is between 8 and 25 characters
@@ -80,7 +80,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
      //Insert the username and password into database
      sqlWithoutResult3($mysqli, "INSERT INTO  users (username, password, quizCode) VALUES (?, ?,?);", $username, $hashedPass,$quizNumber);
      //redirect to welcome.php
-     header("Location: ../hub/index.php");
+     header("Location: ../hub/");
      exit();
 }  // if
 
@@ -103,7 +103,7 @@ function generateRandomNumber($mysqli)
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>Sign Up!</title>
+	<title>Sign Up</title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<script src="misc/checkMobile.js"></script>

@@ -65,7 +65,7 @@
 <!DOCTYPE HTML>
 <html lang ="en">
 <head>
-  <title>Quiz Hub</title>
+  <title>Hub</title>
   <script src="../misc/checkMobile.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="./hub.js"> </script>
@@ -93,17 +93,18 @@
 <body class="is-preload">
   <div id="page-wrapper">
 
-    <!-- Header -->
-      <header id="header">
-        <h1 id="logo"><a href="../">QuizMapp</a></h1>
-      </header>
+			<!-- Header -->
+				<header id="header">
+					<h1 id="logo"><a>QuizMapp</a></h1>
+				</header>
+
 
       <!-- Main -->
         <div id="main" class="wrapper style1">
           <div class="container">
             <header class="major">
-              <h3>Welcome to the Hub</h3>
-              <p>Here you can manage your Quizzes</p>
+              <h2>Welcome to the Hub!</h2>
+              <p>Here you can host and manage your quizzes.</p>
               <!--If there is an error caused by the changing of the quiz code, echo an error-->
             </header>
             <?php
@@ -183,7 +184,7 @@ while($row = $quizIDandNameList ->fetch_assoc())
 </div>
 <!--REDIRECTION SHOULD BE CHANGED TO THE QUIZ CREATOR PAGE-->
 <form method="post" action="../">
-<input class="button primary right" type="submit" name = "Create New" value = "CREATE NEW">
+<input class="button primary right" type="submit" name = "Create New" value = "Create New">
 </form>
   </div><!--  close main -->
 </body>

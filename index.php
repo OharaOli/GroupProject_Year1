@@ -52,7 +52,7 @@
 						<header>
 								<span class="resize"><img src="styling/images/poster/posterLogo.png"  alt="" /></span>
 								<!-- Button to redirect the payer to the join a quiz without logging in -->
-								<h2>Click To Play!</h2>
+								<h2>Click to Play!</h2>
 	              <a href="./player" type="submit" class="button primary fit small">Play</a>
 						</header>
 					</div>

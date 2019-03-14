@@ -57,7 +57,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
                     // encrypt the password that was input by the user, then compare with the encypted password in DB
                     if (!password_verify( $_POST["password"], $encryptedPass['Password']))
                        // if encrypted paswords don't match, then give an error
-                        $loginError = "Password is wrong. Try again you moron!";
+                        $loginError = "Incorrect password";
                     // if the password matches, then set boolean variable to be true
                     else
                     {
@@ -75,7 +75,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
     $_SESSION["username"] = $username;
     // redirect to welcome.php 
     header( 'Location: ../hub' );
-    //header("Location: ../hub/index.php"); 
     exit();
 }  // if  
 
