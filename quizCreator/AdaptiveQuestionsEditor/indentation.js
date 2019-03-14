@@ -35,7 +35,7 @@ function addSubQuestion(givenButton, givenSubQText, givenSubQTime)
   givenButton.parentNode.setAttribute('data-numOfSubQSoFar', numOfSubQSoFar);
 
   //create a new linkQuestion table
-  var linkQTable = createSubQTable(parentQX, numOfSubQSoFar, givenSubQText, givenSubQTime);
+  var subQTable = createSubQTable(parentQX, numOfSubQSoFar, givenSubQText, givenSubQTime);
 
   //create wrapper for this new subQ
   var individualSubQDiv = document.createElement('div');
@@ -50,7 +50,7 @@ function addSubQuestion(givenButton, givenSubQText, givenSubQTime)
   individualSubQDiv.appendChild(deleteSubQButton);
 
   //append the table to the div
-  individualSubQDiv.appendChild(linkQTable);
+  individualSubQDiv.appendChild(subQTable);
 
   var carrigeReturn = document.createElement('br');
 
@@ -58,6 +58,7 @@ function addSubQuestion(givenButton, givenSubQText, givenSubQTime)
 
   givenButton.insertAdjacentElement('beforebegin', individualSubQDiv);
 
+  return subQTable;
 
 } // function addSubQuestion
 
