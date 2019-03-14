@@ -20,7 +20,12 @@
 		<title>Quiz Mapp</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		<script src="misc/checkMobile.js"></script>
+		<script>
+		  window.onload = function() {
+      if(/Android|webOS|iPhone|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent))
+        window.location.href = "../player";
+      }; 
+    </script>
 		<link rel="stylesheet" href="styling/assets/css/main.css" />
     <link rel="stylesheet" href="styling/assets_custome/css/custome.css" />
 		<noscript><link rel="stylesheet" href="styling/assets/css/noscript.css" /></noscript>
