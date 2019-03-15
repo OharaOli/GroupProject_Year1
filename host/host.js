@@ -640,9 +640,9 @@ function generateSlides()
   // __
   Reveal.initialize({
     keyboard: {
-      13: $("#start-" + xCoord + "-" + yCoord).click(),
-      32: $("#start-" + xCoord + "-" + yCoord).click(),
-      80: togglePauseTimer()
+      13: function() {$("#start-" + xCoord + "-" + yCoord).click()},
+      32: function() {$("#start-" + xCoord + "-" + yCoord).click()},
+      80: function() {togglePauseTimer()}
     },
 
     transition: 'slide',
