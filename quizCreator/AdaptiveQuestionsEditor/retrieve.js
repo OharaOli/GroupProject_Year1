@@ -165,7 +165,6 @@ function retrieveSubQ(givenQTableArray)
     //grab the corresponding addsubquestion button
     addSubQButton = document.getElementById('addSubQButton' + coordX);
 
-
     //click the button (max y coord) times (it is 1-based)
     subQText = arrayOfSubQ[index][0];
     subQTime = arrayOfSubQ[index][3];
