@@ -503,6 +503,8 @@ function displayQuestionState()
 
   $("#" + getCoords()).append("<div class='num-of-answers' id='number-of-answers-" + getCoords() + "'></div>");
   updatePlayerAnswers(0);
+
+  $("#" + getCoords() + " .answerbox").hide().fadeIn(1000);
 }  // end-displayQuestionState
 
 
@@ -520,7 +522,9 @@ function displayFeedbackState(answerSelections)
 {
   toggleNavigation(true);
   $("#stop-" + getCoords()).css("visibility", "hidden");
-  $(".timer-container").remove();
+  $(".timer-container").fadeOut(1000);
+  setTimeout(function(){ $(".timer-container").remove(); }, 1500);  
+
   $("#number-of-answers-" + getCoords()).text("Total Answers: " + currentQuestionNumOfAnswers);
 
   letterIndex = 0;
@@ -540,7 +544,7 @@ function displayFeedbackState(answerSelections)
 
     $("#" + getCoords() + " .answerbox:eq(" + letterIndex + ") .bar-container").css({"opacity": "0.1"}); 
 
-    $("#" + getCoords() + " .answerbox:eq(" + letterIndex + ") .selection-number").css({"opacity": "1"}); 
+    $("#" + getCoords() + " .answerbox:eq(" + letterIndex + ") .selection-number").hide().fadeIn(1000); 
 
     if (questions[xCoord][yCoord].answers[letter].isCorrect) {
       $("#" + getCoords() + " .answerbox:eq(" + letterIndex + ")")
@@ -665,13 +669,15 @@ Reveal.addEventListener('slidechanged', function(event) {
 function startTimer() {
   // The time left until countdown is 0.
   var timeLeft = questions[xCoord][yCoord].timeLimit;
-  // Show the timer countdown.
+  // Show the timer countdown...
   $("#" + getCoords()).prepend("<div class='timer-container'><h3 id='timer'></h3></div>");
+  // ...in a fading effect.
+  $("#" + getCoords() + " .timer-container").hide().fadeIn(1000);
   // A function which decrements the countdown by 1, displays
   // it and if it has run out, then ends the question.
   var updateTimer = function() {
     $("#timer").html(timeLeft);
-    if (timeLeft < 0)
+    if (timeLeft <= 0)
     {
       updateFeedbackState();
       return;
@@ -716,13 +722,20 @@ function updateIntroUI()
     if (players[index].connected)
     {
       
-      if ($("#player-list li").length == 9)
+      if ($("#player-list li").length == 8)
       {
         $("#player-list li:last-child").remove();
       }
 
       // If they are connected, add a list element, containing the
       //  player's screen name, to the list.
+      $("#player-list").prepend("<li>" + players[index].screenName + "</li>");
+      $("#player-list").prepend("<li>" + players[index].screenName + "</li>");
+      $("#player-list").prepend("<li>" + players[index].screenName + "</li>");
+      $("#player-list").prepend("<li>" + players[index].screenName + "</li>");
+      $("#player-list").prepend("<li>" + players[index].screenName + "</li>");
+      $("#player-list").prepend("<li>" + players[index].screenName + "</li>");
+      $("#player-list").prepend("<li>" + players[index].screenName + "</li>");
       $("#player-list").prepend("<li>" + players[index].screenName + "</li>");
     }  // end-if
   

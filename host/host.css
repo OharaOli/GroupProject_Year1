@@ -1,12 +1,106 @@
-@media screen and ( max-height: 350px ){
+@media screen and ( max-width: 1400px ), screen and ( max-height: 1100px ){
+  body {
+    font-size: 14px !important;
+  }
+  p .letter {
+    font-size: 1.75em !important;
+    left: -8% !important;
+  }
+  .answerbox p {
+    margin-left: 9.5% !important;
+    width: 90.5% !important;
+  }
+}
 
+@media screen and ( max-width: 1200px ), screen and ( max-height: 1000px ){
+  body {
+    font-size: 13px !important;
+  }
+  p .letter {
+    font-size: 1.65 !important;
+    left: -7.5% !important;
+  }
+  .answerbox p {
+    margin-left: 9% !important;
+    width: 91% !important;
+  }
+}
 
+@media screen and ( max-width: 1000px ), screen and ( max-height: 900px ){
+  body {
+    font-size: 11px !important;
+  }
+  p .letter {
+    font-size: 1.55em !important;
+    left: -7% !important;
+  }
+  .answerbox p {
+    margin-left: 8.5% !important;
+    width: 91.5% !important;
+  }
+}
+
+@media screen and ( max-width: 800px ), screen and ( max-height: 800px ){
+  body {
+    font-size: 9px !important;
+  }
+  p .letter {
+    font-size: 1.45em !important;
+    left: -6.5% !important;
+  }
+  .answerbox p {
+    margin-left: 8% !important;
+    width: 92% !important;
+  }
+}
+f
+@media screen and ( max-width: 600px ), screen and ( max-height: 700px ){
+  body {
+    font-size: 8px !important;
+  }
+  p .letter {
+    font-size: 1.35em !important;
+    left: -6% !important;
+  }
+  .answerbox p {
+    margin-left: 7.5% !important;
+    width: 92.5% !important;
+  }
+}
+
+@media screen and ( max-width: 400px ), screen and ( max-height: 600px ){
+  body {
+    font-size: 7px !important;
+  }
+  p .letter {
+    font-size: 1.25em !important;
+    left: -5.5% !important;
+  }
+  .answerbox p {
+    margin-left: 7.5% !important;
+    width: 92.5% !important;
+  }
+}
+
+@media screen and ( max-width: 400px ), screen and ( max-height: 500px ){
+  body {
+    font-size: 6px !important;
+  }
+  p .letter {
+    font-size: 1.15em !important;
+    left: -5% !important;
+  }
+  .answerbox p {
+    margin-left: 7.5% !important;
+    width: 92.5% !important;
+  }
 }
 
 body {
   background-color: #2176ae;
   font-family: 'Roboto', sans-serif;
   font-size: 16px;
+  transition: 0.1s all linear;
 }
 
 #intro-container {
@@ -21,7 +115,7 @@ body {
   width: 10em;
   height: 2.5em;
   background-color: #3BACE7;
-  font-size: 56px;
+  font-size: 3.5em;
   color: #FFF;
   border-radius: 0.5em;
   border: none;
@@ -111,7 +205,7 @@ section button:hover {
 .reveal h2 {
   margin-top: 4.5em;
   margin-bottom: 1em;
-  font-size: 56px !important;
+  font-size: 3.5em !important;
   background-color: #FFF;
   color: #222;
   display: inline-block;
@@ -138,33 +232,34 @@ orange - #FFB850
 
 .present .answerbox, .past .answerbox, .future .answerbox {
   position: relative;
-  padding: 0.75vh;
+  padding: 0.5em;
   display: block;
   width:  50%;
   margin-top: 0;
   margin-left: auto;
   margin-right: auto;
-  margin-bottom: 1vh;
-  height: 8vh;
+  margin-bottom: 0.75em;
+  height: 5em;
   background-color: #3BACE7;
-  border-radius: 1vw;
-  line-height: 8vh;
+  border-radius: 1em;
+  line-height: 5em;
+  transition: 1s background-color ease;
 }
 
 .answerbox p {
   color: #444;
-  font-size: 2vw;
+  font-size: 2em;
   text-align: center;
   display: block;
   position: relative;
-  border-radius: 1vw;
+  border-radius: 0.5em;
   background-color: #FFF;
   margin-left: 10%;
   width: 90%;
 }
  
 .letter {
-  font-size: 3.5vw !important;
+  font-size: 2em !important;
   position: absolute;
   left: -8.5%;
   width: 100%;
@@ -173,42 +268,37 @@ orange - #FFB850
 }
 
 .selection-number {
-  font-size: 3.5vw !important;
+  font-size: 3em !important;
   color: #FFF;
   position: absolute;
   top: 0;
-  margin-left: 7.5em !important;
+  margin-left: 52% !important;
   margin-top: 0.125em !important;
-  opacity: 0;
-  transition: 1.5s opacity ease-out;
 }
 
 .num-of-answers {
-  position: absolute;
-  bottom: 2vh;
-  left: 0;
-  right: 0;
-  font-size: 50px !important;
+  margin-top: 1em !important;
+  font-size: 3em !important;
   color: #FFF;
 }
 
 .answerbox .bar-container {
   position: relative;
-  height: 8vh;
+  height: 5em;
   width: 90%;
-  border-radius: 1vw;
-  margin-top: -8vh;
+  border-radius: 1em;
+  margin-top: -5em;
   margin-left: 10%;
   background-color: #FFF;
   opacity: 0;
-  transition: 1.5s opacity ease-out;
+  transition: 1s opacity ease;
 }
 
 .answerbox .bar-container .bar {
   position: absolute;
   width: 0;
   height: 100%;
-  border-radius: 1vw;
+  border-radius: 1em;
   background-color: #000;
-  transition: 1.5s width ease-out;
+  transition: 1s width ease;
 }
