@@ -654,7 +654,7 @@ function generateSlides()
             else
               timerIsPaused = false;
           }
-    }
+    },
     transition: 'slide',
     backgroundTransition: 'slide',
     width: "100%",
