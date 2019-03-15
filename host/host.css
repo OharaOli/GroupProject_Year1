@@ -177,18 +177,18 @@ orange - #FFB850
   color: #FFF;
   position: absolute;
   top: 0;
-  right: -1.25em;
+  margin-left: 7.5em !important;
   margin-top: 0.125em !important;
   opacity: 0;
   transition: 1.5s opacity ease-out;
 }
 
-#number-of-answers {
+.num-of-answers {
   position: absolute;
-  bottom: 5vh;
+  bottom: 2vh;
   left: 0;
   right: 0;
-  font-size: 2vw;
+  font-size: 50px !important;
   color: #FFF;
 }
 

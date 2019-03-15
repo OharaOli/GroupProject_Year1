@@ -501,7 +501,7 @@ function displayQuestionState()
     $("#" + getCoords()).append("<div class='answerbox'><p><span class='letter'>" + letter + "</span>" +
         questions[xCoord][yCoord].answers[letter].text + "<div class='bar-container'><div class='bar'></div></div></p></div>");
 
-  $("#" + getCoords()).append("<div id='number-of-answers'></div>");
+  $("#" + getCoords()).append("<div class='num-of-answers' id='number-of-answers-" + getCoords() + "'></div>");
   updatePlayerAnswers(0);
 }  // end-displayQuestionState
 
@@ -511,7 +511,7 @@ function displayQuestionState()
 function updatePlayerAnswers(numOfAnswers)
 {
 
-    $("#number-of-answers")
+    $("#number-of-answers-" + getCoords())
       .text("Answers so far: " + numOfAnswers);
 }  // end-updatePlayerAnswers
 
@@ -521,10 +521,8 @@ function displayFeedbackState(answerSelections)
   toggleNavigation(true);
   $("#stop-" + getCoords()).css("visibility", "hidden");
   $(".timer-container").remove();
-  $("#number-of-answers").text("Total Answers: " + currentQuestionNumOfAnswers);
+  $("#number-of-answers-" + getCoords()).text("Total Answers: " + currentQuestionNumOfAnswers);
 
-  answerSelections = {"A": 54, "B": 32, "C": 4, "D": 16};
-  currentQuestionNumOfAnswers = 106;
   letterIndex = 0;
   for (var letter in questions[xCoord][yCoord].answers)
   {
@@ -718,20 +716,13 @@ function updateIntroUI()
     if (players[index].connected)
     {
       
-      if ($("#player-list li").length == 10)
+      if ($("#player-list li").length == 9)
       {
         $("#player-list li:last-child").remove();
       }
 
       // If they are connected, add a list element, containing the
       //  player's screen name, to the list.
-      $("#player-list").prepend("<li>" + players[index].screenName + "</li>");
-      $("#player-list").prepend("<li>" + players[index].screenName + "</li>");
-      $("#player-list").prepend("<li>" + players[index].screenName + "</li>");
-      $("#player-list").prepend("<li>" + players[index].screenName + "</li>");
-      $("#player-list").prepend("<li>" + players[index].screenName + "</li>");
-      $("#player-list").prepend("<li>" + players[index].screenName + "</li>");
-      $("#player-list").prepend("<li>" + players[index].screenName + "</li>");
       $("#player-list").prepend("<li>" + players[index].screenName + "</li>");
     }  // end-if
   
