@@ -643,7 +643,7 @@ function generateSlides()
       13: $("#start-" + xCoord + "-" + yCoord).click(),
       32: $("#start-" + xCoord + "-" + yCoord).click(),
       80: togglePauseTimer()
-    }
+    },
 
     transition: 'slide',
     backgroundTransition: 'slide',
