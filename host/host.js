@@ -640,11 +640,21 @@ function generateSlides()
   // __
   Reveal.initialize({
     keyboard: {
-      13: function() {$("#start-" + xCoord + "-" + yCoord).click()},
-      32: function() {$("#start-" + xCoord + "-" + yCoord).click()},
-      80: function() {togglePauseTimer()}
-    },
-
+      13: function() {
+            $("#start-" + xCoord + "-" + yCoord).click();
+            $("#start-" + xCoord + "-" + yCoord).click();
+          },
+      32: function() {
+            $("#start-" + xCoord + "-" + yCoord).click();
+            $("#start-" + xCoord + "-" + yCoord).click();
+          },
+      80: function() {
+            if (!timerIsPaused)
+              timerIsPaused = true;
+            else
+              timerIsPaused = false;}
+          }
+    }
     transition: 'slide',
     backgroundTransition: 'slide',
     width: "100%",
@@ -703,16 +713,6 @@ function startTimer()
   // Afterwards, call it once every second.
   timerInterval  = setInterval(updateTimer, 1000);
 }  // end-startTimer
-
-
-function togglePauseTimer()
-{
-  if (!timerIsPaused)
-    timerIsPaused = true;
-  else
-    timerIsPaused = false;
-}  // end-pauseTimer
-
 
 // Execute the code when the page is ready.
 $(document).ready(function() {
