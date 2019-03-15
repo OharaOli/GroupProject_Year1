@@ -1,16 +1,79 @@
-#no-border{
-    border: none;
-    margin-bottom: 4em
-}
+@media only screen and (max-width: 1200px){
+    #quizzesTable{
+        text-align: center;
+    }
+
+    #quizzesTable .row h3{
+	font-size: 2em;
+	font-weight: 500;
+    }
 
 #no-border input[type="text"]{
     color: white;
-    font-weight: 500;	
+    font-weight: 500;
+    margin-bottom: 1em
+}
+#no-border input{
+    text-align: center;
 }
 
-#no-border span{
-    font-weight: 900;
+#no-border{
+    border: none;
+    margin-bottom: 4em;
 }
+
+.button.primary.right{
+    float: right;
+}
+
+#quizzesTable .HostButton.button.small{
+    margin-bottom: 1em;
+}
+
+#quizzesTable .EditButton.button.small{
+    margin-bottom: 1em;
+}
+
+#nav input.button{
+    height: 2em;
+    line-height: 2em;
+    padding: 0 1.25em;
+    background-color: #2176ae;
+    text-align: center;
+    text-decoration: none;
+    white-space: nowrap;
+    font-weight: 300;
+    color: #ffffff !important;
+    border-radius: 4px;
+    font-size: 100%;
+    width: 100%;
+}
+
+}
+
+@media only screen and (min-width: 1101px){
+    #quizzesTable{
+        text-align: left;
+    }
+
+    #no-border{
+    border: none;
+    margin-bottom: 3.5em;
+    }
+
+    #no-border input[type="text"]{
+        color: white;
+        font-weight: 500;
+        width: 75%;	
+    }
+
+    #no-border input[type="submit"]{
+        float: right;
+    }
+    
+    #no-border span{
+        font-weight: 900;
+    }
 
 #nav input.button{
     height: 2em;
@@ -46,6 +109,10 @@ h3.codeErrorLine{
     color: #b30000;
 }
 
+.button.primary.right{
+    float: right;
+}
+
 .row{
     margin: 0 0 2em 0;
     border-bottom: 3px solid #262732;
@@ -54,3 +121,8 @@ h3.codeErrorLine{
 form {
     margin: 0 0 0.5em 0;
 }
+
+}
+
+
+    

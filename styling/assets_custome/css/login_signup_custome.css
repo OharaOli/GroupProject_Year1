@@ -1,0 +1,23 @@
+.container-login100{
+    background: #1c1d26;
+}
+
+.login100-form-title{
+    color: #fff;
+}
+
+.wrap-login100 {
+    background: #1c1d26;
+}
+
+.input100 {
+    background: rgba(255, 255, 255, 0.41);
+}
+
+.alert-danger {
+    color: #b30000;
+    font-weight: 900;
+    font-size: x-large;
+    background-color: transparent;
+    border-color: transparent;
+} 

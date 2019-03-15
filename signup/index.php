@@ -134,6 +134,9 @@ function generateRandomNumber($mysqli)
 	<link rel="stylesheet" type="text/css" href="../styling/login_assets/css/util.css">
 	<link rel="stylesheet" type="text/css" href="../styling/login_assets/css/main.css">
 <!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="../styling/assets_custome/css/login_signup_custome.css">
+<!--===============================================================================================-->
+
 <style media="screen">
 	.error-message{
 		width: 100%;

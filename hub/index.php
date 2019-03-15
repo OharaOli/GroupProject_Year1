@@ -167,9 +167,9 @@
 <div id="quizzesTable">
     <div id='changeQuizIdRow'>
       <form id = "quizCodeForm " style="width:100%" method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>" >
-        <div class='row' id="no-border">
+        <div class='row gtr-0' id="no-border">
           <div class='col-8 col-12-medium'>
-            <h3 class='right'>Your Quiz Code: <span style="font-weight: 900;"> <?php echo $quizCode ?> </span></h3> 
+            <h3 class='right'>Your Quiz Code: <span> <?php echo $quizCode ?> </span></h3> 
           </div>
           <div class='col-2 col-12-medium'>
             <input type="text" name="quizCode" value="<?php echo  $quizCode ?>">
@@ -186,7 +186,7 @@ $count = 0;
 while($row = $quizIDandNameList ->fetch_assoc())
  {
    echo
-   "<div class='row' id='row-" . $count . "'>";
+   "<div class='row gtr-0' id='row-" . $count . "'>";
    echo
    "<script>placeQuiz(" . $row['quiz_id'] . ",'" . $row['name'] . "', '" . $quizCode . "', " . $count . ")</script>";
    echo
