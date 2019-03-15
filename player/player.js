@@ -271,6 +271,8 @@ function displayOutro()
 {
   // The question and answers container div is no longer needed.
   $("#q-and-a-container").hide();
+  // Hides the floating state message.
+  $("#floating-container").hide();
   // Show the outro container div.
   $("#outro-container").show();
   // Display the player's score.
