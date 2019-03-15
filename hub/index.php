@@ -2,15 +2,15 @@
     //Including the files
     require_once('../misc/config.inc.php');
     require_once("../misc/sqlFunctions.php");
-    
+
     session_start();
-    
+
     if(!isset($_SESSION['username']))
     {
       header("Location: ../");
       exit();
     } // if
-    
+
     //opening  connection to database
     $mysqli = new mysqli($database_host, $database_user,
                                             $database_pass, $group_dbnames[0]);
@@ -18,9 +18,9 @@
     // Check for errors before doing anything else
     if($mysqli -> connect_error)
       die("Connection failed.");
-    
+
     $username = $_SESSION['username'];
-      
+
      // error if the user has put an invalid quiz code
      $quizCodeEntryError = "";
     if ($_SERVER["REQUEST_METHOD"] == "POST")
@@ -75,7 +75,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
   <link rel="stylesheet" href="../styling/assets/css/main.css" />
   <link rel="stylesheet" href="../styling/assets_custome/css/custome.css" />
-  <!-- <link rel="stylesheet" href="../styling/assets_custome/css/hub_custome.css" />-->
+  <link rel="stylesheet" href="../styling/assets_custome/css/hub_custome.css" />
   <noscript><link rel="stylesheet" href="../styling/assets/css/noscript.css" /></noscript>
   <style media="screen">
   </style>
@@ -100,7 +100,9 @@
 						<ul>
 							<!-- A button to redirect the user to the login page -->
 							<li><form action="index.php" method="post">
-    <input class="button primary right" type="submit" name="logout" value="Logout" />
+    <li><a href="../player">Play</a></li>
+    <li><input class="button primary small" type="submit" name="logout" value="Logout" /></li>
+      
 </form></li>
 <?php
     if($_SERVER['REQUEST_METHOD'] == "POST" and isset($_POST['logout']))
@@ -110,7 +112,7 @@
     function func()
     {
      // destroy the session
-     session_destroy();    
+     session_destroy();
      header("Location: ../");
      exit();
     }
@@ -118,7 +120,7 @@
 						</ul>
 					</nav>
 				</header>
-				
+
       <!-- Main -->
         <div id="main" class="wrapper style1">
           <div class="container">
@@ -178,11 +180,7 @@
         </div>
       </form>
     </div>
-    <form action="../player" method="post">
-         <div class='col-2 col-12-medium'>
-            <input class="button primary" type="submit" name="play" value = "Play"> 
-          </div>
-     </form>
+
 <?php
 $count = 0;
 while($row = $quizIDandNameList ->fetch_assoc())
@@ -203,7 +201,7 @@ while($row = $quizIDandNameList ->fetch_assoc())
 
 </div>
 <!--REDIRECTION SHOULD BE CHANGED TO THE QUIZ CREATOR PAGE-->
-<form method="post" action="../">
+<form method="post" action="../creator">
 <input class="button primary right" type="submit" name = "Create New" value = "Create New">
 </form>
   </div><!--  close main -->
