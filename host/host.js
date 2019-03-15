@@ -611,14 +611,6 @@ function addStartButtonToSlide(requiredX, requiredY)
     $(this).click(function() {
       updateFeedbackState();
     });
-
-    Reveal.configure({
-      keyboard: {
-        13: $("#start-" + xCoord + "-" + yCoord).click(),
-        32: $("#start-" + xCoord + "-" + yCoord).click()
-      }
-    });
-
     startQuestion();
   });
 }  // end-addButtonToSlide
@@ -647,6 +639,12 @@ function generateSlides()
    
   // __
   Reveal.initialize({
+    keyboard: {
+      13: $("#start-" + xCoord + "-" + yCoord).click(),
+      32: $("#start-" + xCoord + "-" + yCoord).click(),
+      80: togglePauseTimer()
+    }
+
     transition: 'slide',
     backgroundTransition: 'slide',
     width: "100%",
@@ -728,13 +726,13 @@ $(document).ready(function() {
     generateSlides();
   });
 
-  Reveal.configure({
+  /*Reveal.configure({
     keyboard: {
       13: $("#start-button").click(),
       32: $("#start-button").click(),
       80: togglePauseTimer()
     }
-  });
+  }); */
 
 });
 
