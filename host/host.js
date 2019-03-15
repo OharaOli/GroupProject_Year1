@@ -77,6 +77,8 @@ var xCoord = 0;
 var yCoord = 0;
 // Determines if the host is currently in the floating state.
 var isFloating = false;
+// True when timer is paused, initially false.
+var timerIsPaused = false;
 
 // Code written by Alex.
 // -------------------------------------------------------------------------
@@ -609,10 +611,16 @@ function addStartButtonToSlide(requiredX, requiredY)
     $(this).click(function() {
       updateFeedbackState();
     });
+
+    Reveal.configure({
+      keyboard: {
+        13: $("#start-" + xCoord + "-" + yCoord).click(),
+        32: $("#start-" + xCoord + "-" + yCoord).click()
+      }
+    });
+
     startQuestion();
   });
-
-  
 }  // end-addButtonToSlide
 
 
@@ -639,10 +647,10 @@ function generateSlides()
    
   // __
   Reveal.initialize({
-  transition: 'slide',
-  backgroundTransition: 'slide',
-  width: "100%",
-  height: "100%"
+    transition: 'slide',
+    backgroundTransition: 'slide',
+    width: "100%",
+    height: "100%"
   });
 
   $("body").css({"background-color": "#2176ae"});
@@ -670,7 +678,8 @@ Reveal.addEventListener('slidechanged', function(event) {
 
 
 // Starts the timer countdown (1 second at a time).
-function startTimer() {
+function startTimer()
+{
   // The time left until countdown is 0.
   var timeLeft = questions[xCoord][yCoord].timeLimit;
   // Show the timer countdown...
@@ -686,7 +695,9 @@ function startTimer() {
       updateFeedbackState();
       return;
     }  // end-if
-    timeLeft--;
+    // Only decrement timer for when timer is not paused.
+    if (!timerIsPaused)
+      timeLeft--;
   }  // end-updateTimerFunction
   // Call the updateTimer function once at first, to
   // start countdown immediately.
@@ -696,11 +707,17 @@ function startTimer() {
 }  // end-startTimer
 
 
+function togglePauseTimer()
+{
+  if (!timerIsPaused)
+    timerIsPaused = true;
+  else
+    timerIsPaused = false;
+}  // end-pauseTimer
 
 
 // Execute the code when the page is ready.
 $(document).ready(function() {
-
   // Upon clicking the 'Start Quiz' button...
   $("#start-button").click(function() {
     // Starts the functional part of the quiz.
@@ -710,6 +727,15 @@ $(document).ready(function() {
     // Call the function to start the quiz.
     generateSlides();
   });
+
+  Reveal.configure({
+    keyboard: {
+      13: $("#start-button").click(),
+      32: $("#start-button").click(),
+      80: togglePauseTimer()
+    }
+  });
+
 });
 
 
