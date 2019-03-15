@@ -169,7 +169,7 @@
       <form id = "quizCodeForm " style="width:100%" method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>" >
         <div class='row' id="no-border">
           <div class='col-8 col-12-medium'>
-            <h3 class='right'>Your Quiz Code: <?php echo $quizCode ?></h3>
+            <h3 class='right'>Your Quiz Code: <span style="font-weight: 900;"> <?php echo $quizCode ?> </span></h3> 
           </div>
           <div class='col-2 col-12-medium'>
             <input type="text" name="quizCode" value="<?php echo  $quizCode ?>">
@@ -201,7 +201,7 @@ while($row = $quizIDandNameList ->fetch_assoc())
 
 </div>
 <!--REDIRECTION SHOULD BE CHANGED TO THE QUIZ CREATOR PAGE-->
-<form method="post" action="../creator">
+<form method="post" action="../">
 <input class="button primary right" type="submit" name = "Create New" value = "Create New">
 </form>
   </div><!--  close main -->

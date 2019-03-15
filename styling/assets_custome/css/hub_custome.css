@@ -3,6 +3,15 @@
     margin-bottom: 4em
 }
 
+#no-border input[type="text"]{
+    color: white;
+    font-weight: 500;	
+}
+
+#no-border span{
+    font-weight: 900;
+}
+
 #nav input.button{
     height: 2em;
     line-height: 2em;
@@ -22,8 +31,19 @@ header.major {
     margin: 0 0 2em 0;
 }
 
+header.major:after {
+    background: #262732;
+    max-width: 50em;
+    width: 75%;
+}
+
 h3.right{
     margin: 0.3em 0 0.5em 0;
+}
+
+h3.codeErrorLine{
+    text-align: center;
+    color: #b30000;
 }
 
 .row{
