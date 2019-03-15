@@ -10,6 +10,10 @@
     margin-left: 9.5% !important;
     width: 90.5% !important;
   }
+  .answerbox .bar-container {
+    margin-left: 9.5% !important;
+    width: 90.5% !important;
+  }
 }
 
 @media screen and ( max-width: 1200px ), screen and ( max-height: 1000px ){
@@ -21,6 +25,10 @@
     left: -7.5% !important;
   }
   .answerbox p {
+    margin-left: 9% !important;
+    width: 91% !important;
+  }
+  .answerbox .bar-container {
     margin-left: 9% !important;
     width: 91% !important;
   }
@@ -38,6 +46,10 @@
     margin-left: 8.5% !important;
     width: 91.5% !important;
   }
+  .answerbox .bar-container {
+    margin-left: 8.5% !important;
+    width: 91.5% !important;
+  }
 }
 
 @media screen and ( max-width: 800px ), screen and ( max-height: 800px ){
@@ -49,6 +61,10 @@
     left: -6.5% !important;
   }
   .answerbox p {
+    margin-left: 8% !important;
+    width: 92% !important;
+  }
+  .answerbox .bar-container {
     margin-left: 8% !important;
     width: 92% !important;
   }
@@ -66,6 +82,10 @@ f
     margin-left: 7.5% !important;
     width: 92.5% !important;
   }
+  .answerbox .bar-container {
+    margin-left: 7.5% !important;
+    width: 92.5% !important;
+  }
 }
 
 @media screen and ( max-width: 400px ), screen and ( max-height: 600px ){
@@ -80,6 +100,10 @@ f
     margin-left: 7.5% !important;
     width: 92.5% !important;
   }
+  .answerbox .bar-container {
+    margin-left: 7.5% !important;
+    width: 92.5% !important;
+  }
 }
 
 @media screen and ( max-width: 400px ), screen and ( max-height: 500px ){
@@ -91,6 +115,10 @@ f
     left: -5% !important;
   }
   .answerbox p {
+    margin-left: 7.5% !important;
+    width: 92.5% !important;
+  }
+  .answerbox .bar-container {
     margin-left: 7.5% !important;
     width: 92.5% !important;
   }
