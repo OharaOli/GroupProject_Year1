@@ -42,21 +42,22 @@ function placeQuiz(quizID, quizName, quizCode, count)
      form.submit();
 } );
 
+  // when edit button is pressed, send the quiz id by post
  $("#edit" + quizID).click(function() {
-    var form = document.createElement("form");
-    form.setAttribute("method", "post");
+    var formForEdit = document.createElement("form");
+    formForEdit.setAttribute("method", "post");
 
-    //THIS SHOULD BE CHANGED TO QUIZ EDITOR NOT LANDING PAGE
-    form.setAttribute("action", "../");
+    // quiz edito
+    formForEdit.setAttribute("action", "../quizEditor");
 
-     var input = document.createElement("input");
-     input.setAttribute("type", "hidden");
-     input.setAttribute("name", "quizID");
-     input.setAttribute("value", quizID);
+     var inputTheQuizID = document.createElement("input");
+     inputTheQuizID.setAttribute("type", "hidden");
+     inputTheQuizID.setAttribute("name", "quizID");
+     inputTheQuizID.setAttribute("value", quizID);
 
-     form.appendChild(input);
-     document.body.appendChild(form);
-     form.submit();
+     formForEdit.appendChild(inputTheQuizID);
+     document.body.appendChild(formForEdit);
+     formForEdit.submit();
 } );
 
 });

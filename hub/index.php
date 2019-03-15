@@ -96,9 +96,29 @@
 			<!-- Header -->
 				<header id="header">
 					<h1 id="logo"><a>QuizMapp</a></h1>
+					<nav id="nav">
+						<ul>
+							<!-- A button to redirect the user to the login page -->
+							<li><form action="index.php" method="post">
+    <input class="button primary right" type="submit" name="logout" value="Logout" />
+</form></li>
+<?php
+    if($_SERVER['REQUEST_METHOD'] == "POST" and isset($_POST['logout']))
+    {
+        func();
+    }
+    function func()
+    {
+     // destroy the session
+     session_destroy();    
+     header("Location: ../");
+     exit();
+    }
+?>
+						</ul>
+					</nav>
 				</header>
-
-
+				
       <!-- Main -->
         <div id="main" class="wrapper style1">
           <div class="container">
