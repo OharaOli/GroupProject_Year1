@@ -504,6 +504,8 @@ function displayQuestionState()
   $("#" + getCoords()).append("<div class='num-of-answers' id='number-of-answers-" + getCoords() + "'></div>");
   updatePlayerAnswers(0);
 
+  $("#number-of-answers-" + getCoords()).hide().fadeIn(1000);
+
   $("#" + getCoords() + " .answerbox").hide().fadeIn(1000);
 }  // end-displayQuestionState
 
@@ -729,13 +731,6 @@ function updateIntroUI()
 
       // If they are connected, add a list element, containing the
       //  player's screen name, to the list.
-      $("#player-list").prepend("<li>" + players[index].screenName + "</li>");
-      $("#player-list").prepend("<li>" + players[index].screenName + "</li>");
-      $("#player-list").prepend("<li>" + players[index].screenName + "</li>");
-      $("#player-list").prepend("<li>" + players[index].screenName + "</li>");
-      $("#player-list").prepend("<li>" + players[index].screenName + "</li>");
-      $("#player-list").prepend("<li>" + players[index].screenName + "</li>");
-      $("#player-list").prepend("<li>" + players[index].screenName + "</li>");
       $("#player-list").prepend("<li>" + players[index].screenName + "</li>");
     }  // end-if
   
