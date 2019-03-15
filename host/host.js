@@ -652,7 +652,7 @@ function generateSlides()
             if (!timerIsPaused)
               timerIsPaused = true;
             else
-              timerIsPaused = false;}
+              timerIsPaused = false;
           }
     }
     transition: 'slide',
