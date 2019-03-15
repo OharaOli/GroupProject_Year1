@@ -644,6 +644,8 @@ function generateSlides()
   width: "100%",
   height: "100%"
   });
+
+  $("body").css({"background-color": "#2176ae"});
 }  // end-generateSlides
 
 
