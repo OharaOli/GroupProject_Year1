@@ -384,7 +384,6 @@ function updateFeedbackState()
     players[key].giveAnswer(questions[xCoord][yCoord].getCorrectAnswers());
   } // for
   
-  
   // Displays the required UI for the feedback state.
   displayFeedbackState(answerSelections);
 } // updateFeedbackState
@@ -580,6 +579,19 @@ function displayFeedbackState(answerSelections)
     }
     letterIndex++;
   }  // end-for
+
+  Reveal.configure({
+    keyboard: {
+      13: function() {
+            $("#start-" + xCoord + "-" + yCoord).click();
+            $("#start-" + xCoord + "-" + yCoord).click();
+          },
+      32: function() {
+            $("#start-" + xCoord + "-" + yCoord).click();
+            $("#start-" + xCoord + "-" + yCoord).click();
+          }
+    }
+  });
 }  // end-displayFeedbackState
 
 /*
@@ -631,19 +643,6 @@ function addStartButtonToSlide(requiredX, requiredY)
       updateFeedbackState();
     });
     startQuestion();
-  });
-
-  Reveal.configure({
-    keyboard: {
-      13: function() {
-            $("#start-" + xCoord + "-" + yCoord).click();
-            $("#start-" + xCoord + "-" + yCoord).click();
-          },
-      32: function() {
-            $("#start-" + xCoord + "-" + yCoord).click();
-            $("#start-" + xCoord + "-" + yCoord).click();
-          }
-    }
   });
 }  // end-addButtonToSlide
 
