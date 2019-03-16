@@ -25,7 +25,7 @@ table.answersTable
 }
 
 
-div.subQDiv
+div.subQDivWithButton
 {
   position: relative;
   margin-left: 177px;
@@ -95,12 +95,6 @@ select.timeLimitList
 input.answerField
 {
 
-
-
-}
-
-input.answerDescriptionField
-{
 
 
 }

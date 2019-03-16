@@ -10,293 +10,14 @@ var isAllSubQHidden = false;
 var isAddRootQButtonHidden = false;
 
 
-//function for adding a linkQuestion
-function addSubQuestion(givenButton)
-{
-  numOfSubQSoFar++;
-  numOfQSoFar++;
 
-  //update the number of questions
-  document.getElementById('quizEditor').setAttribute('data-numOfQuestions', numOfQSoFar);
 
-  //find the id of the parent question
-  parentQId = givenButton.parentNode.parentNode.getAttribute('data-QId');
 
-  //find the x coordinate of the parent question
-  parentQX = givenButton.parentNode.getAttribute('data-x');
 
-  //get the number of sub questions
-  numOfSubQSoFar = parseInt(givenButton.parentNode.getAttribute('data-numOfSubQSoFar'));
-
-  //increment one
-  numOfSubQSoFar++;
-
-  //update it
-  givenButton.parentNode.setAttribute('data-numOfSubQSoFar', numOfSubQSoFar);
-
-  //create a new linkQuestion table
-  var linkQTable = createSubQTable(parentQX, numOfSubQSoFar);
-
-  //create wrapper for this new subQ
-  var individualSubQDiv = document.createElement('div');
-
-  //create delete button and appen to the div
-  var deleteSubQButton = document.createElement('input');
-  deleteSubQButton.setAttribute('class', 'deleteSubQButton');
-  deleteSubQButton.setAttribute('type', 'button');
-  deleteSubQButton.setAttribute('value', 'X');
-  deleteSubQButton.setAttribute('onClick', 'deleteSubQuestion(this)')
-
-  individualSubQDiv.appendChild(deleteSubQButton);
-
-  //append the table to the div
-  individualSubQDiv.appendChild(linkQTable);
-
-  var carrigeReturn = document.createElement('br');
-
-  individualSubQDiv.appendChild(carrigeReturn);
-
-  givenButton.insertAdjacentElement('beforebegin', individualSubQDiv);
-
-
-} // function addSubQuestion
-
-
-//function for adding a root question
-function addRootQuestion(givenButton)
-{
-  numOfRootQSoFar++;
-  numOfQSoFar++;
-
-  //update the number of questions
-  document.getElementById('quizEditor').setAttribute('data-numOfQuestions', numOfQSoFar);
-
-  //wrapper to contain the root question and all of the sub questions
-  var rootQDiv = document.createElement('div');
-  rootQDiv.setAttribute('id', 'rootQDiv' + numOfRootQSoFar);
-  rootQDiv.setAttribute('data-QId', 'Q' + numOfRootQSoFar);
-
-
-  //button for deleting the question
-  var deleteRootQButton = document.createElement('input');
-  deleteRootQButton.setAttribute('class', 'deleteRootQButton');
-  deleteRootQButton.setAttribute('type', 'button');
-  deleteRootQButton.setAttribute('value', 'X');
-  deleteRootQButton.setAttribute('onClick', 'deleteRootQuestion(this)');
-
-  rootQDiv.appendChild(deleteRootQButton);
-
-  //append the root question table to the wrapper
-  rootQDiv.appendChild(createRootQTable(numOfRootQSoFar));
-
-  //button for hiding the subquesions
-  var addSubQButton = document.createElement('input');
-  addSubQButton.setAttribute('type', 'button');
-  addSubQButton.setAttribute('value', 'V');
-  addSubQButton.setAttribute('onClick', 'hideSubQButton(this)');
-
-  rootQDiv.appendChild(addSubQButton);
-  // a wrapper for sub questions
-  var subQDiv = document.createElement('div');
-  subQDiv.setAttribute('id', 'subQDiv' + numOfRootQSoFar);
-  subQDiv.setAttribute('data-numOfSubQSoFar', '0');
-  subQDiv.setAttribute('class', 'subQDiv');
-  subQDiv.setAttribute('style', 'display: block;');
-  subQDiv.setAttribute('data-x', numOfRootQSoFar);
-
-  //append 'add sub question' button to the wrapper
-  var addSubQButton = document.createElement('input');
-
-  //set the onClick attribute (adding a sub question)
-  addSubQButton.setAttribute('type', 'button');
-  addSubQButton.setAttribute('value', '+');
-  addSubQButton.setAttribute('onClick', 'addSubQuestion(this)');
-  addSubQButton.setAttribute('class', 'addSubQButton');
-  addSubQButton.setAttribute('id', 'addSubQButton' + numOfRootQSoFar)
-
-
-  //append the button to the wrapper
-  subQDiv.appendChild(addSubQButton);
-
-
-  var carrigeReturn1 = document.createElement('br');
-  rootQDiv.appendChild(carrigeReturn1);
-
-  //append the wrapper for sub question to the wrapper for the root question
-  rootQDiv.appendChild(subQDiv);
-
-  //for some white space
-  var carrigeReturn2 = document.createElement('br');
-  rootQDiv.appendChild(carrigeReturn2);
-
-  //append the wrapper right before where the button is situated
-  givenButton.insertAdjacentElement('beforebegin', rootQDiv);
-
-
-
-
-} // add root Question
-
-
-
-//funciton for removing a question, given a button
-function deleteRootQuestion(givenButton)
-{
-
-  //update the total num of root questions
-  numOfRootQSoFar--;
-
-  // remove the parent root q div
-  givenButton.parentNode.remove();
-
-
-
-
-} // deleteRootQuestion
-
-
-function deleteSubQuestion(givenButton)
-{
-  //update the num of sub questions so far
-  var numOfSubQSoFar = parseInt(givenButton.parentNode.parentNode.getAttribute('data-numOfSubQSoFar'));
-  numOfSubQSoFar--;
-
-  givenButton.parentNode.parentNode.setAttribute('data-numOfSubQSoFar', numOfSubQSoFar);
-
-  //delete the parent
-  givenButton.parentNode.remove();
-} // deleteSubQuestion
-
-//function for creating the answer table with given index
-//function for creating question Table
-function createRootQTable(givenX)
-{
-  var rootQTable = document.createElement('table');
-  rootQTable.setAttribute('border', 1);
-  rootQTable.setAttribute('id', 'rootQTable' + "Q" + givenX);
-  rootQTable.setAttribute('class', 'rootQTable');
-
-  //attributes for implemenation of data transfer to the data base
-  rootQTable.setAttribute('data-x', givenX);
-
-  //y-coordinate is always zero
-  rootQTable.setAttribute('data-y', '0');
-
-  //index for the question
-  rootQTable.setAttribute('data-index', 'Q' + givenX);
-
-  // add header row
-  var headerRow = rootQTable.insertRow(0);
-
-  //add cells to the row
-  var indexHeaderCell = headerRow.insertCell(0);
-  indexHeaderCell.innerHTML = "<th>Root</th>";
-
-  var questionHeaderCell = headerRow.insertCell(1);
-  questionHeaderCell.innerHTML = "<th>Question</th>";
-
-  var timeLimitHeaderCell = headerRow.insertCell(2);
-  timeLimitHeaderCell.innerHTML = "<th>Time limit</th>";
-
-  //another header for answers
-  var answersHeaderCell = headerRow.insertCell(3);
-  answersHeaderCell.innerHTML = "<th> Answers </th>"
-
-  // add question Row
-  var questionRow = rootQTable.insertRow(1);
-  var indexCell = questionRow.insertCell(0);
-  indexCell.innerHTML = "Q" + givenX;
-
-  var questionCell = questionRow.insertCell(1);
-  var questionField = document.createElement('input');
-  questionField.setAttribute('type', 'text');
-  questionField.setAttribute('class', 'questionField');
-  questionField.setAttribute('placeholder', 'question');
-  questionCell.appendChild(questionField);
-
-  var timeLimitCell = questionRow.insertCell(2);
-  timeLimitCell.appendChild(createTimeLimitList());
-
-
-  var answersCell = questionRow.insertCell(3);
-  answersCell.appendChild(createAnswersTable(givenX, '0'));
-
-  return rootQTable;
-} // function createQTable
-
-
-
-
-//function for creeating linkQuestionTable
-function createSubQTable(givenX, givenY)
-{
-  var subQTable = document.createElement('table');
-
-  //set the class (for styling)
-  subQTable.setAttribute('class', 'subQTable')
-
-  //set the border
-  subQTable.setAttribute('border', '1');
-
-  // set the x-coordinate and y-coordinate
-  subQTable.setAttribute('data-x', givenX);
-  subQTable.setAttribute('data-y', givenY);
-
-
-
-
-  //insert headerRow
-  var headerRow = subQTable.insertRow(0);
-
-  //insert hierarchyCell
-  var hierarchyCell = headerRow.insertCell(0);
-  hierarchyCell.innerHTML = "<th> Sub" + givenY + "</th>";
-
-  //insert question header
-  var questionHeaderCell = headerRow.insertCell(1);
-  questionHeaderCell.innerHTML = "<th>Question </th>";
-
-
-  //insert cell for the time limit
-  var timeLimitHeaderCell = headerRow.insertCell(2);
-  timeLimitHeaderCell.innerHTML = "<th> Time Limit </th>";
-
-  //insertCell for the answers header
-  var answersHeaderCell = headerRow.insertCell(3);
-  answersHeaderCell.innerHTML = "<th> Answers </th>";
-
-
-  // now the second row
-  // add question Row
-  var questionRow = subQTable.insertRow(1);
-  var indexCell = questionRow.insertCell(0);
-
-  indexCell.innerHTML = "Q" + givenX + "." + givenY;
-
-  var questionCell = questionRow.insertCell(1);
-  var questionField = document.createElement('input');
-  questionField.setAttribute('type', 'text');
-  questionField.setAttribute('class', 'questionField');
-  questionField.setAttribute('placeholder', 'question');
-  questionCell.appendChild(questionField);
-
-
-  var timeLimitCell = questionRow.insertCell(2);
-  timeLimitCell.appendChild(createTimeLimitList());
-
-
-  var answerCell = questionRow.insertCell(3);
-
-  //create an answer table and append it to the cell
-  answerCell.appendChild(createAnswersTable(givenX, givenY));
-
-  return subQTable;
-
-} // function createSubQTable
 
 
 //function for creating a table for the four answers
-function createAnswersTable(givenX, givenY)
+function createAnswersTable(givenX, givenY, givenQFeedback)
 {
   //create aTable
   var aTable = document.createElement('table');
@@ -333,18 +54,25 @@ function createAnswersTable(givenX, givenY)
   var answerCellA = rowA.insertCell(2);
   var answerFieldA = document.createElement('input');
   answerFieldA.setAttribute('type', 'text');
-  answerFieldA.setAttribute('placeholder', 'answer');
+  answerFieldA.setAttribute('placeholder', 'answer A (required)');
   answerFieldA.setAttribute('class', 'answerField');
   answerCellA.appendChild(answerFieldA);
 
   //description Cell - only for this row
   //need only one description Cell for the four cells
-  var descriptionCell = rowA.insertCell(3);
-  descriptionCell.setAttribute('rowspan', 4);
-  var descriptionField = document.createElement('textarea');
-  descriptionField.setAttribute('placeholder', 'feedback');
-  descriptionField.setAttribute('class', 'answerDescriptionField');
-  descriptionCell.appendChild(descriptionField);
+  var feedbackCell = rowA.insertCell(3);
+  feedbackCell.setAttribute('rowspan', 4);
+  var feedbackField = document.createElement('textarea');
+  feedbackField.setAttribute('placeholder', 'feedback (required)');
+  feedbackField.setAttribute('type', 'text');
+  feedbackField.setAttribute('class', 'feedbackField');
+
+  if(givenQFeedback != null)
+  {
+    feedbackField.innerHTML = givenQFeedback;
+  }// if statement
+
+  feedbackCell.appendChild(feedbackField);
 
 
 
@@ -365,7 +93,7 @@ function createAnswersTable(givenX, givenY)
   var answerCellB = rowB.insertCell(2);
   var answerFieldB = document.createElement('input');
   answerFieldB.setAttribute('type', 'text');
-  answerFieldB.setAttribute('placeholder', 'answer');
+  answerFieldB.setAttribute('placeholder', 'answer B (required)');
   answerFieldB.setAttribute('class', 'answerField');
   answerCellB.appendChild(answerFieldB);
 
@@ -380,7 +108,9 @@ function createAnswersTable(givenX, givenY)
   var correctCheckboxCellC = rowC.insertCell(1);
   var correctCheckboxC = document.createElement('input');
   correctCheckboxC.setAttribute('type', 'checkbox');
-  correctCheckboxC.setAttribute('class', 'correctCheckbox')
+  correctCheckboxC.setAttribute('class', 'correctCheckbox');
+
+  // C is disabled until A and B are
 
   correctCheckboxCellC.appendChild(correctCheckboxC);
 
@@ -388,7 +118,7 @@ function createAnswersTable(givenX, givenY)
   var answerCellC = rowC.insertCell(2);
   var answerFieldC = document.createElement('input');
   answerFieldC.setAttribute('type', 'text');
-  answerFieldC.setAttribute('placeholder', 'answer');
+  answerFieldC.setAttribute('placeholder', 'answer C');
   answerFieldC.setAttribute('class', 'answerField');
   answerCellC.appendChild(answerFieldC);
 
@@ -411,7 +141,7 @@ function createAnswersTable(givenX, givenY)
   var answerCellD = rowD.insertCell(2);
   var answerFieldD = document.createElement('input');
   answerFieldD.setAttribute('type', 'text');
-  answerFieldD.setAttribute('placeholder', 'answer');
+  answerFieldD.setAttribute('placeholder', 'answer D');
   answerFieldD.setAttribute('class', 'answerField');
   answerCellD.appendChild(answerFieldD);
 
@@ -463,6 +193,8 @@ function hideSubQButton(givenButton)
 
 
 //function for hiding all the answers
+//function for hiding all the sub questions
+//hide/show individual sub questions added. known error: edit root Q order does not work properly
 function hideAllSubQuestions()
 {
   //grab all the elements by class name
@@ -485,8 +217,34 @@ function hideSubQuestions(givenButton)
 {
   hideOrShowByElement(givenButton.nextElementSibling.nextElementSibling)
 
+  //update the value
+  //if(givenButton.value == "V")
+  //  givenButton.value = "V";
+//  else
+  //  givenButton.value = ">";
+
 }
 
+
+//function for hiding sub questions of a root question
+function hideSubQuestions(givenButton)
+{
+
+  //use the nextSibling property
+  hideORShowByElement(givenButton.nextElementSibling.nextElementSibling);
+
+
+  //change the shape of the button
+  if(givenButton.value == "V")
+  {
+    givenButton.value = ">";
+  }
+  else
+  {
+    givenButton.value = "V";
+  }
+
+} // function hideSubQuestions
 
 
 function hideORShowByClass(givenClassId)
@@ -527,7 +285,9 @@ function hideOrShowById(givenId)
 
 }
 
-function hideOrShowByElement(givenElement)
+
+
+function hideORShowByElement(givenElement)
 {
   if(givenElement.style.display == "block")
   {
@@ -544,7 +304,7 @@ function hideOrShowByElement(givenElement)
 
 
 //function for creating time Limit list(drop-down selection)
-function createTimeLimitList()
+function createTimeLimitList(givenTimeLimit)
 {
   var timeLimitList = document.createElement('select');
   timeLimitList.setAttribute('class', 'timeLimitList');
@@ -579,6 +339,9 @@ function createTimeLimitList()
   timeLimitList.appendChild(option3);
   timeLimitList.appendChild(option4);
   timeLimitList.appendChild(option5);
+
+  if(givenTimeLimit != null)
+    timeLimitList.value = givenTimeLimit;
 
   //return the list
   return timeLimitList;
