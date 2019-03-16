@@ -664,7 +664,6 @@ function generateSlides()
      }  // end-for
 
   $(".end-button").click(function() {
-    console.log("redirect");
     endQuiz();
   });
    
