@@ -1,5 +1,12 @@
 // javascript for implementing drag and drop
 // using dragula libarry
-var drake = dragula({
-  copy: false
-});
+
+function createDragConfig()
+{
+  var dragConfig = dragula({
+    copy: false
+  });
+
+  return dragConfig;
+  
+} // function create dragConfig

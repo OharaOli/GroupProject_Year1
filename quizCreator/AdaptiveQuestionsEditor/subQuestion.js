@@ -114,10 +114,10 @@ function createSubQTable(givenX, givenY, givenSubQText, givenSubQTime, givenSubQ
   indexCell.innerHTML = "Q" + givenX + "." + givenY;
 
   var questionCell = questionRow.insertCell(1);
-  var questionField = document.createElement('input');
+  var questionField = document.createElement('textarea');
   questionField.setAttribute('type', 'text');
   questionField.setAttribute('class', 'questionField');
-  questionField.setAttribute('placeholder', 'question');
+  questionField.setAttribute('placeholder', 'question (required)');
 
   if(givenSubQText != null)
     questionField.setAttribute('value', givenSubQText);

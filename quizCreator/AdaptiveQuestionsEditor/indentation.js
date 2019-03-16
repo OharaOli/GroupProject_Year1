@@ -54,25 +54,25 @@ function createAnswersTable(givenX, givenY, givenQFeedback)
   var answerCellA = rowA.insertCell(2);
   var answerFieldA = document.createElement('input');
   answerFieldA.setAttribute('type', 'text');
-  answerFieldA.setAttribute('placeholder', 'answer');
+  answerFieldA.setAttribute('placeholder', 'answer A (required)');
   answerFieldA.setAttribute('class', 'answerField');
   answerCellA.appendChild(answerFieldA);
 
   //description Cell - only for this row
   //need only one description Cell for the four cells
-  var descriptionCell = rowA.insertCell(3);
-  descriptionCell.setAttribute('rowspan', 4);
-  var descriptionField = document.createElement('textarea');
-  descriptionField.setAttribute('placeholder', 'feedback');
-  descriptionField.setAttribute('type', 'text');
-  descriptionField.setAttribute('class', 'answerDescriptionField');
+  var feedbackCell = rowA.insertCell(3);
+  feedbackCell.setAttribute('rowspan', 4);
+  var feedbackField = document.createElement('textarea');
+  feedbackField.setAttribute('placeholder', 'feedback (required)');
+  feedbackField.setAttribute('type', 'text');
+  feedbackField.setAttribute('class', 'feedbackField');
 
   if(givenQFeedback != null)
   {
-    descriptionField.innerHTML = givenQFeedback;
+    feedbackField.innerHTML = givenQFeedback;
   }// if statement
 
-  descriptionCell.appendChild(descriptionField);
+  feedbackCell.appendChild(feedbackField);
 
 
 
@@ -93,7 +93,7 @@ function createAnswersTable(givenX, givenY, givenQFeedback)
   var answerCellB = rowB.insertCell(2);
   var answerFieldB = document.createElement('input');
   answerFieldB.setAttribute('type', 'text');
-  answerFieldB.setAttribute('placeholder', 'answer');
+  answerFieldB.setAttribute('placeholder', 'answer B (required)');
   answerFieldB.setAttribute('class', 'answerField');
   answerCellB.appendChild(answerFieldB);
 
@@ -108,7 +108,9 @@ function createAnswersTable(givenX, givenY, givenQFeedback)
   var correctCheckboxCellC = rowC.insertCell(1);
   var correctCheckboxC = document.createElement('input');
   correctCheckboxC.setAttribute('type', 'checkbox');
-  correctCheckboxC.setAttribute('class', 'correctCheckbox')
+  correctCheckboxC.setAttribute('class', 'correctCheckbox');
+
+  // C is disabled until A and B are
 
   correctCheckboxCellC.appendChild(correctCheckboxC);
 
@@ -116,7 +118,7 @@ function createAnswersTable(givenX, givenY, givenQFeedback)
   var answerCellC = rowC.insertCell(2);
   var answerFieldC = document.createElement('input');
   answerFieldC.setAttribute('type', 'text');
-  answerFieldC.setAttribute('placeholder', 'answer');
+  answerFieldC.setAttribute('placeholder', 'answer C');
   answerFieldC.setAttribute('class', 'answerField');
   answerCellC.appendChild(answerFieldC);
 
@@ -139,7 +141,7 @@ function createAnswersTable(givenX, givenY, givenQFeedback)
   var answerCellD = rowD.insertCell(2);
   var answerFieldD = document.createElement('input');
   answerFieldD.setAttribute('type', 'text');
-  answerFieldD.setAttribute('placeholder', 'answer');
+  answerFieldD.setAttribute('placeholder', 'answer D');
   answerFieldD.setAttribute('class', 'answerField');
   answerCellD.appendChild(answerFieldD);
 

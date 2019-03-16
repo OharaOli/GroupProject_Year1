@@ -40,8 +40,11 @@ function addRootQuestion(givenButton, givenRootQText, givenRootQTime, givenRootQ
 
   //hide/show individual sub questions added. known error: edit root Q order does not work properly
 
+
+  var dragConfig = createDragConfig();
+
   //make the sub Q Div as the draggable container
-  drake.containers.push(subQDiv);
+  dragConfig.containers.push(subQDiv);
 
   //wrapper to contain subQDiv and button
   var subQDivWithButton = document.createElement('div');
@@ -148,10 +151,10 @@ function createRootQTable(givenX, givenRootQText, givenRootQTime, givenRootQFeed
   indexCell.innerHTML = "Q" + givenX;
 
   var questionCell = questionRow.insertCell(1);
-  var questionField = document.createElement('input');
+  var questionField = document.createElement('textarea');
   questionField.setAttribute('type', 'text');
   questionField.setAttribute('class', 'questionField');
-  questionField.setAttribute('placeholder', 'question');
+  questionField.setAttribute('placeholder', 'question (required)');
 
 
   if(givenRootQText != null)
