@@ -709,6 +709,16 @@ Reveal.addEventListener('slidechanged', function(event) {
 });
 
 
+Reveal.addEventListener( 'overviewshown', function( event ) {
+  
+});
+
+
+Reveal.addEventListener( 'overviewhidden', function( event ) {
+
+});
+
+
 // Starts the timer countdown (1 second at a time).
 function startTimer()
 {
@@ -748,6 +758,11 @@ $(document).ready(function() {
     $("#intro-container").empty(); 
     // Call the function to start the quiz.
     generateSlides();
+  });
+
+  $("body").one("keypress", function(event){
+    if (event.which == 13 || event.which == 32)
+      $("#start-button").click();
   });
 });
 
