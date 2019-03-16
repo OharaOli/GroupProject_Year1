@@ -30,14 +30,14 @@ Quiz creator
 
 
   <!-- Accessing Css from a separate file -->
-  <link href="../../styling/assets_custome/css/indentation.css" rel="stylesheet" type="text/css">
+  <link href="../styling/assets_custome/css/indentation.css" rel="stylesheet" type="text/css">
 </head>
 <body>
   <!-- plug-ins for dragula -->
   <script type="text/javascript" src="./node_modules/dragula/dist/dragula.js"> </script>
   <link href="./node_modules/dragula/dist/dragula.css" rel="stylesheet" type="text/css">
 
-  <!-- javaScript related to drag & drop --> 
+  <!-- javaScript related to drag & drop -->
   <script type="text/javascript" src="./dragAndDrop.js"> </script>
 
 
