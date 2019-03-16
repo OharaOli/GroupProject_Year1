@@ -284,6 +284,26 @@ function startQuestion()
   
   // Starts the countdown timer for the question.
   startTimer();
+
+  Reveal.configure({
+    keyboard: {
+      13: function() {
+            $("#stop-" + xCoord + "-" + yCoord).click();
+            $("#stop-" + xCoord + "-" + yCoord).click();
+          },
+      32: function() {
+            $("#stop-" + xCoord + "-" + yCoord).click();
+            $("#stop-" + xCoord + "-" + yCoord).click();
+          },
+      80: function() {
+	          console.log("p clicked");
+            if (!timerIsPaused)
+              timerIsPaused = true;
+            else
+              timerIsPaused = false;
+          }
+    }
+  });
 } // startQuestion
 
 
@@ -647,13 +667,6 @@ function generateSlides()
       32: function() {
             $("#start-" + xCoord + "-" + yCoord).click();
             $("#start-" + xCoord + "-" + yCoord).click();
-          },
-      80: function() {
-	    console.log("p clicked");
-            if (!timerIsPaused)
-              timerIsPaused = true;
-            else
-              timerIsPaused = false;
           }
     },
     transition: 'slide',
