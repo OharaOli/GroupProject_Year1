@@ -7,12 +7,14 @@ function deleteRootQuestion(givenButton)
   var quizEditor = document.getElementById('quizEditor');
   quizEditor.setAttribute('data-numOfQuestions', numOfQSoFar);
 
+  var rootX = givenButton.getAttribute('data-x');
+
   //update the total num of root questions
   numOfRootQSoFar--;
 
-
   // remove the parent root q div
-  givenButton.parentNode.remove();
+  var rootQDiv = document.getElementById('rootQDiv' + rootX);
+  rootQDiv.remove();
 
   //update the root Q index
   updateRootQIndex();
@@ -30,17 +32,24 @@ function deleteSubQuestion(givenButton)
   var quizEditor = document.getElementById('quizEditor');
   quizEditor.setAttribute('data-numOfQuestions', numOfQSoFar);
 
-  //update the num of sub questions so far
-  var numOfSubQSoFar = parseInt(givenButton.parentNode.parentNode.getAttribute('data-numOfSubQSoFar'));
-  numOfSubQSoFar--;
-
-  givenButton.parentNode.parentNode.setAttribute('data-numOfSubQSoFar', numOfSubQSoFar);
-
   //get the parent x-coordinate
-  var parentX = givenButton.parentNode.parentNode.parentNode.getAttribute('data-x');
+  var parentX = givenButton.getAttribute('data-x');
 
-  //delete the parent
-  givenButton.parentNode.remove();
+  //get the sub Q Y-coordinate
+  var subY = givenButton.getAttribute('data-y');
+
+  //using the x and y coordinate, access the subQDiv
+  var subQDiv = document.getElementById('subQDiv' + parentX + '0');
+
+  //update the num of sub questions so far
+  var numOfSubQSoFar = parseInt(subQDiv.getAttribute('data-numOfSubQSoFar'));
+  numOfSubQSoFar--;
+  subQDiv.setAttribute('data-numOfSubQSoFar', numOfSubQSoFar);
+
+
+  //delete the parent subQDiv
+  var parentSubQDiv = document.getElementById('subQDiv' + parentX + subY);
+  parentSubQDiv.remove();
 
   //update the order
   updateSubQIndex(parentX);
@@ -74,6 +83,10 @@ function updateRootQIndex()
     //update the rootQdiv as well
     rootQTable.parentNode.setAttribute('id', 'rootQDiv' + (index + 1));
     rootQTable.parentNode.setAttribute('data-QId', 'Q' + (index + 1));
+
+    //update the button as well
+    rootQTable.rows[0].cells[0].childNodes[0].setAttribute('data-x', (index + 1));
+
  } // for loop
 } // updateRootQIndex
 

@@ -30,11 +30,19 @@ Quiz creator
 
 
   <!-- Accessing Css from a separate file -->
-  <link href="./dragularCSS.css" rel="stylesheet" type="text/css">
   <link href="../../styling/assets_custome/css/indentation.css" rel="stylesheet" type="text/css">
 </head>
 <body>
-x
+  <!-- plug-ins for dragula -->
+  <script type="text/javascript" src="./node_modules/dragula/dist/dragula.js"> </script>
+  <link href="./node_modules/dragula/dist/dragula.css" rel="stylesheet" type="text/css">
+
+  <!-- javaScript related to drag & drop --> 
+  <script type="text/javascript" src="./dragAndDrop.js"> </script>
+
+
+
+
 
 <div style="width: 800px; margin: auto;" id="quizEditor" data-numOfQuestions="0">
   <h1 id="quizHeader" contenteditable="true" data-quizId= "1" placeholder='required'>

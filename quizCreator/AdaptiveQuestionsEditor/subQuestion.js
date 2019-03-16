@@ -1,6 +1,7 @@
 //function for adding a subQuestion
 function addSubQuestion(givenButton, givenSubQText, givenSubQTime, givenSubQFeedback)
 {
+  //updating the global variables
   numOfSubQSoFar++;
   numOfQSoFar++;
 
@@ -10,46 +11,37 @@ function addSubQuestion(givenButton, givenSubQText, givenSubQTime, givenSubQFeed
   //find the x coordinate of the parent question
   parentQX = givenButton.parentNode.parentNode.getAttribute('data-x');
 
-  //get the number of sub questions
-  numOfSubQSoFar = parseInt(givenButton.parentNode.getAttribute('data-numOfSubQSoFar'));
+  //get the number of sub questions for this root (before pressing the button)
+  var numOfSubQSoFarRoot = parseInt(givenButton.previousElementSibling.getAttribute('data-numOfSubQSoFar'));
 
   //increment one
-  numOfSubQSoFar++;
+  numOfSubQSoFarRoot++;
 
   //update it
-  givenButton.parentNode.setAttribute('data-numOfSubQSoFar', numOfSubQSoFar);
+  givenButton.previousElementSibling.setAttribute('data-numOfSubQSoFar', numOfSubQSoFarRoot);
 
   //create a new linkQuestion table
-  var subQTable = createSubQTable(parentQX, numOfSubQSoFar, givenSubQText, givenSubQTime, givenSubQFeedback);
+  var subQTable = createSubQTable(parentQX, numOfSubQSoFarRoot, givenSubQText, givenSubQTime, givenSubQFeedback);
 
   //create wrapper for this new subQ
-  var subQDiv = document.createElement('div');
+  var subQDivEach = document.createElement('div');
+  subQDivEach.setAttribute('id', 'subQDiv' + parentQX + numOfSubQSoFarRoot);
 
-  //create delete button and appen to the div
-  var deleteSubQButton = document.createElement('input');
-  deleteSubQButton.setAttribute('class', 'deleteSubQButton');
-  deleteSubQButton.setAttribute('type', 'button');
-  deleteSubQButton.setAttribute('value', 'X');
-  deleteSubQButton.setAttribute('onClick', 'deleteSubQuestion(this)')
 
-  subQDiv.appendChild(deleteSubQButton);
 
   //append the table to the div
-  subQDiv.appendChild(subQTable);
+  subQDivEach.appendChild(subQTable);
 
   var whiteSpace = document.createElement('br');
 
-  subQDiv.appendChild(whiteSpace);
+  subQDivEach.appendChild(whiteSpace);
 
 
 
-  givenButton.insertAdjacentElement('beforebegin', subQDiv);
+  givenButton.previousElementSibling.appendChild(subQDivEach);
 
-  var orderDiv = document.createElement('div');
-  orderDiv.setAttribute('class', 'orderDiv');
-  orderDiv.innerHTML = "--------------------";
-  subQDiv.appendChild(orderDiv);
-  
+
+
   return subQTable;
 
 } // function addSubQuestion
@@ -64,7 +56,7 @@ function addSubQuestion(givenButton, givenSubQText, givenSubQTime, givenSubQFeed
 
 
 
-//function for creeating linkQuestionTable
+//function for creeating subQuestionTable
 function createSubQTable(givenX, givenY, givenSubQText, givenSubQTime, givenSubQFeedback)
 {
   var subQTable = document.createElement('table');
@@ -88,13 +80,17 @@ function createSubQTable(givenX, givenY, givenSubQText, givenSubQTime, givenSubQ
   //insert hierarchyCell
   var hierarchyCell = headerRow.insertCell(0);
 
-  //insert "move button" top this cell
-  var moveButton = document.createElement('input');
-  moveButton.setAttribute('type', 'button');
-  moveButton.setAttribute('value', 'move');
+  //create delete button for sub question
+  var deleteSubQButton = document.createElement('input');
+  deleteSubQButton.setAttribute('class', 'deleteSubQButton');
+  deleteSubQButton.setAttribute('type', 'button');
+  deleteSubQButton.setAttribute('data-x', givenX);
+  deleteSubQButton.setAttribute('data-y', givenY);
+  deleteSubQButton.setAttribute('value', 'X');
+  deleteSubQButton.setAttribute('onClick', 'deleteSubQuestion(this)')
 
   //append the button to the cell
-  hierarchyCell.appendChild(moveButton);
+  hierarchyCell.appendChild(deleteSubQButton);
 
   //insert question header
   var questionHeaderCell = headerRow.insertCell(1);

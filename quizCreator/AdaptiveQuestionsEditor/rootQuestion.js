@@ -14,23 +14,7 @@ function addRootQuestion(givenButton, givenRootQText, givenRootQTime, givenRootQ
   rootQDiv.setAttribute('id', 'rootQDiv' + numOfRootQSoFar);
   rootQDiv.setAttribute('data-QId', 'Q' + numOfRootQSoFar);
   rootQDiv.setAttribute('data-x', numOfRootQSoFar);
-  rootQDiv.setAttribute('data-y', 0);
-
-
-  //button for deleting the question
-  var deleteRootQButton = document.createElement('input');
-  deleteRootQButton.setAttribute('class', 'deleteRootQButton');
-  deleteRootQButton.setAttribute('type', 'button');
-  deleteRootQButton.setAttribute('value', 'X');
-  deleteRootQButton.setAttribute('onClick', 'deleteRootQuestion(this)');
-
-  deleteRootQButton.setAttribute('type', 'button');
-  deleteRootQButton.setAttribute('value', 'X');
-
-  //append the button to the wrapper
-  // hide/show individual sub questions added. known error: edit root Q order does not work properly
-  rootQDiv.appendChild(deleteRootQButton);
-
+  rootQDiv.setAttribute('data-y', '0');
 
   var rootQTable = createRootQTable(numOfRootQSoFar, givenRootQText, givenRootQTime, givenRootQFeedback);
   //append the root question table to the wrapper
@@ -52,8 +36,20 @@ function addRootQuestion(givenButton, givenRootQText, givenRootQTime, givenRootQ
   subQDiv.setAttribute('data-numOfSubQSoFar', '0');
   subQDiv.setAttribute('class', 'subQDiv');
   subQDiv.setAttribute('style', 'display: block;');
-  subQDiv.setAttribute('style', 'display: block;')
+  subQDiv.setAttribute('id', 'subQDiv' + numOfRootQSoFar + '0');
+
   //hide/show individual sub questions added. known error: edit root Q order does not work properly
+
+  //make the sub Q Div as the draggable container
+  drake.containers.push(subQDiv);
+
+  //wrapper to contain subQDiv and button
+  var subQDivWithButton = document.createElement('div');
+  subQDivWithButton.setAttribute('class', 'subQDivWithButton');
+  subQDivWithButton.setAttribute('style', 'display: block;');
+  //append the subQdiv to the div with button
+  subQDivWithButton.appendChild(subQDiv);
+
 
   //append 'add sub question' button to the wrapper
   var addSubQButton = document.createElement('input');
@@ -67,23 +63,16 @@ function addRootQuestion(givenButton, givenRootQText, givenRootQTime, givenRootQ
   addSubQButton.setAttribute('class', 'addSubQButton');
 
 
-  //append orderDivider that will always be on the top of the sub questions
-  var orderDivTop = document.createElement('div');
-  orderDivTop.setAttribute('class', 'orderDiv');
-  orderDivTop.innerHTML = "--------------------";
-  subQDiv.appendChild(orderDivTop);
-
-  //append the button to the wrapper
-  subQDiv.appendChild(addSubQButton);
+  //append the button to the div with button
+  subQDivWithButton.appendChild(addSubQButton);
 
 
   var carrigeReturn1 = document.createElement('br');
   rootQDiv.appendChild(carrigeReturn1);
 
 
-
-  //append the wrapper for sub question to the wrapper for the root question
-  rootQDiv.appendChild(subQDiv);
+  //append the subQDiv with Button to the rootQDiv
+  rootQDiv.appendChild(subQDivWithButton);
 
   //for some white space
   var carrigeReturn2 = document.createElement('br');
@@ -91,6 +80,7 @@ function addRootQuestion(givenButton, givenRootQText, givenRootQTime, givenRootQ
 
   //append the wrapper right before where the button is situated
   givenButton.insertAdjacentElement('beforebegin', rootQDiv);
+
 
 
   return rootQTable;
@@ -126,8 +116,21 @@ function createRootQTable(givenX, givenRootQText, givenRootQTime, givenRootQFeed
   var headerRow = rootQTable.insertRow(0);
 
   //add cells to the row
+
+
   var indexHeaderCell = headerRow.insertCell(0);
-  indexHeaderCell.innerHTML = "<th>Root</th>";
+
+  //button for deleting the question
+  var deleteRootQButton = document.createElement('input');
+  deleteRootQButton.setAttribute('class', 'deleteRootQButton');
+  deleteRootQButton.setAttribute('type', 'button');
+  deleteRootQButton.setAttribute('value', 'X');
+  deleteRootQButton.setAttribute('data-x', givenX);
+  deleteRootQButton.setAttribute('data-y', '0');
+  deleteRootQButton.setAttribute('onClick', 'deleteRootQuestion(this)');
+
+  //append the button to the cell
+  indexHeaderCell.appendChild(deleteRootQButton);
 
   var questionHeaderCell = headerRow.insertCell(1);
   questionHeaderCell.innerHTML = "<th>Question</th>";
