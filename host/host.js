@@ -632,6 +632,19 @@ function addStartButtonToSlide(requiredX, requiredY)
     });
     startQuestion();
   });
+
+  Reveal.configure({
+    keyboard: {
+      13: function() {
+            $("#start-" + xCoord + "-" + yCoord).click();
+            $("#start-" + xCoord + "-" + yCoord).click();
+          },
+      32: function() {
+            $("#start-" + xCoord + "-" + yCoord).click();
+            $("#start-" + xCoord + "-" + yCoord).click();
+          }
+    }
+  });
 }  // end-addButtonToSlide
 
 
@@ -738,20 +751,6 @@ $(document).ready(function() {
     // Call the function to start the quiz.
     generateSlides();
   });
-
-  Reveal.configure({
-    keyboard: {
-      13: function() {
-            $("#start-" + xCoord + "-" + yCoord).click();
-            $("#start-" + xCoord + "-" + yCoord).click();
-          },
-      32: function() {
-            $("#start-" + xCoord + "-" + yCoord).click();
-            $("#start-" + xCoord + "-" + yCoord).click();
-          }
-    }
-  });
-
 });
 
 
