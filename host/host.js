@@ -387,19 +387,6 @@ function updateFeedbackState()
   
   // Displays the required UI for the feedback state.
   displayFeedbackState(answerSelections);
-
-  Reveal.configure({
-    keyboard: {
-      13: function() {
-            $("#start-" + xCoord + "-" + yCoord).click();
-            $("#start-" + xCoord + "-" + yCoord).click();
-          },
-      32: function() {
-            $("#start-" + xCoord + "-" + yCoord).click();
-            $("#start-" + xCoord + "-" + yCoord).click();
-          }
-    }
-  });
 } // updateFeedbackState
 
 
@@ -752,13 +739,18 @@ $(document).ready(function() {
     generateSlides();
   });
 
-  /*Reveal.configure({
+  Reveal.configure({
     keyboard: {
-      13: $("#start-button").click(),
-      32: $("#start-button").click(),
-      80: togglePauseTimer()
+      13: function() {
+            $("#start-" + xCoord + "-" + yCoord).click();
+            $("#start-" + xCoord + "-" + yCoord).click();
+          },
+      32: function() {
+            $("#start-" + xCoord + "-" + yCoord).click();
+            $("#start-" + xCoord + "-" + yCoord).click();
+          }
     }
-  }); */
+  });
 
 });
 
@@ -791,6 +783,6 @@ function updateIntroUI()
   if (numberOfConnectedPlayers == 1)
     $("#number-of-players-connected").text("1 player is currently connected.");
   else
-    $("#number-of-players-connected").text("" + numberOfConnectedPlayers
-                                                                          + " players are currently connected.");
+    $("#number-of-players-connected")
+      .text("" + numberOfConnectedPlayers + " players are currently connected.");
 } // end-updateIntroUI()
