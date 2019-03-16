@@ -296,7 +296,6 @@ function startQuestion()
             $("#stop-" + xCoord + "-" + yCoord).click();
           },
       80: function() {
-	          console.log("p clicked");
             if (!timerIsPaused)
               timerIsPaused = true;
             else
@@ -388,6 +387,19 @@ function updateFeedbackState()
   
   // Displays the required UI for the feedback state.
   displayFeedbackState(answerSelections);
+
+  Reveal.configure({
+    keyboard: {
+      13: function() {
+            $("#start-" + xCoord + "-" + yCoord).click();
+            $("#start-" + xCoord + "-" + yCoord).click();
+          },
+      32: function() {
+            $("#start-" + xCoord + "-" + yCoord).click();
+            $("#start-" + xCoord + "-" + yCoord).click();
+          }
+    }
+  });
 } // updateFeedbackState
 
 
