@@ -129,6 +129,7 @@ body {
   font-family: 'Roboto', sans-serif;
   font-size: 16px;
   transition: 0.1s all linear;
+  transition: 1s background-color ease !important;
 }
 
 #intro-container {
