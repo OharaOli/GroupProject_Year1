@@ -649,6 +649,7 @@ function generateSlides()
             $("#start-" + xCoord + "-" + yCoord).click();
           },
       80: function() {
+	    console.log("p clicked");
             if (!timerIsPaused)
               timerIsPaused = true;
             else
