@@ -26,6 +26,7 @@ function addSubQuestion(givenButton, givenSubQText, givenSubQTime, givenSubQFeed
   //create wrapper for this new subQ
   var subQDivEach = document.createElement('div');
   subQDivEach.setAttribute('id', 'subQDiv' + parentQX + numOfSubQSoFarRoot);
+  subQDivEach.setAttribute('data-x', parentQX);
 
 
 
@@ -77,8 +78,18 @@ function createSubQTable(givenX, givenY, givenSubQText, givenSubQTime, givenSubQ
   //insert headerRow
   var headerRow = subQTable.insertRow(0);
 
+  // insert drag button cell
+  var dragHandleCell = headerRow.insertCell(0);
+  dragHandleCell.setAttribute('rowspan', 2);
+
+  //append dragbutton to this
+  var dragHandle = document.createElement('button');
+  dragHandle.setAttribute('class', 'dragHandle');
+  dragHandleCell.appendChild(dragHandle);
+
+
   //insert hierarchyCell
-  var hierarchyCell = headerRow.insertCell(0);
+  var hierarchyCell = headerRow.insertCell(1);
 
   //create delete button for sub question
   var deleteSubQButton = document.createElement('input');
@@ -93,22 +104,24 @@ function createSubQTable(givenX, givenY, givenSubQText, givenSubQTime, givenSubQ
   hierarchyCell.appendChild(deleteSubQButton);
 
   //insert question header
-  var questionHeaderCell = headerRow.insertCell(1);
+  var questionHeaderCell = headerRow.insertCell(2);
   questionHeaderCell.innerHTML = "<th>Question</th>";
 
 
   //insert cell for the time limit
-  var timeLimitHeaderCell = headerRow.insertCell(2);
+  var timeLimitHeaderCell = headerRow.insertCell(3);
   timeLimitHeaderCell.innerHTML = "<th>Time(s)</th>";
 
   //insertCell for the answers header
-  var answersHeaderCell = headerRow.insertCell(3);
+  var answersHeaderCell = headerRow.insertCell(4);
   answersHeaderCell.innerHTML = "<th> Answers </th>";
 
 
   // now the second row
   // add question Row
   var questionRow = subQTable.insertRow(1);
+
+
   var indexCell = questionRow.insertCell(0);
 
   indexCell.innerHTML = "Q" + givenX + "." + givenY;
@@ -120,7 +133,7 @@ function createSubQTable(givenX, givenY, givenSubQText, givenSubQTime, givenSubQ
   questionField.setAttribute('placeholder', 'question (required)');
 
   if(givenSubQText != null)
-    questionField.setAttribute('value', givenSubQText);
+    questionField.innerHTML = givenSubQText;
 
   questionCell.appendChild(questionField);
 
