@@ -1,13 +1,14 @@
 // javascript for implementing drag and drop
 // using dragula libarry
 
-function createDragConfig()
+function createDragConfigSub()
 {
   var dragConfig = dragula({
     copy: false,
-    moves: function (draggedElement, droppedSource, handle){
+    moves: function (draggedElement, droppedSource, handle)
+    {
       //setting the drag handle
-      return handle.classList.contains('dragHandle');
+      return handle.classList.contains('dragHandleSub');
     }
   });
 
@@ -22,3 +23,28 @@ function createDragConfig()
 
   return dragConfig;
 } // function create dragConfig
+
+
+
+function createDragCongfigRoot()
+{
+  var dragConfig = dragula({
+    copy: false,
+    //initially not draggable
+    moves: function (draggedElement, droppedSource, handle){
+      //setting the drag handle
+      return handle.classList.contains('dragHandleRoot')}
+  });
+
+  //adding listener to the object
+  dragConfig.on('drop', function(draggedElement)
+  {
+    updateRootQIndex();
+  })
+
+  return dragConfig;
+}
+
+//setting the container of the root questions draggable
+var dragConfigRoot = createDragCongfigRoot();
+dragConfigRoot.containers.push(document.getElementById('rootQDivAll'));

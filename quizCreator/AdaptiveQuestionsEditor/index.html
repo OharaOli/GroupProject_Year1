@@ -28,6 +28,8 @@ Quiz creator
   <!-- javaScript related to root questions -->
   <script type="text/javascript" src="./rootQuestion.js"> </script>
 
+  <script type="text/javascript" src="./hideOrShow.js"> </script>
+
 
   <!-- Accessing Css from a separate file -->
   <link href="../../styling/assets_custome/css/indentation.css" rel="stylesheet" type="text/css">
@@ -37,8 +39,6 @@ Quiz creator
   <script type="text/javascript" src="./node_modules/dragula/dist/dragula.js"> </script>
   <link href="./node_modules/dragula/dist/dragula.css" rel="stylesheet" type="text/css">
 
-  <!-- javaScript related to drag & drop -->
-  <script type="text/javascript" src="./dragAndDrop.js"> </script>
 
 
 
@@ -53,11 +53,12 @@ Quiz creator
   <div>
     <input type="button" value="submit(JavaScript-test)" onClick="submit()"> </input>
     <input type="button" value="retrieve(JavaScript-test)" onClick="retrieve()"> </input>
-    <input type="button" value="edit root question order (working on)" > </input> <!--onClick="editRootQOrder()" -->
     <input type="button" value="<"> </input>
     <input type="button" value=">"> </input>
   </div>
   <br/>
+  <div id="rootQDivAll">
+  </div>
   <input id="addRootQButton" style="display: block" class="addRootQButton" type="button" value="add root question" onClick="addRootQuestion(this)"> </input>
 </div> <!-- QuizEditor -->
 
@@ -65,6 +66,11 @@ Quiz creator
     <!-- display validation message -->
    <p style="color:red;" id="question_validation"></p>
    <p style="color:red;" id="feedback_validation"></p>
+
+
+
+   <!-- javaScript related to drag & drop -->
+   <script type="text/javascript" src="./dragAndDrop.js"> </script>
 
 </body>
 

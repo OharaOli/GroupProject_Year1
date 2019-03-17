@@ -1,10 +1,14 @@
-button.dragHandle
+button.dragHandleSub
 {
   height: 133px;
   width: 35px;
 }
 
-
+button.dragHandleRoot
+{
+  height: 133px;
+  width: 35px;
+}
 input.deleteQButton
 {
 

@@ -85,7 +85,7 @@ function updateRootQIndex()
     rootQTable.parentNode.setAttribute('data-QId', 'Q' + (index + 1));
 
     //update the button as well
-    rootQTable.rows[0].cells[0].childNodes[0].setAttribute('data-x', (index + 1));
+    rootQTable.rows[0].cells[1].childNodes[0].setAttribute('data-x', (index + 1));
 
  } // for loop
 } // updateRootQIndex

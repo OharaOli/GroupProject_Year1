@@ -20,14 +20,18 @@ function addRootQuestion(givenButton, givenRootQText, givenRootQTime, givenRootQ
   //append the root question table to the wrapper
   rootQDiv.appendChild(rootQTable);
 
+  //wrapper that includes hideOrShow
+  var subQDivWithHideOrShow = document.createElement('div');
+  subQDivWithHideOrShow.setAttribute('class', 'subQDivWithHideOrShow');
+  subQDivWithHideOrShow.style.display = 'block';
+
   //button for hide/show sub questions
   var hideSubQButton = document.createElement('input');
   hideSubQButton.setAttribute('type', 'button');
   hideSubQButton.setAttribute('value','V');
   hideSubQButton.setAttribute('onClick', 'hideSubQuestions(this)');
 
-  //append the button to the table
-  rootQDiv.appendChild(hideSubQButton);
+  subQDivWithHideOrShow.appendChild(hideSubQButton);
 
 
   // hide/show individual sub questions added. known error: edit root Q order does not work properly
@@ -41,7 +45,7 @@ function addRootQuestion(givenButton, givenRootQText, givenRootQTime, givenRootQ
   //hide/show individual sub questions added. known error: edit root Q order does not work properly
 
 
-  var dragConfig = createDragConfig();
+  var dragConfig = createDragConfigSub();
 
   //make the sub Q Div as the draggable container
   dragConfig.containers.push(subQDiv);
@@ -69,20 +73,17 @@ function addRootQuestion(givenButton, givenRootQText, givenRootQTime, givenRootQ
   //append the button to the div with button
   subQDivWithButton.appendChild(addSubQButton);
 
-
-  var carrigeReturn1 = document.createElement('br');
-  rootQDiv.appendChild(carrigeReturn1);
-
+  subQDivWithHideOrShow.appendChild(subQDivWithButton);
 
   //append the subQDiv with Button to the rootQDiv
-  rootQDiv.appendChild(subQDivWithButton);
+  rootQDiv.appendChild(subQDivWithHideOrShow);
 
   //for some white space
   var carrigeReturn2 = document.createElement('br');
   rootQDiv.appendChild(carrigeReturn2);
 
   //append the wrapper right before where the button is situated
-  givenButton.insertAdjacentElement('beforebegin', rootQDiv);
+  givenButton.previousElementSibling.appendChild(rootQDiv);
 
 
 
@@ -124,11 +125,18 @@ function createRootQTable(givenX, givenRootQText, givenRootQTime, givenRootQFeed
   var dragHandleCell = headerRow.insertCell(0);
   dragHandleCell.setAttribute('rowspan', 2);
 
+  //this cell is initially inivisible
+
+  //when 'edit root question order' is pressed, this should appear
+
   //add drag handle to it
   var dragHandle = document.createElement('button');
-  dragHandle.setAttribute('class', 'dragHandle');
+  dragHandle.setAttribute('class', 'dragHandleRoot');
+  dragHandle.setAttribute('data-editMode', '0');
+  dragHandle.setAttribute('onClick', 'editRootQOrder(this)');
+
   dragHandleCell.appendChild(dragHandle);
-  
+
   var indexHeaderCell = headerRow.insertCell(1);
 
   //button for deleting the question
@@ -139,6 +147,7 @@ function createRootQTable(givenX, givenRootQText, givenRootQTime, givenRootQFeed
   deleteRootQButton.setAttribute('data-x', givenX);
   deleteRootQButton.setAttribute('data-y', '0');
   deleteRootQButton.setAttribute('onClick', 'deleteRootQuestion(this)');
+
 
   //append the button to the cell
   indexHeaderCell.appendChild(deleteRootQButton);
@@ -166,7 +175,7 @@ function createRootQTable(givenX, givenRootQText, givenRootQTime, givenRootQFeed
 
 
   if(givenRootQText != null)
-    questionField.setAttribute('value', givenRootQText);
+    questionField.innerHTML = givenRootQText;
 
   questionCell.appendChild(questionField);
 
@@ -179,3 +188,8 @@ function createRootQTable(givenX, givenRootQText, givenRootQTime, givenRootQFeed
 
   return rootQTable;
 } // function createQTable
+
+
+
+/*------------------------------------------------------------------------------
+-------------------------------------------------------------------------------*/

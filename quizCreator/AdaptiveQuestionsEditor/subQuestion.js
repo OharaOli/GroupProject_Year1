@@ -9,7 +9,7 @@ function addSubQuestion(givenButton, givenSubQText, givenSubQTime, givenSubQFeed
   document.getElementById('quizEditor').setAttribute('data-numOfQuestions', numOfQSoFar);
 
   //find the x coordinate of the parent question
-  parentQX = givenButton.parentNode.parentNode.getAttribute('data-x');
+  parentQX = givenButton.parentNode.parentNode.parentNode.getAttribute('data-x');
 
   //get the number of sub questions for this root (before pressing the button)
   var numOfSubQSoFarRoot = parseInt(givenButton.previousElementSibling.getAttribute('data-numOfSubQSoFar'));
@@ -84,7 +84,7 @@ function createSubQTable(givenX, givenY, givenSubQText, givenSubQTime, givenSubQ
 
   //append dragbutton to this
   var dragHandle = document.createElement('button');
-  dragHandle.setAttribute('class', 'dragHandle');
+  dragHandle.setAttribute('class', 'dragHandleSub');
   dragHandleCell.appendChild(dragHandle);
 
 
