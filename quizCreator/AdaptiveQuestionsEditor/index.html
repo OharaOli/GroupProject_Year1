@@ -37,7 +37,7 @@ Quiz creator
   <script type="text/javascript" src="./node_modules/dragula/dist/dragula.js"> </script>
   <link href="./node_modules/dragula/dist/dragula.css" rel="stylesheet" type="text/css">
 
-  <!-- javaScript related to drag & drop --> 
+  <!-- javaScript related to drag & drop -->
   <script type="text/javascript" src="./dragAndDrop.js"> </script>
 
 
@@ -55,13 +55,14 @@ Quiz creator
     <input type="button" value="retrieve(JavaScript-test)" onClick="retrieve()"> </input>
     <input type="button" value="edit root question order (working on)" > </input> <!--onClick="editRootQOrder()" -->
   </div>
-
   <br/>
   <input id="addRootQButton" style="display: block" class="addRootQButton" type="button" value="add root question" onClick="addRootQuestion(this)"> </input>
 </div> <!-- QuizEditor -->
 
 <br/>
-
+    <!-- display validation message -->
+   <p style="color:red;" id="question_validation"></p>
+   <p style="color:red;" id="feedback_validation"></p>
 
 </body>
 
