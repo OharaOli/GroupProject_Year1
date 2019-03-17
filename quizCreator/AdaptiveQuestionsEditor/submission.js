@@ -11,7 +11,8 @@ var deleteRootQButtons;
 // function for the submit button
 function submit()
 {
-  if(validation()) {
+  if(validation())
+  {
     numOfQSoFarSubmit = 0;
     qTableArrayTest = createQTableArray();
     aTableArrayAllTest = createATableArrayAll();
@@ -21,7 +22,7 @@ function submit()
           + "\n" + JSON.stringify(qTableArrayTest));
     alert("2D array of answers: "
           + "\n" + JSON.stringify(aTableArrayAllTest));
-    }
+  } // if statement
 }
 
 function deleteAll()

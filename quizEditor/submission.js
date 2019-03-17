@@ -11,15 +11,18 @@ var deleteRootQButtons;
 // function for the submit button
 function submit()
 {
-  numOfQSoFarSubmit = 0;
-  qTableArrayTest = createQTableArray();
-  aTableArrayAllTest = createATableArrayAll();
+  if(validation())
+  {
+    numOfQSoFarSubmit = 0;
+    qTableArrayTest = createQTableArray();
+    aTableArrayAllTest = createATableArrayAll();
 
-  alert("submission complete");
-  alert("2D array of questions: "
-        + "\n" + JSON.stringify(qTableArrayTest));
-  alert("2D array of answers: "
-        + "\n" + JSON.stringify(aTableArrayAllTest));
+    alert("submission complete");
+    alert("2D array of questions: "
+          + "\n" + JSON.stringify(qTableArrayTest));
+    alert("2D array of answers: "
+          + "\n" + JSON.stringify(aTableArrayAllTest));
+  } // if statement
 }
 
 function deleteAll()
@@ -187,6 +190,46 @@ function createATableArrayAll()
 
 
 
+function validation()
+{
+ //validation to check if question feedback boxes are filled.
+    valid = true;
+    //get all the question boxes created
+    var checkQuestion = document.getElementsByClassName('questionField');
+    //get all the feedback boxes created
+    var checkFeedback = document.getElementsByClassName('feedbackField');
+
+    //for loop through each question bo see if empty
+    for (var i = 0; i < checkQuestion.length; i++) {
+      if (checkQuestion[i].value == "")
+      {
+        valid = false;
+        document.getElementById('question_validation').innerHTML = "You must fill in ALL the question boxes";
+        break;
+      }
+      else {
+        document.getElementById('question_validation').innerHTML = "";
+        valid = true;
+      }
+
+    }
+    //for loop through each feedback box see if empty
+    for (var i = 0; i < checkFeedback.length; i++) {
+      if (checkFeedback[i].value == "")
+      {
+        valid = false;
+        document.getElementById('feedback_validation').innerHTML = "You must fill in ALL the feedback boxes";
+        break;
+      }
+      else {
+        document.getElementById('feedback_validation').innerHTML = "";
+        valid = true;
+
+    }
+
+}
+  return valid;
+}
 
 
 
