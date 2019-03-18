@@ -190,7 +190,7 @@ while($row = $quizIDandNameList ->fetch_assoc())
    echo
    "<div class='row gtr-0' id='row-" . $count . "'>";
    echo
-   "<script>placeQuiz(" . $row['quiz_id'] . ",'" . $row['name'] . "', '" . $quizCode . "', " . $user_id . "', '". $count . ")</script>";
+   "<script>placeQuiz(" . $row['quiz_id'] . ",'" . $row['name'] . "', '" . $quizCode . "', '" . $user_id . "', '". $count . "')</script>";
    echo
    "</div>";
    $count += 1;
