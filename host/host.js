@@ -300,7 +300,7 @@ function startQuestion()
               timerIsPaused = true;
             else
               timerIsPaused = false;
-          }
+          },
       37: false,
       38: false,
       39: false,
