@@ -9,8 +9,8 @@
                        $database_pass, $group_dbnames[0]);
 
 
-$stmt = $mysqli->prepare("INSERT INTO questions (quiz_id, order_num, text) VALUES (?,?,?);");
-$stmt->bind_param("iis", $_POST["quiz_id"], $_POST["relatedNodeID"], $_POST["question"]);
+$stmt = $mysqli->prepare("INSERT INTO questions (quiz_id, text, x_coord, y_coord, time, feedback) VALUES (?,?,?,?,?,?);");
+$stmt->bind_param("isiiis", $_POST["quiz_ID"], $_POST["questionText"], $_POST["xCoord"], $_POST["yCoord"], $_POST["time"], $_POST["feedback"]);
 $stmt->execute();
 $last_question_id = mysqli_insert_id($mysqli);
 $stmt->close();

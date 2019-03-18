@@ -83,7 +83,7 @@ function updateRootQIndex()
     //update the rootQdiv as well
     rootQTable.parentNode.setAttribute('id', 'rootQDiv' + (index + 1));
     rootQTable.parentNode.setAttribute('data-QId', 'Q' + (index + 1));
-
+    rootQTable.parentNode.setAttribute('data-x', (index + 1));
     //update the button as well
     rootQTable.rows[0].cells[1].childNodes[0].setAttribute('data-x', (index + 1));
 

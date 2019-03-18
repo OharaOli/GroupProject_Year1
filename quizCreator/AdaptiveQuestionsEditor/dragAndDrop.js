@@ -40,6 +40,7 @@ function createDragCongfigRoot()
   dragConfig.on('drop', function(draggedElement)
   {
     updateRootQIndex();
+    updateSubQIndex();
   })
 
   return dragConfig;

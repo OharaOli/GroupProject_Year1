@@ -10,7 +10,6 @@ function addSubQuestion(givenButton, givenSubQText, givenSubQTime, givenSubQFeed
 
   //find the x coordinate of the parent question
   parentQX = givenButton.parentNode.parentNode.parentNode.getAttribute('data-x');
-
   //get the number of sub questions for this root (before pressing the button)
   var numOfSubQSoFarRoot = parseInt(givenButton.previousElementSibling.getAttribute('data-numOfSubQSoFar'));
 
