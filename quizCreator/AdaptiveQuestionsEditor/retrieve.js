@@ -68,7 +68,7 @@ function retrieveRootQ(givenQTableArray)
     rootQTable = addRootQuestion(addRootQButton, rootQText, rootQTime, rootQFeedback);
 
     //retrive the ansers for this root q, if there is any
-    retrieveQAns(rootQTable, aTableArrayAllTest);
+    retrieveQAns(rootQTable, aTableArrayAll);
   } // for loop
 
 }// retrieveRootQ
@@ -89,12 +89,12 @@ function retrieveQAns(givenRootQTable, givenAnsTableArrayAll)
   for(var index = 0; index < givenAnsTableArrayAll.length; index++)
   {
     //the two coordinates must match
-    if(aTableArrayAllTest[index][1] == rootQX
-       && aTableArrayAllTest[index][2] == rootQY)
+    if(aTableArrayAll[index][1] == rootQX
+       && aTableArrayAll[index][2] == rootQY)
     {
       //match found
       // find the ansIndex
-      ansIndex = aTableArrayAllTest[index][5];
+      ansIndex = aTableArrayAll[index][5];
 
       //find the row
       switch (ansIndex)
@@ -111,9 +111,9 @@ function retrieveQAns(givenRootQTable, givenAnsTableArrayAll)
       } // switch statement to determine the row
 
       //get the text and correct value
-      ansText = aTableArrayAllTest[index][3];
+      ansText = aTableArrayAll[index][3];
 
-      if(aTableArrayAllTest[index][4] == "1")
+      if(aTableArrayAll[index][4] == "1")
         ansCorrect = true;
       else
         ansCorrect = false;
@@ -173,7 +173,7 @@ function retrieveSubQ(givenQTableArray)
     subQTable = addSubQuestion(addSubQButton, subQText, subQTime, subQFeedback);
 
     //retrive the ansers for this root q, if there is any
-    retrieveQAns(subQTable, aTableArrayAllTest);
+    retrieveQAns(subQTable, aTableArrayAll);
   } // outer for loop
 
 } // retrieve sub question
