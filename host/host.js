@@ -301,10 +301,10 @@ function startQuestion()
             else
               timerIsPaused = false;
           }
-      37: null,
-      38: null,
-      39: null,
-      40: null
+      37: false,
+      38: false,
+      39: false,
+      40: false
     }
   });
 } // startQuestion
@@ -678,6 +678,18 @@ function generateSlides()
    
   // __
   Reveal.initialize({
+     // 13 = ENTER
+     // 27 = ESC
+     // 32 = SPACE
+     // 35 = END
+     // 36 = HOME
+     // 72 = H
+     // 74 = J
+     // 75 = K
+     // 76 = L
+     // 78 = N
+     // 79 = O
+     // 80 = P
     keyboard: {
       13: function() {
             $("#start-" + xCoord + "-" + yCoord).click();
@@ -688,7 +700,15 @@ function generateSlides()
             $("#start-" + xCoord + "-" + yCoord).click();
           },
        27: null,
-       79: null
+       35: null,
+       36: null,
+       72: null,
+       74: null,
+       75: null,
+       76: null,
+       78: null,
+       79: null,
+       80: null
     },
     transition: 'slide',
     backgroundTransition: 'slide',
