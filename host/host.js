@@ -282,6 +282,9 @@ function startQuestion()
   // Starts the countdown timer for the question.
   startTimer();
 
+  // Calls a function which displays UI for question asked.
+  displayQuestionState();
+
   Reveal.configure({
     keyboard: {
       13: function() {
@@ -300,9 +303,6 @@ function startQuestion()
           }
     }
   });
-
-  // Calls a function which displays UI for question asked.
-  displayQuestionState();
 } // startQuestion
 
 
