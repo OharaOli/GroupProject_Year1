@@ -14,8 +14,8 @@ function retrieve()
 {
 
 //retrieve the root questions and sub questions
-retrieveRootQ(qTableArrayTest);
-retrieveSubQ(qTableArrayTest);
+retrieveRootQ(qTableArray);
+retrieveSubQ(qTableArray);
 
 } // function retrieve
 
