@@ -507,8 +507,13 @@ function toggleNavigation(booleanState)
   Reveal.configure({
     controls: booleanState,
     progress: booleanState,
-    keyboard: booleanState,
-    overview: booleanState,
+    keyboard: {
+      37: booleanState,
+      38: booleanState,
+      39: booleanState,
+      40: booleanState
+    },
+    // overview: booleanState,
     touch: booleanState
   });  
 }  // end-toggleNavitatioN
