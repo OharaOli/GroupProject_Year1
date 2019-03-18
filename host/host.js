@@ -524,9 +524,9 @@ function displayQuestionState()
   $("#" + getCoords()).append("<div class='num-of-answers' id='number-of-answers-" + getCoords() + "'></div>");
   updatePlayerAnswers(0);
 
-  $("#number-of-answers-" + getCoords()).hide().fadeIn(1000);
+  $("#number-of-answers-" + getCoords()).hide().fadeIn(100);
 
-  $("#" + getCoords() + " .answerbox").hide().fadeIn(1000);
+  $("#" + getCoords() + " .answerbox").hide().fadeIn(100);
 }  // end-displayQuestionState
 
 
@@ -544,7 +544,7 @@ function displayFeedbackState(answerSelections)
 {
   toggleNavigation(true);
   $("#stop-" + getCoords()).css("visibility", "hidden");
-  $(".timer-container").fadeOut(1000);
+  $(".timer-container").fadeOut(100);
   setTimeout(function(){ $(".timer-container").remove(); }, 1500);  
 
   $("#number-of-answers-" + getCoords()).text("Total Answers: " + currentQuestionNumOfAnswers);
@@ -566,7 +566,7 @@ function displayFeedbackState(answerSelections)
 
     $("#" + getCoords() + " .answerbox:eq(" + letterIndex + ") .bar-container").css({"opacity": "0.1"}); 
 
-    $("#" + getCoords() + " .answerbox:eq(" + letterIndex + ") .selection-number").hide().fadeIn(1000); 
+    $("#" + getCoords() + " .answerbox:eq(" + letterIndex + ") .selection-number").hide().fadeIn(100); 
 
     if (questions[xCoord][yCoord].answers[letter].isCorrect) {
       $("#" + getCoords() + " .answerbox:eq(" + letterIndex + ")")
@@ -677,7 +677,9 @@ function generateSlides()
       32: function() {
             $("#start-" + xCoord + "-" + yCoord).click();
             $("#start-" + xCoord + "-" + yCoord).click();
-          }
+          },
+       27: null,
+       79: null
     },
     transition: 'slide',
     backgroundTransition: 'slide',
@@ -727,7 +729,7 @@ function startTimer()
   // Show the timer countdown...
   $("#" + getCoords()).prepend("<div class='timer-container'><h3 id='timer'></h3></div>");
   // ...in a fading effect.
-  $("#" + getCoords() + " .timer-container").hide().fadeIn(1000);
+  $("#" + getCoords() + " .timer-container").hide().fadeIn(100);
   // A function which decrements the countdown by 1, displays
   // it and if it has run out, then ends the question.
   var updateTimer = function() {
