@@ -172,7 +172,7 @@
             <h3 class='right'>Your Quiz Code: <span> <?php echo $quizCode ?> </span></h3> 
           </div>
           <div class='col-2 col-12-medium'>
-            <input type="text" name="quizCode" value="<?php echo  $quizCode ?>">
+            <input type="text" maxlength="6" name="quizCode" value="<?php echo  $quizCode ?>">
           </div>
           <div class='col-2 col-12-medium'>
             <input class="button primary" type="submit" name="submitCode" value="Change Quiz Code">
@@ -201,7 +201,7 @@ while($row = $quizIDandNameList ->fetch_assoc())
 
 </div>
 <!--REDIRECTION SHOULD BE CHANGED TO THE QUIZ CREATOR PAGE-->
-<form method="post" action="../">
+<form method="post" action="../quizCreator/AdaptiveQuestionsEditor">
 <input class="button primary right" type="submit" name = "Create New" value = "Create New">
 </form>
   </div><!--  close main -->
