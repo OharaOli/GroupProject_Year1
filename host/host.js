@@ -278,9 +278,6 @@ function startQuestion()
                                       pollForAnswersDataReturned, 
                                       "hostConnectToDB.php?a=pfa&h=" + hostID); 
                                                   }, POLL_FOR_ANSWERS_DELAY);
-
-  // Calls a function which displays UI for question asked.
-  displayQuestionState();
   
   // Starts the countdown timer for the question.
   startTimer();
@@ -303,6 +300,9 @@ function startQuestion()
           }
     }
   });
+
+  // Calls a function which displays UI for question asked.
+  displayQuestionState();
 } // startQuestion
 
 
