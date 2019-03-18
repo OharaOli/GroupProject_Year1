@@ -44,6 +44,7 @@ Quiz creator
 
 
 
+
 <div style="width: 800px; margin: auto;" id="quizEditor" data-numOfQuestions="0">
   <h1 id="quizHeader" contenteditable="true" data-quizId= "1" placeholder='required'>
     Lorem ipsum
@@ -53,8 +54,8 @@ Quiz creator
   <div>
     <input type="button" value="submit(JavaScript-test)" onClick="submit()"> </input>
     <input type="button" value="retrieve(JavaScript-test)" onClick="retrieve()"> </input>
-    <input type="button" value="<"> </input>
-    <input type="button" value=">"> </input>
+    <input type="button" value="<" id="undoButton"> </input>
+    <input type="button" value=">" id="redoButton"> </input>
   </div>
   <br/>
   <div id="rootQDivAll">
@@ -71,6 +72,10 @@ Quiz creator
 
    <!-- javaScript related to drag & drop -->
    <script type="text/javascript" src="./dragAndDrop.js"> </script>
+
+   <!-- plug-ins for undo manager -->
+   <script type="text/javascript" src="./node_modules/undo-manager/lib/undomanager.js"> </script>
+   <script type="text/javascript" src="./undoRedo.js"> </script>
 
 </body>
 
