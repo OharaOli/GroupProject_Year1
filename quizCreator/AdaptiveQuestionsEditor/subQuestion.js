@@ -62,6 +62,7 @@ function createSubQTable(givenX, givenY, givenSubQText, givenSubQTime, givenSubQ
   var subQTable = document.createElement('table');
 
   //set the class (for styling)
+  subQTable.setAttribute('id', 'subQTable' + givenX + givenY);
   subQTable.setAttribute('class', 'subQTable')
 
   //set the border

@@ -36,13 +36,12 @@ function createDragCongfigRoot()
       return handle.classList.contains('dragHandleRoot')}
   });
 
+
   //adding listener to the object
-  dragConfig.on('drop', function(draggedElement)
+  dragConfig.on('drop', function(el, target, source, sibling)
   {
-    var previousParentX = draggedElement.getAttribute('data-x');
     updateRootQIndex();
-    updateParentXOfSubQdivs(draggedElement, previousParentX);
-  })
+  });
 
   return dragConfig;
 } // function createDragCongfigRoot
@@ -58,20 +57,40 @@ function updateParentXOfSubQdivs(givenRootQDiv, givenPreviousParentX)
   var previousParentX = givenPreviousParentX;
   var parentX = givenRootQDiv.getAttribute('data-x');
   var subY;
+  //first get the array of all root questions
+  //use get elements by class
+  var arrayOfAllSubQTables = document.getElementsByClassName('subQTable');
 
-  //locate all subQTables with their class names
-  var subQTablesArray = document.getElementsByClassName('subQTable');
+  var arrayOfSubQTables = [];
 
-  for(var index = 0; subQTablesArray.length; index++)
+  //loop through the sub questions whose parent's coordindate are as given
+  for(var index = 0; index < arrayOfAllSubQTables.length; index++)
   {
-    if(subQTablesArray[index].getAttribute('data-x') == previousParentX)
+    if(arrayOfAllSubQTables[index].getAttribute('data-x') == givenPreviousParentX)
     {
-      subY = subQTablesArray[index].getAttribute('data-y');
-      subQTablesArray[index].setAttribute('data-x', parentX);
-      subQTablesArray[index].rows[1].cells[0].innerHTML = "Q" + parentX + "." + subY;
+      // if match was found, push that table to the empty array
+      arrayOfSubQTables.push(arrayOfAllSubQTables[index]);
     } // if statement
   } // for loop
+
+  var subQTable;
+
+  //use for loop to loop through
+  //use the index to update the number
+  //index should start from 0, but the quesitons index is not zero-based
+  for(var index = 0; index < arrayOfSubQTables.length; index++)
+  {
+     //update the index of the rootQAnsTable
+     //update the id, update the first cell index
+     subQTable = arrayOfSubQTables[index];
+     subQTable.setAttribute('id', 'subQTable' + parentX + "." + (index + 1));
+     subQTable.setAttribute('data-x', parentX);
+     subQTable.rows[1].cells[0].innerHTML = "Q" + parentX + "." + (index + 1);
+  } // for loop
+
 } // function updateParentX
+
+
 //setting the container of the rootquestions draggable
 var dragConfigRoot = createDragCongfigRoot();
 dragConfigRoot.containers.push(document.getElementById('rootQDivAll'));

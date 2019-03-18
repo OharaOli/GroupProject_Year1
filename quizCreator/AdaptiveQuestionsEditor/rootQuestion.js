@@ -12,9 +12,9 @@ function addRootQuestion(givenButton, givenRootQText, givenRootQTime, givenRootQ
   //wrapper to contain the root question and all of the sub questions
   var rootQDiv = document.createElement('div');
   rootQDiv.setAttribute('id', 'rootQDiv' + numOfRootQSoFar);
-  rootQDiv.setAttribute('data-QId', 'Q' + numOfRootQSoFar);
   rootQDiv.setAttribute('data-x', numOfRootQSoFar);
   rootQDiv.setAttribute('data-y', '0');
+
 
   var rootQTable = createRootQTable(numOfRootQSoFar, givenRootQText, givenRootQTime, givenRootQFeedback);
   //append the root question table to the wrapper
@@ -112,6 +112,7 @@ function createRootQTable(givenX, givenRootQText, givenRootQTime, givenRootQFeed
 
   //y-coordinate is always zero
   rootQTable.setAttribute('data-y', '0');
+  rootQTable.setAttribute('data-xp', givenX);
 
   //index for the question
   rootQTable.setAttribute('data-index', 'Q' + givenX);
