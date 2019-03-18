@@ -302,9 +302,10 @@ function displayHostDisconnected()
 {
   // Display host disconnected error code.
   $("#error-message-host-disconnected").show();
-  $("#intro-container").empty();
-  $("#q-and-a-container").empty();
-  $("#floating-container").empty();
+  if(currentState == "intro")
+    $("#intro-container").empty();
+  else
+    displayOutro();
 } // displayHostDisconnected
 
 // ----------- END OF UPDATING STUFF -----------------------------------------
