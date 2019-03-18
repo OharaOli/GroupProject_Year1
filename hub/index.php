@@ -59,6 +59,8 @@
     $quizCode = $quizCodeList['quizCode'];
    // get the quiz IDs list and name of quizzes from the quizzes table using the user id related to the quiz
     $quizIDandNameList = sqlWithResult1($mysqli, "SELECT quiz_id, name FROM quizzes WHERE user_id = (?);", $user_id);
+    // get the user id as a session id
+   $_SESSION['user_id'] = $user_id; 
 
 ?>
 
@@ -188,7 +190,7 @@ while($row = $quizIDandNameList ->fetch_assoc())
    echo
    "<div class='row gtr-0' id='row-" . $count . "'>";
    echo
-   "<script>placeQuiz(" . $row['quiz_id'] . ",'" . $row['name'] . "', '" . $quizCode . "', " . $count . ")</script>";
+   "<script>placeQuiz(" . $row['quiz_id'] . ",'" . $row['name'] . "', '" . $quizCode . "', " . $user_id . "', '". $count . ")</script>";
    echo
    "</div>";
    $count += 1;

@@ -1,4 +1,4 @@
-function placeQuiz(quizID, quizName, quizCode, count)
+function placeQuiz(quizID, quizName, quizCode, user_id, count)
 {
   $(document).ready(function() {
   // show the quiz based on the quizes present in the DB
@@ -54,7 +54,13 @@ function placeQuiz(quizID, quizName, quizCode, count)
      inputTheQuizID.setAttribute("type", "hidden");
      inputTheQuizID.setAttribute("name", "quizID");
      inputTheQuizID.setAttribute("value", quizID);
+     
+     var inputUserID = document.createElement("input");
+     inputUserID.setAttribute("type", "hidden");
+     inputUserID.setAttribute("name", "user_ID");
+     inputUserID.setAttribute("value", user_id);
 
+     formForEdit.appendChild(inputUserID);
      formForEdit.appendChild(inputTheQuizID);
      document.body.appendChild(formForEdit);
      formForEdit.submit();
