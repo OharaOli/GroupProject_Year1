@@ -301,6 +301,10 @@ function startQuestion()
             else
               timerIsPaused = false;
           }
+      37: null,
+      38: null,
+      39: null,
+      40: null
     }
   });
 } // startQuestion
