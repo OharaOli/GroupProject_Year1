@@ -217,7 +217,7 @@ function validation()
         document.getElementById('question_validation').innerHTML = "";
         valid = true;
       }
-\
+
     }
     //for loop through each feedback box see if empty
     for (var i = 0; i < checkFeedback.length; i++) {
