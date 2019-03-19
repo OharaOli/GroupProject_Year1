@@ -91,7 +91,7 @@ function retrieveQAns(givenRootQTable, givenAnsTableArrayAll)
 
 
   // loop through the ansers
-  for(var index = 0; index < givenAnsTableArrayAll.length; index++)
+  for(var index = 0; index < answerArray.length; index++)
   {
     //the two coordinates must match
     if(answerArray[index][3] == rootQX

@@ -31,7 +31,6 @@ function createAnswersTable(givenX, givenY, givenQFeedback, isRoot)
 
   // row for the answer A
   var rowA = aTable.insertRow(0);
-
   var indexCellA = rowA.insertCell(0);
   indexCellA.innerHTML = "A";
 
