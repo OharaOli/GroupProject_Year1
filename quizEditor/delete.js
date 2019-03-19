@@ -149,6 +149,8 @@ function updateSubQIndex(givenParentX)
   } // for loop
 
   var subQTable;
+  var parentX;
+
 
 
   //use for loop to loop through
@@ -162,6 +164,11 @@ function updateSubQIndex(givenParentX)
      subQTable.setAttribute('id', 'subQTable' + givenParentX + "." + (index + 1));
      subQTable.setAttribute('data-y', (index + 1));
      subQTable.rows[1].cells[0].innerHTML = "Q" + givenParentX + "." + (index + 1);
+
+     //update the answers table as well
+     parentX = subQTable.getAttribute('data-x');
+     subQTable.rows[1].cells[3].childNodes[0].setAttribute('id','ansTable' + parentX + (index + 1));
+     subQTable.rows[1].cells[3].childNodes[0].setAttribute('data-y', (index + 1));
   } // for loop
 
 } // updateSubQIndex
