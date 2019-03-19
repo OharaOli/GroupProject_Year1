@@ -160,6 +160,7 @@ function updateSubQIndex(givenParentX)
      //update the id, update the first cell index
      subQTable = arrayOfSubQTables[index];
      subQTable.setAttribute('id', 'subQTable' + givenParentX + "." + (index + 1));
+     subQTable.setAttribute('data-y', (index + 1));
      subQTable.rows[1].cells[0].innerHTML = "Q" + givenParentX + "." + (index + 1);
   } // for loop
 
