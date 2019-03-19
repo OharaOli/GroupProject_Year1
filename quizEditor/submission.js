@@ -137,8 +137,8 @@ function createATableArray(givenATable)
     {
 
       var workArray = [numOfQSoFarSubmit,
-                       givenTable.getAttribute('data-x'),
-                       givenTable.getAttribute('data-y'),
+                       givenATable.getAttribute('data-x'),
+                       givenATable.getAttribute('data-y'),
                        givenATable.rows[index].cells[2].childNodes[0].value];
       //transform the true and false to 1 and zero
       if(givenATable.rows[index].cells[1].childNodes[0].checked == true)
