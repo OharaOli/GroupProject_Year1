@@ -146,7 +146,7 @@ function createSubQTable(givenX, givenY, givenSubQText, givenSubQTime, givenSubQ
   var answerCell = questionRow.insertCell(3);
 
   //create an answer table and append it to the cell
-  answerCell.appendChild(createAnswersTable(givenX, givenY, givenSubQFeedback));
+  answerCell.appendChild(createAnswersTable(givenX, givenY, givenSubQFeedback, false));
 
   return subQTable;
 

@@ -10,7 +10,6 @@ function addSubQuestion(givenButton, givenSubQText, givenSubQTime, givenSubQFeed
 
   //find the x coordinate of the parent question
   parentQX = givenButton.parentNode.parentNode.parentNode.getAttribute('data-x');
-
   //get the number of sub questions for this root (before pressing the button)
   var numOfSubQSoFarRoot = parseInt(givenButton.previousElementSibling.getAttribute('data-numOfSubQSoFar'));
 
@@ -63,6 +62,7 @@ function createSubQTable(givenX, givenY, givenSubQText, givenSubQTime, givenSubQ
   var subQTable = document.createElement('table');
 
   //set the class (for styling)
+  subQTable.setAttribute('id', 'subQTable' + givenX + givenY);
   subQTable.setAttribute('class', 'subQTable')
 
   //set the border
@@ -131,6 +131,7 @@ function createSubQTable(givenX, givenY, givenSubQText, givenSubQTime, givenSubQ
   questionField.setAttribute('type', 'text');
   questionField.setAttribute('class', 'questionField');
   questionField.setAttribute('placeholder', 'question (required)');
+  questionField.setAttribute('onkeydown', 'return (event.keyCode!=13);');
 
   if(givenSubQText != null)
     questionField.innerHTML = givenSubQText;
@@ -145,7 +146,7 @@ function createSubQTable(givenX, givenY, givenSubQText, givenSubQTime, givenSubQ
   var answerCell = questionRow.insertCell(3);
 
   //create an answer table and append it to the cell
-  answerCell.appendChild(createAnswersTable(givenX, givenY, givenSubQFeedback));
+  answerCell.appendChild(createAnswersTable(givenX, givenY, givenSubQFeedback, false));
 
   return subQTable;
 

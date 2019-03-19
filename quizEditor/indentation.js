@@ -7,23 +7,23 @@ var numOfQSoFar = 0;
 
 
 //function for creating a table for the four answers
-function createAnswersTable(givenX, givenY, givenQFeedback)
+function createAnswersTable(givenX, givenY, givenQFeedback, isRoot)
 {
   //create aTable
   var aTable = document.createElement('table');
 
   //set attributes
   aTable.setAttribute('id', 'answersTable' + givenX + "." + givenY);
-  aTable.setAttribute('border', 1);
-  //To distinguish between answers for the root and answers for the sub
-  if(givenY == 0)
+  if(isRoot)
   {
-    aTable.setAttribute('class', 'answersTableRoot');
+    aTable.setAttribute('class', 'ansTableRoot');
   }
   else
   {
-    aTable.setAttribute('class', 'answersTableSub');
+    aTable.setAttribute('class', 'ansTableSub');
   }
+  aTable.setAttribute('border', 1);
+
 
   aTable.setAttribute('data-x', givenX);
   aTable.setAttribute('data-y', givenY);
@@ -53,9 +53,11 @@ function createAnswersTable(givenX, givenY, givenQFeedback)
   var feedbackCell = rowA.insertCell(3);
   feedbackCell.setAttribute('rowspan', 4);
   var feedbackField = document.createElement('textarea');
-  feedbackField.setAttribute('placeholder', 'feedback (required)');
+  feedbackField.setAttribute('placeholder', 'feedback');
   feedbackField.setAttribute('type', 'text');
   feedbackField.setAttribute('class', 'feedbackField');
+  feedbackField.setAttribute('onkeydown', 'return (event.keyCode!=13);');
+
 
   if(givenQFeedback != null)
   {
