@@ -60,7 +60,7 @@
    // get the quiz IDs list and name of quizzes from the quizzes table using the user id related to the quiz
     $quizIDandNameList = sqlWithResult1($mysqli, "SELECT quiz_id, name FROM quizzes WHERE user_id = (?);", $user_id);
     // get the user id as a session id
-   $_SESSION['user_id'] = $user_id;
+   $_SESSION['user_id'] = $user_id; 
 
 ?>
 
@@ -96,7 +96,7 @@
   <div id="page-wrapper">
 
 
-
+				
 			<!-- Header -->
 				<header id="header">
 					<h1 id="logo"><a>QuizMapp</a></h1>
@@ -106,7 +106,7 @@
 							<li><form action="index.php" method="post">
     <li><a href="../player">Play</a></li>
     <li><input class="button primary small" type="submit" name="logout" value="Logout" /></li>
-
+      
 </form></li>
 <?php
     if($_SERVER['REQUEST_METHOD'] == "POST" and isset($_POST['logout']))
@@ -173,7 +173,7 @@
       <form id = "quizCodeForm " style="width:100%" method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>" >
         <div class='row gtr-0' id="no-border">
           <div class='col-8 col-12-medium'>
-            <h3 class='right'>Your Quiz Code: <span> <?php echo $quizCode ?> </span></h3>
+            <h3 class='right'>Your Quiz Code: <span> <?php echo $quizCode ?> </span></h3> 
           </div>
           <div class='col-2 col-12-medium'>
             <input type="text" maxlength="6" name="quizCode" value="<?php echo  $quizCode ?>">
@@ -205,7 +205,7 @@ while($row = $quizIDandNameList ->fetch_assoc())
 
 </div>
 <!--REDIRECTION SHOULD BE CHANGED TO THE QUIZ CREATOR PAGE-->
-<form method="post" action="../quizEditor">
+<form method="post" action="../quizCreator/AdaptiveQuestionsEditor">
 <input class="button primary right" type="submit" name = "Create New" value = "Create New">
 </form>
   </div><!--  close main -->
