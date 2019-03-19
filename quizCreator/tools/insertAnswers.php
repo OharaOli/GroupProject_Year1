@@ -10,15 +10,10 @@
 
 
 $stmt = $mysqli->prepare("INSERT INTO answers (question_id, text, is_correct, letter) VALUES (?,?,?,?);");
-$stmt->bind_param("isis", $_POST["question_id"], $_POST["answerText"], $_POST["isCorrect"], $_POST["letter"]);
+$stmt->bind_param("isis", $_POST["question_ID"], $_POST["answerText"], $_POST["isCorrect"], $_POST["letter"]);
 $stmt->execute();
 $stmt->close();
 
-echo "Quiz created!";
 $mysqli->close();
 
 ?>
-
-
-
-

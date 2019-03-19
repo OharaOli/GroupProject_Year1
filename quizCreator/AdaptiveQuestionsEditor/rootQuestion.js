@@ -189,7 +189,7 @@ function createRootQTable(givenX, givenRootQText, givenRootQTime, givenRootQFeed
 
 
   var answersCell = questionRow.insertCell(3);
-  answersCell.appendChild(createAnswersTable(givenX, '0', givenRootQFeedback));
+  answersCell.appendChild(createAnswersTable(givenX, '0', givenRootQFeedback, true));
 
   return rootQTable;
 } // function createQTable
