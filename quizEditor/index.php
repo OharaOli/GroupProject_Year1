@@ -43,25 +43,25 @@ Quiz creator
 
 
 
-<form>
-<div style="width: 800px; margin: auto;" id="quizEditor" data-numOfQuestions="0">
+<!-- quizEditor -->
+<div style="margin-left: 100px;" id="quizEditor" data-numOfQuestions="0">
   <h1 id="quizHeader" contenteditable="true" data-quizId= "1" placeholder='required'>
     Lorem ipsum
   </h1>
 
   <!-- buttons for editing order and submission -->
   <div>
-    <input type="submit" value="submit(JavaScript-test)" onClick="submit()">
+    <input type="submit" value="submit(JavaScript-test)" onclick="submit()"> </input>
     <input type="button" value="retrieve(JavaScript-test)" onClick="retrieve()"> </input>
-    <input type="button" value="<"> </input>
-    <input type="button" value=">"> </input>
+    <input type="button" value="<" id="undoButton"> </input>
+    <input type="button" value=">" id="redoButton"> </input>
   </div>
   <br/>
   <div id="rootQDivAll">
   </div>
-  <input id="addRootQButton" style="display: block" class="addRootQButton" type="button" value="add root question" onClick="addRootQuestion(this)"> </input>
+  <button id="addRootQButton" style="display: block;" class="addRootQButton"  onClick="addRootQuestion(this)">
+  add root question </button>
 </div> <!-- QuizEditor -->
-</form>
 <br/>
     <!-- display validation message -->
    <p style="color:red;" id="question_validation"></p>
@@ -71,6 +71,10 @@ Quiz creator
 
    <!-- javaScript related to drag & drop -->
    <script type="text/javascript" src="./dragAndDrop.js"> </script>
+
+   <!-- plug-ins for undo manager -->
+   <script type="text/javascript" src="./node_modules/undo-manager/lib/undomanager.js"> </script>
+   <script type="text/javascript" src="./undoRedo.js"> </script>
 
 </body>
 

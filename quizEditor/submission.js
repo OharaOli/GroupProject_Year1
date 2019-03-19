@@ -2,8 +2,14 @@ var numOfQSoFarSubmit;
 
 
 
-var qTableArrayTest;
-var aTableArrayAllTest;
+var qTableArray;
+var returnQTableArray;
+
+var aTableArrayAll;
+var returnATableArray;
+
+var answerIndex = 0;
+
 
 var deleteRootQButtons;
 
@@ -11,18 +17,19 @@ var deleteRootQButtons;
 // function for the submit button
 function submit()
 {
-  if(validation())
-  {
+  //if(validation())
+  //{
     numOfQSoFarSubmit = 0;
-    qTableArrayTest = createQTableArray();
-    aTableArrayAllTest = createATableArrayAll();
+    qTableArray = createQTableArray();
+    aTableArrayAll = createATableArrayAll();
 
     alert("submission complete");
     alert("2D array of questions: "
-          + "\n" + JSON.stringify(qTableArrayTest));
+          + "\n" + JSON.stringify(qTableArray));
     alert("2D array of answers: "
-          + "\n" + JSON.stringify(aTableArrayAllTest));
-  } // if statement
+          + "\n" + JSON.stringify(aTableArrayAll));
+    upload_quiz();
+  //} // if statement
 }
 
 function deleteAll()
@@ -130,8 +137,8 @@ function createATableArray(givenATable)
     {
 
       var workArray = [numOfQSoFarSubmit,
-                      givenATable.getAttribute('data-x'),
-                      givenATable.getAttribute('data-y'),
+                       givenATable.getAttribute('data-x'),
+                       givenATable.getAttribute('data-y'),
                        givenATable.rows[index].cells[2].childNodes[0].value];
       //transform the true and false to 1 and zero
       if(givenATable.rows[index].cells[1].childNodes[0].checked == true)
@@ -164,7 +171,7 @@ function createATableArrayAll()
   var aTableArrayAll = [];
 
   //get all of the answer tables for the root questions
-  var aTablesRoot = document.getElementsByClassName('answersTableRoot');
+  var aTablesRoot = document.getElementsByClassName('ansTableRoot');
   //concatenate all of the answer tables
   for(var index = 0; index < aTablesRoot.length; index++)
   {
@@ -174,7 +181,7 @@ function createATableArrayAll()
 
 
   //get all of the answers table for the sub questions
-  var aTablesSub = document.getElementsByClassName('answersTableSub');
+  var aTablesSub = document.getElementsByClassName('ansTableSub');
   //concatenate all of the answer tables
   for(var index = 0; index < aTablesSub.length; index++)
   {
@@ -187,7 +194,6 @@ function createATableArrayAll()
 
 } // function createATableArray
 //---------------------------------------------------------------------------
-
 
 
 function validation()
@@ -231,6 +237,203 @@ function validation()
   return valid;
 }
 
+//-------------------------------submission -----------------------------//
+//Oliver O'Hara (part 1)
+
+//JavaScript function intended to run when the submit button is pressed
+//The function will retrieve the data for each row in turn and send it to the
+//database via an ajax call to a php function.
+
+
+
+//Store the name of the quiz and return the ID where its stored to store the questions
+function upload_quiz() {
+   //Return the name of the quiz being submitted
+   var quizName = document.getElementById('quizHeader').innerHTML;
+   var quizID = null;
+
+   //Ajax call to store the quiz name (and temp account id) and call submit question with the id
+   $.ajax({
+      async: false,
+      url: "../tools/insertQuizName.php",
+      cache: false,
+      type: "post",
+      data:
+      {
+         quizName: quizName
+      }, //data
+      success: function(data)
+      {
+         quizID = data;
+         upload_questions(data);
+      } //success function
+   }) //ajax
+} //upload_quiz
+
+
+
+
+//Store the questions one at a time using the quiz ID, storing the answers after each one
+function upload_questions(quiz_ID) {
+   alert("upload questions");
+   //Store the number of questions in the quiz
+   numberOfQuestions = document.getElementById("quizEditor").getAttribute("data-numOfQuestions");
+   numberOfQuestions = parseInt(numberOfQuestions);
+   var questionID = null;
+
+   //Loop through the number of questions
+   for (i = 0; i < numberOfQuestions; i++)
+   {
+      //Access the array storing the data for this question
+      var questionText = qTableArray[i][0];
+      var xCoord = qTableArray[i][1];
+      var yCoord = qTableArray[i][2];
+      var time = qTableArray[i][3];
+      var feedback = qTableArray[i][4];
+
+      //Send the current question and then call the submit answer function for its answers
+      $.ajax({
+         async: false,
+         url: "../tools/insertQuestions.php",
+         cache: false,
+         type: "post",
+         data:
+         {
+            quiz_ID: quiz_ID,
+            questionText: questionText,
+            xCoord: xCoord,
+            yCoord: yCoord,
+            time: time,
+            feedback: feedback
+         }, //data
+         success: function(data)
+         {
+            questionID = data;
+            upload_answers(data);
+         } //success function
+      }) //ajax
+   } //for
+} //upload_questions
+
+
+
+
+//Store the answers under the given question ID
+function upload_answers(question_ID) {
+   alert("upload answers");
+   //While to check how many answers there are for the given question
+   while (answerIndex < aTableArrayAll.length && aTableArrayAll[answerIndex][0] == i)
+   {
+      //Access the array storing the data for this answer
+      var answerText = aTableArrayAll[answerIndex][3];
+      var isCorrect = aTableArrayAll[answerIndex][4];
+      var letter = aTableArrayAll[answerIndex][5];
+      answerIndex += 1;
+
+      alert("Test values");
+      alert(letter);
+      alert(isCorrect);
+      alert(letter.value);
+
+
+      //Send each answer individually, storing it with the correct question id
+      $.ajax({
+    async: false,
+         url: "../tools/insertAnswers.php",
+         cache: false,
+         type: "post",
+         data:
+         {
+   question_ID: question_ID,
+            answerText: answerText,
+            isCorrect: isCorrect,
+            letter: letter
+         }, //data
+         success: function(data)
+         {
+            alert(data);
+         } //success function
+      }) //ajax
+   } //while
+} //upload_questions
+
+//Oliver O'Hara (part 2)
+
+//JavaScript function intended to return a question and answer array for
+//a given quiz when called. These arrays will be in the same form as
+//those passed to the upload_quiz function above.
+
+
+
+//Store the name of the quiz and return the ID where its stored to store the questions
+function return_quiz(quizName) {
+   //Ajax call to return the quiz id of the given quiz_name (and user id)
+   $.ajax({
+      async: false,
+      url: "../tools/returnQuizID.php",
+      cache: false,
+      type: "get",
+      data:
+      {
+         quizName: quizName
+      }, //data
+      success: function(data)
+      {
+         quizID = data;
+         return_questions(data);
+      } //success function
+   }) //ajax
+} //return_quiz
+
+
+//Return the questions from the given quiz and store them in the array
+function return_questions(quiz_ID) {
+   //Send the current question and then call the submit answer function for its answers
+   $.ajax({
+      async: false,
+      url: "../tools/returnQuestions.php",
+      cache: false,
+      type: "get",
+      data:
+      {
+         quiz_ID: quiz_ID
+      }, //data
+      success: function(data)
+      {
+         returnQTableArray = data;
+         var numberOfQuestions = returnQTableArray.length;
+         for (i = 0; i < numberOfQuestions; i++)
+         {
+       var question_ID = returnQTableArray[i][5];
+       //Ajax call to return the quiz id of the given quiz_name (and user id)
+            $.ajax({
+               async: false,
+               url: "../tools/returnAnswers.php",
+               cache: false,
+               type: "get",
+               data:
+               {
+                  question_ID: question_ID
+               }, //data
+               success: function(data)
+               {
+                  returnATableArray.push(data);
+               } //success function
+            }) //ajax
+
+            //Remove the question id from the array
+            returnQTableArray = returnQTableArray.slice(i, 5);
+
+            //Adding the x and y coords to the answer array
+            returnATableArray[i][5] = returnQTableArray[i][1];
+            returnATableArray[i][6] = returnQTableArray[i][2];
+
+            alert("Questions array" + returnQTableArray);
+            alert("Answers array" + returnATableArray);
+         } //for
+      } //success function
+   }) //ajax
+} //return_questions
 
 
 

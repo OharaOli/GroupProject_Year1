@@ -142,3 +142,8 @@ input.button.primary{
 input.button.primary.small{
 width: 6em !important;
 }
+
+#header{
+display: inline-block;
+float: right;
+}

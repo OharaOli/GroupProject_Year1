@@ -43,12 +43,22 @@
 	// Nav.
 
 		// Title Bar.
-			$(
-				'<div id="titleBar">' +
+			if ( document.URL.includes("player/index.html") )
+			{
+			  $(
+							'<div id="titleBar">' +
 					'<span class="title">' + $('#logo').html() + '</span>' +
-				'</div>'
-			)
-				.appendTo($body);
+				'</div>').appendTo($body);
+			}
+			else
+			{
+			  $(
+				'<div id="titleBar">' +
+									'<a href="#navPanel" class="toggle"></a>' +
+					'<span class="title">' + $('#logo').html() + '</span>' +
+				'</div>').appendTo($body);
+				}
+
 
 		// Panel.
 			$(

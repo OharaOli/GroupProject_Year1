@@ -137,8 +137,8 @@ function createATableArray(givenATable)
     {
 
       var workArray = [numOfQSoFarSubmit,
-                      givenATable.getAttribute('data-x'),
-                      givenATable.getAttribute('data-y'),
+                       givenATable.getAttribute('data-x'),
+                       givenATable.getAttribute('data-y'),
                        givenATable.rows[index].cells[2].childNodes[0].value];
       //transform the true and false to 1 and zero
       if(givenATable.rows[index].cells[1].childNodes[0].checked == true)
@@ -171,7 +171,7 @@ function createATableArrayAll()
   var aTableArrayAll = [];
 
   //get all of the answer tables for the root questions
-  var aTablesRoot = document.getElementsByClassName('answersTableRoot');
+  var aTablesRoot = document.getElementsByClassName('ansTableRoot');
   //concatenate all of the answer tables
   for(var index = 0; index < aTablesRoot.length; index++)
   {
@@ -181,7 +181,7 @@ function createATableArrayAll()
 
 
   //get all of the answers table for the sub questions
-  var aTablesSub = document.getElementsByClassName('answersTableSub');
+  var aTablesSub = document.getElementsByClassName('ansTableSub');
   //concatenate all of the answer tables
   for(var index = 0; index < aTablesSub.length; index++)
   {
@@ -241,6 +241,7 @@ function validation()
 
 
 //-------------------------------submission -----------------------------//
+//-------------------------------submission -----------------------------//
 //Oliver O'Hara (part 1)
 
 //JavaScript function intended to run when the submit button is pressed
@@ -278,6 +279,7 @@ function upload_quiz() {
 
 //Store the questions one at a time using the quiz ID, storing the answers after each one
 function upload_questions(quiz_ID) {
+   alert("upload questions");
    //Store the number of questions in the quiz
    numberOfQuestions = document.getElementById("quizEditor").getAttribute("data-numOfQuestions");
    numberOfQuestions = parseInt(numberOfQuestions);
@@ -301,7 +303,7 @@ function upload_questions(quiz_ID) {
          type: "post",
          data:
          {
-        quiz_ID: quiz_ID,
+            quiz_ID: quiz_ID,
             questionText: questionText,
             xCoord: xCoord,
             yCoord: yCoord,
@@ -310,8 +312,8 @@ function upload_questions(quiz_ID) {
          }, //data
          success: function(data)
          {
-       questionID = data;
-            upload_answers(data)
+            questionID = data;
+            upload_answers(data);
          } //success function
       }) //ajax
    } //for
@@ -322,14 +324,21 @@ function upload_questions(quiz_ID) {
 
 //Store the answers under the given question ID
 function upload_answers(question_ID) {
+   alert("upload answers");
    //While to check how many answers there are for the given question
    while (answerIndex < aTableArrayAll.length && aTableArrayAll[answerIndex][0] == i)
    {
       //Access the array storing the data for this answer
-      var answerText = aTableArrayAll[answerIndex][1];
-      var isCorrect = aTableArrayAll[answerIndex][2];
-      var letter = aTableArrayAll[answerIndex][3];
+      var answerText = aTableArrayAll[answerIndex][3];
+      var isCorrect = aTableArrayAll[answerIndex][4];
+      var letter = aTableArrayAll[answerIndex][5];
       answerIndex += 1;
+
+      alert("Test values");
+      alert(letter);
+      alert(isCorrect);
+      alert(letter.value);
+
 
       //Send each answer individually, storing it with the correct question id
       $.ajax({
@@ -346,22 +355,11 @@ function upload_answers(question_ID) {
          }, //data
          success: function(data)
          {
-            document.getElementById("upload_success").innerHTML = data;
+            alert(data);
          } //success function
       }) //ajax
    } //while
 } //upload_questions
-
-
-function id_returned(id) {
-   alert("ID returned in function: " + id);
-} //id_returned
-
-function testForErrors(returnedText)
-{
-   console.log(returnedText);
-}
-
 
 //Oliver O'Hara (part 2)
 

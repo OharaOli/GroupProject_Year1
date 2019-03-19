@@ -7,14 +7,21 @@ var numOfQSoFar = 0;
 
 
 //function for creating a table for the four answers
-function createAnswersTable(givenX, givenY, givenQFeedback)
+function createAnswersTable(givenX, givenY, givenQFeedback, isRoot)
 {
   //create aTable
   var aTable = document.createElement('table');
 
   //set attributes
-  aTable.setAttribute('id', 'answersTable' + givenX + "." + givenY);
-  aTable.setAttribute('class', 'ansTable');
+  aTable.setAttribute('id', 'ansTable' + givenX + givenY);
+  if(isRoot)
+  {
+    aTable.setAttribute('class', 'ansTableRoot');
+  }
+  else
+  {
+    aTable.setAttribute('class', 'ansTableSub');
+  }
   aTable.setAttribute('border', 1);
 
 

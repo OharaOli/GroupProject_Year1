@@ -22,8 +22,8 @@ function deleteRootQuestion(givenButton)
   //change the attri
 
 
-
 } // deleteRootQuestion
+
 
 function deleteSubQuestion(givenButton)
 {
@@ -66,28 +66,66 @@ function updateRootQIndex()
  //first get the array of all root questions
  //use get elements by class
  var arrayOfRootQ = document.getElementsByClassName('rootQTable');
- var rootQTable;
-
 
  //use for loop to loop through
  //use the index to update the number
  //index should start from 0, but the quesitons index is not zero-based
+
+
+ var rootQTable;
+
+
  for(var index = 0; index < arrayOfRootQ.length; index++)
  {
     //update the index of the rootQAnsTable
     //update the id, update the first cell index
     rootQTable = arrayOfRootQ[index];
     rootQTable.setAttribute('id', 'rootQTable' + (index + 1));
+    rootQTable.setAttribute('data-x', (index + 1));
     rootQTable.rows[1].cells[0].innerHTML = "Q" + (index + 1);
 
     //update the rootQdiv as well
     rootQTable.parentNode.setAttribute('id', 'rootQDiv' + (index + 1));
     rootQTable.parentNode.setAttribute('data-QId', 'Q' + (index + 1));
+    rootQTable.parentNode.setAttribute('data-x', (index + 1));
 
     //update the button as well
     rootQTable.rows[0].cells[1].childNodes[0].setAttribute('data-x', (index + 1));
 
  } // for loop
+
+
+  var parentX;
+  var parentXP;
+
+  var numOfSubQSoFar;
+  var subQTable;
+
+  //now for each rootQDivs, update its subQTables
+  // use grab them by id. just change the x coordinates
+  for(var index1 = 0; index1 < arrayOfRootQ.length - 1; index1++)
+  {
+    parentX = arrayOfRootQ[index1].getAttribute('data-x');
+    parentXP = arrayOfRootQ[index1].getAttribute('data-xp');
+
+    //get the subQDiv
+    //alert("index1: " + index1);
+    //alert('subQDiv' + parentXP + '0');
+    subQDiv = document.getElementById('subQDiv' + parentXP + '0');
+
+    //get the num of subQSofar
+    numOfSubQSoFar = subQDiv.childNodes.length;
+    //alert(numOfSubQSoFar);
+
+    //loop through each subQTable, and update the data-x coordinate
+    for(var index2 = 0; index2 < subQDiv.childNodes.length; index2++)
+    {
+      //alert(subQDiv.childNodes[index].childNodes[0])
+      subQDiv.childNodes[index2].childNodes[0].setAttribute('id', 'subQTable' + parentX + index2);
+      subQDiv.childNodes[index2].childNodes[0].setAttribute('data-x', parentX);
+    } // for loop
+    updateSubQIndex(parentX);
+  } // for loop
 } // updateRootQIndex
 
 
@@ -111,6 +149,8 @@ function updateSubQIndex(givenParentX)
   } // for loop
 
   var subQTable;
+  var parentX;
+
 
 
   //use for loop to loop through
@@ -122,7 +162,13 @@ function updateSubQIndex(givenParentX)
      //update the id, update the first cell index
      subQTable = arrayOfSubQTables[index];
      subQTable.setAttribute('id', 'subQTable' + givenParentX + "." + (index + 1));
+     subQTable.setAttribute('data-y', (index + 1));
      subQTable.rows[1].cells[0].innerHTML = "Q" + givenParentX + "." + (index + 1);
+
+     //update the answers table as well
+     parentX = subQTable.getAttribute('data-x');
+     subQTable.rows[1].cells[3].childNodes[0].setAttribute('id','ansTable' + parentX + (index + 1));
+     subQTable.rows[1].cells[3].childNodes[0].setAttribute('data-y', (index + 1));
   } // for loop
 
 } // updateSubQIndex

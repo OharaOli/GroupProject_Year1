@@ -47,7 +47,7 @@
 				</header>
 
 			<!-- Banner -->
-				<section id="banner">
+				<section id="banner" style="background-position: center 0px;">
 					<div class="content">
 						<header>
 								<span class="resize"><img src="styling/images/poster/posterLogo.png"  alt="" /></span>
