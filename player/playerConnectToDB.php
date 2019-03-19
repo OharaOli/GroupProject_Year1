@@ -61,12 +61,21 @@
   
   function insertNewPlayer($mysqli)
   {
-    if(!preg_match("/^[a-zA-Z0-9]*$/",$_GET["n"]) or preg_match("/^[0-9]*$/",$_GET["n"])
-       or strlen($_GET["n"]) < 4 or strlen($_GET["n"]) > 15)
+    if(!preg_match("/^[a-zA-Z0-9]*$/",$_GET["n"]) or preg_match("/^[0-9]*$/",$_GET["n"]))
     {
-      echo "-Invalid screen name.";
+      echo "-Screen name must not contain any special characters.";
       return;
     } // if
+    else if(strlen($_GET["n"]) < 3)
+    {
+      echo "-Screen name must be at least 3 characters long.";
+      return;
+    } // else if
+    else if(strlen($_GET["n"]) > 16)
+    {
+      echo "-Screen name must be at most 16 characters long.";
+      return;
+    } // else if
     
     $sql = "SELECT host_id FROM hosts "
                 . "WHERE quiz_code = ? AND state = 'intro' AND ABS( "
