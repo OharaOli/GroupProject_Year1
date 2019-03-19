@@ -191,6 +191,10 @@ function createRootQTable(givenX, givenRootQText, givenRootQTime, givenRootQFeed
   var answersCell = questionRow.insertCell(3);
   answersCell.appendChild(createAnswersTable(givenX, '0', givenRootQFeedback, true));
 
+  //append the checkError p tag as well
+  var checkErrorParag = document.createElement('p');
+  answersCell.appendChild(checkErrorParag);
+
   return rootQTable;
 } // function createQTable
 

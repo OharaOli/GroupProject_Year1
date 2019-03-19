@@ -15,21 +15,26 @@ var deleteRootQButtons;
 
 
 // function for the submit button
-function submit()
+function save()
 {
-  //if(validation())
-  //{
+  var rootCheckValid = validateCorrectCheckbox("root");
+  var subCheckValid = validateCorrectCheckbox("sub");
+
+  if(rootCheckValid && subCheckValid)
+  {
     numOfQSoFarSubmit = 0;
     qTableArray = createQTableArray();
     aTableArrayAll = createATableArrayAll();
 
-    alert("submission complete");
+    alert("save complete");
     alert("2D array of questions: "
           + "\n" + JSON.stringify(qTableArray));
     alert("2D array of answers: "
           + "\n" + JSON.stringify(aTableArrayAll));
     upload_quiz();
-  //} // if statement
+  } // if statement
+  else
+    alert("Correct/incorrect checkbox not valid.");
 }
 
 function deleteAll()
@@ -49,7 +54,11 @@ function deleteAll()
 //function for creating an array that stores all the information about a question
 //e.g.
 /*QArray =
-[1, "what is the capital city of london?", 1, 0, 20, "yellow yellow"]*/
+[1, "what is the capital city of london?", 1, 0,
+  parentQX = givenButton.parentNode.parentNode.parentNode.getAttribute('data-x');
+  //get the number of sub questions for this root (before pressing the button)
+  var numOfSubQSoFarRoot = parseInt(givenButton.previousElementSibling.getAttribute('data-numOfSubQSoFar'));
+20, "yellow yellow"]*/
 function createQArray(givenQTable)
 {
   //given Q table is either root Q or sub Q, but doesn't matter.
@@ -71,7 +80,7 @@ function createQArray(givenQTable)
 
 
   var answersTable = document.getElementById('ansTable' + givenQTable.getAttribute('data-x')
-                                                            + givenQTable.getAttribute('data-y'));
+                                                        + givenQTable.getAttribute('data-y'));
 
   //locate the feedback field, and push the value to the array
   qArray.push(answersTable.rows[0].cells[3].childNodes[0].value);

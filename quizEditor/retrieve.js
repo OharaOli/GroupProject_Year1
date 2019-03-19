@@ -8,10 +8,14 @@ var numOfSubQSoFarRe = 0;
 var numOfQSoFarRe = 0;
 
 
+
+
 //-------- lines of codes that are executed on accesing the page -------//
 
 function retrieve()
 {
+
+retrieveFromDB(1);
 
 //retrieve the root questions and sub questions
 retrieveRootQ(qTableArray);
@@ -35,7 +39,7 @@ function retrieveRootQ(givenQTableArray)
   //get an array upto to the point where the y-coord is zero
   for(var index = 0; index < givenQTableArray.length; index++)
   {
-    if(givenQTableArray[index][2] == 0)
+    if(givenQTableArray[index][2] == 0)retrieveFromDB(quiz_ID)
     {
       arrayOfRootQ.push(givenQTableArray[index]);
 
@@ -89,12 +93,12 @@ function retrieveQAns(givenRootQTable, givenAnsTableArrayAll)
   for(var index = 0; index < givenAnsTableArrayAll.length; index++)
   {
     //the two coordinates must match
-    if(aTableArrayAll[index][1] == rootQX
-       && aTableArrayAll[index][2] == rootQY)
+    if(aTableArrayAll[index][3] == rootQX
+       && aTableArrayAll[index][4] == rootQY)
     {
       //match found
       // find the ansIndex
-      ansIndex = aTableArrayAll[index][5];
+      ansIndex = aTableArrayAll[index][2];
 
       //find the row
       switch (ansIndex)
@@ -111,9 +115,9 @@ function retrieveQAns(givenRootQTable, givenAnsTableArrayAll)
       } // switch statement to determine the row
 
       //get the text and correct value
-      ansText = aTableArrayAll[index][3];
+      ansText = aTableArrayAll[index][0];
 
-      if(aTableArrayAll[index][4] == "1")
+      if(aTableArrayAll[index][1] == "1")
         ansCorrect = true;
       else
         ansCorrect = false;
@@ -140,7 +144,7 @@ function retrieveSubQ(givenQTableArray)
   var maxCoordYSoFar = 0;
 
 
-
+retrieveFromDB(quiz_ID)
   //get an array from the point the y value is not zero
   for(var index = 0; index < givenQTableArray.length; index++)
   {
@@ -177,3 +181,91 @@ function retrieveSubQ(givenQTableArray)
   } // outer for loop
 
 } // retrieve sub question
+
+
+
+
+//****************************retrieve code ********************************
+//Oliver O'Hara (part 2)
+
+//JavaScript function intended to return a question and answer array for
+//a given quiz when called. These arrays will be in the same form as
+//those passed to the upload_quiz function above. This requires the ID
+//of the quiz to be returned.
+
+
+var appendAnswerIndex = 0;
+
+//Return the questions from the given quiz and store them in the array
+function retrieveFromDB(quiz_ID) {
+   //Send the current question and then call the submit answer function for its answers
+   $.ajax({
+      async: false,
+      url: "../tools/returnQuestions.php",
+      cache: false,
+      type: "get",
+      data:
+      {
+         quiz_ID: quiz_ID
+      }, //data
+      success: function(data)
+      {
+         var returnQTableArrayTemp = JSON.parse(data);
+         var numberOfQuestions = returnQTableArrayTemp.length;
+         //Convert the JASON into an array
+         for (i = 0; i < numberOfQuestions; i++)
+         {
+            questionArray.push([returnQTableArrayTemp[i]["text"]]);
+            questionArray[i][1] = returnQTableArrayTemp[i]["x_coord"];
+            questionArray[i][2] = returnQTableArrayTemp[i]["y_coord"];
+            questionArray[i][3] = returnQTableArrayTemp[i]["time"];
+            questionArray[i][4] = returnQTableArrayTemp[i]["feedback"];
+            questionArray[i][5] = returnQTableArrayTemp[i]["question_id"];
+         } //for
+         alert("Question array: " + JSON.stringify(questionArray));
+         //////////////////////////////////////////////////////////////
+         ///////////////// questionArray holds array //////////////////
+         //////////////////////////////////////////////////////////////
+
+         for (i = 0; i < numberOfQuestions; i++)
+         {
+            var question_ID = questionArray[i][5];
+            //Ajax call to return the quiz id of the given quiz_name (and user id)
+            $.ajax({
+               async: false,
+               url: "../tools/returnAnswers.php",
+               cache: false,
+               type: "get",
+               data:
+               {
+                  question_ID: question_ID
+               }, //data
+               success: function(data)
+               {
+                  returnATableArray = JSON.parse(data);
+                  var numberOfAnswers = returnATableArray.length;
+                  //Convert the JASON into an array
+                  for (k = 0; k < numberOfAnswers; k++)
+                  {
+                   answerArray.push([returnATableArray[k]["text"]]);
+                   answerArray[appendAnswerIndex][1] = returnATableArray[k]["is_correct"];
+                   answerArray[appendAnswerIndex][2] = returnATableArray[k]["letter"];
+                   answerArray[appendAnswerIndex][3] = questionArray[i][1];
+                   answerArray[appendAnswerIndex][4] = questionArray[i][2];
+                   appendAnswerIndex++;
+                   } //for
+                 } //success function
+            }) //ajax
+
+            //Remove the question id from the array
+            questionArray[i].pop();
+         } //for
+
+      alert("Answer array: " + JSON.stringify(answerArray));
+      //////////////////////////////////////////////////////////////
+      ////////////////// answerArray holds array ///////////////////
+      //////////////////////////////////////////////////////////////
+
+      } //success function
+   }) //ajax
+} //return_questions

@@ -30,6 +30,8 @@ Quiz creator
 
   <script type="text/javascript" src="./hideOrShow.js"> </script>
 
+  <script type="text/javascript" src="./validation.js"> </script>
+
 
   <!-- Accessing Css from a separate file -->
   <link href="../styling/assets_custome/css/indentation.css" rel="stylesheet" type="text/css">
@@ -48,15 +50,13 @@ Quiz creator
     Lorem ipsum
   </h1>
   <!-- buttons for editing order and submission -->
-  <form action="../hub" onsubmit="submit()">
     <div>
-      <input type="submit" value="Save and submit" onclick="submit()"> </input>
+      <input type="button" value="Save" onclick="save()"> </input>
       <input type="button" value="retrieve(JavaScript-test)" onClick="retrieve()"> </input>
     </div>
     <br/>
     <div id="rootQDivAll">
     </div>
-</form>
   <button id="addRootQButton" style="display: block;" class="addRootQButton"  onClick="addRootQuestion(this)">
   add root question </button>
 </div> <!-- QuizEditor -->

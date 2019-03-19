@@ -22,6 +22,7 @@ function createAnswersTable(givenX, givenY, givenQFeedback, isRoot)
   {
     aTable.setAttribute('class', 'ansTableSub');
   }
+
   aTable.setAttribute('border', 1);
 
 
@@ -189,6 +190,8 @@ function createTimeLimitList(givenTimeLimit)
 
   if(givenTimeLimit != null)
     timeLimitList.value = givenTimeLimit;
+  else
+    timeLimitList.value = "30";
 
   //return the list
   return timeLimitList;

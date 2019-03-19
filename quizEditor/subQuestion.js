@@ -149,6 +149,10 @@ function createSubQTable(givenX, givenY, givenSubQText, givenSubQTime, givenSubQ
   //create an answer table and append it to the cell
   answerCell.appendChild(createAnswersTable(givenX, givenY, givenSubQFeedback, false));
 
+  var checkedErrorParag = document.createElement('p');
+  answerCell.appendChild(checkedErrorParag);
+  
+
   return subQTable;
 
 } // function createSubQTable
