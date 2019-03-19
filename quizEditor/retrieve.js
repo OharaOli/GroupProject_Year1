@@ -40,7 +40,7 @@ function retrieveRootQ(givenQTableArray)
   //get an array upto to the point where the y-coord is zero
   for(var index = 0; index < givenQTableArray.length; index++)
   {
-    if(givenQTableArray[index][2] == 0)retrieveFromDB(quiz_ID)
+    if(givenQTableArray[index][2] == 0)
     {
       arrayOfRootQ.push(givenQTableArray[index]);
 
