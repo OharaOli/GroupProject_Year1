@@ -278,7 +278,10 @@ function startQuestion()
                                       pollForAnswersDataReturned, 
                                       "hostConnectToDB.php?a=pfa&h=" + hostID); 
                                                   }, POLL_FOR_ANSWERS_DELAY);
-  
+
+  // Make sure timer isn't paused.
+  timerIsPaused = false;
+
   // Starts the countdown timer for the question.
   startTimer();
 
@@ -772,10 +775,10 @@ function startTimer()
     if (!timerIsPaused)
     {
       timeLeft--;
-      $("#timer-container").css({"background-color": "#FFF"});
+      $(".timer-container").css({"background-color": "#FFF"});
     }  // end-if
     else
-      $("#timer-container").css({"background-color": "#DDD"});
+      $(".timer-container").css({"background-color": "#DDD"});
   }  // end-updateTimerFunction
   // Call the updateTimer function once at first, to
   // start countdown immediately.
