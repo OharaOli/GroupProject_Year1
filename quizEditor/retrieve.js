@@ -15,11 +15,11 @@ var numOfQSoFarRe = 0;
 function retrieve()
 {
 
-retrieveFromDB(1);
+retrieveFromDB(quizID);
 
 //retrieve the root questions and sub questions
-//retrieveRootQ(qTableArray);
-//retrieveSubQ(qTableArray);
+retrieveRootQ(questionArray);
+retrieveSubQ(questionArray);
 
 } // function retrieve
 
@@ -72,7 +72,7 @@ function retrieveRootQ(givenQTableArray)
     rootQTable = addRootQuestion(addRootQButton, rootQText, rootQTime, rootQFeedback);
 
     //retrive the ansers for this root q, if there is any
-    retrieveQAns(rootQTable, aTableArrayAll);
+    retrieveQAns(rootQTable, answerArray);
   } // for loop
 
 }// retrieveRootQ
