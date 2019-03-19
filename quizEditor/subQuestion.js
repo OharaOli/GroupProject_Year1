@@ -132,6 +132,7 @@ function createSubQTable(givenX, givenY, givenSubQText, givenSubQTime, givenSubQ
   questionField.setAttribute('class', 'questionField');
   questionField.setAttribute('placeholder', 'question (required)');
   questionField.setAttribute('onkeydown', 'return (event.keyCode!=13);');
+  questionField.setAttribute('required', true);
 
   if(givenSubQText != null)
     questionField.innerHTML = givenSubQText;

@@ -1,5 +1,6 @@
 //creating the undo manager
-// this one has two instance methods for un-doing and re-doing things
+// this one has two instance methods for un-doing and re-doing
+/*
 var undoMang = new UndoManager();
 
 //grab the buttons
@@ -7,7 +8,7 @@ var undoButton = document.getElementById('undoButton');
 var redoButton = document.getElementById('redoButton');
 
 undoMang.add({
-  undo: function(){  
+  undo: function(){
   },
   redo: function(){
 
@@ -25,3 +26,4 @@ redoButton.addEventListener('click', function()
   alert("redo button cliked")
   undoMang.redo();
 });
+*/

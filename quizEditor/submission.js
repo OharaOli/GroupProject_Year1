@@ -70,8 +70,7 @@ function createQArray(givenQTable)
   qArray.push(givenQTable.rows[1].cells[2].childNodes[0].value);
 
 
-  var answersTable = document.getElementById('answersTable' + givenQTable.getAttribute('data-x')
-                                                            + "."
+  var answersTable = document.getElementById('ansTable' + givenQTable.getAttribute('data-x')
                                                             + givenQTable.getAttribute('data-y'));
 
   //locate the feedback field, and push the value to the array

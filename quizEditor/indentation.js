@@ -46,6 +46,7 @@ function createAnswersTable(givenX, givenY, givenQFeedback, isRoot)
   answerFieldA.setAttribute('type', 'text');
   answerFieldA.setAttribute('placeholder', 'answer A (required)');
   answerFieldA.setAttribute('class', 'answerField');
+  answerFieldA.setAttribute('required', true);
   answerCellA.appendChild(answerFieldA);
 
   //description Cell - only for this row
@@ -87,6 +88,7 @@ function createAnswersTable(givenX, givenY, givenQFeedback, isRoot)
   answerFieldB.setAttribute('type', 'text');
   answerFieldB.setAttribute('placeholder', 'answer B (required)');
   answerFieldB.setAttribute('class', 'answerField');
+  answerFieldB.setAttribute('required', true);
   answerCellB.appendChild(answerFieldB);
 
 
