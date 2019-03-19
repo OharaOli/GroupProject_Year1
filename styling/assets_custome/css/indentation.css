@@ -1,12 +1,12 @@
 button.dragHandleSub
 {
-  height: 133px;
+  height: 175px;
   width: 35px;
 }
 
 button.dragHandleRoot
 {
-  height: 133px;
+  height: 175px;
   width: 35px;
 }
 input.deleteQButton
@@ -30,9 +30,10 @@ table.subQTable
 }
 
 
-table.answersTable
+table.ansTable
 {
-
+  width: 500px;
+  height: 130px;
 }
 
 
@@ -71,28 +72,26 @@ input.addSubQButton
 
 }
 
-input.addRootQButton
+button.addRootQButton
 {
-  width: 500px;
-  height: 50px;
-
-  margin-left: 67px;
+  width: 1050px;
+  height: 70px;
 
 }
 
 
 textarea.questionField
 {
-  width: 200px;
-  height: 70px;
+  width: 400px;
+  height: 125px;
 
 
 }
 
-textarea.answerDescriptionField
+textarea.feedbackField
 {
   width: 200px;
-  height: 70px;
+  height: 100px;
 
 }
 
@@ -105,7 +104,8 @@ select.timeLimitList
 
 input.answerField
 {
-
+  width: 230px;
+  height: 23px;
 
 
 }
@@ -122,6 +122,11 @@ h1.quizHeader
 
 
 div.orderDiv
+{
+
+}
+
+div
 {
 
 }

@@ -43,7 +43,7 @@ Quiz creator
 
 
 
-
+<form>
 <div style="width: 800px; margin: auto;" id="quizEditor" data-numOfQuestions="0">
   <h1 id="quizHeader" contenteditable="true" data-quizId= "1" placeholder='required'>
     Lorem ipsum
@@ -51,7 +51,7 @@ Quiz creator
 
   <!-- buttons for editing order and submission -->
   <div>
-    <input type="button" value="submit(JavaScript-test)" onClick="submit()"> </input>
+    <input type="submit" value="submit(JavaScript-test)" onClick="submit()">
     <input type="button" value="retrieve(JavaScript-test)" onClick="retrieve()"> </input>
     <input type="button" value="<"> </input>
     <input type="button" value=">"> </input>
@@ -61,7 +61,7 @@ Quiz creator
   </div>
   <input id="addRootQButton" style="display: block" class="addRootQButton" type="button" value="add root question" onClick="addRootQuestion(this)"> </input>
 </div> <!-- QuizEditor -->
-
+</form>
 <br/>
     <!-- display validation message -->
    <p style="color:red;" id="question_validation"></p>
