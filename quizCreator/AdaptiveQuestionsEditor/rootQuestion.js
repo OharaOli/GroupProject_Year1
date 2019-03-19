@@ -12,6 +12,7 @@ function addRootQuestion(givenButton, givenRootQText, givenRootQTime, givenRootQ
   //wrapper to contain the root question and all of the sub questions
   var rootQDiv = document.createElement('div');
   rootQDiv.setAttribute('id', 'rootQDiv' + numOfRootQSoFar);
+  rootQDiv.setAttribute('class' , 'rootQDiv');
   rootQDiv.setAttribute('data-x', numOfRootQSoFar);
   rootQDiv.setAttribute('data-y', '0');
 
@@ -173,6 +174,9 @@ function createRootQTable(givenX, givenRootQText, givenRootQTime, givenRootQFeed
   questionField.setAttribute('type', 'text');
   questionField.setAttribute('class', 'questionField');
   questionField.setAttribute('placeholder', 'question (required)');
+  questionField.setAttribute('required', true);
+  questionField.setAttribute('name', "questionField");
+  questionField.setAttribute('onkeydown', 'return (event.keyCode!=13);');
 
 
   if(givenRootQText != null)

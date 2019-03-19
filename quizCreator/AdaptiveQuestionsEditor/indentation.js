@@ -14,16 +14,9 @@ function createAnswersTable(givenX, givenY, givenQFeedback)
 
   //set attributes
   aTable.setAttribute('id', 'answersTable' + givenX + "." + givenY);
+  aTable.setAttribute('class', 'ansTable');
   aTable.setAttribute('border', 1);
-  //To distinguish between answers for the root and answers for the sub
-  if(givenY == 0)
-  {
-    aTable.setAttribute('class', 'answersTableRoot');
-  }
-  else
-  {
-    aTable.setAttribute('class', 'answersTableSub');
-  }
+
 
   aTable.setAttribute('data-x', givenX);
   aTable.setAttribute('data-y', givenY);
@@ -53,9 +46,11 @@ function createAnswersTable(givenX, givenY, givenQFeedback)
   var feedbackCell = rowA.insertCell(3);
   feedbackCell.setAttribute('rowspan', 4);
   var feedbackField = document.createElement('textarea');
-  feedbackField.setAttribute('placeholder', 'feedback (required)');
+  feedbackField.setAttribute('placeholder', 'feedback');
   feedbackField.setAttribute('type', 'text');
   feedbackField.setAttribute('class', 'feedbackField');
+  feedbackField.setAttribute('onkeydown', 'return (event.keyCode!=13);');
+
 
   if(givenQFeedback != null)
   {

@@ -75,7 +75,7 @@ function updateRootQIndex()
  var rootQTable;
 
 
- for(var index = 0; index < arrayOfRootQ.length - 1; index++)
+ for(var index = 0; index < arrayOfRootQ.length; index++)
  {
     //update the index of the rootQAnsTable
     //update the id, update the first cell index
