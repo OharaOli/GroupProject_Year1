@@ -260,9 +260,10 @@ section button:hover {
   background-color: #2176ae;
   width: 3em;
   height: 3em;
-  border: 0.125em solid white !important;
+  border: 0.125em solid #FFF !important;
   border-radius: 50%;
   line-height: 3em !important;
+  transition: 0.1s background-color ease;
 }
 
 .timer-container h3 {

@@ -771,6 +771,9 @@ function startTimer()
     // Only decrement timer for when timer is not paused.
     if (!timerIsPaused)
       timeLeft--;
+      $("#timer-container").css({"background-color": "#FFF"});
+    else
+      $("#timer-container").css({"background-color": "#DDD"});
   }  // end-updateTimerFunction
   // Call the updateTimer function once at first, to
   // start countdown immediately.
