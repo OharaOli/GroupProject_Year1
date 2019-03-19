@@ -94,12 +94,12 @@ function retrieveQAns(givenRootQTable, givenAnsTableArrayAll)
   for(var index = 0; index < givenAnsTableArrayAll.length; index++)
   {
     //the two coordinates must match
-    if(aTableArrayAll[index][3] == rootQX
-       && aTableArrayAll[index][4] == rootQY)
+    if(answerArray[index][3] == rootQX
+       && answerArray[index][4] == rootQY)
     {
       //match found
       // find the ansIndex
-      ansIndex = aTableArrayAll[index][2];
+      ansIndex = answerArray[index][2];
 
       //find the row
       switch (ansIndex)
@@ -116,9 +116,9 @@ function retrieveQAns(givenRootQTable, givenAnsTableArrayAll)
       } // switch statement to determine the row
 
       //get the text and correct value
-      ansText = aTableArrayAll[index][0];
+      ansText = answerArray[index][0];
 
-      if(aTableArrayAll[index][1] == "1")
+      if(answerArray[index][1] == "1")
         ansCorrect = true;
       else
         ansCorrect = false;
@@ -178,7 +178,7 @@ retrieveFromDB(quiz_ID)
     subQTable = addSubQuestion(addSubQButton, subQText, subQTime, subQFeedback);
 
     //retrive the ansers for this root q, if there is any
-    retrieveQAns(subQTable, aTableArrayAll);
+    retrieveQAns(subQTable, answerArray);
   } // outer for loop
 
 } // retrieve sub question
