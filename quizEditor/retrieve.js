@@ -18,8 +18,8 @@ function retrieve()
 retrieveFromDB(1);
 
 //retrieve the root questions and sub questions
-retrieveRootQ(qTableArray);
-retrieveSubQ(qTableArray);
+//retrieveRootQ(qTableArray);
+//retrieveSubQ(qTableArray);
 
 } // function retrieve
 
