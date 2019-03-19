@@ -212,6 +212,7 @@ function retrieveFromDB(quiz_ID) {
       }, //data
       success: function(data)
       {
+         alert(data);
          var returnQTableArrayTemp = JSON.parse(data);
          var numberOfQuestions = returnQTableArrayTemp.length;
          //Convert the JASON into an array
