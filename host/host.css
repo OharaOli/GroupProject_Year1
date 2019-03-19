@@ -168,6 +168,18 @@ f
 }
 */
 
+
+/*
+colors:
+blue - #3BACE7
+darkblue - #2176AE
+yellow - #FBE83B
+red - #FE6847
+green - #ACE73B
+orange - #FFB850
+*/
+
+
 body {
   background-color: #1C1D26;
   font-family: 'Roboto', sans-serif;
@@ -186,7 +198,7 @@ body {
   display: block;
   width: 10em;
   height: 2.5em;
-  background-color: #2176ae;
+  background-color: #3BACE7;
   font-size: 3.5em;
   color: #FFF;
   border-radius: 0.5em;
@@ -216,7 +228,7 @@ body {
 }
 
 #start-button:hover {
-  background-color: #12415F;  /* prev: #12415F */
+  background-color: #1A95D5;  /* prev: #12415F */
   color: #ebebeb;
 }
 
@@ -234,7 +246,7 @@ section button {
   width: 10em;
   height: 2.5em;
   font-size: 1.5em;
-  background-color: #2176ae;
+  background-color: #3BACE7;
   color: #FFF;
   border: none;
   border-radius: 0.25em;
@@ -242,7 +254,7 @@ section button {
 }
 
 section button:hover {
-  background-color: #12415F; /* prev: #12415F */
+  background-color: #1A95D5; /* prev: #12415F */
   color: #ebebeb;
 }
 
@@ -257,7 +269,7 @@ section button:hover {
   right: 0;
   margin-left: auto !important;
   margin-right: auto !important;
-  background-color: #2176ae;
+  background-color: #3BACE7;
   width: 3em;
   height: 3em;
   border: 0.125em solid #FFF !important;
@@ -293,16 +305,6 @@ section button:hover {
     min-height: 100% !important;
 }
 
-/*
-colors:
-blue - #2176ae
-darkblue - #2176AE
-yellow - #FBE83B
-red - #FE6847
-green - #ACE73B
-orange - #FFB850
-*/
-
 .present .answerbox, .past .answerbox, .future .answerbox {
   position: relative;
   padding: 0.5em;
@@ -313,7 +315,7 @@ orange - #FFB850
   margin-right: auto;
   margin-bottom: 0.75em;
   height: 5em;
-  background-color: #2176ae;
+  background-color: #3BACE7;
   border-radius: 1em;
   line-height: 5em;
   transition: 1s background-color ease;
@@ -374,4 +376,8 @@ orange - #FFB850
   border-radius: 1em;
   background-color: #000;
   transition: 1s width ease;
+}
+
+.resume-button {
+  display: none;
 }

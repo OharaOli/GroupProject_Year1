@@ -288,7 +288,23 @@ function startQuestion()
   // Calls a function which displays UI for question asked.
   displayQuestionState();
 
+  // Reconfigure the key-bindings to allow for pause with P
+  // and stop with ENTER/SPACE, and not allow navigation
+  // or any other default key-binding which should not be used.
   Reveal.configure({
+    // 13 = ENTER
+    // 27 = ESC
+    // 32 = SPACE
+    // 35 = END
+    // 36 = HOME
+    // 37-40 = Arrow keys
+    // 72 = H
+    // 74 = J
+    // 75 = K
+    // 76 = L
+    // 78 = N
+    // 79 = O
+    // 80 = P
     keyboard: {
       13: function() {
             $("#stop-" + xCoord + "-" + yCoord).click();
@@ -298,16 +314,25 @@ function startQuestion()
             $("#stop-" + xCoord + "-" + yCoord).click();
             $("#stop-" + xCoord + "-" + yCoord).click();
           },
+      37: false,
+      38: false,
+      39: false,
+      40: false,
+      27: null,
+      35: null,
+      36: null,
+      72: null,
+      74: null,
+      75: null,
+      76: null,
+      78: null,
+      79: null,
       80: function() {
             if (!timerIsPaused)
               timerIsPaused = true;
             else
               timerIsPaused = false;
-          },
-      37: false,
-      38: false,
-      39: false,
-      40: false
+          }
     }
   });
 } // startQuestion
@@ -500,15 +525,16 @@ function giveAnswer(correctAnswer)
 } // giveAnswer
 
 
-// Code written by Manne.
-// --------------------------------------------------------------------------------------
-
+// A function which returns the coordinates of current page, and
+// thereby an indicator of the ID of the div containing the current slide.
 function getCoords()
 {
   return xCoord + "-" + yCoord;
 } // getCoords
 
 
+// A function which takes a boolean to either disable or enable
+// all navigation possibilities.
 function toggleNavigation(booleanState)
 {
   Reveal.configure({
@@ -520,7 +546,6 @@ function toggleNavigation(booleanState)
       39: booleanState,
       40: booleanState
     },
-    // overview: booleanState,
     touch: booleanState
   });  
 }  // end-toggleNavitatioN
@@ -555,7 +580,7 @@ function updatePlayerAnswers(numOfAnswers)
 function displayFeedbackState(answerSelections)
 {
   toggleNavigation(true);
-  $("#stop-" + getCoords()).css("visibility", "hidden");
+  $("#stop-" + getCoords()).css("visibility", "hidden").unbind("click");
   $(".timer-container").fadeOut(100);
   setTimeout(function(){ $(".timer-container").remove(); }, 1500);  
 
@@ -576,7 +601,7 @@ function displayFeedbackState(answerSelections)
     $("#" + getCoords() + " .answerbox:eq(" + letterIndex + ") .bar")
       .css({"width": percentage});
 
-    $("#" + getCoords() + " .answerbox:eq(" + letterIndex + ") .bar-container").css({"opacity": "0.1"}); 
+    $("#" + getCoords() + " .answerbox:eq(" + letterIndex + ") .bar-container").css({"opacity": "0.2"}); 
 
     $("#" + getCoords() + " .answerbox:eq(" + letterIndex + ") .selection-number").hide().fadeIn(100); 
 
@@ -592,7 +617,22 @@ function displayFeedbackState(answerSelections)
     letterIndex++;
   }  // end-for
 
+  // Reconfigure the key-bindings to allow for start with ENTER/SPACE,
+  // and not allow any other default key-binding which should not be used.
   Reveal.configure({
+    // 13 = ENTER
+    // 27 = ESC
+    // 32 = SPACE
+    // 35 = END
+    // 36 = HOME
+    // 37-40 = Arrow keys
+    // 72 = H
+    // 74 = J
+    // 75 = K
+    // 76 = L
+    // 78 = N
+    // 79 = O
+    // 80 = P
     keyboard: {
       13: function() {
             $("#start-" + xCoord + "-" + yCoord).click();
@@ -601,7 +641,17 @@ function displayFeedbackState(answerSelections)
       32: function() {
             $("#start-" + xCoord + "-" + yCoord).click();
             $("#start-" + xCoord + "-" + yCoord).click();
-          }
+          },
+       27: null,
+       35: null,
+       36: null,
+       72: null,
+       74: null,
+       75: null,
+       76: null,
+       78: null,
+       79: null,
+       80: null
     }
   });
 }  // end-displayFeedbackState
@@ -719,7 +769,7 @@ function generateSlides()
     height: "100%"
   });
 
-  //$("body").css({"background-color": "#616168"});
+  $("body").css({"background-color": "#2176AE"});
 }  // end-generateSlides
 
 
@@ -744,12 +794,12 @@ Reveal.addEventListener('slidechanged', function(event) {
 
 
 Reveal.addEventListener( 'overviewshown', function( event ) {
-  
+  // In case we decide to use overview
 });
 
 
 Reveal.addEventListener( 'overviewhidden', function( event ) {
-
+  // In case we decide to use overview
 });
 
 
@@ -775,7 +825,7 @@ function startTimer()
     if (!timerIsPaused)
     {
       timeLeft--;
-      $(".timer-container").css({"background-color": "#2176ae"});
+      $(".timer-container").css({"background-color": "#3BACE7"});
     }  // end-if
     else
       $(".timer-container").css({"background-color": "#DDD"});
