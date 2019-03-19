@@ -13,7 +13,7 @@ function createAnswersTable(givenX, givenY, givenQFeedback, isRoot)
   var aTable = document.createElement('table');
 
   //set attributes
-  aTable.setAttribute('id', 'answersTable' + givenX + "." + givenY);
+  aTable.setAttribute('id', 'ansTable' + givenX + givenY);
   if(isRoot)
   {
     aTable.setAttribute('class', 'ansTableRoot');
