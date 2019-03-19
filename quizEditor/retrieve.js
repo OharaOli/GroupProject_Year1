@@ -7,6 +7,8 @@ var numOfRootQSoFarRe= 0;
 var numOfSubQSoFarRe = 0;
 var numOfQSoFarRe = 0;
 
+var quizIDRe;
+
 
 
 
@@ -15,7 +17,7 @@ var numOfQSoFarRe = 0;
 function retrieve()
 {
 
-retrieveFromDB(quizID);
+retrieveFromDB(quizIDRe);
 
 //retrieve the root questions and sub questions
 retrieveRootQ(questionArray);
