@@ -1,3 +1,9 @@
+textarea
+{
+  resize: none;
+}
+
+
 button.dragHandleSub
 {
   height: 175px;
