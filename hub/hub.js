@@ -54,10 +54,10 @@ function placeQuiz(quizID, quizName, quizCode, user_id, count)
      inputTheQuizID.setAttribute("type", "hidden");
      inputTheQuizID.setAttribute("name", "quizID");
      inputTheQuizID.setAttribute("value", quizID);
-     
+
      var inputUserID = document.createElement("input");
      inputUserID.setAttribute("type", "hidden");
-     inputUserID.setAttribute("name", "user_ID");
+     inputUserID.setAttribute("name",Host "user_ID");
      inputUserID.setAttribute("value", user_id);
 
      formForEdit.appendChild(inputUserID);
