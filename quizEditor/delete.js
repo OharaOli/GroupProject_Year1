@@ -52,7 +52,7 @@ function deleteSubQuestion(givenButton)
   parentSubQDiv.remove();
 
   //update the order
-  updateSubQIndex(parentX);
+  updateSubQIndex(parentX, true);
 
 } // deleteSubQuestion
 
@@ -130,7 +130,7 @@ function updateRootQIndex()
 
 
 
-function updateSubQIndex(givenParentX)
+function updateSubQIndex(givenParentX, isOnDelete)
 {
   //first get the array of all root questions
   //use get elements by class
@@ -156,19 +156,41 @@ function updateSubQIndex(givenParentX)
   //use for loop to loop through
   //use the index to update the number
   //index should start from 0, but the quesitons index is not zero-based
-  for(var index = 0; index < arrayOfSubQTables.length; index++)
+  if(isOnDelete)
   {
-     //update the index of the rootQAnsTable
-     //update the id, update the first cell index
-     subQTable = arrayOfSubQTables[index];
-     subQTable.setAttribute('id', 'subQTable' + givenParentX + "." + (index + 1));
-     subQTable.setAttribute('data-y', (index + 1));
-     subQTable.rows[1].cells[0].innerHTML = "Q" + givenParentX + "." + (index + 1);
+    for(var index = 0; index < arrayOfSubQTables.length; index++)
+    {
+       //update the index of the rootQAnsTable
+       //update the id, update the first cell index
+       subQTable = arrayOfSubQTables[index];
+       subQTable.setAttribute('id', 'subQTable' + givenParentX + "." + (index + 1));
+       subQTable.setAttribute('data-y', (index + 1));
+       subQTable.rows[1].cells[0].innerHTML = "Q" + givenParentX + "." + (index + 1);
 
-     //update the answers table as well
-     parentX = subQTable.getAttribute('data-x');
-     subQTable.rows[1].cells[3].childNodes[0].setAttribute('id','ansTable' + parentX + (index + 1));
-     subQTable.rows[1].cells[3].childNodes[0].setAttribute('data-y', (index + 1));
-  } // for loop
+       //update the answers table as well
+       parentX = subQTable.getAttribute('data-x');
+       alert(subQTable.rows[1].cells[3].childNodes[0].getAttribute('id'));
+       subQTable.rows[1].cells[3].childNodes[0].setAttribute('id','ansTable' + parentX + (index + 1));
+       subQTable.rows[1].cells[3].childNodes[0].setAttribute('data-y', (index + 1));
+    } // for loop
+  }
+  else
+  {
+    for(var index = 0; index < arrayOfSubQTables.length - 1; index++)
+    {
+       //update the index of the rootQAnsTable
+       //update the id, update the first cell index
+       subQTable = arrayOfSubQTables[index];
+       subQTable.setAttribute('id', 'subQTable' + givenParentX + "." + (index + 1));
+       subQTable.setAttribute('data-y', (index + 1));
+       subQTable.rows[1].cells[0].innerHTML = "Q" + givenParentX + "." + (index + 1);
+
+       //update the answers table as well
+       parentX = subQTable.getAttribute('data-x');
+       alert(subQTable.rows[1].cells[3].childNodes[0].getAttribute('id'));
+       subQTable.rows[1].cells[3].childNodes[0].setAttribute('id','ansTable' + parentX + (index + 1));
+       subQTable.rows[1].cells[3].childNodes[0].setAttribute('data-y', (index + 1));
+    } // for loop
+  }
 
 } // updateSubQIndex
