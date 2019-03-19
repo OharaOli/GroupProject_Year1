@@ -144,8 +144,6 @@ function retrieveSubQ(givenQTableArray)
   var coordX;
   var maxCoordYSoFar = 0;
 
-
-retrieveFromDB(quiz_ID)
   //get an array from the point the y value is not zero
   for(var index = 0; index < givenQTableArray.length; index++)
   {
