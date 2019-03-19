@@ -195,6 +195,8 @@ retrieveFromDB(quiz_ID)
 
 
 var appendAnswerIndex = 0;
+var questionArray = [];
+var answerArray = [];
 
 //Return the questions from the given quiz and store them in the array
 function retrieveFromDB(quiz_ID) {
