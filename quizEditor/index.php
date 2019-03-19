@@ -20,12 +20,6 @@ Quiz creator
   <script type="text/javascript" src="./retrieve.js"> </script>
 
 
-  <script> $(document).ready(function() {
-    quizIDRe = <?php echo json_encode($_POST['quizID']); ?>;
-
-    });
-  </script>
-
 
   <!-- javaScript for deleting questions -->
   <script type="text/javascript" src="./delete.js"> </script>
