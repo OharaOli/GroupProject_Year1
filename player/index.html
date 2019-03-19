@@ -10,12 +10,15 @@
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="../styling/assets/css/main.css" />
-    <link rel="stylesheet" href="../styling/assets_custome/css/custome.css" />
+		<link rel="stylesheet" href="../styling/assets_custome/css/custome.css" />
+		<link rel="stylesheet" href="../styling/assets_custome/css/player_custome.css" />
 		<noscript><link rel="stylesheet" href="../styling/assets/css/noscript.css" /></noscript>
+
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   	<script src="../misc/connectToDB.js"></script>
   	<script src="player.js"></script>
+
 
     <style>
     .hidden {
@@ -58,7 +61,6 @@
               <div id="q-and-a-container" class="hidden answers-styling">
                 <div id="answer-button-container" class="">
 
-									<div class="row">
 										<div class="col-3 col-12-medium">
 											<button value="A" class="hidden button primary fit small">A</button>
 										</div>
@@ -71,13 +73,11 @@
 										<div class="col-3 col-12-medium">
 											<button value="D" class="hidden button primary fit small">D</button>
 										</div>
-									</div>
 
                 </div>
-                <p id="selected-answer-message" class="hidden"></p>
               </div>
               <div id="floating-container" class = "hidden">
-                <p>Waiting for the host...</p>
+                <h2>Waiting for the host...</h2>
               </div>
               <div id="outro-container" class="hidden">
               </div>
@@ -85,6 +85,7 @@
 						  <p id="error-message-host-disconnected" class="hidden">Host disconnected.</p>
               <!-- ss -->
             </header>
+			    <p id="selected-answer-message" class="hidden selected-answer-pre-feedback"></p>
 					</div>
 				</section>
 		</div>

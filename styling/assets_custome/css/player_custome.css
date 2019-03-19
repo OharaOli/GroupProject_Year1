@@ -1,0 +1,117 @@
+@media screen and (min-width: 1441px){
+  #banner .content header {
+      display: inline-block;
+  }
+
+  div#answer-button-container{
+      padding: 0 18em;
+  }
+
+  #join-option.join-option-form{
+      padding: 0 18em
+  }
+}
+
+@media screen and (max-width: 1440px){
+  #banner .content header {
+      display: inline-block;
+  }
+
+  div#answer-button-container{
+      padding: 0 15em;
+  }
+
+  #join-option.join-option-form{
+      padding: 0 15em
+  }
+}
+
+@media screen and (max-width: 1024px){
+  #banner .content header {
+      display: inline-block;
+  }
+
+  div#answer-button-container{
+      padding: 0 9em;
+  }
+ 
+  #join-option.join-option-form{
+      padding: 0 9em
+  }
+}
+
+
+@media screen and (max-width: 768px){
+  #banner .content header {
+      display: inline-block;
+  }
+
+  div#answer-button-container{
+      padding: 0 5em;
+  }
+
+  #join-option.join-option-form{
+      padding: 0 5em
+  }
+}
+
+@media screen and (max-width: 425px){
+  #banner .content header {
+      display: inline-block;
+  }
+  
+  div#answer-button-container{
+      padding: 0 0em;
+  }
+
+  #join-option.join-option-form{
+      padding: 0 0em
+  }
+}
+
+#banner .content {
+    max-width: 90%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+#banner header{
+    width: 85%;
+}
+
+#banner:before{
+    width: 0%;
+}
+
+.button.primary{
+    white-space: normal;
+    height: auto;
+}
+
+.selected-answer-pre-feedback{
+    position: absolute;
+    height: 5em;
+    width: 100%;
+    text-align: center;
+    bottom: -6em;
+}
+
+span.correct{
+    color: green;
+    font weight: 500;
+}
+
+span.incorrect{
+    color: red;
+    font weight: 500;
+}
+
+h3.response{
+    text-align: center !important;
+}
+
+h2{
+    font-weight: 500;
+}
+
