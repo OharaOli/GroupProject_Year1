@@ -775,7 +775,7 @@ function startTimer()
     if (!timerIsPaused)
     {
       timeLeft--;
-      $(".timer-container").css({"background-color": "#FFF"});
+      $(".timer-container").css({"background-color": "#2176ae"});
     }  // end-if
     else
       $(".timer-container").css({"background-color": "#DDD"});
