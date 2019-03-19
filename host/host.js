@@ -716,7 +716,7 @@ function generateSlides()
     height: "100%"
   });
 
-  $("body").css({"background-color": "#2176ae"});
+  $("body").css({"background-color": "#616168"});
 }  // end-generateSlides
 
 

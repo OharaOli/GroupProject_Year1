@@ -124,6 +124,50 @@ f
   }
 }
 
+/*
+@media screen and ( max-width: 1400px ){
+  p .letter {
+    left: -8% !important;
+  }
+}
+
+@media screen and ( max-width: 1200px ){
+  p .letter {
+    left: -7.5% !important;
+  }
+}
+
+@media screen and ( max-width: 1000px ){
+  p .letter {
+    left: -7% !important;
+  }
+}
+
+@media screen and ( max-width: 800px ){
+  p .letter {
+    left: -6.5% !important;
+  }
+}
+
+@media screen and ( max-width: 600px ){
+  p .letter {
+    left: -6% !important;
+  }
+}
+
+@media screen and ( max-width: 400px ){
+  p .letter {
+    left: -5.5% !important;
+  }
+}
+
+@media screen and ( max-width: 400px ){
+  p .letter {
+    left: -5% !important;
+  }
+}
+*/
+
 body {
   background-color: #1C1D26;
   font-family: 'Roboto', sans-serif;
@@ -142,7 +186,7 @@ body {
   display: block;
   width: 10em;
   height: 2.5em;
-  background-color: #3BACE7;
+  background-color: #2176ae;
   font-size: 3.5em;
   color: #FFF;
   border-radius: 0.5em;
@@ -172,7 +216,7 @@ body {
 }
 
 #start-button:hover {
-  background-color: #1a95d5;
+  background-color: #12415F;  /* prev: #12415F */
   color: #ebebeb;
 }
 
@@ -190,7 +234,7 @@ section button {
   width: 10em;
   height: 2.5em;
   font-size: 1.5em;
-  background-color: #3BACE7;
+  background-color: #2176ae;
   color: #FFF;
   border: none;
   border-radius: 0.25em;
@@ -198,7 +242,7 @@ section button {
 }
 
 section button:hover {
-  background-color: #1a95d5;
+  background-color: #12415F; /* prev: #12415F */
   color: #ebebeb;
 }
 
@@ -213,7 +257,7 @@ section button:hover {
   right: 0;
   margin-left: auto !important;
   margin-right: auto !important;
-  background-color: #3BACE7;
+  background-color: #2176ae;
   width: 3em;
   height: 3em;
   border: 0.125em solid white !important;
@@ -250,7 +294,7 @@ section button:hover {
 
 /*
 colors:
-blue - #3BACE7
+blue - #2176ae
 darkblue - #2176AE
 yellow - #FBE83B
 red - #FE6847
@@ -268,7 +312,7 @@ orange - #FFB850
   margin-right: auto;
   margin-bottom: 0.75em;
   height: 5em;
-  background-color: #3BACE7;
+  background-color: #2176ae;
   border-radius: 1em;
   line-height: 5em;
   transition: 1s background-color ease;
