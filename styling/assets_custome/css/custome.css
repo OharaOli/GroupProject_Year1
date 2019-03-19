@@ -70,3 +70,8 @@
    text-align: center;
 }
 
+.header{
+display: inline-block;
+float: right;
+}
+
