@@ -770,8 +770,10 @@ function startTimer()
     }  // end-if
     // Only decrement timer for when timer is not paused.
     if (!timerIsPaused)
+    {
       timeLeft--;
       $("#timer-container").css({"background-color": "#FFF"});
+    }  // end-if
     else
       $("#timer-container").css({"background-color": "#DDD"});
   }  // end-updateTimerFunction
