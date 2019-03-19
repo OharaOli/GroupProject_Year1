@@ -1,6 +1,6 @@
 <?php
 
-require_once('../../misc/config.inc.php');
+require_once('../misc/config.inc.php');
 
 // Connect to the database
 $mysqli = new mysqli($database_host, $database_user,
