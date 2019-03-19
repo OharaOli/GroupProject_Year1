@@ -4,7 +4,10 @@ textarea
 }
 
 
-
+p
+{
+  color: red;
+}
 
 button.dragHandleSub
 {
