@@ -36,9 +36,6 @@
     var quizCode = <?php echo json_encode($_POST['quizCode']); ?>;
     var quizID = <?php echo json_encode($_POST['quizID']); ?>;
 
-    //sending the quizID to quiz Editor
-    quizIDRe = quizID;
-
     startHost(quizCode, quizID);
 
     });
