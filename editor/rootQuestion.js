@@ -170,7 +170,7 @@ function createRootQTable(givenX, givenRootQText, givenRootQTime, givenRootQFeed
   // add question Row
   var questionRow = rootQTable.insertRow(1);
   var indexCell = questionRow.insertCell(0);
-  indexCell.innerHTML = "Q" + givenX;
+  indexCell.innerHTML = "Q" + ( givenX + 1 );
 
   var questionCell = questionRow.insertCell(1);
   var questionField = document.createElement('textarea');
