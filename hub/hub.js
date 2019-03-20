@@ -48,7 +48,7 @@ function placeQuiz(quizID, quizName, quizCode, user_id, count)
     formForEdit.setAttribute("method", "post");
 
     // quiz edito
-    formForEdit.setAttribute("action", "../quizEditor");
+    formForEdit.setAttribute("action", "../editor");
 
      var inputTheQuizID = document.createElement("input");
      inputTheQuizID.setAttribute("type", "hidden");
@@ -65,6 +65,7 @@ function placeQuiz(quizID, quizName, quizCode, user_id, count)
      document.body.appendChild(formForEdit);
      formForEdit.submit();
 } );
+
 
 });
 
