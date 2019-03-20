@@ -95,7 +95,7 @@ function updateRootQIndex()
  } // for loop
 
 
-  var parentX;
+  var newParentX;
   var parentXP;
 
   var numOfSubQSoFar;
@@ -105,7 +105,7 @@ function updateRootQIndex()
   // use grab them by id. just change the x coordinates
   for(var index1 = 0; index1 < arrayOfRootQ.length; index1++)
   {
-    parentX = arrayOfRootQ[index1].getAttribute('data-x');
+    newParentX = arrayOfRootQ[index1].getAttribute('data-x');
     parentXP = arrayOfRootQ[index1].getAttribute('data-xp');
 
     //get the subQDiv
@@ -114,7 +114,7 @@ function updateRootQIndex()
     subQDiv = document.getElementById('subQDiv' + parentXP + '0');
     alert('previous subQDiv: ' + subQDiv.id);
     //after getting the id, update it
-    subQDiv.setAttribute('id', 'subQDiv' + parentX + '0');
+    subQDiv.setAttribute('id', 'subQDiv' + newParentX + '0');
 
     //get the num of subQSofar
     numOfSubQSoFar = subQDiv.childNodes.length;
@@ -124,10 +124,10 @@ function updateRootQIndex()
     for(var index2 = 0; index2 < subQDiv.childNodes.length; index2++)
     {
       //alert(subQDiv.childNodes[index].childNodes[0])
-      subQDiv.childNodes[index2].childNodes[0].setAttribute('id', 'subQTable' + parentX + (index2 + 1));
-      subQDiv.childNodes[index2].childNodes[0].setAttribute('data-x', parentX);
+      subQDiv.childNodes[index2].childNodes[0].setAttribute('id', 'subQTable' + newParentX + (index2 + 1));
+      subQDiv.childNodes[index2].childNodes[0].setAttribute('data-x', newParentX);
     } // for loop
-    updateSubQIndex(parentX);
+    updateSubQIndex(newParentX);
 
   } // for loop
 } // updateRootQIndex
