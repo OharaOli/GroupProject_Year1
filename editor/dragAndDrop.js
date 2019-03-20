@@ -19,7 +19,7 @@ function createDragConfigSub()
     //you first have to get the parentX
     var parentX = draggedElement.getAttribute('data-x');
     updateSubQIndex(parentX);
-    updateRootQIndex();
+    updateRootQIndexDragAndDrop();
   })
 
   return dragConfig;
