@@ -19,6 +19,9 @@ Quiz creator
   <!-- javaScript for retrieval -->
   <script type="text/javascript" src="./retrieve.js"> </script>
 
+<script>
+quizIDRe = <?php echo json_encode($_POST['quizID']); ?>;
+</script>
 
 
   <!-- javaScript for deleting questions -->

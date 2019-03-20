@@ -16,7 +16,8 @@ var quizIDRe;
 
 function retrieve()
 {
-retrieveFromDB(1);
+alert(quizIDRe)
+retrieveFromDB(quizIDRe);
 
 //retrieve the root questions and sub questions
 retrieveRootQ(questionArray);
