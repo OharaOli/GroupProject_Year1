@@ -10,12 +10,13 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js" type="text/javascript"></script>
   <script src="../misc/connectToDB.js" type="text/javascript"></script>
   <script src="../player/player.js" type="text/javascript"></script>
+  <script src="../quizEditor/retrieve.js" type="text/javascript"></script>
   <link rel="stylesheet" type="text/css" href="../reveal.js-master/css/reveal.css">
   <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
   <link rel="stylesheet" type="text/css" href="host.css">
   <style>
   .hidden {
-    display: none;  
+    display: none;
   }
   </style>
 </head>
@@ -28,13 +29,15 @@
   <!--div id="host-option">
     <input id="quiz-code-host" type="text" placeholder="Quiz Code"/>
     <button id="host-button">Host Quiz</button>
-  </div--> 
+  </div-->
 
 
   <script> $(document).ready(function() {
     var quizCode = <?php echo json_encode($_POST['quizCode']); ?>;
     var quizID = <?php echo json_encode($_POST['quizID']); ?>;
+
     startHost(quizCode, quizID);
+
     });
   </script>
 
@@ -46,12 +49,12 @@
     <ul id="player-list">
     </ul>
   </div>
-  
+
   <div class="reveal">
     <div class="slides">
     </div>
   </div>
-  
+
   <!--<div id="q-and-a-container" class="hidden">
     <h3 id="timer"></h3>
     <p id="numberOfAnswers">Answers so far: 0</p>
@@ -66,4 +69,4 @@
   <script src="../reveal.js-master/js/reveal.js" type="text/javascript"></script>
   <script src="host.js" type="text/javascript"></script>
 </body>
-</html> 
+</html>

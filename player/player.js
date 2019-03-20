@@ -123,7 +123,7 @@ $(document).ready(function() {
     // Make the selected answer text visible.
     $("#selected-answer-message").show();
     // Display the selected answer.
-    $("#selected-answer-message").html("You have selected " + answerSelected);
+    $("#selected-answer-message").html("<h3 class='response'>You have selected " + answerSelected + ": " + currentQuestionAnswers[answerSelected] + "</h3>");
     // Call the function which sends the currently selected answer to DB.
     inputAnswer(answerSelected);
   });
@@ -150,7 +150,7 @@ function displayIntro()
   // The button and input fields are contained within this div.
   $("#join-option").hide();
   // Display a message which informs that the host has to start the quiz.
-  $("#intro-container").append("<p>Waiting for the host to start.</p>");
+  $("#intro-container").append("<h2>Waiting for the host to start.</h2>");
 }  // end-displayIntro
 
 
@@ -198,11 +198,16 @@ function displayQuestionAndAnswers()
   $("#q-and-a-container").prepend("<h2>" + currentQuestionText + "</h2>");
   // A string variable to contain all answers, initially empty.
   var answers_collection = "";
-  // Add the answers onto a string, one at a time.
+  // Index used to select the answer buttons.
+  var answerIndex = 0;
+  // Fpr every answer, change the button text to contain
+  // the key and its associated answer.
   for (var key in currentQuestionAnswers)
-    answers_collection += (key + ": " + currentQuestionAnswers[key] + "<br />");
-  // Adds a paragraph containing the current different possible answers.
-  $("<p>" + answers_collection + "</p>").insertAfter("#q-and-a-container h2");
+  {
+    $("#answer-button-container .col-3 button:eq(" + answerIndex + ")")
+      .text(key + ": " + currentQuestionAnswers[key]);
+    answerIndex++;
+  }  // end-for
 }  // end-displayQuestionAndAnswers
 
 
@@ -243,16 +248,18 @@ function displayFeedback(feedback, isCorrect)
   $("#answer-button-container :button").hide();
   if (isCorrect)
     // If the answer was correct, then inform of that.
-    $("#q-and-a-container").append("<p>You selected the correct answer.</p>");
+    $("#q-and-a-container").append("<h3 class='response'>You selected the <span class='correct'>correct</span> answer.</h3>");
   else if (currentQuestionAnswerSelected != "-")
     // If the answer was incorrect, then inform of that.
-    $("#q-and-a-container").append("<p>You selected an incorrect answer.</p>");
+    $("#q-and-a-container").append("<h3 class='response'>You selected an <span class='incorrect'>incorrect</span> answer.</h3>");
   else
     // If an answer was not selected, then inform of that.
-    $("#q-and-a-container").append("<p>You did not select an answer.</p>");
+    $("#q-and-a-container").append("<h3 class='response'>You did not select an answer.</h3>");
   
   // In any case, display the available feedback.
-  $("#q-and-a-container").append("<p>" + feedback + "</p>");
+  $("#q-and-a-container").append("<h3 class='response'>" + feedback + "</h3>");
+
+  $("#selected-answer-message").removeClass("selected-answer-pre-feedback");
 }  // end-displayFeedback
 
 
