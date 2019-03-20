@@ -112,7 +112,6 @@ function updateRootQIndex()
     //alert("index1: " + index1);
     //alert('subQDiv' + parentXP + '0');
     subQDiv = document.getElementById('subQDiv' + parentXP + '0');
-    alert('previous subQDiv: ' + subQDiv.id);
     //after getting the id, update it
     subQDiv.setAttribute('id', 'subQDiv' + newParentX + '0');
 
