@@ -121,7 +121,7 @@ function updateRootQIndex(isDueToDrop)
     subQDiv = document.getElementById('subQDiv' + parentXP + '0');
     alert(subQDiv)
 
-    subQDiv.setAttribute('id', 'subQDiv' + newparentX + '0');
+    subQDiv.setAttribute('id', 'subQDiv' + newParentX + '0');
 
     //get the num of subQSofar
     numOfSubQSoFar = subQDiv.childNodes.length;
