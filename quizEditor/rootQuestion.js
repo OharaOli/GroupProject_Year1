@@ -11,13 +11,13 @@ function addRootQuestion(givenButton, givenRootQText, givenRootQTime, givenRootQ
 
   //wrapper to contain the root question and all of the sub questions
   var rootQDiv = document.createElement('div');
-  rootQDiv.setAttribute('id', 'rootQDiv' + numOfRootQSoFar);
+  rootQDiv.setAttribute('id', 'rootQDiv' + (numOfRootQSoFar - 1));
   rootQDiv.setAttribute('class' , 'rootQDiv');
-  rootQDiv.setAttribute('data-x', numOfRootQSoFar);
+  rootQDiv.setAttribute('data-x', (numOfRootQSoFar - 1));
   rootQDiv.setAttribute('data-y', '0');
 
 
-  var rootQTable = createRootQTable(numOfRootQSoFar, givenRootQText, givenRootQTime, givenRootQFeedback);
+  var rootQTable = createRootQTable((numOfRootQSoFar - 1), givenRootQText, givenRootQTime, givenRootQFeedback);
   //append the root question table to the wrapper
   rootQDiv.appendChild(rootQTable);
 
@@ -41,7 +41,7 @@ function addRootQuestion(givenButton, givenRootQText, givenRootQTime, givenRootQ
   subQDiv.setAttribute('data-numOfSubQSoFar', '0');
   subQDiv.setAttribute('class', 'subQDiv');
   subQDiv.setAttribute('style', 'display: block;');
-  subQDiv.setAttribute('id', 'subQDiv' + numOfRootQSoFar + '0');
+  subQDiv.setAttribute('id', 'subQDiv' + (numOfRootQSoFar - 1) + '0');
 
   //hide/show individual sub questions added. known error: edit root Q order does not work properly
 
@@ -62,7 +62,7 @@ function addRootQuestion(givenButton, givenRootQText, givenRootQTime, givenRootQ
   //append 'add sub question' button to the wrapper
   var addSubQButton = document.createElement('input');
 
-  addSubQButton.setAttribute('id', 'addSubQButton' + numOfRootQSoFar);
+  addSubQButton.setAttribute('id', 'addSubQButton' + (numOfRootQSoFar - 1));
   addSubQButton.setAttribute('type', 'button');
   addSubQButton.setAttribute('value', '+');
 
