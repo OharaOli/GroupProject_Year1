@@ -7,10 +7,7 @@ Quiz creator
 <head>
   <!-- Accessing javascript from a separate file -->
 
-  <!-- plug in for jQuery -->
-  <script type="text/javascript" src="./jquery-3.3.1.min.js"> </script>
-  <!-- plug in for jQuery connections -->
-  <script type="text/javascript" src="./jquery.connections.js"> </script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js" type="text/javascript"></script>
 
   <script type="text/javascript" src="./indentation.js"> </script>
 
@@ -19,11 +16,6 @@ Quiz creator
 
   <!-- javaScript for retrieval -->
   <script type="text/javascript" src="./retrieve.js"> </script>
-
-<script>
-quizIDRe = <?php echo  $_POST['quizID'] ?>;
-</script>
-
 
   <!-- javaScript for deleting questions -->
   <script type="text/javascript" src="./delete.js"> </script>
@@ -45,10 +37,15 @@ quizIDRe = <?php echo  $_POST['quizID'] ?>;
   <link href="../styling/assets_custome/css/quizEditor_custome.css" rel="stylesheet" type="text/css">
   <noscript><link rel="stylesheet" href="styling/assets/css/noscript.css" /></noscript>
   <!-- plug-ins for dragula -->
-  <script type="text/javascript" src="./node_modules/dragula/dist/dragula.js"> </script>
+  <script type="text/javascript" src="./node_modules/dragula/dist/dragula.js"></script>
   <link href="./node_modules/dragula/dist/dragula.css" rel="stylesheet" type="text/css">
 
   <body class="is-preload">
+    <script> 
+    window.onload = function() {
+      quizIDRe = <?php echo json_encode($_POST['quizID']); ?>;
+    };
+  </script>
 		<div id="page-wrapper">
 
 			<!-- Header -->
