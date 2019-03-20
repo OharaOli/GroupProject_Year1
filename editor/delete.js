@@ -81,16 +81,16 @@ function updateRootQIndex()
     //update the id, update the first cell index
     rootQTable = arrayOfRootQ[index];
     rootQTable.setAttribute('id', 'rootQTable' + (index + 1));
-    rootQTable.setAttribute('data-x', (index + 1));
+    rootQTable.setAttribute('data-x', (index));
     rootQTable.rows[1].cells[0].innerHTML = "Q" + (index + 1);
 
     //update the rootQdiv as well
     rootQTable.parentNode.setAttribute('id', 'rootQDiv' + (index + 1));
     rootQTable.parentNode.setAttribute('data-QId', 'Q' + (index + 1));
-    rootQTable.parentNode.setAttribute('data-x', (index + 1));
+    rootQTable.parentNode.setAttribute('data-x', (index));
 
     //update the button as well
-    rootQTable.rows[0].cells[1].childNodes[0].setAttribute('data-x', (index + 1));
+    rootQTable.rows[0].cells[1].childNodes[0].setAttribute('data-x', (index));
 
  } // for loop
 
@@ -121,7 +121,7 @@ function updateRootQIndex()
     for(var index2 = 0; index2 < subQDiv.childNodes.length; index2++)
     {
       //alert(subQDiv.childNodes[index].childNodes[0])
-      subQDiv.childNodes[index2].childNodes[0].setAttribute('id', 'subQTable' + parentX + index2);
+      subQDiv.childNodes[index2].childNodes[0].setAttribute('id', 'subQTable' + (parentX + 1) + index2);
       subQDiv.childNodes[index2].childNodes[0].setAttribute('data-x', parentX);
     } // for loop
     updateSubQIndex(parentX);
