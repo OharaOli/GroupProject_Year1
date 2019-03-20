@@ -113,6 +113,8 @@ function updateRootQIndex(isDueToDrop)
   {
     newParentX = arrayOfRootQ[index1].getAttribute('data-x');
     parentXP = arrayOfRootQ[index1].getAttribute('data-xp');
+    //once obtained, update the previous parent coord
+    arrayOfRootQ[index1].setAttribute('data-xp', newParentX);
     alert("previous id" + parentXP);
     alert("new" + newParentX);
 
