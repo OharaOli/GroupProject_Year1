@@ -163,7 +163,7 @@ function updateSubQIndex(givenParentX)
      subQTable = arrayOfSubQTables[index];
      subQTable.setAttribute('id', 'subQTable' + givenParentX + "." + (index + 1));
      subQTable.setAttribute('data-y', (index + 1));
-     subQTable.rows[1].cells[0].innerHTML = "Q" + givenParentX + "." + (index + 1);
+     subQTable.rows[1].cells[0].innerHTML = "Q" + (parseInt(givenParentX) + 1) + "." + (index + 1);
 
      //update the answers table as well
      parentX = subQTable.getAttribute('data-x');
