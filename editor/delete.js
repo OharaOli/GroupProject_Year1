@@ -121,7 +121,7 @@ function updateRootQIndex()
     for(var index2 = 0; index2 < subQDiv.childNodes.length; index2++)
     {
       //alert(subQDiv.childNodes[index].childNodes[0])
-      subQDiv.childNodes[index2].childNodes[0].setAttribute('id', 'subQTable' + (parentX + 1) + index2);
+      subQDiv.childNodes[index2].childNodes[0].setAttribute('id', 'subQTable' + parentX + (index2 + 1));
       subQDiv.childNodes[index2].childNodes[0].setAttribute('data-x', parentX);
     } // for loop
     updateSubQIndex(parentX);
@@ -163,7 +163,7 @@ function updateSubQIndex(givenParentX)
      subQTable = arrayOfSubQTables[index];
      subQTable.setAttribute('id', 'subQTable' + givenParentX + "." + (index + 1));
      subQTable.setAttribute('data-y', (index + 1));
-     subQTable.rows[1].cells[0].innerHTML = "Q" + givenParentX + "." + (index + 1);
+     subQTable.rows[1].cells[0].innerHTML = "Q" + givenParentX + "." + (index + 1));
 
      //update the answers table as well
      parentX = subQTable.getAttribute('data-x');
