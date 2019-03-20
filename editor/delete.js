@@ -61,7 +61,7 @@ function deleteSubQuestion(givenButton)
 
 //need a function that re-arranges the index of the question index
 //after deleting a questions
-function updateRootQIndex()
+function updateRootQIndex(isDueToDrop)
 {
  //first get the array of all root questions
  //use get elements by class
@@ -74,8 +74,14 @@ function updateRootQIndex()
 
  var rootQTable;
 
+ if(isDueToDrop)
+  var arrayOfRootQLength = arrayOfRootQ.length - 1;
+ else
+  var arrayOfRootQLength = arrayOfRootQ.length;
 
- for(var index = 0; index < arrayOfRootQ.length; index++)
+
+
+ for(var index = 0; index < arrayOfRootQLength; index++)
  {
     //update the index of the rootQAnsTable
     //update the id, update the first cell index
@@ -103,7 +109,7 @@ function updateRootQIndex()
 
   //now for each rootQDivs, update its subQTables
   // use grab them by id. just change the x coordinates
-  for(var index1 = 0; index1 < arrayOfRootQ.length; index1++)
+  for(var index1 = 0; index1 < arrayOfRootQLength; index1++)
   {
     newParentX = arrayOfRootQ[index1].getAttribute('data-x');
     parentXP = arrayOfRootQ[index1].getAttribute('data-xp');
