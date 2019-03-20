@@ -124,7 +124,7 @@ function createSubQTable(givenX, givenY, givenSubQText, givenSubQTime, givenSubQ
 
   var indexCell = questionRow.insertCell(0);
 
-  indexCell.innerHTML = "Q" + givenX + "." + givenY;
+  indexCell.innerHTML = "Q" + (givenX + 1) + "." + givenY;
 
   var questionCell = questionRow.insertCell(1);
   var questionField = document.createElement('textarea');
@@ -151,7 +151,7 @@ function createSubQTable(givenX, givenY, givenSubQText, givenSubQTime, givenSubQ
 
   var checkedErrorParag = document.createElement('p');
   answerCell.appendChild(checkedErrorParag);
-  
+
 
   return subQTable;
 
