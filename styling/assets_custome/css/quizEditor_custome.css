@@ -225,7 +225,13 @@ div.orderDiv
 
 div
 {
+  vertical-align: middle !important;
+}
 
+tbody,
+tr,
+td{
+  vertical-align: middle !important;
 }
 
 
