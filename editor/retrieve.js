@@ -16,7 +16,6 @@ var quizIDRe;
 
 function retrieve()
 {
-alert(quizIDRe)
 retrieveFromDB(quizIDRe);
 
 //retrieve the root questions and sub questions
@@ -200,6 +199,22 @@ var answerArray = [];
 
 //Return the questions from the given quiz and store them in the array
 function retrieveFromDB(quiz_ID) {
+   // Get quiz name
+   $.ajax({
+    async: true,
+    url: "../tools/returnQuizName.php",
+    cache: false,
+    type: "get",
+    data:
+    {
+      quizID: quiz_ID
+    },
+    success: function(data)
+    {
+      $("#quizHeader").text(data);
+    }
+   });
+   
    //Send the current question and then call the submit answer function for its answers
    $.ajax({
       async: false,
@@ -212,7 +227,6 @@ function retrieveFromDB(quiz_ID) {
       }, //data
       success: function(data)
       {
-         alert(data);
          var returnQTableArrayTemp = JSON.parse(data);
          var numberOfQuestions = returnQTableArrayTemp.length;
          //Convert the JASON into an array
@@ -225,11 +239,9 @@ function retrieveFromDB(quiz_ID) {
             questionArray[i][4] = returnQTableArrayTemp[i]["feedback"];
             questionArray[i][5] = returnQTableArrayTemp[i]["question_id"];
          } //for
-         alert("Question array: " + JSON.stringify(questionArray));
          //////////////////////////////////////////////////////////////
          ///////////////// questionArray holds array //////////////////
          //////////////////////////////////////////////////////////////
-
          for (i = 0; i < numberOfQuestions; i++)
          {
             var question_ID = questionArray[i][5];
@@ -264,7 +276,6 @@ function retrieveFromDB(quiz_ID) {
             questionArray[i].pop();
          } //for
 
-      alert("Answer array: " + JSON.stringify(answerArray));
       //////////////////////////////////////////////////////////////
       ////////////////// answerArray holds array ///////////////////
       //////////////////////////////////////////////////////////////

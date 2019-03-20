@@ -50,10 +50,6 @@ INSERT INTO answers VALUES
   (NULL, 4, "Black", 1, "C"),
   (NULL, 5, "L", 1, "A"),
   (NULL, 5, "O", 0, "B");
-
-INSERT INTO quizzes(name, user_id) VALUES("Something", 1);
-INSERT INTO quizzes(name, user_id) VALUES("SomethingElse", 1);
-INSERT INTO quizzes(name, user_id) VALUES("Ulis Ultimate Quiz", 8);
   
 quit
 EOF

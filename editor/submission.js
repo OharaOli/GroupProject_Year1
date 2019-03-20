@@ -1,6 +1,6 @@
 var numOfQSoFarSubmit;
 
-
+var answerIndex;
 
 var qTableArray;
 var returnQTableArray;
@@ -8,10 +8,9 @@ var returnQTableArray;
 var aTableArrayAll;
 var returnATableArray;
 
-var answerIndex = 0;
-
-
 var deleteRootQButtons;
+
+var username; 
 
 
 // function for the submit button
@@ -26,15 +25,8 @@ function save()
     qTableArray = createQTableArray();
     aTableArrayAll = createATableArrayAll();
 
-    alert("save complete");
-    alert("2D array of questions: "
-          + "\n" + JSON.stringify(qTableArray));
-    alert("2D array of answers: "
-          + "\n" + JSON.stringify(aTableArrayAll));
     upload_quiz();
   } // if statement
-  else
-    alert("Correct/incorrect checkbox not valid.");
 }
 
 function deleteAll()
@@ -257,9 +249,7 @@ function validation()
 //Store the name of the quiz and return the ID where its stored to store the questions
 function upload_quiz() {
    //Return the name of the quiz being submitted
-   var quizName = document.getElementById('quizHeader').innerHTML;
-   var quizID = null;
-
+   var quizName = $("#quizHeader").text().trim();
    //Ajax call to store the quiz name (and temp account id) and call submit question with the id
    $.ajax({
       async: false,
@@ -268,27 +258,28 @@ function upload_quiz() {
       type: "post",
       data:
       {
-         quizName: quizName
+         quizName: quizName,
+         username: username,
+         oldQuizID: quizIDRe
       }, //data
       success: function(data)
       {
-         quizID = data;
-         upload_questions(data);
+        if(quizIDRe == "0")
+          quizIDRe = data;
+        console.log("New quiz ID: " + quizIDRe);
+        upload_questions(quizIDRe);
       } //success function
    }) //ajax
 } //upload_quiz
 
 
-
-
 //Store the questions one at a time using the quiz ID, storing the answers after each one
-function upload_questions(quiz_ID) {
-   alert("upload questions");
+function upload_questions(quizID) {
    //Store the number of questions in the quiz
    numberOfQuestions = document.getElementById("quizEditor").getAttribute("data-numOfQuestions");
    numberOfQuestions = parseInt(numberOfQuestions);
    var questionID = null;
-
+   answerIndex = 0;
    //Loop through the number of questions
    for (i = 0; i < numberOfQuestions; i++)
    {
@@ -307,7 +298,7 @@ function upload_questions(quiz_ID) {
          type: "post",
          data:
          {
-            quiz_ID: quiz_ID,
+            quizID: quizID,
             questionText: questionText,
             xCoord: xCoord,
             yCoord: yCoord,
@@ -323,12 +314,8 @@ function upload_questions(quiz_ID) {
    } //for
 } //upload_questions
 
-
-
-
 //Store the answers under the given question ID
 function upload_answers(question_ID) {
-   alert("upload answers");
    //While to check how many answers there are for the given question
    while (answerIndex < aTableArrayAll.length && aTableArrayAll[answerIndex][0] == i)
    {
@@ -338,12 +325,6 @@ function upload_answers(question_ID) {
       var letter = aTableArrayAll[answerIndex][5];
       answerIndex += 1;
 
-      alert("Test values");
-      alert(letter);
-      alert(isCorrect);
-      alert(letter.value);
-
-
       //Send each answer individually, storing it with the correct question id
       $.ajax({
     async: false,
@@ -352,15 +333,11 @@ function upload_answers(question_ID) {
          type: "post",
          data:
          {
-   question_ID: question_ID,
+            question_ID: question_ID,
             answerText: answerText,
             isCorrect: isCorrect,
             letter: letter
          }, //data
-         success: function(data)
-         {
-            alert(data);
-         } //success function
       }) //ajax
    } //while
 } //upload_questions
@@ -435,9 +412,6 @@ function return_questions(quiz_ID) {
             //Adding the x and y coords to the answer array
             returnATableArray[i][5] = returnQTableArray[i][1];
             returnATableArray[i][6] = returnQTableArray[i][2];
-
-            alert("Questions array" + returnQTableArray);
-            alert("Answers array" + returnATableArray);
          } //for
       } //success function
    }) //ajax
