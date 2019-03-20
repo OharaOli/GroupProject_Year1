@@ -205,7 +205,7 @@ while($row = $quizIDandNameList ->fetch_assoc())
 
 </div>
 <!--REDIRECTION SHOULD BE CHANGED TO THE QUIZ CREATOR PAGE-->
-<form method="post" action="../quizCreator/AdaptiveQuestionsEditor">
+<form method="post" action="../editor">
 <input class="button primary right" type="submit" name = "Create New" value = "Create New">
 </form>
   </div><!--  close main -->
