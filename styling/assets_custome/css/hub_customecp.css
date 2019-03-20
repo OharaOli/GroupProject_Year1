@@ -1,129 +1,150 @@
+@media only screen and (max-width: 1200px){
+    #quizzesTable{
+        text-align: center;
+    }
 
-header.major h2,
-header.major h3,
-header.major h4,
-header.major h5,
-header.major h6{
-  margin: 0 0 0.5em 0;
-  position: relative;
-  text-align: center;
+    #quizzesTable .row h3{
+	font-size: 2em;
+	font-weight: 500;
+    }
+
+#no-border input[type="text"]{
+    color: white;
+    font-weight: 500;
+    margin-bottom: 1em
+}
+#no-border input{
+    text-align: center;
+    width: 10em;
+    margin-left: auto;
+    margin-right: auto;
+    
 }
 
-header.major p{
-  margin: 0 0 6em 0;
-  position: relative;
-  text-align: center;
+#no-border{
+    border: none;
+    margin-bottom: 4em;
+}
+
+.button.primary.right{
+    float: right;
+    width: 9em !important;
+}
+
+#quizzesTable .HostButton.button.small{
+    margin-bottom: 1em;
+}
+
+#quizzesTable .EditButton.button.small{
+    margin-bottom: 1em;
+}
+
+#nav input.button{
+    height: 2em;
+    line-height: 2em;
+    padding: 0 1.25em;
+    background-color: #2176ae;
+    text-align: center;
+    text-decoration: none;
+    white-space: nowrap;
+    font-weight: 300;
+    color: #ffffff !important;
+    border-radius: 4px;
+    font-size: 100%;
+    width: 100%;
+}
+
+}
+
+@media only screen and (min-width: 1101px){
+    #quizzesTable{
+        text-align: left;
+    }
+
+    #no-border{
+    border: none;
+    margin-bottom: 3.5em;
+    }
+
+    #no-border input[type="text"]{
+        color: white;f
+        font-weight: 500;
+        width: 75%;	
+    }
+
+    #no-border input[type="submit"]{
+        float: right;
+    }
+    
+    #no-border span{
+        font-weight: 900;
+		color: #2176ae;
+    }
+
+#nav input.button{
+    height: 2em;
+    line-height: 2em;
+    padding: 0 1.25em;
+    background-color: #2176ae;
+    text-align: center;
+    text-decoration: none;
+    white-space: nowrap;
+    font-weight: 300;
+    color: #ffffff !important;
+    border-radius: 4px;
+    font-size: 100%;
+    width: 100%;
 }
 
 header.major {
-  margin: 0 0 0.5em 0;
+    margin: 0 0 2em 0;
 }
 
 header.major:after {
-  max-width: 40em;
-  width: 40em;
-  display: none;
-}
-
-h3.codeErrorLine{
-  color: #b20000;
+    background: #262732;
+    max-width: 50em;
+    width: 75%;
 }
 
 h3.right{
-  text-align: right;
+    margin: 0.3em 0 0.5em 0;
 }
 
-div.row{
-  border-bottom: 1px solid white;
-  margin-top: 1.5em;
-  margin-bottom: 0.5em;
+h3.codeErrorLine{
+    text-align: center;
+    color: #b30000;
 }
 
-.hidden {
-  display: none;
+.button.primary.right{
+    float: right;
 }
 
-input.button.primary.right{
-  margin-top: 10px;
-  float: right;
+.row{
+    margin: 0 0 2em 0;
+    border-bottom: 3px solid #262732;
 }
 
-
-.nav-element{
-  border-bottom: 1px white solid;
-  margin-bottom: 30px;
-}
-.nav-element a{
-  display: inline-block;
-  width: 100%;
-  color: white;
-  border: none;
-  padding-top: 2px;
-  padding-left: 12px;
-  padding-bottom: 3px;
-  font-size: 20px
-}
-.nav-element .active{
-  color: #57b8ff!important;
-  background: linear-gradient(#e6646500, #ffffff0d);
-}
-.nav-element a:hover{
-  color: #57b8ff!important;
-  background: linear-gradient(#e6646500, #ffffff0d);
+form {
+    margin: 0 0 0.5em 0;
 }
 
-@media only screen and (max-width: 736px) {
-  #sidebar{
-    display: none;
-  }
-}
-@media only screen and (min-width: 736px) {
-  #nav{
-    display: none;
-  }
 }
 
-#main {
-  text-align: center;
+.codeErrorLine{
+    color: #ff2d00 !important;
+    text-align: center !important;
+       
 }
 
-#quizzesTable h3{
-  text-align: left;
+input.button.primary{
+    width: 13em !important;
 }
 
-#quizzesTable .right{
-  text-align: right !important;
-  vertical-align: middle;
-  line-height: 2em
+input.button.primary.small{
+width: 6em !important;
 }
 
-#quizCodeForm input{
-  width: 100%;
-  margin-bottom: 0.5em;
-  text-align: center;
-}
-
-#changeQuizIdRow:after{
-  background: #2176ae;
-  margin-bottom: 2em;
-  content: '';
-  display: inline-block;
-  height: 0.2em;
-  max-width: 50em;
-  width: 100%;
-  margin-left: auto;
-  margin-right: auto;
-  text-align: center;  
-}
-
-#no-border.row{
-  border-bottom: 0px;
-}
-
-#QuizCodeDiv h2,
-#QuizCodeDiv h3,
-#QuizCodeDiv h4,
-#QuizCodeDiv h5,
-#QuizCodeDiv h6{
-  margin: 0 0 0.5em 0;
+#header{
+display: inline-block;
+float: right;
 }
