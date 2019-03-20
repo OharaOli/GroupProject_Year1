@@ -43,7 +43,7 @@
 	// Nav.
 
 		// Title Bar.
-			if ( document.URL.includes("player/index.html") )
+			if ( document.URL.includes("player/") )
 			{
 			  $(
 							'<div id="titleBar">' +
