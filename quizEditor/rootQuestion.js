@@ -29,7 +29,8 @@ function addRootQuestion(givenButton, givenRootQText, givenRootQTime, givenRootQ
   //button for hide/show sub questions
   var hideSubQButton = document.createElement('input');
   hideSubQButton.setAttribute('type', 'button');
-  hideSubQButton.setAttribute('value','V');
+  hideSubQButton.setAttribute('value','Hide Sub Questions');
+  hideSubQButton.setAttribute('id','make-my-subqhide-button-small');
   hideSubQButton.setAttribute('onClick', 'hideSubQuestions(this)');
 
   subQDivWithHideOrShow.appendChild(hideSubQButton);
@@ -126,6 +127,8 @@ function createRootQTable(givenX, givenRootQText, givenRootQTime, givenRootQFeed
   //add dragHandleCell
   var dragHandleCell = headerRow.insertCell(0);
   dragHandleCell.setAttribute('rowspan', 2);
+  dragHandleCell.setAttribute('class', 'rowspan-draggy-thingy');
+
 
   //this cell is initially inivisible
 

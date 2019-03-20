@@ -42,7 +42,8 @@ function validateCorrectCheckbox(givenType)
     if(numOfCheckedSoFar < 1)
     {
       //if it is less than one, than printout an error message
-      ansTable.nextElementSibling.innerHTML = "There must be at least 1 correct answer."
+      alert("There must be at least 1 correct answer in " + givenType);
+      // ansTable.nextElementSibling.innerHTML = "There must be at least 1 correct answer."
       isCheckedValid = false;
     } // true part
     else
