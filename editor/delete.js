@@ -103,7 +103,7 @@ function updateRootQIndex()
 
   //now for each rootQDivs, update its subQTables
   // use grab them by id. just change the x coordinates
-  for(var index1 = 0; index1 < arrayOfRootQ.length - 1; index1++)
+  for(var index1 = 0; index1 < arrayOfRootQ.length; index1++)
   {
     parentX = arrayOfRootQ[index1].getAttribute('data-x');
     parentXP = arrayOfRootQ[index1].getAttribute('data-xp');
