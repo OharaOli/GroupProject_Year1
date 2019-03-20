@@ -123,7 +123,7 @@ function updateRootQIndex(isDueToDrop)
     //alert('subQDiv' + parentXP + '0');
     alert('root Q Table' + index1)
     subQDiv = document.getElementById('subQDiv' + parentXP + '0');
-    alert('getting the previous subQDIv:id:' + subQDiv.)
+    alert('getting the previous subQDIv:id:' + subQDiv)
 
     subQDiv.setAttribute('id', 'subQDiv' + newParentX + '0');
 
