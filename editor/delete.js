@@ -111,7 +111,7 @@ function updateRootQIndex()
     //get the subQDiv
     //alert("index1: " + index1);
     //alert('subQDiv' + parentXP + '0');
-    alert('root Q Table' + idnex1)
+    alert('root Q Table' + index1)
     subQDiv = document.getElementById('subQDiv' + parentXP + '0');
     alert(subQDiv)
     //after getting the id, update it
