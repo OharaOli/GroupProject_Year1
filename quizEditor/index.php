@@ -20,7 +20,7 @@ Quiz creator
   <script type="text/javascript" src="./retrieve.js"> </script>
 
 <script>
-quizIDRe = <?php $_POST['quizID'] ?>;
+quizIDRe = <?php echo  $_POST['quizID'] ?>;
 </script>
 
 
