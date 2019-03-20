@@ -69,17 +69,17 @@ function updateRootQIndexDragAndDrop()
     //update the index of the rootQAnsTable
     //update the id, update the first cell index
     rootQTable = arrayOfRootQ[index];
-    rootQTable.setAttribute('id', 'rootQTable' + (index + 1));
-    rootQTable.setAttribute('data-x', (index + 1));
+    rootQTable.setAttribute('id', 'rootQTable' + (index));
+    rootQTable.setAttribute('data-x', (index));
     rootQTable.rows[1].cells[0].innerHTML = "Q" + (index + 1);
 
     //update the rootQdiv as well
-    rootQTable.parentNode.setAttribute('id', 'rootQDiv' + (index + 1));
+    rootQTable.parentNode.setAttribute('id', 'rootQDiv' + (index));
     rootQTable.parentNode.setAttribute('data-QId', 'Q' + (index + 1));
-    rootQTable.parentNode.setAttribute('data-x', (index + 1));
+    rootQTable.parentNode.setAttribute('data-x', (index));
 
     //update the button as well
-    rootQTable.rows[0].cells[1].childNodes[0].setAttribute('data-x', (index + 1));
+    rootQTable.rows[0].cells[1].childNodes[0].setAttribute('data-x', (index));
 
  } // for loop
 
@@ -102,6 +102,7 @@ function updateRootQIndexDragAndDrop()
     //alert('subQDiv' + parentXP + '0');
     subQDiv = document.getElementById('subQDiv' + parentXP + '0');
 
+    subQDiv.setAttribute('id', 'subQDiv' + parentX + '0');
     //get the num of subQSofar
     numOfSubQSoFar = subQDiv.childNodes.length;
     //alert(numOfSubQSoFar);
