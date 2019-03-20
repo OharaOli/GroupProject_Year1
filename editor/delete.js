@@ -123,7 +123,7 @@ function updateRootQIndex(isDueToDrop)
     //alert('subQDiv' + parentXP + '0');
     alert('root Q Table' + index1)
     subQDiv = document.getElementById('subQDiv' + parentXP + '0');
-    alert(subQDiv)
+    alert('getting the previous subQDIv:id:' + subQDiv)
 
     subQDiv.setAttribute('id', 'subQDiv' + newParentX + '0');
 
@@ -174,6 +174,7 @@ function updateSubQIndex(givenParentX)
   //index should start from 0, but the quesitons index is not zero-based
   for(var index = 0; index < arrayOfSubQTables.length; index++)
   {
+    alert('success');
      //update the index of the rootQAnsTable
      //update the id, update the first cell index
      subQTable = arrayOfSubQTables[index];
