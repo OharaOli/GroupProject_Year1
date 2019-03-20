@@ -80,12 +80,12 @@ function updateRootQIndex()
     //update the index of the rootQAnsTable
     //update the id, update the first cell index
     rootQTable = arrayOfRootQ[index];
-    rootQTable.setAttribute('id', 'rootQTable' + (index + 1));
+    rootQTable.setAttribute('id', 'rootQTable' + (index));
     rootQTable.setAttribute('data-x', (index));
     rootQTable.rows[1].cells[0].innerHTML = "Q" + (index + 1);
 
     //update the rootQdiv as well
-    rootQTable.parentNode.setAttribute('id', 'rootQDiv' + (index + 1));
+    rootQTable.parentNode.setAttribute('id', 'rootQDiv' + (index ));
     rootQTable.parentNode.setAttribute('data-QId', 'Q' + (index + 1));
     rootQTable.parentNode.setAttribute('data-x', (index));
 
@@ -112,6 +112,8 @@ function updateRootQIndex()
     //alert("index1: " + index1);
     //alert('subQDiv' + parentXP + '0');
     subQDiv = document.getElementById('subQDiv' + parentXP + '0');
+    //after getting the id, update it
+    subQDiv.setAttribute('id', 'subQDiv' + parentX + '0');
 
     //get the num of subQSofar
     numOfSubQSoFar = subQDiv.childNodes.length;
@@ -125,6 +127,7 @@ function updateRootQIndex()
       subQDiv.childNodes[index2].childNodes[0].setAttribute('data-x', parentX);
     } // for loop
     updateSubQIndex(parentX);
+
   } // for loop
 } // updateRootQIndex
 
