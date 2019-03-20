@@ -17,7 +17,7 @@ function deleteRootQuestion(givenButton)
   rootQDiv.remove();
 
   //update the root Q index
-  updateRootQIndex();
+  updateRootQIndex(false);
 
   //change the attri
 
