@@ -11,10 +11,16 @@ function placeQuiz(quizID, quizName, quizCode, user_id, count)
   //firstCell.innerhtml = (''+ quizName);
   $("#row-" + count).append("<div class='col-8 col-12-medium'><h3>"
                             + quizName + "</h3></div>");
+                            
   $("#row-" + count).append("<div class='col-2 col-12-medium'><button class = 'HostButton button small' id='host"
                             + quizID + "'>Host</button></div>");
+                            
   $("#row-" + count).append("<div class='col-2 col-12-medium'><button class = 'EditButton button small' id='edit"
                             + quizID + "'>Edit</button></div>");
+                            
+  $("#row-" + count).append("<div class='col-2 col-12-medium'><button class = 'DeleteButton button small' id='delete"
+                            + quizID + "'>Delete</button></div>");      
+                                                 
   //var secondCell = rows.inseWrtCell(1);
   //secondCell.innerHTML = buttonHost;
 
@@ -48,7 +54,7 @@ function placeQuiz(quizID, quizName, quizCode, user_id, count)
     formForEdit.setAttribute("method", "post");
 
     // quiz edito
-    formForEdit.setAttribute("action", "../editor");
+    formForEdit.setAttribute("action", "../editor/");
 
      var inputTheQuizID = document.createElement("input");
      inputTheQuizID.setAttribute("type", "hidden");
@@ -66,6 +72,29 @@ function placeQuiz(quizID, quizName, quizCode, user_id, count)
      formForEdit.submit();
 } );
 
+  // when edit button is pressed, send the quiz id by post
+ $("#delete" + quizID).click(function() {
+    var deleteForm = document.createElement("form");
+    deleteForm.setAttribute("method", "post");
+
+    // quiz edito
+    deleteForm.setAttribute("action", "./");
+
+     var inputTheQuizID = document.createElement("input");
+     inputTheQuizID.setAttribute("type", "hidden");
+     inputTheQuizID.setAttribute("name", "deleteQuiz");
+     inputTheQuizID.setAttribute("value", quizID);
+     
+     var inputUserID = document.createElement("input");
+     inputUserID.setAttribute("type", "hidden");
+     inputUserID.setAttribute("name", "user_ID");
+     inputUserID.setAttribute("value", user_id);
+
+     deleteForm.appendChild(inputUserID);
+     deleteForm.appendChild(inputTheQuizID);
+     document.body.appendChild(deleteForm);
+     deleteForm.submit();
+} );
 
 });
 

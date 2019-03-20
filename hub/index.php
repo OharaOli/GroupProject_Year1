@@ -25,27 +25,38 @@
      $quizCodeEntryError = "";
     if ($_SERVER["REQUEST_METHOD"] == "POST")
     {
-        $quizCode = $_POST['quizCode'];
-       // if the quiz code is  not letters or a mixture of letters and numbers and not equal to 6
-       if (!preg_match("/^[a-zA-Z0-9]*$/",$quizCode) or strlen($quizCode)  != 6)
+       if (isset($_POST['deleteQuiz']))
        {
-          // error in the quiz code
-         $quizCodeEntryError = "Your quiz code needs to have no special characters and has to be 6 characters long ";
-      } // if
-      else
-      {
-            //Try to fetch the quizcode from the database and if it returns something other than an empty list, that means username exists
-            $result = mysqli_fetch_assoc(sqlWithResult1($mysqli, "SELECT quizCode FROM users WHERE quizCode=(?);", $quizCode));
+        
+        $quizID = $_POST['deleteQuiz'];
+        echo "<script>console.log('>$quizID<');</script>";
+        sqlWithoutResult1($mysqli, "UPDATE quizzes SET user_id=0 WHERE quiz_id=?;",$quizID);
+       }
+       
+       else
+       {
+          $quizCode = $_POST['quizCode'];
+         // if the quiz code is  not letters or a mixture of letters and numbers and not equal to 6
+         if (!preg_match("/^[a-zA-Z0-9]*$/",$quizCode) or strlen($quizCode)  != 6)
+         {
+            // error in the quiz code
+           $quizCodeEntryError = "Your quiz code needs to have no special characters and has to be 6 characters long ";
+        } // if
+        else
+        {
+              //Try to fetch the quizcode from the database and if it returns something other than an empty list, that means username exists
+              $result = mysqli_fetch_assoc(sqlWithResult1($mysqli, "SELECT quizCode FROM users WHERE quizCode=(?);", $quizCode));
 
-           // if quiz code exists put in an error
-            if ($result != '')
-                $quizCodeEntryError   = "The quiz code already exists.";
-           else
-              //Insert the username and password into database
-             sqlWithoutResult2($mysqli, "UPDATE users SET quizCode=(?) WHERE username=(?);", strtoupper($quizCode),$username);
+             // if quiz code exists put in an error
+              if ($result != '')
+                  $quizCodeEntryError   = "The quiz code already exists.";
+             else
+                //Insert the username and password into database
+               sqlWithoutResult2($mysqli, "UPDATE users SET quizCode=(?) WHERE username=(?);", strtoupper($quizCode),$username);
 
 
-       } // else
+         } // else
+       }//else
 
    } // if
 
