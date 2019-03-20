@@ -113,6 +113,8 @@ function updateRootQIndex(isDueToDrop)
   {
     newParentX = arrayOfRootQ[index1].getAttribute('data-x');
     parentXP = arrayOfRootQ[index1].getAttribute('data-xp');
+    alert("previous id" + parentXP);
+    alert("new" + newParentX);
 
     //get the subQDiv
     //alert("index1: " + index1);
