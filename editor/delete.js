@@ -114,8 +114,6 @@ function updateRootQIndex()
     alert('root Q Table' + index1)
     subQDiv = document.getElementById('subQDiv' + parentXP + '0');
     alert(subQDiv)
-    //after getting the id, update it
-    subQDiv.setAttribute('id', 'subQDiv' + newParentX + '0');
 
     //get the num of subQSofar
     numOfSubQSoFar = subQDiv.childNodes.length;
@@ -125,6 +123,7 @@ function updateRootQIndex()
     for(var index2 = 0; index2 < subQDiv.childNodes.length; index2++)
     {
       //alert(subQDiv.childNodes[index].childNodes[0])
+      subQDiv.childNodes[index2].setAttribute('id', 'subQDiv' + newParentX + index2);
       subQDiv.childNodes[index2].childNodes[0].setAttribute('id', 'subQTable' + newParentX + (index2 + 1));
       subQDiv.childNodes[index2].childNodes[0].setAttribute('data-x', newParentX);
     } // for loop
