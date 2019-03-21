@@ -1,4 +1,4 @@
-<?php 
+<?php
   session_start();
   if(!isset($_SESSION['username']))
     header("Location: ../");
@@ -19,7 +19,7 @@ Quiz creator
 
   <!-- javaScript for retrieval -->
   <script type="text/javascript" src="./retrieve.js"> </script>
-  
+
   <!-- javaScript for submission -->
   <script type="text/javascript" src="./submission.js"> </script>
 
@@ -47,7 +47,7 @@ Quiz creator
   <link href="./node_modules/dragula/dist/dragula.css" rel="stylesheet" type="text/css">
 
   <body class="is-preload">
-    <script> 
+    <script>
     window.onload = function() {
       quizIDRe = <?php echo (isset($_POST['quizID']) ? json_encode($_POST['quizID']) : '0'); ?>;
       username = <?php  echo json_encode($_SESSION['username']); ?>;
@@ -76,6 +76,7 @@ Quiz creator
               <!-- buttons for editing order and submission -->
                 <div>
                   <input type="button" class="primary button small" value="Save" onclick="save()"> </input>
+                  <p id="saveNotifier"> saved </p> 
                 </div>
                 <br/>
                 <div id="rootQDivAll">

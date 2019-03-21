@@ -290,3 +290,8 @@ input[type="checkbox"], input[type="radio"] {
     width: 1em;
     z-index: -1;
 }
+
+#saveNotifier {
+  opacity: 0;
+  color: green;
+}

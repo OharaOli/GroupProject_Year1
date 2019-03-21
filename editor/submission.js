@@ -10,7 +10,7 @@ var returnATableArray;
 
 var deleteRootQButtons;
 
-var username; 
+var username;
 
 
 // function for the submit button
@@ -338,6 +338,11 @@ function upload_answers(question_ID) {
             isCorrect: isCorrect,
             letter: letter
          }, //data
+         success: function(data)
+         {
+           //this code is triggered when the save is successfully done.
+           $("#saveNotifier").finish().fadeIn("fast").delay(1000).fadeOut("slow");
+         }
       }) //ajax
    } //while
 } //upload_questions

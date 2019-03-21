@@ -149,14 +149,15 @@ function updateRootQIndex(isDueToDrop)
     //loop through each subQTable, and update the data-x coordinate
     for(var index2 = 0; index2 < numOfSubQSoFar; index2++)
     {
-      //alert(subQDiv.childNodes[index].childNodes[0])
+      //update subQDiv each
       subQDiv.childNodes[index2].setAttribute('id', 'subQDiv' + newParentX + index2);
+
       //console.log("subQDIV each id:" + subQDiv.childNodes[index2].id);
       subQDiv.childNodes[index2].childNodes[0].setAttribute('id', 'subQTable' + newParentX + (index2 + 1));
       subQDiv.childNodes[index2].childNodes[0].setAttribute('data-x', newParentX);
     } // for loop
-    //console.log("new parentX: " + newParentX);
-
+    updateSubQIndex(newParentX, false);
+    
   } // for loop
 } // updateRootQIndex
 
