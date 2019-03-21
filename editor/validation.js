@@ -123,6 +123,8 @@ function activateCD(givenATable)
      givenATable.rows[2].cells[2].childNodes[0].removeAttribute('required');
  }
 
+ console.log("why is the code below not being executed?");
+
  //For the C and D, when the texts are empty, the check box must be disabled
  if(givenATable.rows[2].cells[2].childNodes[0].value == "")
  {
