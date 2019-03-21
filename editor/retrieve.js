@@ -131,6 +131,8 @@ function retrieveQAns(givenRootQTable, givenAnsTableArrayAll)
 
       //the text as well
       rootQAnsTable.rows[ansRow].cells[2].childNodes[0].value = ansText;
+
+      activateCD(givenRootQTable);
     } // if statement
   } // for loop
 } // function retrieveRootQAns
@@ -214,7 +216,7 @@ function retrieveFromDB(quiz_ID) {
       $("#quizHeader").text(data);
     }
    });
-   
+
    //Send the current question and then call the submit answer function for its answers
    $.ajax({
       async: false,
