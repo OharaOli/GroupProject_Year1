@@ -36,6 +36,12 @@ Quiz creator
 
   <script type="text/javascript" src="./validation.js"> </script>
 
+  <!-- Import for logout -->
+  <script src="../misc/connectToDB.js"></script>
+
+  <!-- Check phones -->
+  <script src="../misc/checkMobile.js"></script>
+
 
 
   <!-- Accessing Css from a separate file -->
@@ -66,6 +72,12 @@ Quiz creator
 			<!-- Header -->
 				<header id="header">
 					<h1 id="logo"><a href="../">QuizMapp</a></h1>
+          <nav id="nav">
+            <ul>
+              <!-- Logout button -->
+              <li><input class="button primary small" type="submit" name="logout" value="Logout" /></li>
+            </ul>
+          </nav>
 				</header>
 
 			<!-- Banner -->
@@ -76,7 +88,9 @@ Quiz creator
 						</header>
             <!-- quizEditor -->
             <div id="quizEditor" data-numOfQuestions="0">
-              <h1 id="quizHeader" contenteditable="true" data-quizId= "1" placeholder='required'></h1>
+              <h3 id="changeQuizNameh2">Change your quiz name bellow</h3>
+              <h2 id="quizHeader" contenteditable="true" data-quizId= "1" placeholder='required'></h2>
+              <h2 class="give-me-some-space"> </h2>
               <!-- buttons for editing order and submission -->
               <!-- form tag for valiaton -->
               <form action="javascript:void(0);" method="" />
@@ -90,6 +104,11 @@ Quiz creator
               <button id="addRootQButton" class="button small" style="display: block;" class="addRootQButton"  onClick="addRootQuestion(this)">
               add root question </button>
             </div> <!-- QuizEditor -->
+            <div id="saveBox2">
+              <input type="submit" class="primary button small" value="Save" onclick="save()"> </input>
+              <p id="saveNotifier2"> saved </p>
+              <p id="errorNotifier2"> <p>
+            </div>
 
             <br/>
                 <!-- display validation message -->

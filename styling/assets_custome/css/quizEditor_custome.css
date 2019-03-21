@@ -322,7 +322,30 @@ input[type="checkbox"], input[type="radio"] {
     z-index: -1;
 }
 
+#nav input.button {
+    height: 2em;
+    line-height: 2em;
+    padding: 0 1.25em;
+    background-color: #2176ae;
+    text-align: center;
+    text-decoration: none;
+    white-space: nowrap;
+    font-weight: 300;
+    color: #ffffff !important;
+    border-radius: 4px;
+    font-size: 100%;
+    width: 100%;
+}
+
 #saveNotifier {
+  display: none;
+  font-size: large;
+  line-height: large;
+  color: #00FF00;
+  margin: 0 0 0 0;
+}
+
+#saveNotifier2 {
   display: none;
   font-size: large;
   line-height: large;
@@ -332,10 +355,41 @@ input[type="checkbox"], input[type="radio"] {
 
 #saveBox {
   display: inline-block;
-  padding-bottom: 2em;
-} 
+  padding-bottom: 0;
+}
+
+#saveBox2 {
+  display: inline-block;
+  padding-bottom: 0;
+}
 
 #rootQDivAll{
   font-weight: 500;
   color: white;
+}
+
+#changeQuizNameh2{
+  text-align: center;
+  color: #fff;
+  margin: 0 0 0.3em;
+}
+
+#quizHeader {
+  color: #2176ae;
+  font-weight: 500;
+  text-align: center;
+  border-bottom: solid 4px #262732;
+  margin: 0 16em;
+  padding: 0 0 0.1em 0;
+}
+
+header h2{
+  margin: 0 0 1em;
+  color: #12415f;
+  font-size: -webkit-xxx-large;
+}
+
+
+.give-me-some-space{
+  height: 3em;
 }
