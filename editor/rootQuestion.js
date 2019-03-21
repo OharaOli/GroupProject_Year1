@@ -175,9 +175,12 @@ function createRootQTable(givenX, givenRootQText, givenRootQTime, givenRootQFeed
   questionField.setAttribute('class', 'questionField');
   questionField.setAttribute('placeholder', 'question (required)');
   questionField.setAttribute('required', true);
+  questionField.setAttribute('oninvalid', "this.setCustomValidity('Question must be filled')");
+  questionField.setAttribute('oninput',"this.setCustomValidity('')");
   questionField.setAttribute('maxlength', 100);
   questionField.setAttribute('name', "questionField");
   questionField.setAttribute('onkeydown', 'return (event.keyCode!=13);');
+
 
 
   if(givenRootQText != null)
@@ -195,6 +198,7 @@ function createRootQTable(givenX, givenRootQText, givenRootQTime, givenRootQFeed
 
   //append the checkError p tag as well
   var checkErrorParag = document.createElement('p');
+  checkErrorParag.style.display = "none";
   answersCell.appendChild(checkErrorParag);
 
   return rootQTable;

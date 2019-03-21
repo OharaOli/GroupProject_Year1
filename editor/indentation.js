@@ -48,6 +48,8 @@ function createAnswersTable(givenX, givenY, givenQFeedback, isRoot)
   answerFieldA.setAttribute('maxlength', 34);
   answerFieldA.setAttribute('class', 'answerField');
   answerFieldA.setAttribute('required', true);
+  answerFieldA.setAttribute('oninvalid', "this.setCustomValidity('There must be at least 2 answers for the question.')");
+  answerFieldA.setAttribute('oninput',"this.setCustomValidity('')");
   answerCellA.appendChild(answerFieldA);
 
 

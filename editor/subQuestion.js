@@ -137,6 +137,8 @@ function createSubQTable(givenX, givenY, givenSubQText, givenSubQTime, givenSubQ
   questionField.setAttribute('placeholder', 'question (required)');
   questionField.setAttribute('onkeydown', 'return (event.keyCode!=13);');
   questionField.setAttribute('required', true);
+  questionField.setAttribute('oninvalid', "this.setCustomValidity('Question must be filled')");
+  questionField.setAttribute('oninput',"this.setCustomValidity('')");
 
   if(givenSubQText != null)
     questionField.innerHTML = givenSubQText;
