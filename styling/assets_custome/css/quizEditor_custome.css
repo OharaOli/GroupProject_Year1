@@ -244,6 +244,12 @@ td.timeLimitCell
   min-width: 7em;
 }
 
+td.questionCell
+{
+  padding-right: 0.5em;
+  padding-left: 0.5em;
+}
+
 td.buttonCell
 {
   border-left: 1px solid #616168;
