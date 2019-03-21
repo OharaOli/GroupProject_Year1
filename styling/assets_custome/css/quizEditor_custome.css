@@ -292,6 +292,13 @@ input[type="checkbox"], input[type="radio"] {
 }
 
 #saveNotifier {
-  opacity: 0;
-  color: green;
+  display: none;
+  font-size: large;
+  line-height: large;
+  color: #00FF00;
+  margin: 0 0 0 0;
 }
+
+#saveBox {
+  display: inline-block;
+} 

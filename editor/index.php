@@ -74,7 +74,7 @@ Quiz creator
             <div id="quizEditor" data-numOfQuestions="0">
               <h1 id="quizHeader" contenteditable="true" data-quizId= "1" placeholder='required'></h1>
               <!-- buttons for editing order and submission -->
-                <div>
+                <div id="saveBox">
                   <input type="button" class="primary button small" value="Save" onclick="save()"> </input>
                   <p id="saveNotifier"> saved </p> 
                 </div>

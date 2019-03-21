@@ -266,7 +266,6 @@ function upload_quiz() {
       {
         if(quizIDRe == "0")
           quizIDRe = data;
-        console.log("New quiz ID: " + quizIDRe);
         upload_questions(quizIDRe);
       } //success function
    }) //ajax
@@ -312,6 +311,8 @@ function upload_questions(quizID) {
          } //success function
       }) //ajax
    } //for
+   //this code is triggered when the save is successfully done.
+   $("#saveNotifier").finish().fadeIn("fast").css({"display": "inline-block"}).delay(2000).fadeOut("slow");
 } //upload_questions
 
 //Store the answers under the given question ID
@@ -338,11 +339,6 @@ function upload_answers(question_ID) {
             isCorrect: isCorrect,
             letter: letter
          }, //data
-         success: function(data)
-         {
-           //this code is triggered when the save is successfully done.
-           $("#saveNotifier").finish().fadeIn("fast").delay(1000).fadeOut("slow");
-         }
       }) //ajax
    } //while
 } //upload_questions
