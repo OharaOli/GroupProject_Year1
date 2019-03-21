@@ -84,12 +84,13 @@ function hideAddRootQButton()
 //function for the hideSubQButton
 function hideSubQButton(givenButton)
 {
+  console.log(givenButton.value);
   hideSubQuestions(givenButton);
 
-  if(givenButton.value == "V")
-    givenButton.value = ">";
+  if(givenButton.value == "Hide Sub Questions")
+    givenButton.value = "Show Sub Questions";
   else
-    givenButton.value = "V";
+    givenButton.value = "Hide Sub Questions";
 
 }
 
@@ -114,18 +115,6 @@ function hideAllSubQuestions()
 } // function hideAllSubQuestions
 
 
-//function for individually hiding the sub questions
-function hideSubQuestions(givenButton)
-{
-  hideOrShowByElement(givenButton.nextElementSibling.nextElementSibling)
-
-  //update the value
-  //if(givenButton.value == "V")
-  //  givenButton.value = "V";
-//  else
-  //  givenButton.value = ">";
-
-}
 
 
 //function for hiding sub questions of a root question
@@ -137,13 +126,13 @@ function hideSubQuestions(givenButton)
 
 
   //change the shape of the button
-  if(givenButton.value == "V")
+  if(givenButton.value == "Hide Sub Questions")
   {
-    givenButton.value = ">";
+    givenButton.value = "Show Sub Questions";
   }
   else
   {
-    givenButton.value = "V";
+    givenButton.value = "Hide Sub Questions";
   }
 
 } // function hideSubQuestions

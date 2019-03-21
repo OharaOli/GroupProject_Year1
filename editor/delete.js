@@ -68,19 +68,24 @@ function updateRootQIndex(isDueToDrop)
  //use get elements by class
  var arrayOfRootQ = document.getElementsByClassName('rootQTable');
 
+ console.log("array of all root questions: ")
+ console.log(arrayOfRootQ);
+
  //use for loop to loop through
  //use the index to update the number
  //index should start from 0, but the quesitons index is not zero-based
 
-
  var rootQTable;
 
- if(isDueToDrop)
-  var arrayOfRootQLength = arrayOfRootQ.length - 1;
+ if (isDueToDrop)
+ {
+   arrayOfRootQLength = arrayOfRootQ.length - 1;
+ }
  else
-  var arrayOfRootQLength = arrayOfRootQ.length;
+ {
+   arrayOfRootQLength = arrayOfRootQ.length;
 
-
+ }
 
  for(var index = 0; index < arrayOfRootQLength; index++)
  {
@@ -114,7 +119,10 @@ function updateRootQIndex(isDueToDrop)
   {
     newParentX = arrayOfRootQ[index1].getAttribute('data-x');
     parentXP = arrayOfRootQ[index1].getAttribute('data-xp');
-    //once obtained, update the previous parent coord
+    console.log("new ParentX: " + newParentX);
+    console.log("previous ParentX: " + parentXP);
+
+    //once obtained, update the previous parent coord with the new one
     arrayOfRootQ[index1].setAttribute('data-xp', newParentX);
 
     //console.log('previous x: ' + parentXP);
@@ -126,12 +134,14 @@ function updateRootQIndex(isDueToDrop)
     //console.log("subQDiv before update: ")
     //console.log(subQDiv.id);
 
+    //update the subQDiv
     subQDiv.setAttribute('id', 'subQDiv' + newParentX + '0');
     //console.log("subQDiv after update");
     //console.log(subQDiv.id);
 
     //get the num of subQSofar
-    numOfSubQSoFar = subQDiv.childNodes.length;
+    numOfSubQSoFar = subQDiv.getAttribute('data-numOfSubQSoFar');
+    console.log("number of sub Q: " + numOfSubQSoFar);
     //alert(numOfSubQSoFar);
     //console.log("length" + subQDiv.childNodes.length);
     //loop through each subQTable, and update the data-x coordinate
@@ -144,13 +154,12 @@ function updateRootQIndex(isDueToDrop)
       subQDiv.childNodes[index2].childNodes[0].setAttribute('data-x', newParentX);
     } // for loop
     //console.log("new parentX: " + newParentX);
-    updateSubQIndex(newParentX);
 
   } // for loop
 } // updateRootQIndex
 
 
-function updateSubQIndex(givenParentX)
+function updateSubQIndex(givenParentX, isCalledDueToDrag)
 {
   //first get the array of all root questions
   //use get elements by class
@@ -176,12 +185,18 @@ function updateSubQIndex(givenParentX)
   var subQTable;
   var parentX;
 
+  // when this function is called due to dragging,
+  // an additional table is grabbed at the last index of the sub questions.
 
+  if(isCalledDueToDrag)
+    var arrayOfSubQTablesLength = arrayOfSubQTables.length - 1;
+  else
+    var arrayOfSubQTablesLength = arrayOfSubQTables.length;
 
   //use for loop to loop through
   //use the index to update the number
   //index should start from 0, but the quesitons index is not zero-based
-  for(var index = 0; index < arrayOfSubQTables.length; index++)
+  for(var index = 0; index < arrayOfSubQTablesLength; index++)
   {
      //update the index of the rootQAnsTable
      //update the id, update the first cell index
