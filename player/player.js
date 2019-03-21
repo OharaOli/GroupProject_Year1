@@ -222,6 +222,8 @@ function clearQuestionAndAnswers()
     .contents(":not(#answer-button-container, #selected-answer-message)").remove();
   // Hide the selected answer message since we are leaving feedback state.
   $("#selected-answer-message").hide();
+  // Makes the answer notification fixed to not center with rest of content.
+  $("#selected-answer-message").addClass("selected-answer-pre-feedback");
 }  // end-clearQuestionAndAnswers
 
 
