@@ -131,6 +131,7 @@ function activateCD(givenATable)
  }
  else
  {
+   console.log("C check enabled");
    if(givenATable.rows[2].cells[2].childNodes[0].getAttribute('disabled') != null)
      givenATable.rows[2].cells[1].childNodes[0].removeAttribute('disabled');
  } // if false part
@@ -143,6 +144,7 @@ function activateCD(givenATable)
  }
  else
  {
+   console.log("D check enabled");
    if(givenATable.rows[3].cells[2].childNodes[0].getAttribute('disabled') != null)
      givenATable.rows[3].cells[1].childNodes[0].removeAttribute('disabled');
  } // if false part
