@@ -79,10 +79,10 @@ function retrieveRootQ(givenQTableArray)
 }// retrieveRootQ
 
 
-function retrieveQAns(givenRootQTable, givenAnsTableArrayAll)
+function retrieveQAns(givenQTable, givenAnsTableArrayAll)
 {
-  var rootQX = givenRootQTable.getAttribute('data-x');
-  var rootQY = givenRootQTable.getAttribute('data-y');
+  var rootQX = givenQTable.getAttribute('data-x');
+  var rootQY = givenQTable.getAttribute('data-y');
   var ansIndex;
   var ansRow;
   var ansText;
@@ -124,14 +124,18 @@ function retrieveQAns(givenRootQTable, givenAnsTableArrayAll)
         ansCorrect = false;
 
       //locate the ans table of the root Q
-      rootQAnsTable = givenRootQTable.rows[1].cells[3].childNodes[0];
+      QAnsTable = givenQTable.rows[1].cells[3].childNodes[0];
 
       //insert the the correct value (boolean) to the corresponding row
-      rootQAnsTable.rows[ansRow].cells[1].childNodes[0].checked = ansCorrect;
+      QAnsTable.rows[ansRow].cells[1].childNodes[0].checked = ansCorrect;
 
       //the text as well
-      rootQAnsTable.rows[ansRow].cells[2].childNodes[0].value = ansText;
+      QAnsTable.rows[ansRow].cells[2].childNodes[0].value = ansText;
+
+      activateCD(QAnsTable);
+
     } // if statement
+
   } // for loop
 } // function retrieveRootQAns
 
@@ -214,7 +218,7 @@ function retrieveFromDB(quiz_ID) {
       $("#quizHeader").text(data);
     }
    });
-   
+
    //Send the current question and then call the submit answer function for its answers
    $.ajax({
       async: false,

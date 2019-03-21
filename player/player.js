@@ -222,6 +222,8 @@ function clearQuestionAndAnswers()
     .contents(":not(#answer-button-container, #selected-answer-message)").remove();
   // Hide the selected answer message since we are leaving feedback state.
   $("#selected-answer-message").hide();
+  // Makes the answer notification fixed to not center with rest of content.
+  $("#selected-answer-message").addClass("selected-answer-pre-feedback");
 }  // end-clearQuestionAndAnswers
 
 
@@ -259,7 +261,7 @@ function displayFeedback(feedback, isCorrect)
   
   // In any case, display the available feedback.
   $("#q-and-a-container").append("<h3 class='response'>" + feedback + "</h3>");
-
+  // Makes the answer notification centered with rest of content.
   $("#selected-answer-message").removeClass("selected-answer-pre-feedback");
 }  // end-displayFeedback
 
@@ -295,6 +297,8 @@ function updateFloatingState()
 {
   // Hide the selected answer message since we are leaving feedback state.
   $("#selected-answer-message").hide();
+  // Makes the answer notification fixed to not center with rest of content.
+  $("#selected-answer-message").addClass("selected-answer-pre-feedback");
   $("#intro-container").empty();
   $("#q-and-a-container").hide();
   $("#outro-container").hide();
