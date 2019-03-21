@@ -80,9 +80,6 @@ function addRootQuestion(givenButton, givenRootQText, givenRootQTime, givenRootQ
   //append the subQDiv with Button to the rootQDiv
   rootQDiv.appendChild(subQDivWithHideOrShow);
 
-  //for some white space
-  var carrigeReturn2 = document.createElement('br');
-  rootQDiv.appendChild(carrigeReturn2);
 
   //append the wrapper right before where the button is situated
   givenButton.previousElementSibling.appendChild(rootQDiv);

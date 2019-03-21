@@ -188,7 +188,7 @@
             <h3 class='right'>Your Quiz Code: <span> <?php echo $quizCode ?> </span></h3> 
           </div>
           <div class='col-2 col-12-medium'>
-            <input type="text" maxlength="6" name="quizCode" value="<?php echo  $quizCode ?>">
+            <input class = "quizCode" type="text"maxlength="6" name="quizCode" value="<?php echo  $quizCode ?>">
           </div>
           <div class='col-2 col-12-medium'>
             <input class="button primary" type="submit" name="submitCode" value="Change Quiz Code">
@@ -204,7 +204,7 @@ while($row = $quizIDandNameList ->fetch_assoc())
    echo
    "<div class='row gtr-0' id='row-" . $count . "'>";
    echo
-   "<script>placeQuiz(" . $row['quiz_id'] . ",'" . $row['name'] . "', '" . $quizCode . "', '" . $user_id . "', '". $count . "')</script>";
+   "<script>placeQuiz(" . $row['quiz_id'] . ",'" . str_replace("'", "\'", $row['name']) . "','" . $quizCode . "', '" . $user_id . "', '". $count . "')</script>";
    echo
    "</div>";
    $count += 1;

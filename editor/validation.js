@@ -42,12 +42,19 @@ function validateCorrectCheckbox(givenType)
     if(numOfCheckedSoFar < 1)
     {
       //if it is less than one, than printout an error message
-      alert("There must be at least 1 correct answer in " + givenType);
-      // ansTable.nextElementSibling.innerHTML = "There must be at least 1 correct answer."
+      ansTable.nextElementSibling.style.display = "block";
+      ansTable.nextElementSibling.innerHTML = "There must be at least 1 correct answer.";
       isCheckedValid = false;
+
+      //put message on the save notifier as well
+      saveNotifier = document.getElementById('saveNotifier');
+      saveNotifier.innerHTML = "Oops! some questions have no correct answers."
+
+
     } // true part
     else
     {  // if greater than 1, remove the error message
+      ansTable.nextElementSibling.style.display = "none";
       ansTable.nextElementSibling.innerHTML = "";
     } //false part
   } // for loop - looping through each ansTable
@@ -55,3 +62,38 @@ function validateCorrectCheckbox(givenType)
   //return
   return isCheckedValid;
 } // validateCorrectCheckbox
+
+
+
+
+//validation for the answers
+//the answers C must be disabled until A and B are fully filled
+//the answer D must be disabled until A B C are fully filled
+//Use event listeners
+function activateCD(givenATable)
+{
+ //check if A and B are both filled
+ if(givenATable.rows[0].cells[2].childNodes[0].value != ""
+    && givenATable.rows[1].cells[2].childNodes[0].value != "")
+ {
+   //activate C
+   givenATable.rows[2].cells[2].childNodes[0].removeAttribute('disabled');
+
+   //if C also has some value in it, activate D as well
+   if(givenATable.rows[2].cells[2].childNodes[0].value != "")
+   {
+     givenATable.rows[3].cells[2].childNodes[0].removeAttribute('disabled');
+   } // inner if
+   else
+   {
+     //else , you have to disable D
+     givenATable.rows[3].cells[2].childNodes[0].setAttribute('disabled', true);
+   }
+ } // outer if
+ else
+ {
+   //if either A and B are not filled, disable C and D
+   givenATable.rows[2].cells[2].childNodes[0].setAttribute('disabled',true);
+   givenATable.rows[3].cells[2].childNodes[0].setAttribute('disabled',true);
+ } //outer if false part
+} // function activateCD
