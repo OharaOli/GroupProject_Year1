@@ -131,9 +131,10 @@ function retrieveQAns(givenRootQTable, givenAnsTableArrayAll)
 
       //the text as well
       rootQAnsTable.rows[ansRow].cells[2].childNodes[0].value = ansText;
-
-      activateCD(givenRootQTable);
     } // if statement
+
+    activateCD(givenRootQTable);
+
   } // for loop
 } // function retrieveRootQAns
 
