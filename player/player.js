@@ -5,7 +5,7 @@ var playerID;
 // The ID of the host of which the player is currently in the quiz in
 var hostID;
 // delay for each state delay
-var POLL_FOR_STATE_DELAY = 500;
+var POLL_FOR_STATE_DELAY = 250;
 // interval for polling the state
 var pollForStateInterval;
 // create the variable for the player's score
@@ -65,6 +65,7 @@ function setPlayerID(playerAndHostID)
 
 function pollForState(responseText)
 {
+  console.log(responseText);
   var statesArray = responseText.split(" \n");
 
   // If the host has disconnected according to the server.
@@ -282,6 +283,8 @@ function displayOutro()
   $("#floating-container").hide();
   // Show the outro container div.
   $("#outro-container").show();
+  // Hides any previous answer selected.
+  $("#selected-answer-message").hide();
   // Display the player's score.
   $("#outro-container").append("<p>You answered " + playerScore + "/"
                                                        + questionsAnswered + " questions correctly.</p>");

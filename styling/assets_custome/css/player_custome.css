@@ -113,5 +113,7 @@ h3.response{
 
 h2{
     font-weight: 500;
+    max-width: 80vw;
+    word-wrap: break-word;
 }
 

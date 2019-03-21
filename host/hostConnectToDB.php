@@ -159,4 +159,8 @@
       $sql = "UPDATE hosts SET current_question_id = ? WHERE host_id = ?;";
       sqlWithoutResult2($mysqli, $sql, $_GET["q"], $_GET["h"]);
     } // if
+    else if($_GET["s"] == "outro")
+    {
+      echo "1";
+    }
   } // updateState

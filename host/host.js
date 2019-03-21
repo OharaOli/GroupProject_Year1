@@ -427,10 +427,13 @@ function endQuiz()
   // Makes a final update to the database to inform players of the outro state.
   // The (a)ction is (u)pdating the (s)tate, the (h)ost ID is the host's ID, and the
   // new (s)tate is the outro state.
-  updateDataInDB("hostConnectToDB.php?a=us&h=" + hostID + "&s=outro");
-  window.location = "../hub";
+  requestDataFromDB(goToHub, "hostConnectToDB.php?a=us&h=" + hostID + "&s=outro");
 } // endQuiz
 
+function goToHub(returnedText)
+{
+  window.location = "../hub";
+} // goToHub
 
 function enterFloatingState()
 {
@@ -721,9 +724,9 @@ function generateSlides()
       else
       {
         $("#root" + xIndex).append("<section id='" + xIndex + "-" + yIndex + "'><button class='end-button'>End Quiz</button><div class='question-container'><h2>" + questions[xIndex][yIndex].text + "</h2></div></section>");
-      }  // end-else
-      if ($(xIndex + "-" + yIndex).css("height") > 150)
-        console.log("2 lines!!!");
+      }  // end-els
+      if ($("#" + xIndex + "-" + yIndex + " .question-container h2").text().length > 39)
+        $("#" + xIndex + "-" + yIndex + " .question-container h2").css({"margin-top": "3em"});
       addStartButtonToSlide(xIndex, yIndex);
      }  // end-for
 
