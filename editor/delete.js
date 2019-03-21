@@ -210,9 +210,17 @@ function updateSubQIndex(givenParentX, isCalledDueToDrag)
   //index should start from 0, but the quesitons index is not zero-based
   for(var index = 0; index < arrayOfSubQTablesLength; index++)
   {
+
+
+
      //update the index of the rootQAnsTable
      //update the id, update the first cell index
      subQTable = arrayOfSubQTables[index];
+
+     //update the delete sub q button
+     subQTable.rows[0].cells[1].childNodes[0].setAttribute('data-x', givenParentX);
+     subQTable.rows[0].cells[1].childNodes[0].setAttribute('data-y', (index + 1));
+
      //console.log(subQTable);
      subQTable.setAttribute('id', 'subQTable' + givenParentX + (index + 1));
      subQTable.setAttribute('data-y', (index + 1));

@@ -60,7 +60,7 @@ function createAnswersTable(givenX, givenY, givenQFeedback, isRoot)
   var feedbackCell = rowA.insertCell(3);
   feedbackCell.setAttribute('rowspan', 4);
   var feedbackField = document.createElement('textarea');
-  feedbackField.setAttribute('placeholder', 'feedback');
+  feedbackField.setAttribute('placeholder', 'feedback (optional)');
   feedbackField.setAttribute('type', 'text');
   feedbackField.setAttribute('class', 'feedbackField');
   feedbackField.setAttribute('maxlength', 100);
@@ -110,6 +110,7 @@ function createAnswersTable(givenX, givenY, givenQFeedback, isRoot)
   var correctCheckboxC = document.createElement('input');
   correctCheckboxC.setAttribute('type', 'checkbox');
   correctCheckboxC.setAttribute('class', 'correctCheckbox');
+  correctCheckboxC.setAttribute('disabled', true);
 
   // C is disabled until A and B are
 
@@ -120,7 +121,7 @@ function createAnswersTable(givenX, givenY, givenQFeedback, isRoot)
   var answerFieldC = document.createElement('input');
   answerFieldC.setAttribute('type', 'text');
   answerFieldC.setAttribute('maxlength', 34);
-  answerFieldC.setAttribute('placeholder', 'answer C');
+  answerFieldC.setAttribute('placeholder', 'answer C (optional)');
   answerFieldC.setAttribute('disabled', true);
   answerFieldC.setAttribute('class', 'answerField');
   answerCellC.appendChild(answerFieldC);
@@ -139,6 +140,7 @@ function createAnswersTable(givenX, givenY, givenQFeedback, isRoot)
   var correctCheckboxD = document.createElement('input');
   correctCheckboxD.setAttribute('type', 'checkbox');
   correctCheckboxD.setAttribute('class', 'correctCheckbox')
+  correctCheckboxD.setAttribute('disabled', true);
 
   correctCheckboxCellD.appendChild(correctCheckboxD);
 
@@ -147,7 +149,7 @@ function createAnswersTable(givenX, givenY, givenQFeedback, isRoot)
   var answerFieldD = document.createElement('input');
   answerFieldD.setAttribute('type', 'text');
   answerFieldD.setAttribute('maxlength', 34);
-  answerFieldD.setAttribute('placeholder', 'answer D');
+  answerFieldD.setAttribute('placeholder', 'answer D (optional)');
   answerFieldD.setAttribute('disabled', true);
   answerFieldD.setAttribute('class', 'answerField');
   answerCellD.appendChild(answerFieldD);
@@ -158,20 +160,20 @@ function createAnswersTable(givenX, givenY, givenQFeedback, isRoot)
   //adding eventlistener
   //whenever this input field is changed,
   //validation function is triggered
-  answerFieldA.addEventListener('change', function(evt){
+  answerFieldA.addEventListener('input', function(evt){
     activateCD(aTable);
   } );
 
-  answerFieldB.addEventListener('change', function(evt){
+  answerFieldB.addEventListener('input', function(evt){
     activateCD(aTable);
   } );
 
 
-  answerFieldC.addEventListener('change', function(evt){
+  answerFieldC.addEventListener('input', function(evt){
     activateCD(aTable);
   } );
 
-  answerFieldD.addEventListener('change', function(evt){
+  answerFieldD.addEventListener('input', function(evt){
     activateCD(aTable);
   } );
 

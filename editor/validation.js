@@ -77,16 +77,25 @@ function activateCD(givenATable)
  {
    //activate C
    givenATable.rows[2].cells[2].childNodes[0].removeAttribute('disabled');
+   givenATable.rows[2].cells[1].childNodes[0].removeAttribute('disabled');
 
    //if C also has some value in it, activate D as well
    if(givenATable.rows[2].cells[2].childNodes[0].value != "")
    {
      givenATable.rows[3].cells[2].childNodes[0].removeAttribute('disabled');
+     givenATable.rows[3].cells[1].childNodes[0].removeAttribute('disabled');
+
    } // inner if
    else
    {
      //else , you have to disable D
      givenATable.rows[3].cells[2].childNodes[0].setAttribute('disabled', true);
+     givenATable.rows[3].cells[1].childNodes[0].setAttribute('disabled', true);
+
+
+
+
+
    }
  } // outer if
  else
@@ -94,5 +103,26 @@ function activateCD(givenATable)
    //if either A and B are not filled, disable C and D
    givenATable.rows[2].cells[2].childNodes[0].setAttribute('disabled',true);
    givenATable.rows[3].cells[2].childNodes[0].setAttribute('disabled',true);
+
+   //the checkboxes as well
+   givenATable.rows[2].cells[1].childNodes[0].setAttribute('disabled',true);
+   givenATable.rows[3].cells[1].childNodes[0].setAttribute('disabled',true);
+
  } //outer if false part
+
+
+ //separate if statement for dealing with the C
+ if(givenATable.rows[0].cells[2].childNodes[0].value != ""
+    && givenATable.rows[1].cells[2].childNodes[0].value != ""
+    && givenATable.rows[2].cells[2].childNodes[0].value == ""
+    && givenATable.rows[3].cells[2].childNodes[0].value != "")
+ {
+   //for this special case, C must be required
+   givenATable.rows[2].cells[2].childNodes[0].setAttribute('required', true);
+ }
+ else
+ {
+   if(givenATable.rows[2].cells[2].childNodes[0].getAttribute('required') != null)
+     givenATable.rows[2].cells[2].childNodes[0].removeAttribute('required');
+ }
 } // function activateCD

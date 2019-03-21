@@ -42,6 +42,10 @@ Quiz creator
   <link rel="stylesheet" href="../styling/assets/css/main.css" />
   <link href="../styling/assets_custome/css/quizEditor_custome.css" rel="stylesheet" type="text/css">
   <noscript><link rel="stylesheet" href="styling/assets/css/noscript.css" /></noscript>
+
+  <!-- style sheet for validation -->
+  <link rel="stylesheet" href="./validation.css" type="text/css" />
+  
   <!-- plug-ins for dragula -->
   <script type="text/javascript" src="./node_modules/dragula/dist/dragula.js"></script>
   <link href="./node_modules/dragula/dist/dragula.css" rel="stylesheet" type="text/css">
