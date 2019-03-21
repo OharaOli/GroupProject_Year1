@@ -133,6 +133,8 @@ function updateRootQIndex(isDueToDrop)
     subQDiv = document.getElementById('subQDiv' + parentXP + '0');
     //console.log("subQDiv before update: ")
     //console.log(subQDiv.id);
+    console.log(subQDiv.id);
+
 
     //update the subQDiv
     subQDiv.setAttribute('id', 'subQDiv' + newParentX + '0');
@@ -145,7 +147,7 @@ function updateRootQIndex(isDueToDrop)
     //alert(numOfSubQSoFar);
     //console.log("length" + subQDiv.childNodes.length);
     //loop through each subQTable, and update the data-x coordinate
-    for(var index2 = 0; index2 < subQDiv.childNodes.length; index2++)
+    for(var index2 = 0; index2 < numOfSubQSoFar; index2++)
     {
       //alert(subQDiv.childNodes[index].childNodes[0])
       subQDiv.childNodes[index2].setAttribute('id', 'subQDiv' + newParentX + index2);

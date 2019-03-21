@@ -178,6 +178,7 @@ function createRootQTable(givenX, givenRootQText, givenRootQTime, givenRootQFeed
   questionField.setAttribute('class', 'questionField');
   questionField.setAttribute('placeholder', 'question (required)');
   questionField.setAttribute('required', true);
+  questionField.setAttribute('maxlength', 100);
   questionField.setAttribute('name', "questionField");
   questionField.setAttribute('onkeydown', 'return (event.keyCode!=13);');
 

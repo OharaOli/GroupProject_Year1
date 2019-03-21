@@ -58,6 +58,7 @@ function createAnswersTable(givenX, givenY, givenQFeedback, isRoot)
   feedbackField.setAttribute('placeholder', 'feedback');
   feedbackField.setAttribute('type', 'text');
   feedbackField.setAttribute('class', 'feedbackField');
+  feedbackField.setAttribute('maxlength', 100);
   feedbackField.setAttribute('onkeydown', 'return (event.keyCode!=13);');
 
 
