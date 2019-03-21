@@ -154,6 +154,7 @@ function createSubQTable(givenX, givenY, givenSubQText, givenSubQTime, givenSubQ
   answerCell.appendChild(createAnswersTable(givenX, givenY, givenSubQFeedback, false));
 
   var checkedErrorParag = document.createElement('p');
+  checkedErrorParag.style.display = 'none';
   answerCell.appendChild(checkedErrorParag);
 
 

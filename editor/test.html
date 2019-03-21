@@ -1,3 +1,9 @@
+<?php
+  session_start();
+  if(!isset($_SESSION['username']))
+    header("Location: ../");
+?>
+
 <!DOCTYPE html>
 <html>
 <title>
@@ -11,11 +17,11 @@ Quiz creator
 
   <script type="text/javascript" src="./indentation.js"> </script>
 
-  <!-- javaScript for submission -->
-  <script type="text/javascript" src="./submission.js"> </script>
-
   <!-- javaScript for retrieval -->
   <script type="text/javascript" src="./retrieve.js"> </script>
+
+  <!-- javaScript for submission -->
+  <script type="text/javascript" src="./submission.js"> </script>
 
   <!-- javaScript for deleting questions -->
   <script type="text/javascript" src="./delete.js"> </script>
@@ -41,14 +47,16 @@ Quiz creator
   <link href="./node_modules/dragula/dist/dragula.css" rel="stylesheet" type="text/css">
 
   <body class="is-preload">
-  <!--
     <script>
     window.onload = function() {
-      quizIDRe = <?php echo json_encode($_POST['quizID']); ?>;
+      quizIDRe = <?php echo (isset($_POST['quizID']) ? json_encode($_POST['quizID']) : '0'); ?>;
+      username = <?php  echo json_encode($_SESSION['username']); ?>;
+      if(quizIDRe != "0")
+        retrieve();
+      else
+        $("#quizHeader").text("NEW QUIZ NAME");
     };
   </script>
--->
-
 		<div id="page-wrapper">
 
 			<!-- Header -->
@@ -64,13 +72,11 @@ Quiz creator
 						</header>
             <!-- quizEditor -->
             <div id="quizEditor" data-numOfQuestions="0">
-              <h1 id="quizHeader" contenteditable="true" data-quizId= "1" placeholder='required'>
-                Lorem ipsum
-              </h1>
+              <h1 id="quizHeader" contenteditable="true" data-quizId= "1" placeholder='required'></h1>
               <!-- buttons for editing order and submission -->
-                <div>
+                <div id="saveBox">
                   <input type="button" class="primary button small" value="Save" onclick="save()"> </input>
-                  <input type="button" class="primary button small" value="retrieve(JavaScript-test)" onClick="retrieve()"> </input>
+                  <p id="saveNotifier"> saved </p> 
                 </div>
                 <br/>
                 <div id="rootQDivAll">

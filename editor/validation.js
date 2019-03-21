@@ -50,7 +50,6 @@ function validateCorrectCheckbox(givenType)
       saveNotifier = document.getElementById('saveNotifier');
       saveNotifier.innerHTML = "Oops! some questions have no correct answers."
 
-
     } // true part
     else
     {  // if greater than 1, remove the error message
