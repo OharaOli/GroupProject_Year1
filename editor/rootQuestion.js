@@ -122,7 +122,7 @@ function createRootQTable(givenX, givenRootQText, givenRootQTime, givenRootQFeed
   //add dragHandleCell
   var dragHandleCell = headerRow.insertCell(0);
   dragHandleCell.setAttribute('rowspan', 2);
-  dragHandleCell.setAttribute('class', 'rowspan-draggy-thingy');
+  dragHandleCell.setAttribute('class', 'dragHandleCell');
 
 
   //this cell is initially inivisible

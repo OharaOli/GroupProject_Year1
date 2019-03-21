@@ -81,6 +81,7 @@ function createSubQTable(givenX, givenY, givenSubQText, givenSubQTime, givenSubQ
   // insert drag button cell
   var dragHandleCell = headerRow.insertCell(0);
   dragHandleCell.setAttribute('rowspan', 2);
+  dragHandleCell.setAttribute('class', 'dragHandleCell');
 
   //append dragbutton to this
   var dragHandle = document.createElement('button');
@@ -89,8 +90,8 @@ function createSubQTable(givenX, givenY, givenSubQText, givenSubQTime, givenSubQ
 
 
   //insert hierarchyCell
-  var indexCell = headerRow.insertCell(1);
-  indexCell.setAttribute('class', 'indexCell');
+  var buttonCell = headerRow.insertCell(1);
+  buttonCell.setAttribute('class', 'buttonCell');
 
   //create delete button for sub question
   var deleteSubQButton = document.createElement('input');
@@ -102,7 +103,7 @@ function createSubQTable(givenX, givenY, givenSubQText, givenSubQTime, givenSubQ
   deleteSubQButton.setAttribute('onClick', 'deleteSubQuestion(this)')
 
   //append the button to the cell
-  indexCell.appendChild(deleteSubQButton);
+  buttonCell.appendChild(deleteSubQButton);
 
   //insert question header
   var questionHeaderCell = headerRow.insertCell(2);
