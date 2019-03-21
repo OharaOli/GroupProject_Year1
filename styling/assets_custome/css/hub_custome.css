@@ -1,3 +1,5 @@
+
+
 #no-border{
     border: none;
     margin-bottom: 4em;
@@ -14,6 +16,17 @@
 
 #quizzesTable .EditButton.button.small{
     margin-bottom: 1em;
+}
+
+#quizzesTable .DeleteButton.button.small{
+    background-color: #ff2d00;
+    border-color: red;
+    margin-bottom: 1em;
+    padding: 0 2.25em;
+}
+
+.row > .col-1 {
+ width: 6em !important;
 }
 
 #nav input.button{
@@ -33,30 +46,38 @@
 
 }
 
+.row > .col-2{
+    width: 10% !important;
+}
+
 /* @media only screen and (min-width: 1101px){ */
-    #quizzesTable{
-        text-align: left;
-    }
+#quizzesTable{
+    text-align: left;
+}
 
-    #no-border{
-    border: none;
-    margin-bottom: 3.5em;
-    }
+#no-border{
+border: none;
+margin-bottom: 3.5em;
+}
 
-    #no-border input[type="text"]{
-        color: white;
-        font-weight: 500;
-        width: 75%;
-    }
 
-    #no-border input[type="submit"]{
-        float: right;
-    }
+#no-border input[type="text"]{
+    color: white;
+    font-weight: 500;
+    text-align: center;
+    width: 10em;
+    margin-left: auto;
+    margin-right: 10em;
+}
 
-    #no-border span{
-        font-weight: 900;
-		color: #2176ae;
-    }
+#no-border input[type="submit"]{
+    float: right;
+}
+
+#no-border span{
+    font-weight: 900;
+color: #2176ae;
+}
 
 #nav input.button{
     height: 2em;
@@ -118,7 +139,7 @@ input.button.primary{
 }
 
 input.button.primary.small{
-width: 6em !important;
+  width: 6em !important;
 }
 
 #header{
@@ -134,20 +155,19 @@ float: right;
 }
 
 @media screen and (max-width: 1439px){
-  #no-border input[type="text"]{
-   width: 65%;
-  }
 }
 
 @media screen and (max-width: 1023px){
-  #no-border input[type="text"]{
-    width: 55%;
-  }
 }
 
 @media screen and (max-width: 981px){
   #no-border input[type="text"]{
-    width: 100%;
+      color: white;
+      font-weight: 500;
+      text-align: center;
+      width: 10em;
+      margin-left: auto;
+      margin-right: auto;
   }
   div#main.wrapper.style1{
     text-align: center;
@@ -160,5 +180,19 @@ float: right;
   }
   .row.gtr-0 > * {
     padding: 0 0 0.5em 0em;
+        text-align: center;
   }
+  @media screen and (max-width: 980px) {
+    .row > .col-1 {
+	  width: 6em;
+	  left: 50%!important;
+	  margin-left: auto;
+	  margin-right: auto;
+
+    }
+  }
+  		
 }
+
+
+
