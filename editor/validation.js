@@ -42,13 +42,19 @@ function validateCorrectCheckbox(givenType)
     if(numOfCheckedSoFar < 1)
     {
       //if it is less than one, than printout an error message
-      alert("There must be at least 1 correct answer in " + givenType);
-      ansTable.nextElementSibling.innerHTML = "There must be at least 1 correct answer."
+      ansTable.nextElementSibling.style.display = "block";
+      ansTable.nextElementSibling.innerHTML = "There must be at least 1 correct answer.";
       isCheckedValid = false;
+
+      //put message on the save notifier as well
+      saveNotifier = document.getElementById('saveNotifier');
+      saveNotifier.innerHTML = "Oops! some questions have no correct answers."
+
 
     } // true part
     else
     {  // if greater than 1, remove the error message
+      ansTable.nextElementSibling.style.display = "none";
       ansTable.nextElementSibling.innerHTML = "";
     } //false part
   } // for loop - looping through each ansTable
