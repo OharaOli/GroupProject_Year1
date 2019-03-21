@@ -38,7 +38,7 @@ input.deleteSubQButton
 textarea {
   margin: 0 .25rem;
   min-width: 125px;
-  border: 1px solid #eee;
+  border: 1px solid rgb(54, 55, 62);
   border-left: 3px solid;
   border-radius: 5px;
   transition: border-color .5s ease-out;
@@ -56,7 +56,7 @@ textarea:invalid {
 input[type=text] {
   margin: 0 .25rem;
   min-width: 125px;
-  border: 1px solid #eee;
+  border: 1px solid rgb(54, 55, 62);
   border-left: 3px solid;
   border-radius: 5px;
   transition: border-color .5s ease-out;
@@ -95,7 +95,7 @@ textarea:invalid
   border: 2px dashed red;
 }
 */
-.rowspan-draggy-thingy{
+.dragHandleCell{
   padding-top: 0.7em;
 }
 
@@ -103,18 +103,19 @@ table.rootQTable
 {
   vertical-align: -webkit-baseline-middle;
   width: 80%;
-  border-right: 1px solid grey;
-  border-left: 1px solid grey;
-  margin-left: 1.5em;
+  border-right: 1px solid #616168;
+  border-left: 1px solid #616168;
+  margin-left: 0.5em;
 
 }
 
 table.subQTable
 {
   vertical-align: -webkit-baseline-middle;
-  width: auto;
-  border-right: 1px solid grey;
-  border-left: 1px solid grey;
+  width: 80%;
+  border-right: 1px solid #616168;
+  border-left: 1px solid #616168;
+  margin-left: 1.5em;
 }
 
 
@@ -128,7 +129,7 @@ table.ansTableRoot
 
 table.ansTableSub
 {
-  width: auto;
+  width: 90%;
   height: auto;
   margin-bottom: -2.24em;
   margin-top: -0.24em;
@@ -187,22 +188,21 @@ button.addRootQButton
 
 textarea.questionField
 {
-  width: 10em;
-  height: 6em;
-
+  width: 90%;
+  height: 7.3em;
 }
 
 textarea.feedbackField
 {
   width: 100%;
-  height: 6em;
+  height: 7.3em;
 }
 
 select.timeLimitList
 {
-
-
-
+  color: white;
+  font-weight: 500;
+  border: solid 1px rgb(54, 55, 62);
 }
 
 input.answerField
@@ -232,11 +232,34 @@ div
   vertical-align: middle !important;
 }
 
+textarea{
+  font-weight: 400;
+}
+
 tbody,
 tr,
 td{
   vertical-align: middle !important;
 }
+
+td.timeLimitCell
+{
+  border-left: 1px solid rgba(128, 128, 128, 0.15);
+  border-right: 1px solid rgba(128, 128, 128, 0.15);
+  padding: 0 0.5em 0 0.5em;
+  min-width: 7em;
+}
+
+td.buttonCell
+{
+  border-left: 1px solid #616168;
+}
+
+td.indexCell
+{
+  border-right: 1px solid rgba(128, 128, 128, 0.15);
+}
+
 
 
 /* adding styling on template elements, Jonas*/
