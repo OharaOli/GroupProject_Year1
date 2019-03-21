@@ -12,14 +12,14 @@ function placeQuiz(quizID, quizName, quizCode, user_id, count)
   $("#row-" + count).append("<div class='col-8 col-12-medium'><h3>"
                             + quizName + "</h3></div>");
                             
-  $("#row-" + count).append("<div class='col-2 col-12-medium'><button class = 'HostButton button small' id='host"
+  $("#row-" + count).append("<div class='col-1 col-12-medium'><button class = 'HostButton button small' id='host"
                             + quizID + "'>Host</button></div>");
                             
-  $("#row-" + count).append("<div class='col-2 col-12-medium'><button class = 'EditButton button small' id='edit"
+  $("#row-" + count).append("<div class='col-1 col-12-medium'><button class = 'EditButton button small' id='edit"
                             + quizID + "'>Edit</button></div>");
                             
-  $("#row-" + count).append("<div class='col-2 col-12-medium'><button class = 'DeleteButton button small' id='delete"
-                            + quizID + "'>Delete</button></div>");      
+  $("#row-" + count).append("<div class='col-1 col-12-medium'><button class = 'DeleteButton button small' id='delete"
+                            + quizID + "'>X</button></div>");      
                                                  
   //var secondCell = rows.inseWrtCell(1);
   //secondCell.innerHTML = buttonHost;
