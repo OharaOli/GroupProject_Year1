@@ -19,7 +19,7 @@ CREATE TABLE questions(
   x_coord int NOT NULL,
   y_coord int NOT NULL,
   time int NOT NULL,
-  feedback VARCHAR(255) NOT NULL,
+  feedback VARCHAR(255),
   PRIMARY KEY(question_ID));
   
 CREATE TABLE answers(
