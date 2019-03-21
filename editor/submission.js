@@ -25,6 +25,10 @@ function save()
     qTableArray = createQTableArray();
     aTableArrayAll = createATableArrayAll();
 
+    //JSON stringify
+    console.log(JSON.stringify(aTableArrayAll));
+
+
     upload_quiz();
   } // if statement
 }
@@ -133,7 +137,7 @@ function createATableArray(givenATable)
     //look up the text cell
     //store the information in the cell only if the cell is not empty
     // if it is empty, just ignore that cell
-    if(givenATable.rows[index].cells[2].childNodes[0].value != ""
+    if(givenATable.rows[index].cells[2].childNodes[0].value.trim() != ""
        && givenATable.rows[index].cells[2].childNodes[0].getAttribute('disabled') == null);
     {
 
@@ -195,48 +199,7 @@ function createATableArrayAll()
 
 } // function createATableArray
 //---------------------------------------------------------------------------
-
-
-function validation()
-{
- //validation to check if question feedback boxes are filled.
-    valid = true;
-    //get all the question boxes created
-    var checkQuestion = document.getElementsByClassName('questionField');
-    //get all the feedback boxes created
-    var checkFeedback = document.getElementsByClassName('feedbackField');
-
-    //for loop through each question bo see if empty
-    for (var i = 0; i < checkQuestion.length; i++) {
-      if (checkQuestion[i].value == "")
-      {
-        valid = false;
-        document.getElementById('question_validation').innerHTML = "You must fill in ALL the question boxes";
-        break;
-      }
-      else {
-        document.getElementById('question_validation').innerHTML = "";
-        valid = true;
-      }
-
-    }
-    //for loop through each feedback box see if empty
-    for (var i = 0; i < checkFeedback.length; i++) {
-      if (checkFeedback[i].value == "")
-      {
-        valid = false;
-        document.getElementById('feedback_validation').innerHTML = "You must fill in ALL the feedback boxes";
-        break;
-      }
-      else {
-        document.getElementById('feedback_validation').innerHTML = "";
-        valid = true;
-
-    }
-
-}
-  return valid;
-}
+//sorry Yamin I don't need your code anymore..
 
 //-------------------------------submission -----------------------------//
 //Oliver O'Hara (part 1)
