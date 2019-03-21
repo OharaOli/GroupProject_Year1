@@ -19,7 +19,7 @@
 }
 
 #quizzesTable .DeleteButton.button.small{
-    background-color: #ff2d00;
+    background-color: #CC2400;
     border-color: red;
     margin-bottom: 1em;
     padding: 0 2.25em;
@@ -66,7 +66,7 @@ margin-bottom: 3.5em;
     font-weight: 500;
     text-align: center;
     width: 10em;
-    margin-left: auto;
+    margin-left: -4.5em;
     margin-right: 10em;
 }
 
