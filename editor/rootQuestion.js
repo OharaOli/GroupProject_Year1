@@ -157,7 +157,7 @@ function createRootQTable(givenX, givenRootQText, givenRootQTime, givenRootQFeed
   questionHeaderCell.innerHTML = "<th>Question</th>";
 
   var timeLimitHeaderCell = headerRow.insertCell(3);
-  timeLimitHeaderCell.innerHTML = "<th>Time(s)</th>";
+  timeLimitHeaderCell.innerHTML = "<th>Time Limit</th>";
 
   //another header for answers
   var answersHeaderCell = headerRow.insertCell(4);

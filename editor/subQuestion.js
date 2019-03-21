@@ -111,7 +111,7 @@ function createSubQTable(givenX, givenY, givenSubQText, givenSubQTime, givenSubQ
 
   //insert cell for the time limit
   var timeLimitHeaderCell = headerRow.insertCell(3);
-  timeLimitHeaderCell.innerHTML = "<th>Time(s)</th>";
+  timeLimitHeaderCell.innerHTML = "<th>Time Limit</th>";
 
   //insertCell for the answers header
   var answersHeaderCell = headerRow.insertCell(4);

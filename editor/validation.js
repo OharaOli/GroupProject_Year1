@@ -53,6 +53,7 @@ function validateCorrectCheckbox(givenType)
     } // true part
     else
     {  // if greater than 1, remove the error message
+      isCheckedValid = true;
       ansTable.nextElementSibling.style.display = "none";
       ansTable.nextElementSibling.innerHTML = "";
     } //false part
@@ -61,7 +62,6 @@ function validateCorrectCheckbox(givenType)
   //return
   return isCheckedValid;
 } // validateCorrectCheckbox
-
 
 
 

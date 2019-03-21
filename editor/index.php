@@ -74,13 +74,16 @@ Quiz creator
             <div id="quizEditor" data-numOfQuestions="0">
               <h1 id="quizHeader" contenteditable="true" data-quizId= "1" placeholder='required'></h1>
               <!-- buttons for editing order and submission -->
+              <!-- form tag for valiaton -->
+              <form action="javascript:void(0);" method="">
                 <div id="saveBox">
-                  <input type="button" class="primary button small" value="Save" onclick="save()"> </input>
-                  <p id="saveNotifier"> saved </p> 
+                  <input type="submit" class="primary button small" value="Save" onclick="save()"> </input>
+                  <p id="saveNotifier"> saved </p>
                 </div>
                 <br/>
                 <div id="rootQDivAll">
                 </div>
+              </form>
               <button id="addRootQButton" class="button small" style="display: block;" class="addRootQButton"  onClick="addRootQuestion(this)">
               add root question </button>
             </div> <!-- QuizEditor -->
