@@ -81,6 +81,7 @@ function createSubQTable(givenX, givenY, givenSubQText, givenSubQTime, givenSubQ
   // insert drag button cell
   var dragHandleCell = headerRow.insertCell(0);
   dragHandleCell.setAttribute('rowspan', 2);
+  dragHandleCell.setAttribute('class', 'dragHandleCell');
 
   //append dragbutton to this
   var dragHandle = document.createElement('button');
@@ -89,8 +90,8 @@ function createSubQTable(givenX, givenY, givenSubQText, givenSubQTime, givenSubQ
 
 
   //insert hierarchyCell
-  var indexCell = headerRow.insertCell(1);
-  indexCell.setAttribute('class', 'indexCell');
+  var buttonCell = headerRow.insertCell(1);
+  buttonCell.setAttribute('class', 'buttonCell');
 
   //create delete button for sub question
   var deleteSubQButton = document.createElement('input');
@@ -102,7 +103,7 @@ function createSubQTable(givenX, givenY, givenSubQText, givenSubQTime, givenSubQ
   deleteSubQButton.setAttribute('onClick', 'deleteSubQuestion(this)')
 
   //append the button to the cell
-  indexCell.appendChild(deleteSubQButton);
+  buttonCell.appendChild(deleteSubQButton);
 
   //insert question header
   var questionHeaderCell = headerRow.insertCell(2);
@@ -111,7 +112,7 @@ function createSubQTable(givenX, givenY, givenSubQText, givenSubQTime, givenSubQ
 
   //insert cell for the time limit
   var timeLimitHeaderCell = headerRow.insertCell(3);
-  timeLimitHeaderCell.innerHTML = "<th>Time(s)</th>";
+  timeLimitHeaderCell.innerHTML = "<th>Time Limit</th>";
 
   //insertCell for the answers header
   var answersHeaderCell = headerRow.insertCell(4);
@@ -154,6 +155,7 @@ function createSubQTable(givenX, givenY, givenSubQText, givenSubQTime, givenSubQ
   answerCell.appendChild(createAnswersTable(givenX, givenY, givenSubQFeedback, false));
 
   var checkedErrorParag = document.createElement('p');
+  checkedErrorParag.style.display = 'none';
   answerCell.appendChild(checkedErrorParag);
 
 

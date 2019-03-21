@@ -193,26 +193,26 @@ function createTimeLimitList(givenTimeLimit)
 
   var option1 = document.createElement('option');
   option1.setAttribute('value', '10');
-  option1.innerHTML = "10";
+  option1.innerHTML = "10sec";
 
   var option2 = document.createElement('option');
-  option2.setAttribute('value', '15');
-  option2.innerHTML = "15";
+  option2.setAttribute('value', '20');
+  option2.innerHTML = "20sec";
 
 
   var option3 = document.createElement('option');
-  option3.setAttribute('value', '20');
-  option3.innerHTML = "20";
+  option3.setAttribute('value', '30');
+  option3.innerHTML = "30sec";
 
 
   var option4 = document.createElement('option');
-  option4.setAttribute('value', '25');
-  option4.innerHTML = "25";
+  option4.setAttribute('value', '60');
+  option4.innerHTML = "1min";
 
 
   var option5 = document.createElement('option');
-  option5.setAttribute('value', '30');
-  option5.innerHTML = "30";
+  option5.setAttribute('value', '120');
+  option5.innerHTML = "2min";
 
 
   //append the iptions to the list

@@ -122,7 +122,7 @@ function createRootQTable(givenX, givenRootQText, givenRootQTime, givenRootQFeed
   //add dragHandleCell
   var dragHandleCell = headerRow.insertCell(0);
   dragHandleCell.setAttribute('rowspan', 2);
-  dragHandleCell.setAttribute('class', 'rowspan-draggy-thingy');
+  dragHandleCell.setAttribute('class', 'dragHandleCell');
 
 
   //this cell is initially inivisible
@@ -157,7 +157,7 @@ function createRootQTable(givenX, givenRootQText, givenRootQTime, givenRootQFeed
   questionHeaderCell.innerHTML = "<th>Question</th>";
 
   var timeLimitHeaderCell = headerRow.insertCell(3);
-  timeLimitHeaderCell.innerHTML = "<th>Time(s)</th>";
+  timeLimitHeaderCell.innerHTML = "<th>Time Limit</th>";
 
   //another header for answers
   var answersHeaderCell = headerRow.insertCell(4);
