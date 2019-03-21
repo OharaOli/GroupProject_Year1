@@ -13,27 +13,27 @@ function editRootQOrder(givenButton)
   if(givenButton.getAttribute('data-editMode') == '0')
   {
     givenButton.setAttribute('data-editMode', '1');
-    givenButton.style.backgroundColor = "#A9DFBF";
+    givenButton.style.backgroundColor = "white";
 
     //change the boolean state in all of the other buttons as well
     dragHandleArray = document.getElementsByClassName('dragHandleRoot');
     for(var index = 0; index < dragHandleArray.length; index++)
     {
       dragHandleArray[index].setAttribute('data-editMode', '1');
-      dragHandleArray[index].style.backgroundColor = "#A9DFBF";
+      dragHandleArray[index].style.backgroundColor = "white";
     } // for loop
   } // true part
   else
   {
     givenButton.setAttribute('data-editMode', '0');
-    givenButton.style.backgroundColor = "buttonface";
+    givenButton.style.backgroundColor = "#2176AE";
 
     //change the boolean state in all of the other buttons as well
     dragHandleArray = document.getElementsByClassName('dragHandleRoot');
     for(var index = 0; index < dragHandleArray.length; index++)
     {
       dragHandleArray[index].setAttribute('data-editMode', '0');
-      dragHandleArray[index].style.backgroundColor = "buttonface";
+      dragHandleArray[index].style.backgroundColor = "#2176AE";
 
     } // for loop
   } // false part
