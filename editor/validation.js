@@ -57,6 +57,12 @@ function validateCorrectCheckbox(givenType)
       isCheckedValid = true;
       ansTable.nextElementSibling.style.display = "none";
       ansTable.nextElementSibling.innerHTML = "";
+
+      //remove the message
+      var errorNotifier = document.getElementById('errorNotifier');
+      errorNotifier.style.display = "none";
+      errorNotifier.innerHTML = "";
+
     } //false part
   } // for loop - looping through each ansTable
 
