@@ -290,6 +290,8 @@ function displayOutro()
 
 function updateFloatingState()
 {
+  // Hide the selected answer message since we are leaving feedback state.
+  $("#selected-answer-message").hide();
   $("#intro-container").empty();
   $("#q-and-a-container").hide();
   $("#outro-container").hide();
