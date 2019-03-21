@@ -109,6 +109,7 @@ function updateRootQIndex(isDueToDrop)
 
   var newParentX;
   var parentXP;
+  var rootQTable;
 
   var numOfSubQSoFar;
   var subQTable;
@@ -117,6 +118,7 @@ function updateRootQIndex(isDueToDrop)
   // use grab them by id. just change the x coordinates
   for(var index1 = 0; index1 < arrayOfRootQLength; index1++)
   {
+    rootQTable = arrayOfRootQ[index1];
     newParentX = arrayOfRootQ[index1].getAttribute('data-x');
     parentXP = arrayOfRootQ[index1].getAttribute('data-xp');
     console.log("new ParentX: " + newParentX);
@@ -130,7 +132,7 @@ function updateRootQIndex(isDueToDrop)
     //get the subQDiv
     //alert("index1: " + index1);
     //alert('subQDiv' + parentXP + '0');
-    subQDiv = document.getElementById('subQDiv' + parentXP + '0');
+    subQDiv = rootQTable.parentNode.childNodes[1].childNodes[1].childNodes[0];
     //console.log("subQDiv before update: ")
     //console.log(subQDiv.id);
     console.log(subQDiv.id);
@@ -142,7 +144,7 @@ function updateRootQIndex(isDueToDrop)
     //console.log(subQDiv.id);
 
     //get the num of subQSofar
-    numOfSubQSoFar = subQDiv.getAttribute('data-numOfSubQSoFar');
+    numOfSubQSoFar = subQDiv.childNodes.length;
     console.log("number of sub Q: " + numOfSubQSoFar);
     //alert(numOfSubQSoFar);
     //console.log("length" + subQDiv.childNodes.length);
@@ -150,14 +152,21 @@ function updateRootQIndex(isDueToDrop)
     for(var index2 = 0; index2 < numOfSubQSoFar; index2++)
     {
       //update subQDiv each
-      subQDiv.childNodes[index2].setAttribute('id', 'subQDiv' + newParentX + index2);
+      console.log("subQDivEach to change: " + subQDiv.childNodes[index2].id);
+      console.log("new ParentX:" + newParentX);
+      subQDiv.childNodes[index2].setAttribute('id', 'subQDiv' + newParentX + (index2 + 1));
+      console.log("subQDivEach after change: " + subQDiv.childNodes[index2].id);
 
       //console.log("subQDIV each id:" + subQDiv.childNodes[index2].id);
+      console.log("subQTable to change: " + subQDiv.childNodes[index2].childNodes[0].id);
       subQDiv.childNodes[index2].childNodes[0].setAttribute('id', 'subQTable' + newParentX + (index2 + 1));
+      console.log("subQTable after change: " + subQDiv.childNodes[index2].childNodes[0].id);
       subQDiv.childNodes[index2].childNodes[0].setAttribute('data-x', newParentX);
+      console.log("subQTable x-coord after change: " + subQDiv.childNodes[index2].childNodes[0].getAttribute('data-x'));
+
     } // for loop
     updateSubQIndex(newParentX, false);
-    
+
   } // for loop
 } // updateRootQIndex
 

@@ -116,8 +116,6 @@ function createRootQTable(givenX, givenRootQText, givenRootQTime, givenRootQFeed
   rootQTable.setAttribute('data-y', '0');
   rootQTable.setAttribute('data-xp', givenX);
 
-  //index for the question
-  rootQTable.setAttribute('data-index', 'Q' + givenX);
 
   // add header row
   var headerRow = rootQTable.insertRow(0);
