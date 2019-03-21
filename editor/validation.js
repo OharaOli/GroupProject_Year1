@@ -126,6 +126,7 @@ function activateCD(givenATable)
  //For the C and D, when the texts are empty, the check box must be disabled
  if(givenATable.rows[2].cells[2].childNodes[0].value == "")
  {
+   console.log("C check disabeld");
    givenATable.rows[2].cells[1].childNodes[0].setAttribute('disabled', true);
  }
  else
@@ -137,6 +138,7 @@ function activateCD(givenATable)
  //same logic as above, but this time for D
  if(givenATable.rows[3].cells[2].childNodes[0].value == "")
  {
+   console.log("D check disabled");
    givenATable.rows[3].cells[1].childNodes[0].setAttribute('disabled', true);
  }
  else
