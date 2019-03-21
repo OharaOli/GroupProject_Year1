@@ -32,7 +32,8 @@ function validateCorrectCheckbox(givenType)
     //work out the numOfCheckedSoFar
     for(var index2 = 0; index2 < ansTable.rows.length; index2++)
     {
-      if(ansTable.rows[index2].cells[1].childNodes[0].checked == true)
+      if(ansTable.rows[index2].cells[1].childNodes[0].checked == true
+         && ansTable.rows[index2].cells[1].childNodes[0].getAttribute('disabled') == null)
       {
        numOfCheckedSoFar++;
       }
@@ -47,8 +48,8 @@ function validateCorrectCheckbox(givenType)
       isCheckedValid = false;
 
       //put message on the save notifier as well
-      saveNotifier = document.getElementById('saveNotifier');
-      saveNotifier.innerHTML = "Oops! some questions have no correct answers."
+      errorNotifier = document.getElementById('errorNotifier');
+      errorNotifier.innerHTML = "Oops! some questions have no correct answers."
 
     } // true part
     else
@@ -92,10 +93,6 @@ function activateCD(givenATable)
      givenATable.rows[3].cells[2].childNodes[0].setAttribute('disabled', true);
      givenATable.rows[3].cells[1].childNodes[0].setAttribute('disabled', true);
 
-
-
-
-
    }
  } // outer if
  else
@@ -111,7 +108,7 @@ function activateCD(givenATable)
  } //outer if false part
 
 
- //separate if statement for dealing with the C
+ //separate if statement for dealing with the special case with C
  if(givenATable.rows[0].cells[2].childNodes[0].value != ""
     && givenATable.rows[1].cells[2].childNodes[0].value != ""
     && givenATable.rows[2].cells[2].childNodes[0].value == ""
@@ -125,4 +122,26 @@ function activateCD(givenATable)
    if(givenATable.rows[2].cells[2].childNodes[0].getAttribute('required') != null)
      givenATable.rows[2].cells[2].childNodes[0].removeAttribute('required');
  }
+
+ //For the C and D, when the texts are empty, the check box must be disabled
+ if(givenATable.rows[2].cells[2].childNodes[0].value == "")
+ {
+   givenATable.rows[2].cells[1].childNodes[0].setAttribute('disabled', true);
+ }
+ else
+ {
+   if(givenATable.rows[2].cells[2].childNodes[0].getAttribute('disabled') != null)
+     givenATable.rows[2].cells[1].childNodes[0].removeAttribute('disabled');
+ } // if false part
+
+ //same logic as above, but this time for D
+ if(givenATable.rows[3].cells[2].childNodes[0].value == "")
+ {
+   givenATable.rows[3].cells[1].childNodes[0].setAttribute('disabled', true);
+ }
+ else
+ {
+   if(givenATable.rows[3].cells[2].childNodes[0].getAttribute('disabled') != null)
+     givenATable.rows[3].cells[1].childNodes[0].removeAttribute('disabled');
+ } // if false part
 } // function activateCD
