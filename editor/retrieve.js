@@ -133,7 +133,7 @@ function retrieveQAns(givenRootQTable, givenAnsTableArrayAll)
       rootQAnsTable.rows[ansRow].cells[2].childNodes[0].value = ansText;
     } // if statement
 
-    activateCD(givenRootQTable);
+    activateCD(rootQAnsTable);
 
   } // for loop
 } // function retrieveRootQAns
