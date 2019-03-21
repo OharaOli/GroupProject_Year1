@@ -36,9 +36,6 @@ Quiz creator
 
   <script type="text/javascript" src="./validation.js"> </script>
 
-  <!-- Import for logout -->
-  <script src="../misc/connectToDB.js"></script>
-
   <!-- Check phones -->
   <script src="../misc/checkMobile.js"></script>
 
@@ -48,10 +45,6 @@ Quiz creator
   <link rel="stylesheet" href="../styling/assets/css/main.css" />
   <link href="../styling/assets_custome/css/quizEditor_custome.css" rel="stylesheet" type="text/css">
   <noscript><link rel="stylesheet" href="styling/assets/css/noscript.css" /></noscript>
-
-  <!-- style sheet for validation -->
-  <link rel="stylesheet" href="./validation.css" type="text/css" />
-  
   <!-- plug-ins for dragula -->
   <script type="text/javascript" src="./node_modules/dragula/dist/dragula.js"></script>
   <link href="./node_modules/dragula/dist/dragula.css" rel="stylesheet" type="text/css">
@@ -74,8 +67,25 @@ Quiz creator
 					<h1 id="logo"><a href="../">QuizMapp</a></h1>
           <nav id="nav">
             <ul>
-              <!-- Logout button -->
+              <!-- Logout and play button -->
+              <li><form action="index.php" method="post">
+              <li><a href="../player">Play</a></li>
               <li><input class="button primary small" type="submit" name="logout" value="Logout" /></li>
+              </form></li>
+
+              <?php
+                  if($_SERVER['REQUEST_METHOD'] == "POST" and isset($_POST['logout']))
+                  {
+                      func();
+                  }
+                  function func()
+                  {
+                   // destroy the session
+                   session_destroy();
+                   header("Location: ../");
+                   exit();
+                  }
+              ?>
             </ul>
           </nav>
 				</header>
