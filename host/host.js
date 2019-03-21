@@ -582,7 +582,7 @@ function displayFeedbackState(answerSelections)
   toggleNavigation(true);
   $("#stop-" + getCoords()).css("visibility", "hidden").unbind("click");
   $(".timer-container").fadeOut(100);
-  setTimeout(function(){ $(".timer-container").remove(); }, 1500);  
+  setTimeout(function(){ $(".timer-container").remove(); }, 100);  
 
   $("#number-of-answers-" + getCoords()).text("Total Answers: " + currentQuestionNumOfAnswers);
 
@@ -722,6 +722,8 @@ function generateSlides()
       {
         $("#root" + xIndex).append("<section id='" + xIndex + "-" + yIndex + "'><button class='end-button'>End Quiz</button><div class='question-container'><h2>" + questions[xIndex][yIndex].text + "</h2></div></section>");
       }  // end-else
+      if ($(xIndex + "-" + yIndex).css("height") > 150)
+        console.log("2 lines!!!");
       addStartButtonToSlide(xIndex, yIndex);
      }  // end-for
 

@@ -288,12 +288,14 @@ section button:hover {
 }
 
 .reveal h2 {
+  max-width: 80vw;
   margin-top: 4.5em;
   margin-bottom: 1em;
   font-size: 3.5em !important;
   background-color: #FFF;
   color: #222;
   display: inline-block;
+  word-wrap: break-word;
   padding: 1em;
   border-radius: 0.25em;
   -webkit-box-shadow: 0px 5px 50px -15px rgba(0,0,0,0.75);
