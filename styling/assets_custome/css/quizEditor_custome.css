@@ -101,38 +101,30 @@ textarea:invalid
 
 table.rootQTable
 {
-  vertical-align: -webkit-baseline-middle;
-  width: 80%;
   border-right: 1px solid #616168;
   border-left: 1px solid #616168;
-  margin-left: 0.5em;
+  width: 80%;
 
 }
 
 table.subQTable
 {
-  vertical-align: -webkit-baseline-middle;
-  width: 80%;
   border-right: 1px solid #616168;
   border-left: 1px solid #616168;
-  margin-left: 1.5em;
+  width: 90%;
 }
 
 
 table.ansTableRoot
 {
+  margin: 0;
   width: 90%;
-  height: auto;
-  margin-bottom: -2.24em;
-  margin-top: -0.24em;
 }
 
 table.ansTableSub
 {
+  margin: 0;
   width: 90%;
-  height: auto;
-  margin-bottom: -2.24em;
-  margin-top: -0.24em;
 }
 
 div.subQDivWithHideOrShow{
@@ -142,7 +134,7 @@ div.subQDivWithHideOrShow{
 div.subQDivWithButton
 {
   position: relative;
-  margin-left: 177px;
+  margin-left: 200px;
 }
 
 
@@ -188,13 +180,13 @@ button.addRootQButton
 
 textarea.questionField
 {
-  width: 90%;
+  width: 99%;
   height: 7.3em;
 }
 
 textarea.feedbackField
 {
-  width: 100%;
+  width: 99%;
   height: 7.3em;
 }
 
@@ -203,12 +195,13 @@ select.timeLimitList
   color: white;
   font-weight: 500;
   border: solid 1px rgb(54, 55, 62);
+  min-width: 5em;
 }
 
 input.answerField
 {
   width: 6em;
-  height: 1em;
+  height: 1.5em;
 }
 
 
@@ -246,7 +239,8 @@ td.timeLimitCell
 {
   border-left: 1px solid rgba(128, 128, 128, 0.15);
   border-right: 1px solid rgba(128, 128, 128, 0.15);
-  padding: 0 0.5em 0 0.5em;
+  padding-right: 0.5em;
+  padding-left: 0.5em;
   min-width: 7em;
 }
 
