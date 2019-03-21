@@ -115,45 +115,50 @@ function updateRootQIndex(isDueToDrop)
     parentXP = arrayOfRootQ[index1].getAttribute('data-xp');
     //once obtained, update the previous parent coord
     arrayOfRootQ[index1].setAttribute('data-xp', newParentX);
-    alert("previous id" + parentXP);
-    alert("new" + newParentX);
 
+    console.log('previous x: ' + parentXP);
+    console.log('new x: ' + newParentX);
     //get the subQDiv
     //alert("index1: " + index1);
     //alert('subQDiv' + parentXP + '0');
-    alert('root Q Table' + index1)
     subQDiv = document.getElementById('subQDiv' + parentXP + '0');
-    alert('getting the previous subQDIv:id:' + subQDiv)
+    console.log("subQDiv before update: ")
+    console.log(subQDiv.id);
 
     subQDiv.setAttribute('id', 'subQDiv' + newParentX + '0');
+    console.log("subQDiv after update");
+    console.log(subQDiv.id);
 
     //get the num of subQSofar
     numOfSubQSoFar = subQDiv.childNodes.length;
     //alert(numOfSubQSoFar);
-
+    console.log("length" + subQDiv.childNodes.length);
     //loop through each subQTable, and update the data-x coordinate
     for(var index2 = 0; index2 < subQDiv.childNodes.length; index2++)
     {
       //alert(subQDiv.childNodes[index].childNodes[0])
       subQDiv.childNodes[index2].setAttribute('id', 'subQDiv' + newParentX + index2);
+      console.log("subQDIV each id:" + subQDiv.childNodes[index2].id);
       subQDiv.childNodes[index2].childNodes[0].setAttribute('id', 'subQTable' + newParentX + (index2 + 1));
       subQDiv.childNodes[index2].childNodes[0].setAttribute('data-x', newParentX);
     } // for loop
+    console.log("new parentX: " + newParentX);
     updateSubQIndex(newParentX);
 
   } // for loop
 } // updateRootQIndex
 
 
-
 function updateSubQIndex(givenParentX)
 {
   //first get the array of all root questions
   //use get elements by class
-  var arrayOfAllSubQTables = document.getElementsByClassName('subQTable');
+  var arrayOfAllSubQTables = $('.subQTable');
+  console.log("all subQ array: ");
+  console.log(arrayOfAllSubQTables.length);
 
   var arrayOfSubQTables = [];
-
+  console.log("Length: " + arrayOfAllSubQTables.length)
   //loop through the sub questions whose parent's coordindate are as given
   for(var index = 0; index < arrayOfAllSubQTables.length; index++)
   {
@@ -172,15 +177,18 @@ function updateSubQIndex(givenParentX)
   //use for loop to loop through
   //use the index to update the number
   //index should start from 0, but the quesitons index is not zero-based
-  for(var index = 0; index < arrayOfSubQTables.length; index++)
+  for(var index = 0; index < arrayOfSubQTables.length - 1; index++)
   {
-    alert('success');
+    console.log("sub q tables for " + givenParentX)
+    console.log(arrayOfSubQTables);
      //update the index of the rootQAnsTable
      //update the id, update the first cell index
      subQTable = arrayOfSubQTables[index];
-     subQTable.setAttribute('id', 'subQTable' + givenParentX + "." + (index + 1));
+     console.log(subQTable);
+     subQTable.setAttribute('id', 'subQTable' + givenParentX + (index + 1));
      subQTable.setAttribute('data-y', (index + 1));
      subQTable.rows[1].cells[0].innerHTML = "Q" + (parseInt(givenParentX) + 1) + "." + (index + 1);
+     console.log('new parent q index: ' +(parseInt(givenParentX) + 1));
 
      //update the answers table as well
      parentX = subQTable.getAttribute('data-x');
