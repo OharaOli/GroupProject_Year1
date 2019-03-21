@@ -128,11 +128,17 @@ form {
 /*
 } */
 
+.input{
+  margin-left: 2em;
+}
+
 .codeErrorLine{
     color: #ff2d00 !important;
     text-align: center !important;
 
 }
+
+
 
 input.button.primary{
     width: 13em !important;
