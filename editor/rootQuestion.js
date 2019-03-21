@@ -137,7 +137,7 @@ function createRootQTable(givenX, givenRootQText, givenRootQTime, givenRootQFeed
 
   dragHandleCell.appendChild(dragHandle);
 
-  var indexHeaderCell = headerRow.insertCell(1);
+  var buttonCell = headerRow.insertCell(1);
 
   //button for deleting the question
   var deleteRootQButton = document.createElement('input');
@@ -150,7 +150,8 @@ function createRootQTable(givenX, givenRootQText, givenRootQTime, givenRootQFeed
 
 
   //append the button to the cell
-  indexHeaderCell.appendChild(deleteRootQButton);
+  buttonCell.appendChild(deleteRootQButton);
+  buttonCell.setAttribute('class', 'buttonCell');
 
   var questionHeaderCell = headerRow.insertCell(2);
   questionHeaderCell.innerHTML = "<th>Question</th>";
@@ -165,6 +166,7 @@ function createRootQTable(givenX, givenRootQText, givenRootQTime, givenRootQFeed
   // add question Row
   var questionRow = rootQTable.insertRow(1);
   var indexCell = questionRow.insertCell(0);
+  indexCell.setAttribute('class', 'indexCell');
   indexCell.innerHTML = "Q" + ( givenX + 1 );
 
   var questionCell = questionRow.insertCell(1);
@@ -185,6 +187,7 @@ function createRootQTable(givenX, givenRootQText, givenRootQTime, givenRootQFeed
 
   var timeLimitCell = questionRow.insertCell(2);
   timeLimitCell.appendChild(createTimeLimitList(givenRootQTime));
+  timeLimitCell.setAttribute('class', 'timeLimitCell');
 
 
   var answersCell = questionRow.insertCell(3);

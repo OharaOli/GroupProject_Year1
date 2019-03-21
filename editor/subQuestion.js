@@ -89,7 +89,8 @@ function createSubQTable(givenX, givenY, givenSubQText, givenSubQTime, givenSubQ
 
 
   //insert hierarchyCell
-  var hierarchyCell = headerRow.insertCell(1);
+  var indexCell = headerRow.insertCell(1);
+  indexCell.setAttribute('class', 'indexCell');
 
   //create delete button for sub question
   var deleteSubQButton = document.createElement('input');
@@ -101,7 +102,7 @@ function createSubQTable(givenX, givenY, givenSubQText, givenSubQTime, givenSubQ
   deleteSubQButton.setAttribute('onClick', 'deleteSubQuestion(this)')
 
   //append the button to the cell
-  hierarchyCell.appendChild(deleteSubQButton);
+  indexCell.appendChild(deleteSubQButton);
 
   //insert question header
   var questionHeaderCell = headerRow.insertCell(2);
@@ -123,6 +124,7 @@ function createSubQTable(givenX, givenY, givenSubQText, givenSubQTime, givenSubQ
 
 
   var indexCell = questionRow.insertCell(0);
+  indexCell.setAttribute('class', 'indexCell');
 
   indexCell.innerHTML = "Q" + (parseInt(givenX) + 1) + "." + givenY;
 
@@ -142,6 +144,7 @@ function createSubQTable(givenX, givenY, givenSubQText, givenSubQTime, givenSubQ
 
 
   var timeLimitCell = questionRow.insertCell(2);
+  timeLimitCell.setAttribute('class', 'timeLimitCell');
   timeLimitCell.appendChild(createTimeLimitList(givenSubQTime));
 
 
