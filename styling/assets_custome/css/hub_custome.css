@@ -66,7 +66,7 @@ margin-bottom: 3.5em;
     font-weight: 500;
     text-align: center;
     width: 10em;
-    margin-left: auto;
+    margin-left: -4.5em;
     margin-right: 10em;
 }
 
@@ -128,11 +128,17 @@ form {
 /*
 } */
 
+.input{
+  margin-left: 2em;
+}
+
 .codeErrorLine{
     color: #ff2d00 !important;
     text-align: center !important;
 
 }
+
+
 
 input.button.primary{
     width: 13em !important;

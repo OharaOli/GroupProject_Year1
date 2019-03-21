@@ -50,6 +50,9 @@ function createAnswersTable(givenX, givenY, givenQFeedback, isRoot)
   answerFieldA.setAttribute('required', true);
   answerCellA.appendChild(answerFieldA);
 
+
+
+
   //description Cell - only for this row
   //need only one description Cell for the four cells
   var feedbackCell = rowA.insertCell(3);
@@ -95,7 +98,6 @@ function createAnswersTable(givenX, givenY, givenQFeedback, isRoot)
   answerCellB.appendChild(answerFieldB);
 
 
-
   // row for the answer C
   var rowC = aTable.insertRow(2);
 
@@ -117,8 +119,11 @@ function createAnswersTable(givenX, givenY, givenQFeedback, isRoot)
   answerFieldC.setAttribute('type', 'text');
   answerFieldC.setAttribute('maxlength', 34);
   answerFieldC.setAttribute('placeholder', 'answer C');
+  answerFieldC.setAttribute('disabled', true);
   answerFieldC.setAttribute('class', 'answerField');
   answerCellC.appendChild(answerFieldC);
+
+
 
 
 
@@ -141,8 +146,33 @@ function createAnswersTable(givenX, givenY, givenQFeedback, isRoot)
   answerFieldD.setAttribute('type', 'text');
   answerFieldD.setAttribute('maxlength', 34);
   answerFieldD.setAttribute('placeholder', 'answer D');
+  answerFieldD.setAttribute('disabled', true);
   answerFieldD.setAttribute('class', 'answerField');
   answerCellD.appendChild(answerFieldD);
+
+
+
+
+  //adding eventlistener
+  //whenever this input field is changed,
+  //validation function is triggered
+  answerFieldA.addEventListener('change', function(evt){
+    activateCD(aTable);
+  } );
+
+  answerFieldB.addEventListener('change', function(evt){
+    activateCD(aTable);
+  } );
+
+
+  answerFieldC.addEventListener('change', function(evt){
+    activateCD(aTable);
+  } );
+
+  answerFieldD.addEventListener('change', function(evt){
+    activateCD(aTable);
+  } );
+
 
   //return the answer Table
   return aTable;
