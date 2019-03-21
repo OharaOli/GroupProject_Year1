@@ -286,8 +286,8 @@ function displayOutro()
   // Hides any previous answer selected.
   $("#selected-answer-message").hide();
   // Display the player's score.
-  $("#outro-container").append("<p>You answered " + playerScore + "/"
-                                                       + questionsAnswered + " questions correctly.</p>");
+  $("#outro-container").append("<h2>You answered " + playerScore + "/"
+                                                       + questionsAnswered + " questions correctly.</h2>");
 }  // end-displayOutro
 
 
