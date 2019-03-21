@@ -102,9 +102,11 @@ textarea:invalid
 table.rootQTable
 {
   vertical-align: -webkit-baseline-middle;
-  width: auto;
+  width: 80%;
   border-right: 1px solid grey;
   border-left: 1px solid grey;
+  margin-left: 1.5em;
+
 }
 
 table.subQTable
@@ -118,7 +120,7 @@ table.subQTable
 
 table.ansTableRoot
 {
-  width: auto;
+  width: 90%;
   height: auto;
   margin-bottom: -2.24em;
   margin-top: -0.24em;
@@ -132,6 +134,9 @@ table.ansTableSub
   margin-top: -0.24em;
 }
 
+div.subQDivWithHideOrShow{
+  padding-left: 0.5em;
+}
 
 div.subQDivWithButton
 {
@@ -189,9 +194,8 @@ textarea.questionField
 
 textarea.feedbackField
 {
-  width: 10em;
+  width: 100%;
   height: 6em;
-
 }
 
 select.timeLimitList
@@ -244,6 +248,10 @@ section#content{
 
 header h2{
   text-align: center;
+}
+
+table{
+    margin: 0 0 1em 0;
 }
 
 table td {
@@ -301,4 +309,10 @@ input[type="checkbox"], input[type="radio"] {
 
 #saveBox {
   display: inline-block;
+  padding-bottom: 2em;
 } 
+
+#rootQDivAll{
+  font-weight: 500;
+  color: white;
+}
