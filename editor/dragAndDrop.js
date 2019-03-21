@@ -18,7 +18,7 @@ function createDragConfigSub()
     //this drag config is jsut for the sub questions.
     //you first have to get the parentX
     var parentX = draggedElement.getAttribute('data-x');
-    updateSubQIndex(parentX);
+    updateSubQIndex(parentX, true);
   })
 
   return dragConfig;
