@@ -374,14 +374,30 @@ input[type="checkbox"], input[type="radio"] {
   margin: 0 0 0.3em;
 }
 
-#quizHeader {
-  color: #2176ae;
-  font-weight: 500;
-  text-align: center;
-  border-bottom: solid 4px #262732;
-  margin: 0 16em;
-  padding: 0 0 0.1em 0;
+@media screen and (min-width: 1240px){
+  #quizHeader {
+    color: #2176ae;
+    font-weight: 500;
+    text-align: center;
+    border-bottom: solid 4px #262732;
+    margin: 0 12em;
+    padding: 0 0 0.1em 0;
+    white-space: nowrap;
+  }
 }
+
+@media screen and (max-width: 1239px){
+  #quizHeader {
+    color: #2176ae;
+    font-weight: 500;
+    text-align: center;
+    border-bottom: solid 4px #262732;
+    margin: 0 6em;
+    padding: 0 0 0.1em 0;
+    white-space: nowrap;
+  }
+}
+
 
 header h2{
   margin: 0 0 1em;
