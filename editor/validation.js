@@ -305,7 +305,7 @@ function activateCD(givenATable)
  else
  {
    if(givenATable.rows[2].cells[2].childNodes[0].getAttribute('required') != null)
-     givenATable.rows[2].cells[2].childNodes[0].removeAttribute('required');safssf
+     givenATable.rows[2].cells[2].childNodes[0].removeAttribute('required');
  }
 
 
