@@ -18,6 +18,7 @@ function save()
 {
   var checkValid = validateCorrectCheckbox();
 
+
   if(checkValid)
   {
     numOfQSoFarSubmit = 0;

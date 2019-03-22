@@ -12,8 +12,6 @@ function createAnswersTable(givenX, givenY, givenQFeedback, isRoot)
   //create aTable
   var aTable = document.createElement('table');
 
-  aTable.setAttribute('name', 'ansTable');
-
   //set attributes
   aTable.setAttribute('id', 'ansTable' + givenX + givenY);
   if(isRoot)
