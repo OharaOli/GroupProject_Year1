@@ -6,7 +6,7 @@
 
 function validateQuizName()
 {
-  if($('quizHeader').innerHTML.trim().length == 0)
+  if($('#quizHeader').text().trim().length == 0)
     return false;
   else
     return true;
@@ -20,7 +20,6 @@ function validateZeroQ()
     return false;
   else
     return true;
-    
 
 }
 
