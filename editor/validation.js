@@ -102,7 +102,7 @@ function validateAnswers()
   return true;
 }
 
-
+/*
 function validateRequiredInputs()
 {
   var allQField = document.getElementsByClassName('questionField');
@@ -110,7 +110,7 @@ function validateRequiredInputs()
   var allAField = document.getElementsByClassName('answerField');
   console.log(JSON.stringify(allAField));
 
-  var requiredOnes = [];else
+  var requiredOnes = [];
 
   for(var index = 0; index < allQField.length; index++)
   {
@@ -137,7 +137,7 @@ function validateRequiredInputs()
     return true;
 
 }
-
+*/
 
 function validateCorrectCheckbox()
 {
