@@ -12,11 +12,12 @@ var deleteRootQButtons;
 
 var username;
 
-var checkValid = validateCorrectCheckbox();
 
 // function for the submit button
 function save()
 {
+  var checkValid = validateCorrectCheckbox();
+
   if(checkValid)
   {
     numOfQSoFarSubmit = 0;
