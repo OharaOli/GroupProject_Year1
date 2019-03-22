@@ -654,6 +654,7 @@ function displayFeedbackState(answerSelections)
        80: null
     }
   });
+  currentQuestionNumOfAnswers = 0;
 }  // end-displayFeedbackState
 
 
