@@ -201,7 +201,7 @@ function createRootQTable(givenX, givenRootQText, givenRootQTime, givenRootQFeed
   //append the checkError p tag as well
   var checkErrorParag = document.createElement('p');
   checkErrorParag.setAttribute('class', 'checkErrorParag');
-  checkErrorParag.style.display = "none";
+  checkErrorParag.style.display = "block";
   answersCell.appendChild(checkErrorParag);
 
   return rootQTable;

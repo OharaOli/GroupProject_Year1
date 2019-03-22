@@ -3,24 +3,22 @@
 //validate the number of checked boxes for each ans table
 // if there are no correct answers at all, put error message below the answer table!
 // it seems you should put p element in each cell! (right below the table)
-function validateCorrectCheckbox(givenType)
+
+
+
+function validateCorrectCheckbox()
 {
+  var isCheckedValid;
   var ansTableArray;
+  var numOfInvalidTableSoFar = 0;
 
   //first get all of the answer tables
-  if(givenType == "root")
-  {
-    ansTableArray = document.getElementsByClassName('ansTableRoot');
-  }
-  else
-  {
-    ansTableArray = document.getElementsByClassName('ansTableSub');
-  }
+
+  ansTableArray = document.getElementsByName('ansTable');
 
   //loop through the array, and check
   var numOfCheckedSoFar;
   var ansTable;
-  var isCheckedValid = true;
 
 
   for(var index1 = 0; index1 < ansTableArray.length; index1++)
@@ -39,43 +37,48 @@ function validateCorrectCheckbox(givenType)
       }
     } // for loop - looping through eacch row
 
-    //check the numof checed
+    //check the num checed
     if(numOfCheckedSoFar < 1)
     {
-      //if it is less than one, than printout an error message
-      ansTable.nextElementSibling.style.display = "block";
-      ansTable.nextElementSibling.innerHTML = "There must be at least 1 correct answer.";
-      isCheckedValid = false;
-      //put message on the save notifier as well
-    } // true part
+      ansTable.nextElementSibling.innerHTML = "You must provide at least 1 correct answer.";
+      numOfInvalidTableSoFar++;
+    }
     else
-    {  // if greater than 1, remove the error message
-      ansTable.nextElementSibling.style.display = "none";
-      ansTable.nextElementSibling.innerHTML = "";
+    {
+      ansTable.nextElementSibling.style.display = 'none';
+    }
 
-      
-    } //false part
   } // for loop - looping through each ansTable
 
   //now change the message
+  if(numOfInvalidTableSoFar < 1)
+    isCheckedValid = true;
+  else
+    isCheckedValid = false;
+
   if(isCheckedValid)
   {
-    var errorNotifiers = document.getElementsByClassName('errorNotifier');
-    for(var index = 0; index < errorNotifiers.length; index++)
-    {
-      errorNotifiers[index].style.display = 'block';
-      errorNotifiers[index].innerHTML = "Oops! some questions have no correct answers.";
-    } // for loop
-  }
-  else
-  {
+    console.log("is it valid?" + isCheckedValid);
+
+    //make the message appear below the table
+
     var errorNotifiers = document.getElementsByClassName('errorNotifier');
     for(var index = 0; index < errorNotifiers.length; index++)
     {
       errorNotifiers[index].style.display = 'none';
       errorNotifiers[index].innerHTML = "";
     } // for loop
-  }
+  } // true part
+  else
+  {
+    console.log("is it valid?" + isCheckedValid);
+    var errorNotifiers = document.getElementsByClassName('errorNotifier');
+    for(var index = 0; index < errorNotifiers.length; index++)
+    {
+      errorNotifiers[index].style.display = 'inline-block';
+      errorNotifiers[index].innerHTML = "Oops! Some questions have no correct answers!";
+    } // for loop
+  } // false part
 
   //return
   return isCheckedValid;

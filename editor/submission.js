@@ -16,17 +16,13 @@ var username;
 // function for the submit button
 function save()
 {
-  var rootCheckValid = validateCorrectCheckbox("root");
-  var subCheckValid = validateCorrectCheckbox("sub");
 
-  if(rootCheckValid && subCheckValid)
+
+  if(validateCorrectCheckbox())
   {
     numOfQSoFarSubmit = 0;
     qTableArray = createQTableArray();
     aTableArrayAll = createATableArrayAll();
-
-    //JSON stringify
-    console.log(JSON.stringify(aTableArrayAll));
 
 
     upload_quiz();
@@ -296,9 +292,9 @@ function upload_questions(quizID) {
       }) //ajax
    } //for
    //this code is triggered when the save is successfully done.
-   $("#saveNotifier").finish().fadeIn("fast").css({"display": "inline-block"}).delay(2000).fadeOut("slow");
-   $("#saveNotifier2").finish().fadeIn("fast").css({"display": "inline-block"}).delay(2000).fadeOut("slow");
-   $(".errorNotifier").hide();
+   //$(".errorNotifier").hide();
+   $("#saveNotifier").finish().fadeIn("fast").css({"display": "inline-block"}).delay(4000).fadeOut("slow");
+   $("#saveNotifier2").finish().fadeIn("fast").css({"display": "inline-block"}).delay(4000).fadeOut("slow");
 } //upload_questions
 
 //Store the answers under the given question ID
