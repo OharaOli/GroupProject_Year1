@@ -276,6 +276,20 @@ section button:hover {
   border-radius: 50%;
   line-height: 3em !important;
   transition: 0.1s background-color ease;
+  cursor: pointer;
+}
+
+.timer-container:hover {
+  background-color: #1A95D5 !important;
+  color: #ebebeb;
+}
+
+.timer-container-paused {
+  background-color: #DDD;
+}
+
+.timer-container-paused:hover {
+  background-color: #BBB !important;
 }
 
 .timer-container h3 {

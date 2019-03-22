@@ -327,12 +327,7 @@ function startQuestion()
       76: null,
       78: null,
       79: null,
-      80: function() {
-            if (!timerIsPaused)
-              timerIsPaused = true;
-            else
-              timerIsPaused = false;
-          }
+      80: togglePause
     }
   });
 } // startQuestion
@@ -604,7 +599,7 @@ function displayFeedbackState(answerSelections)
     $("#" + getCoords() + " .answerbox:eq(" + letterIndex + ") .bar")
       .css({"width": percentage});
 
-    $("#" + getCoords() + " .answerbox:eq(" + letterIndex + ") .bar-container").css({"opacity": "0.2"}); 
+    $("#" + getCoords() + " .answerbox:eq(" + letterIndex + ") .bar-container").css({"opacity": "0.35"}); 
 
     $("#" + getCoords() + " .answerbox:eq(" + letterIndex + ") .selection-number").hide().fadeIn(100); 
 
@@ -814,7 +809,7 @@ function startTimer()
   // The time left until countdown is 0.
   var timeLeft = questions[xCoord][yCoord].timeLimit;
   // Show the timer countdown...
-  $("#" + getCoords()).prepend("<div class='timer-container'><h3 id='timer'></h3></div>");
+  $("#" + getCoords()).prepend("<div class='timer-container' onclick='togglePause();'><h3 id='timer'></h3></div>");
   // ...in a fading effect.
   $("#" + getCoords() + " .timer-container").hide().fadeIn(100);
   // A function which decrements the countdown by 1, displays
@@ -830,10 +825,10 @@ function startTimer()
     if (!timerIsPaused)
     {
       timeLeft--;
-      $(".timer-container").css({"background-color": "#3BACE7"});
+      $(".timer-container").removeClass("timer-container-paused");
     }  // end-if
     else
-      $(".timer-container").css({"background-color": "#DDD"});
+      $(".timer-container").addClass("timer-container-paused");
   }  // end-updateTimerFunction
   // Call the updateTimer function once at first, to
   // start countdown immediately.
@@ -841,6 +836,16 @@ function startTimer()
   // Afterwards, call it once every second.
   timerInterval  = setInterval(updateTimer, 1000);
 }  // end-startTimer
+
+
+// A function toggles the pause of the timer.
+function togglePause() {
+  if (!timerIsPaused)
+    timerIsPaused = true;
+  else
+    timerIsPaused = false;
+}  // end-togglePause
+
 
 // Execute the code when the page is ready.
 $(document).ready(function() {
