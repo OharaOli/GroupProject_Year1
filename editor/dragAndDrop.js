@@ -50,5 +50,5 @@ function createDragCongfigRoot()
 
 //setting the container of the rootquestions draggable
 var dragConfigRoot = createDragCongfigRoot();
-console.log(document.getElementById('rootQDivAll'));
+//.log(document.getElementById('rootQDivAll'));
 dragConfigRoot.containers.push(document.getElementById('rootQDivAll'));
