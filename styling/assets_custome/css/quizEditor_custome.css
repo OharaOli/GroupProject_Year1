@@ -317,8 +317,7 @@ table{
 
 table td {
     padding: 0.2em 0.2em;
-    width: 0em;
-    text-align: -webkit-center;
+    text-align: center;
 }
 
 table.ansTableRoot td{
@@ -455,6 +454,7 @@ p.errorNotifier
 {
   color: red;
   display: none;
+  margin: 0 0 0 0.5em
 }
 
 p.checkErrorParag
