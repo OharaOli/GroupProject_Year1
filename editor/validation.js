@@ -7,20 +7,49 @@
 function validateQuizName()
 {
   if($('#quizHeader').text().trim().length == 0)
+  {
+    var errorNotifiers = document.getElementsByClassName('errorNotifier');
+    for(var index = 0; index < errorNotifiers.length; index++)
+    {
+      errorNotifiers[index].style.display = 'block';
+      errorNotifiers[index].innerHTML = "You must have a quiz Name";
+    } // for loop
     return false;
+  }
   else
+  {
+    var errorNotifiers = document.getElementsByClassName('errorNotifier');
+    for(var index = 0; index < errorNotifiers.length; index++)
+    {
+      errorNotifiers[index].style.display = 'none';
+    } // for loop
     return true;
-
+  }
 }
+
 
 function validateZeroQ()
 {
   var rootQDivAll = document.getElementById('rootQDivAll');
   if(rootQDivAll.childNodes.length - 1 == 0)
+  {
+    var errorNotifiers = document.getElementsByClassName('errorNotifier');
+    for(var index = 0; index < errorNotifiers.length; index++)
+    {
+      errorNotifiers[index].style.display = 'block';
+      errorNotifiers[index].innerHTML = "You must have at least 1 question";
+    } // for loop
     return false;
+  }
   else
+  {
+    var errorNotifiers = document.getElementsByClassName('errorNotifier');
+    for(var index = 0; index < errorNotifiers.length; index++)
+    {
+      errorNotifiers[index].style.display = 'none';
+    } // for loop
     return true;
-
+  }
 }
 
 function validateQuestions()
@@ -37,7 +66,7 @@ function validateQuestions()
 
   for(var index = 0; index < subQTables.length; index++)
   {
-    if(subQTables[index].rows[1].cells[1].childNodes[0].value.trim() == "")
+    if(subQTables[index].rows[1].cells[1].childNodes[else0].value.trim() == "")
       return false;
   }
 
@@ -81,7 +110,7 @@ function validateRequiredInputs()
   var allAField = document.getElementsByClassName('answerField');
   console.log(JSON.stringify(allAField));
 
-  var requiredOnes = [];
+  var requiredOnes = [];else
 
   for(var index = 0; index < allQField.length; index++)
   {
