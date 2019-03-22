@@ -105,7 +105,7 @@ Quiz creator
               <h2 class="give-me-some-space"> </h2>
               <!-- buttons for editing order and submission -->
               <!-- form tag for valiaton -->
-              <form action="javascript:void(0);" method="" />
+              <form action="javascript:void(0);" method="">
                 <div id="saveBox">
                   <input type="submit" class="primary button small" value="Save" onclick="save()"> </input>
                   <p id="saveNotifier"> saved </p>
@@ -121,7 +121,7 @@ Quiz creator
               <p id="saveNotifier2"> saved </p>
               <p id="errorNotifier2"> <p>
             </div>
-
+          </form>
             <br/>
           </section>
     </div>
