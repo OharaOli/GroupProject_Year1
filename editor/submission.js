@@ -246,7 +246,7 @@ function upload_quiz() {
          username: username,
          oldQuizID: quizIDRe
       }, //data
-      success: function(data)
+      success: function(data)answers
       {
         if(quizIDRe == "0")
           quizIDRe = data;
@@ -298,6 +298,7 @@ function upload_questions(quizID) {
    //this code is triggered when the save is successfully done.
    $("#saveNotifier").finish().fadeIn("fast").css({"display": "inline-block"}).delay(2000).fadeOut("slow");
    $("#saveNotifier2").finish().fadeIn("fast").css({"display": "inline-block"}).delay(2000).fadeOut("slow");
+   $(".errorNotifier").hide();
 } //upload_questions
 
 //Store the answers under the given question ID

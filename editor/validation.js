@@ -52,6 +52,8 @@ function validateCorrectCheckbox(givenType)
     {  // if greater than 1, remove the error message
       ansTable.nextElementSibling.style.display = "none";
       ansTable.nextElementSibling.innerHTML = "";
+
+      
     } //false part
   } // for loop - looping through each ansTable
 
