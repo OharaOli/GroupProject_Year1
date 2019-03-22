@@ -141,7 +141,7 @@ function createATableArray(givenATable)
     console.log(givenATable.rows[index].cells[2].childNodes[0].value);
     console.log("disability: ");
     console.log(givenATable.rows[index].cells[2].childNodes[0].getAttribute('disabled'));
-    if(givenATable.rows[index].cells[2].childNodes[0].value != ""
+    if(givenATable.rows[index].cells[2].childNodes[0].value.trim() != ""
        && givenATable.rows[index].cells[2].childNodes[0].getAttribute('disabled') == null);
     {
 
