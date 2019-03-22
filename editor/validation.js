@@ -67,7 +67,7 @@ function validateQuestions()
 
   for(var index = 0; index < subQTables.length; index++)
   {
-    if(subQTables[index].rows[1].cells[1].childNodes[else0].value.trim() == "")
+    if(subQTables[index].rows[1].cells[1].childNodes[0].value.trim() == "")
       return false;
   }
 
