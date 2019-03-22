@@ -12,19 +12,16 @@ var deleteRootQButtons;
 
 var username;
 
+var checkValid = validateCorrectCheckbox();
 
 // function for the submit button
 function save()
 {
-
-
-  if(validateCorrectCheckbox())
+  if(checkValid)
   {
     numOfQSoFarSubmit = 0;
     qTableArray = createQTableArray();
     aTableArrayAll = createATableArrayAll();
-
-
     upload_quiz();
   } // if statement
 }
