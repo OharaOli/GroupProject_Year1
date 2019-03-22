@@ -17,9 +17,10 @@ var username;
 function save()
 {
   var checkValid = validateCorrectCheckbox();
+  var questionValid = validateRequiredInputs();
 
 
-  if(checkValid)
+  if(checkValid && questionValid)
   {
     numOfQSoFarSubmit = 0;
     qTableArray = createQTableArray();

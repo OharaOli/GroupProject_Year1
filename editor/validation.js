@@ -2,8 +2,83 @@
 
 //validate the number of checked boxes for each ans table
 // if there are no correct answers at all, put error message below the answer table!
-// it seems you should put p element in each cell! (right below the table)
+// it seems you should put p element in each cell! (right below the table)f
 
+/*
+function validateQuestions()
+{
+  var rootQTables = document.getElementsByClassName('rootQTable');
+  var subQTables = document.getElementsByClassName('subQTable');
+
+
+  for(var index = 0; index < rootQTables.length; index++)
+  {
+    if(rootQTables[index].rows[1].cells[1].childNodes[0].value.trim() == "")
+      return false;
+  }
+
+  for(var index = 0; index < subQTables.length; index++)
+  {
+    if(subQTables[index].rows[1].cells[1].childNodes[0].value.trim() == "")
+      return false;
+  }
+
+  return true;
+}
+*/
+
+/*
+function validateAnswers()
+{
+  var rootQAnsTables = document.getElementsByClassName('ansTableRoot');
+  var subQAnsTables = document.getElementsByClassName('ansTableSub');
+
+
+  for(var index = 0; index < rootQAnsTables.length; index++)
+  {
+    if(rootQAnsTables[index].rows[0].cells[2].childNodes[0].value.trim() == ""
+      || rootQAnsTables[index].rows[1].cells[2].childNodes[0].value.trim() == "")
+      return false;
+  }
+
+  for(var index = 0; index < subQAnsTables.length; index++)
+  {
+    if(subQAnsTables[index].rows[1].cells[1].childNodes[0].value.trim() == ""
+       )
+      return false;
+  }
+
+  return true;
+}
+*/
+
+function validateRequiredInputs()
+{
+  var allQField = document.getElementsByClassName('questionField');
+  var allAField = document.getElementsByClassName('answerField');
+
+  var requiredOnes = [];
+
+  for(var index = 0; index < allQField.length; index++)
+  {
+    if(allQField[index].getAttribute('required') != null)
+    {
+      requiredOnes.push(allQField[index].getAttribute('value'));
+    }
+  } // for loop
+
+  for(var index = 0; index < allAField.length; index++)
+  {
+    if(allAField[index].getAttribute('required') != null)
+    {
+      requiredOnes.push(allAField[index].getAttribute('value'));
+    }
+  } // for loop
+
+  var includesEmptyField = requiredOnes.includes("");
+
+  return includesEmptyField;
+}
 
 
 function validateCorrectCheckbox()
