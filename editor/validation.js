@@ -11,8 +11,9 @@ function validateQuizName()
     var errorNotifiers = document.getElementsByClassName('errorNotifier');
     for(var index = 0; index < errorNotifiers.length; index++)
     {
-      errorNotifiers[index].style.display = 'block';
       errorNotifiers[index].innerHTML = "You must have a quiz Name";
+      errorNotifiers[index].style.display = 'block';
+
     } // for loop
     return false;
   }
