@@ -142,12 +142,12 @@ function createATableArray(givenATable)
     console.log("disability: ");
     console.log(givenATable.rows[index].cells[2].childNodes[0].getAttribute('disabled'));
     var booleanTest;
-    if(givenATable.rows[index].cells[2].childNodes[0].getAttribute('value') != "")
+    if(givenATable.rows[index].cells[2].childNodes[0].value.length != 0)
       booleanTest = true;
     else
      booleanTest = false;
     console.log("boolean test for empty value:" + booleanTest);
-    if(givenATable.rows[index].cells[2].childNodes[0].getAttribute('value') != null
+    if(givenATable.rows[index].cells[2].childNodes[0].value.length != 0
        && givenATable.rows[index].cells[2].childNodes[0].getAttribute('disabled') == null);
     {
 
