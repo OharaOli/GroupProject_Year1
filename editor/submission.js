@@ -156,7 +156,8 @@ function createATableArray(givenATable)
       booleanTest2 = false;
 
 
-    console.log("boolean test for empty value:" + booleanTest);
+    console.log("boolean test1 for empty value:" + booleanTest1);
+    console.log('boolean test2 for null: ' + booleanTest2);
     if(booleanTest1 && booleanTest2);
     {
 
