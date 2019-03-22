@@ -174,7 +174,7 @@ function createRootQTable(givenX, givenRootQText, givenRootQTime, givenRootQFeed
   var questionField = document.createElement('textarea');
   questionField.setAttribute('type', 'text');
   questionField.setAttribute('class', 'questionField');
-  questionField.setAttribute('placeholder', 'question (required)');
+  questionField.setAttribute('placeholder', 'question *');
   questionField.setAttribute('required', true);
   questionField.setAttribute('oninvalid', "this.setCustomValidity('Question must be filled')");
   questionField.setAttribute('oninput',"this.setCustomValidity('')");

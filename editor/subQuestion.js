@@ -135,7 +135,7 @@ function createSubQTable(givenX, givenY, givenSubQText, givenSubQTime, givenSubQ
   questionField.setAttribute('type', 'text');
   questionField.setAttribute('class', 'questionField');
   questionField.setAttribute('maxlength', 100);
-  questionField.setAttribute('placeholder', 'question (required)');
+  questionField.setAttribute('placeholder', 'question *');
   questionField.setAttribute('onkeydown', 'return (event.keyCode!=13);');
   questionField.setAttribute('required', true);
   questionField.setAttribute('oninvalid', "this.setCustomValidity('Question must be filled')");

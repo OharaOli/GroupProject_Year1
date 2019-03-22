@@ -44,7 +44,7 @@ function createAnswersTable(givenX, givenY, givenQFeedback, isRoot)
   var answerCellA = rowA.insertCell(2);
   var answerFieldA = document.createElement('input');
   answerFieldA.setAttribute('type', 'text');
-  answerFieldA.setAttribute('placeholder', 'answer A (required)');
+  answerFieldA.setAttribute('placeholder', 'answer A *');
   answerFieldA.setAttribute('maxlength', 34);
   answerFieldA.setAttribute('class', 'answerField');
   answerFieldA.setAttribute('required', true);
@@ -93,7 +93,7 @@ function createAnswersTable(givenX, givenY, givenQFeedback, isRoot)
   var answerCellB = rowB.insertCell(2);
   var answerFieldB = document.createElement('input');
   answerFieldB.setAttribute('type', 'text');
-  answerFieldB.setAttribute('placeholder', 'answer B (required)');
+  answerFieldB.setAttribute('placeholder', 'answer B *');
   answerFieldB.setAttribute('maxlength', 34);
   answerFieldB.setAttribute('class', 'answerField');
   answerFieldB.setAttribute('required', true);
@@ -121,7 +121,7 @@ function createAnswersTable(givenX, givenY, givenQFeedback, isRoot)
   var answerFieldC = document.createElement('input');
   answerFieldC.setAttribute('type', 'text');
   answerFieldC.setAttribute('maxlength', 34);
-  answerFieldC.setAttribute('placeholder', 'answer C (optional)');
+  answerFieldC.setAttribute('placeholder', 'answer C');
   answerFieldC.setAttribute('disabled', true);
   answerFieldC.setAttribute('class', 'answerField');
   answerCellC.appendChild(answerFieldC);
@@ -149,7 +149,7 @@ function createAnswersTable(givenX, givenY, givenQFeedback, isRoot)
   var answerFieldD = document.createElement('input');
   answerFieldD.setAttribute('type', 'text');
   answerFieldD.setAttribute('maxlength', 34);
-  answerFieldD.setAttribute('placeholder', 'answer D (optional)');
+  answerFieldD.setAttribute('placeholder', 'answer D');
   answerFieldD.setAttribute('disabled', true);
   answerFieldD.setAttribute('class', 'answerField');
   answerCellD.appendChild(answerFieldD);
