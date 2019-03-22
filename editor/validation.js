@@ -38,8 +38,8 @@ function validateAnswers()
   {
     if(rootQAnsTables[index].rows[0].cells[2].childNodes[0].value.trim() == ""
       || rootQAnsTables[index].rows[1].cells[2].childNodes[0].value.trim() == ""
-      || (rootQAnsTables[index].rows[2].calls[2].childNodes[0].value.trim() == ""
-          && !(rootQAnsTables[index].rows[3].calls[2].childNodes[0].value.trim() == "")))
+      || (rootQAnsTables[index].rows[2].cells[2].childNodes[0].value.trim() == ""
+          && !(rootQAnsTables[index].rows[3].cells[2].childNodes[0].value.trim() == "")))
       return false;
   }
 
@@ -47,8 +47,8 @@ function validateAnswers()
   {
     if(subQAnsTables[index].rows[0].cells[2].childNodes[0].value.trim() == ""
       || subQAnsTables[index].rows[1].cells[2].childNodes[0].value.trim() == ""
-      || (subQAnsTables[index].rows[2].calls[2].childNodes[0].value.trim() == ""
-          && !(subQAnsTables[index].rows[3].calls[2].childNodes[0].value.trim() == "")))
+      || (subQAnsTables[index].rows[2].cells[2].childNodes[0].value.trim() == ""
+          && !(subQAnsTables[index].rows[3].cells[2].childNodes[0].value.trim() == "")))
       return false;
   }
 
