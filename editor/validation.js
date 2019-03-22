@@ -56,7 +56,6 @@ function validateRequiredInputs()
 {
   var allQField = document.getElementsByClassName('questionField');
   var allAField = document.getElementsByClassName('answerField');
-
   var requiredOnes = [];
 
   for(var index = 0; index < allQField.length; index++)
@@ -71,14 +70,18 @@ function validateRequiredInputs()
   {
     if(allAField[index].getAttribute('required') != null)
     {
-      requiredOnes.push(allAField[index].innerHTML);
+      requiredOnes.push(allAField[index].getAttribute('value'));
     }
   } // for loop
 
-  var includesEmptyField = requiredOnes.includes("");
+  var includesEmpty = requiredOnes.includes("");
   console.log(requiredOnes);
-  console.log(includesEmptyField);
-  return includesEmptyField;
+  console.log(includesEmpty);
+  if(includesEmpty)
+    return false;
+  else
+    return true;
+
 }
 
 
