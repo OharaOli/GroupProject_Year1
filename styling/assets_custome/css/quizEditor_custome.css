@@ -118,13 +118,13 @@ table.subQTable
 table.ansTableRoot
 {
   margin: 0;
-  width: 90%;
+  width: 99%;
 }
 
 table.ansTableSub
 {
   margin: 0;
-  width: 90%;
+  width: 99%;
 }
 
 div.subQDivWithHideOrShow{
@@ -134,7 +134,8 @@ div.subQDivWithHideOrShow{
 div.subQDivWithButton
 {
   position: relative;
-  margin-left: 200px;
+  margin-left: 6%;
+
 }
 
 
@@ -151,9 +152,9 @@ input.deleteRootQButton
 
 input.hideSubQButton
 {
-
-
-
+ width: 6%;
+ text-align: center;
+ font-size: 80%;
 }
 
 }
@@ -170,10 +171,20 @@ input.addSubQButton
   margin: 0 0 1em;
 }
 
-button.addRootQButton
+#addRootQButton
 {
-  width: 1050px;
-  height: 70px;
+  width: 85%;
+  min-width: 704px;
+  height: 5rem;
+  background-color: #353333;
+  color: white;
+  font-size: 120%;
+  border-style: dashed;
+  border-color: grey;
+  border-width: 4px;
+  border-radius: 10px;
+
+
 
 }
 
@@ -181,27 +192,27 @@ button.addRootQButton
 textarea.questionField
 {
   width: 99%;
-  height: 7.3em;
+  height: 150px;
 }
 
 textarea.feedbackField
 {
   width: 99%;
-  height: 7.3em;
+  height: 150px;
 }
 
 select.timeLimitList
 {
   color: white;
-  font-weight: 500;
+  font-size: 0.8rem;
   border: solid 1px rgb(54, 55, 62);
   min-width: 5em;
 }
 
 input.answerField
 {
-  width: 90%;
-  height: 1.5em;
+  width: 99%;
+  height: 2.2rem;
 }
 
 
@@ -285,6 +296,7 @@ table td {
 
 table.ansTableRoot td{
   background-color: #1c1d26;
+
 }
 
 table.ansTableRoot tr{
@@ -338,6 +350,7 @@ input[type="checkbox"], input[type="radio"] {
 }
 
 #saveNotifier {
+  float: left;
   display: none;
   font-size: large;
   line-height: large;
@@ -408,4 +421,12 @@ header h2{
 
 .give-me-some-space{
   height: 3em;
+}
+
+
+p.checkErrorParag
+{
+  height: 0px;
+  color: red;
+  font-size: 0.8rem;
 }

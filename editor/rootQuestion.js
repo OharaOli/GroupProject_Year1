@@ -29,7 +29,8 @@ function addRootQuestion(givenButton, givenRootQText, givenRootQTime, givenRootQ
   //button for hide/show sub questions
   var hideSubQButton = document.createElement('input');
   hideSubQButton.setAttribute('type', 'button');
-  hideSubQButton.setAttribute('value','Hide Sub Questions');
+  hideSubQButton.setAttribute('value','Hide');
+  hideSubQButton.setAttribute('class', 'hideSubQButton');
   hideSubQButton.setAttribute('id','make-my-subqhide-button-small');
   hideSubQButton.setAttribute('onClick', 'hideSubQuestions(this)');
 
@@ -199,6 +200,7 @@ function createRootQTable(givenX, givenRootQText, givenRootQTime, givenRootQFeed
 
   //append the checkError p tag as well
   var checkErrorParag = document.createElement('p');
+  checkErrorParag.setAttribute('class', 'checkErrorParag');
   checkErrorParag.style.display = "none";
   answersCell.appendChild(checkErrorParag);
 

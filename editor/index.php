@@ -110,7 +110,7 @@ Quiz creator
                 </div>
                 <div id="rootQDivAll">
                 </div>
-              <button id="addRootQButton" class="button small" style="display: block;" class="addRootQButton"  onClick="addRootQuestion(this)">
+              <button id="addRootQButton" class="button small" style="display: block;"  onClick="addRootQuestion(this)">
               add root question </button>
             </div> <!-- QuizEditor -->
             <div id="saveBox2">

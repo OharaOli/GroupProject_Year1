@@ -2,24 +2,26 @@
 //funciton for removing a question, given a button
 function deleteRootQuestion(givenButton)
 {
-  //update the number of all questions
-  numOfQSoFar--;
-  var quizEditor = document.getElementById('quizEditor');
-  quizEditor.setAttribute('data-numOfQuestions', numOfQSoFar);
-
   var rootX = givenButton.getAttribute('data-x');
+  var isDeleteConfirmed = confirm("Delete Q" + (parseInt(rootX) + 1) + "?");
+  if(isDeleteConfirmed)
+    {
+    //update the number of all questions
+    numOfQSoFar--;
+    var quizEditor = document.getElementById('quizEditor');
+    quizEditor.setAttribute('data-numOfQuestions', numOfQSoFar);
 
-  //update the total num of root questions
-  numOfRootQSoFar--;
 
-  // remove the parent root q div
-  var rootQDiv = document.getElementById('rootQDiv' + rootX);
-  rootQDiv.remove();
+    //update the total num of root questions
+    numOfRootQSoFar--;
 
-  //update the root Q index
-  updateRootQIndex(false);
+    // remove the parent root q div
+    var rootQDiv = document.getElementById('rootQDiv' + rootX);
+    rootQDiv.remove();
 
-  //change the attri
+    //update the root Q index
+    updateRootQIndex(false);
+  } // if statement
 
 
 } // deleteRootQuestion
@@ -27,10 +29,6 @@ function deleteRootQuestion(givenButton)
 
 function deleteSubQuestion(givenButton)
 {
-  //update the number of all questions
-  numOfQSoFar--;
-  var quizEditor = document.getElementById('quizEditor');
-  quizEditor.setAttribute('data-numOfQuestions', numOfQSoFar);
 
   //get the parent x-coordinate
   var parentX = givenButton.getAttribute('data-x');
@@ -38,23 +36,34 @@ function deleteSubQuestion(givenButton)
   //get the sub Q Y-coordinate
   var subY = givenButton.getAttribute('data-y');
 
-  //using the x and y coordinate, access the subQDiv
-  var subQDiv = document.getElementById('subQDiv' + parentX + '0');
+  var isDeleteConfirmed = confirm("Delete Q" + (parseInt(parentX) + 1) + "." + subY + "?");
 
-  //update the num of sub questions so far
-  var numOfSubQSoFar = parseInt(subQDiv.getAttribute('data-numOfSubQSoFar'));
-  numOfSubQSoFar--;
-  subQDiv.setAttribute('data-numOfSubQSoFar', numOfSubQSoFar);
+  if(isDeleteConfirmed)
+  {
+    //update the number of all questions
+    numOfQSoFar--;
+    var quizEditor = document.getElementById('quizEditor');
+    quizEditor.setAttribute('data-numOfQuestions', numOfQSoFar);
 
 
-  //delete the parent subQDiv
-  var parentSubQDiv = document.getElementById('subQDiv' + parentX + subY);
-  parentSubQDiv.remove();
 
-  //update the order
-  console.log(parentX);
-  updateSubQIndex(parentX);
+    //using the x and y coordinate, access the subQDiv
+    var subQDiv = document.getElementById('subQDiv' + parentX + '0');
 
+    //update the num of sub questions so far
+    var numOfSubQSoFar = parseInt(subQDiv.getAttribute('data-numOfSubQSoFar'));
+    numOfSubQSoFar--;
+    subQDiv.setAttribute('data-numOfSubQSoFar', numOfSubQSoFar);
+
+
+    //delete the parent subQDiv
+    var parentSubQDiv = document.getElementById('subQDiv' + parentX + subY);
+    parentSubQDiv.remove();
+
+    //update the order
+    console.log(parentX);
+    updateSubQIndex(parentX);
+  } // confirm if statement
 } // deleteSubQuestion
 
 
@@ -219,6 +228,11 @@ function updateSubQIndex(givenParentX, isCalledDueToDrag)
      //update the index of the rootQAnsTable
      //update the id, update the first cell index
      subQTable = arrayOfSubQTables[index];
+
+     //update the subQDiv
+     subQTable.parentNode.setAttribute('id', 'subQDiv' + givenParentX + (index + 1));
+     subQTable.parentNode.setAttribute('data-x', givenParentX);
+     subQTable.parentNode.setAttribute('data-y', (index + 1));
 
      //update the delete sub q button
      subQTable.rows[0].cells[1].childNodes[0].setAttribute('data-x', givenParentX);

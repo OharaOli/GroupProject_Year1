@@ -157,9 +157,10 @@ function createSubQTable(givenX, givenY, givenSubQText, givenSubQTime, givenSubQ
   //create an answer table and append it to the cell
   answerCell.appendChild(createAnswersTable(givenX, givenY, givenSubQFeedback, false));
 
-  var checkedErrorParag = document.createElement('p');
-  checkedErrorParag.style.display = 'none';
-  answerCell.appendChild(checkedErrorParag);
+  var checkErrorParag = document.createElement('p');
+  checkErrorParag.setAttribute('class', 'checkErrorParag');
+  checkErrorParag.style.display = 'none';
+  answerCell.appendChild(checkErrorParag);
 
 
   return subQTable;

@@ -1,3 +1,9 @@
+<?php
+  session_start();
+  if(!isset($_SESSION['username']))
+    header("Location: ../");
+?>
+
 <!DOCTYPE html>
 <html>
 <title>
@@ -30,55 +36,90 @@ Quiz creator
 
   <script type="text/javascript" src="./validation.js"> </script>
 
+  <!-- Check phones -->
+  <script src="../misc/checkMobile.js"></script>
+
 
 
   <!-- Accessing Css from a separate file -->
   <link rel="stylesheet" href="../styling/assets/css/main.css" />
   <link href="../styling/assets_custome/css/quizEditor_custome.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="./validation.css"/>
+
   <noscript><link rel="stylesheet" href="styling/assets/css/noscript.css" /></noscript>
-
-
-  <link rel="stylesheet" href="./validation.css" type="text/css" />
-
   <!-- plug-ins for dragula -->
   <script type="text/javascript" src="./node_modules/dragula/dist/dragula.js"></script>
   <link href="./node_modules/dragula/dist/dragula.css" rel="stylesheet" type="text/css">
 
   <body class="is-preload">
-
+    <script>
+    window.onload = function() {
+      quizIDRe = <?php echo (isset($_POST['quizID']) ? json_encode($_POST['quizID']) : '0'); ?>;
+      username = <?php  echo json_encode($_SESSION['username']); ?>;
+      if(quizIDRe != "0")
+        retrieve();
+      else
+        $("#quizHeader").text("NEW QUIZ NAME");
+    };
+  </script>
 		<div id="page-wrapper">
 
 			<!-- Header -->
 				<header id="header">
 					<h1 id="logo"><a href="../">QuizMapp</a></h1>
+          <nav id="nav">
+            <ul>
+              <!-- Logout and play button -->
+              <li><form action="index.php" method="post">
+              <li><a href="../player">Play</a></li>
+              <li><input class="button primary small" type="submit" name="logout" value="Logout" /></li>
+              </form></li>
+
+              <?php
+                  if($_SERVER['REQUEST_METHOD'] == "POST" and isset($_POST['logout']))
+                  {
+                      func();
+                  }
+                  function func()
+                  {
+                   // destroy the session
+                   session_destroy();
+                   header("Location: ../");
+                   exit();
+                  }
+              ?>
+            </ul>
+          </nav>
 				</header>
 
 			<!-- Banner -->
 				<section id="content">
-						<header>
-								<!-- Button to redirect the payer to the join a quiz without logging in -->
-								<h2>Quiz Editor</h2>
-						</header>
+
             <!-- quizEditor -->
             <div id="quizEditor" data-numOfQuestions="0">
-              <h1 id="quizHeader" contenteditable="true" data-quizId= "1" placeholder='required'></h1>
+              <h3 id="changeQuizNameh2">Change your quiz name bellow</h3>
+              <h2 id="quizHeader" contenteditable="true" data-quizId= "1" placeholder='required'></h2>
+              <h2 class="give-me-some-space"> </h2>
               <!-- buttons for editing order and submission -->
-              <form action="javascript:void(0);"/>
+              <!-- form tag for valiaton -->
+              <form action="javascript:void(0);" method="" name='quiz'>
                 <div id="saveBox">
-                  <input type="submit" class="primary button small" value="Save" onClick="save()"> </input>
+                  <input type="submit" class="primary button small" value="Save" onclick="save()" float="left"> </input>
                   <p id="saveNotifier"> saved </p>
-                  <p id="errorNotifier"> </p>
+                  <p id="errorNotifier1"> <p>
                 </div>
                 <div id="rootQDivAll">
                 </div>
-              <button id="addRootQButton" class="button small" style="display: block;" class="addRootQButton"  onClick="addRootQuestion(this)">
+              <button id="addRootQButton" style="display: block;"  onClick="addRootQuestion(this)">
               add root question </button>
             </div> <!-- QuizEditor -->
-
+            <div id="saveBox2">
+              <input type="submit" class="primary button small" value="Save" onclick="save()" float="left"> </input>
+              <p id="saveNotifier2"> saved </p>
+              <p id="errorNotifier2"> <p>
+            </div>
+          </form>
             <br/>
-                <!-- display validation message -->
-               <p style="color:red;" id="question_validation"></p>
-               <p style="color:red;" id="feedback_validation"></p>
           </section>
     </div>
          <!-- javaScript related to drag & drop -->

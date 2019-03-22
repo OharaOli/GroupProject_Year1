@@ -208,16 +208,26 @@ function createTimeLimitList(givenTimeLimit)
   option3.setAttribute('value', '30');
   option3.innerHTML = "30sec";
 
-
   var option4 = document.createElement('option');
-  option4.setAttribute('value', '60');
-  option4.innerHTML = "1min";
-
+  option4.setAttribute('value', '45');
+  option4.innerHTML = "45sec";
 
   var option5 = document.createElement('option');
-  option5.setAttribute('value', '120');
-  option5.innerHTML = "2min";
+  option5.setAttribute('value', '60');
+  option5.innerHTML = "1min";
 
+
+  var option6 = document.createElement('option');
+  option6.setAttribute('value', '120');
+  option6.innerHTML = "2min";
+
+  var option7 = document.createElement('option');
+  option7.setAttribute('value', '180');
+  option7.innerHTML = "3min";
+
+  var option8 = document.createElement('option');
+  option8.setAttribute('value', '240');
+  option8.innerHTML = "4min";
 
   //append the iptions to the list
   timeLimitList.appendChild(option1);
@@ -225,6 +235,10 @@ function createTimeLimitList(givenTimeLimit)
   timeLimitList.appendChild(option3);
   timeLimitList.appendChild(option4);
   timeLimitList.appendChild(option5);
+  timeLimitList.appendChild(option6);
+  timeLimitList.appendChild(option7);
+  timeLimitList.appendChild(option8);
+
 
   if(givenTimeLimit != null)
     timeLimitList.value = givenTimeLimit;

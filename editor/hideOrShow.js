@@ -81,19 +81,6 @@ function hideAddRootQButton()
 
 
 
-//function for the hideSubQButton
-function hideSubQButton(givenButton)
-{
-  console.log(givenButton.value);
-  hideSubQuestions(givenButton);
-
-  if(givenButton.value == "Hide Sub Questions")
-    givenButton.value = "Show Sub Questions";
-  else
-    givenButton.value = "Hide Sub Questions";
-
-}
-
 
 //function for hiding all the answers
 //function for hiding all the sub questions
@@ -126,13 +113,13 @@ function hideSubQuestions(givenButton)
 
 
   //change the shape of the button
-  if(givenButton.value == "Hide Sub Questions")
+  if(givenButton.value == "Hide")
   {
-    givenButton.value = "Show Sub Questions";
+    givenButton.value = "Show";
   }
   else
   {
-    givenButton.value = "Hide Sub Questions";
+    givenButton.value = "Hide";
   }
 
 } // function hideSubQuestions
