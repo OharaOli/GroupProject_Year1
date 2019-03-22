@@ -137,7 +137,11 @@ function createATableArray(givenATable)
     //look up the text cell
     //store the information in the cell only if the cell is not empty
     // if it is empty, just ignore that cell
-    if(givenATable.rows[index].cells[2].childNodes[0].value.trim() != ""
+    console.log("the value: ");
+    console.log(givenATable.rows[index].cells[2].childNodes[0].value);
+    console.log("disability: ");
+    console.log(givenATable.rows[index].cells[2].childNodes[0].getAttribute('disabled'));
+    if(givenATable.rows[index].cells[2].childNodes[0].value != ""
        && givenATable.rows[index].cells[2].childNodes[0].getAttribute('disabled') == null);
     {
 
