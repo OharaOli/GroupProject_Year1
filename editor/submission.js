@@ -16,15 +16,14 @@ var username;
 // function for the submit button
 function save()
 {
+  var checkValid = validateCorrectCheckbox();
 
 
-  if(validateCorrectCheckbox())
+  if(checkValid)
   {
     numOfQSoFarSubmit = 0;
     qTableArray = createQTableArray();
     aTableArrayAll = createATableArrayAll();
-
-
     upload_quiz();
   } // if statement
 }
