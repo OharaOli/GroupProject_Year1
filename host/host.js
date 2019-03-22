@@ -725,7 +725,7 @@ function generateSlides()
       {
         $("#root" + xIndex).append("<section id='" + xIndex + "-" + yIndex + "'><button class='end-button'>End Quiz</button><div class='question-container'><h2>" + questions[xIndex][yIndex].text + "</h2></div></section>");
       }  // end-els
-      if ($("#" + xIndex + "-" + yIndex + " .question-container h2").text().length > 100)
+      if ($("#" + xIndex + "-" + yIndex + " .question-container h2").text().length > 59)
         $("#" + xIndex + "-" + yIndex + " .question-container h2").css({"margin-top": "3em"});
       addStartButtonToSlide(xIndex, yIndex);
      }  // end-for
