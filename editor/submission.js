@@ -158,7 +158,7 @@ function createATableArray(givenATable)
 
     console.log("boolean test1 for empty value:" + booleanTest1);
     console.log('boolean test2 for null: ' + booleanTest2);
-    if(false);
+    if(booleanTest1 && booleanTest2)
     {
 
       workArray = [numOfQSoFarSubmit,
