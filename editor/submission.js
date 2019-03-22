@@ -246,7 +246,7 @@ function upload_quiz() {
          username: username,
          oldQuizID: quizIDRe
       }, //data
-      success: function(data)answers
+      success: function(data)
       {
         if(quizIDRe == "0")
           quizIDRe = data;
