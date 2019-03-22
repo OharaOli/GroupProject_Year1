@@ -2,9 +2,143 @@
 
 //validate the number of checked boxes for each ans table
 // if there are no correct answers at all, put error message below the answer table!
-// it seems you should put p element in each cell! (right below the table)
+// it seems you should put p element in each cell! (right below the table)f
+
+function validateQuizName()
+{
+  if($('#quizHeader').text().trim().length == 0)
+  {
+    var errorNotifiers = document.getElementsByClassName('errorNotifier');
+    for(var index = 0; index < errorNotifiers.length; index++)
+    {
+      errorNotifiers[index].innerHTML = "You must have a quiz name!";
+      errorNotifiers[index].style.display = 'block';
+
+    } // for loop
+    return false;
+  }
+  else
+  {
+    var errorNotifiers = document.getElementsByClassName('errorNotifier');
+    for(var index = 0; index < errorNotifiers.length; index++)
+    {
+      errorNotifiers[index].style.display = 'none';
+    } // for loop
+    return true;
+  }
+}
 
 
+function validateZeroQ()
+{
+  var rootQDivAll = document.getElementById('rootQDivAll');
+  if(rootQDivAll.childNodes.length - 1 == 0)
+  {
+    var errorNotifiers = document.getElementsByClassName('errorNotifier');
+    for(var index = 0; index < errorNotifiers.length; index++)
+    {
+      errorNotifiers[index].style.display = 'block';
+      errorNotifiers[index].innerHTML = "You must have at least 1 question!";
+    } // for loop
+    return false;
+  }
+  else
+  {
+    var errorNotifiers = document.getElementsByClassName('errorNotifier');
+    for(var index = 0; index < errorNotifiers.length; index++)
+    {
+      errorNotifiers[index].style.display = 'none';
+    } // for loop
+    return true;
+  }
+}
+
+function validateQuestions()
+{
+  var rootQTables = document.getElementsByClassName('rootQTable');
+  var subQTables = document.getElementsByClassName('subQTable');
+
+
+  for(var index = 0; index < rootQTables.length; index++)
+  {
+    if(rootQTables[index].rows[1].cells[1].childNodes[0].value.trim() == "")
+      return false;
+  }
+
+  for(var index = 0; index < subQTables.length; index++)
+  {
+    if(subQTables[index].rows[1].cells[1].childNodes[0].value.trim() == "")
+      return false;
+  }
+
+  return true;
+}
+
+
+
+function validateAnswers()
+{
+  var rootQAnsTables = document.getElementsByClassName('ansTableRoot');
+  var subQAnsTables = document.getElementsByClassName('ansTableSub');
+
+
+  for(var index = 0; index < rootQAnsTables.length; index++)
+  {
+    if(rootQAnsTables[index].rows[0].cells[2].childNodes[0].value.trim() == ""
+      || rootQAnsTables[index].rows[1].cells[2].childNodes[0].value.trim() == ""
+      || (rootQAnsTables[index].rows[2].cells[2].childNodes[0].value.trim() == ""
+          && !(rootQAnsTables[index].rows[3].cells[2].childNodes[0].value.trim() == "")))
+      return false;
+  }
+
+  for(var index = 0; index < subQAnsTables.length; index++)
+  {
+    if(subQAnsTables[index].rows[0].cells[2].childNodes[0].value.trim() == ""
+      || subQAnsTables[index].rows[1].cells[2].childNodes[0].value.trim() == ""
+      || (subQAnsTables[index].rows[2].cells[2].childNodes[0].value.trim() == ""
+          && !(subQAnsTables[index].rows[3].cells[2].childNodes[0].value.trim() == "")))
+      return false;
+  }
+
+  return true;
+}
+
+/*
+function validateRequiredInputs()
+{
+  var allQField = document.getElementsByClassName('questionField');
+  console.log(JSON.stringify(allQField));
+  var allAField = document.getElementsByClassName('answerField');
+  console.log(JSON.stringify(allAField));
+
+  var requiredOnes = [];
+
+  for(var index = 0; index < allQField.length; index++)
+  {
+    if(allQField[index].getAttribute('required') != null)
+    {
+      requiredOnes.push(allQField[index].innerHTML);
+    }
+  } // for loop
+
+  for(var index = 0; index < allAField.length; index++)
+  {
+    if(allAField[index].getAttribute('required') != null)
+    {
+      requiredOnes.push(allAField[index].getAttribute('value'));
+    }
+  } // for loop
+
+  var includesEmpty = requiredOnes.includes("");
+  console.log(requiredOnes);
+  console.log(includesEmpty);
+  if(includesEmpty)
+    return false;
+  else
+    return true;
+
+}
+*/
 
 function validateCorrectCheckbox()
 {
@@ -14,9 +148,9 @@ function validateCorrectCheckbox()
   //first get all of the answer tables
 
   var ansTableArrayRoot = document.getElementsByClassName('ansTableRoot');
-  console.log(ansTableArrayRoot);
+  //.log(ansTableArrayRoot);
   var ansTableArraySub = document.getElementsByClassName('ansTableSub');
-  console.log(ansTableArraySub);
+  //.log(ansTableArraySub);
 
 
   //loop through the array, and check
@@ -42,7 +176,7 @@ function validateCorrectCheckbox()
     //check the num checed
     if(numOfCheckedSoFar < 1)
     {
-      ansTable.nextElementSibling.innerHTML = "You must provide at least 1 correct answer.";
+      ansTable.nextElementSibling.innerHTML = "You must provide at least 1 correct answer!";
       numOfInvalidTableSoFar++;
     }
     else
@@ -71,7 +205,8 @@ function validateCorrectCheckbox()
     //check the num checed
     if(numOfCheckedSoFar < 1)
     {
-      ansTable.nextElementSibling.innerHTML = "You must provide at least 1 correct answer.";
+      ansTable.nextElementSibling.style.display = 'block';
+      ansTable.nextElementSibling.innerHTML = "You must provide at least 1 correct answer!";
       numOfInvalidTableSoFar++;
     }
     else
@@ -89,7 +224,7 @@ function validateCorrectCheckbox()
 
   if(isCheckedValid)
   {
-    console.log("is it valid?" + isCheckedValid);
+    //.log("is it valid?" + isCheckedValid);
 
     //make the message appear below the table
 
@@ -102,7 +237,7 @@ function validateCorrectCheckbox()
   } // true part
   else
   {
-    console.log("is it valid?" + isCheckedValid);
+    //.log("is it valid?" + isCheckedValid);
     var errorNotifiers = document.getElementsByClassName('errorNotifier');
     for(var index = 0; index < errorNotifiers.length; index++)
     {

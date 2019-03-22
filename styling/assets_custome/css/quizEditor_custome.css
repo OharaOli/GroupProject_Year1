@@ -447,8 +447,8 @@ header h2{
 p.errorNotifier
 {
   color: red;
-  display: none;
-  margin: 0 0 0 0.5em
+  display: inline-block !important;
+  margin: 0 0 0 0.5em;
 }
 
 p.checkErrorParag
@@ -456,5 +456,5 @@ p.checkErrorParag
   height: 0px;
   color: red;
   font-size: 0.8rem;
-  display: none !important;
+  display: none;
 }

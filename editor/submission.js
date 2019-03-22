@@ -17,10 +17,14 @@ var username;
 function save()
 {
   var checkValid = validateCorrectCheckbox();
+  var questionValid = validateQuestions();
+  var answersValid = validateAnswers();
+  var quizNameValid = validateQuizName();
+  var questionNumValid = validateZeroQ();
 
-
-  if(checkValid)
+  if(checkValid && questionValid && answersValid && quizNameValid && questionNumValid)
   {
+    console.log("saving");
     numOfQSoFarSubmit = 0;
     qTableArray = createQTableArray();
     aTableArrayAll = createATableArrayAll();
@@ -48,7 +52,7 @@ function deleteAll()
 [1, "what is the capital city of london?", 1, 0,
   parentQX = givenButton.parentNode.parentNode.parentNode.getAttribute('data-x');
   //get the number of sub questions for this root (before pressing the button)
-  var numOfSubQSoFarRoot = parseInt(givenButton.previousElementSibling.getAttribute('data-numOfSubQSoFar'));
+  var numOfSubQSoFarRoot = parseInt(givenButton.previousElementSibling.getAttr]);ibute('data-numOfSubQSoFar'));
 20, "yellow yellow"]*/
 function createQArray(givenQTable)
 {
