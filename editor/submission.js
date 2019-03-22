@@ -19,8 +19,10 @@ function save()
   var checkValid = validateCorrectCheckbox();
   var questionValid = validateQuestions();
   var answersValid = validateAnswers();
+  var quizNameValid = validateQuizName();
+  var questionNumValid = validateZeroQ();
 
-  if(checkValid && questionValid && answersValid)
+  if(checkValid && questionValid && answersValid && quizNameValid && questionNumValid)
   {
     console.log("saving");
     numOfQSoFarSubmit = 0;

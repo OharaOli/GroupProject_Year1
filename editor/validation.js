@@ -4,6 +4,25 @@
 // if there are no correct answers at all, put error message below the answer table!
 // it seems you should put p element in each cell! (right below the table)f
 
+function validateQuizName()
+{
+  if($('quizHeader').innerHTML.trim().length == 0)
+    return false;
+  else
+    return true;
+
+}
+
+function validateZeroQ()
+{
+  var rootQDivAll = document.getElementById('rootQDivAll');
+  if(rootQDivAll.childNodes.length == 0)
+    return false;
+  else
+    return true;
+    
+
+}
 
 function validateQuestions()
 {
@@ -258,7 +277,7 @@ function activateCD(givenATable)
  else
  {
    if(givenATable.rows[2].cells[2].childNodes[0].getAttribute('required') != null)
-     givenATable.rows[2].cells[2].childNodes[0].removeAttribute('required');
+     givenATable.rows[2].cells[2].childNodes[0].removeAttribute('required');safssf
  }
 
 
