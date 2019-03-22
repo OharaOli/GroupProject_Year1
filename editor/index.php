@@ -107,7 +107,7 @@ Quiz creator
                 <div id="saveBox">
                   <input type="submit" class="primary button small" value="Save" onclick="save()"> </input>
                   <p id="saveNotifier"> saved </p>
-                  <p id="errorNotifier"> <p>
+                  <p id="errorNotifier1"> <p>
                 </div>
                 <div id="rootQDivAll">
                 </div>
