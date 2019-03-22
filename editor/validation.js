@@ -43,6 +43,10 @@ function validateCorrectCheckbox()
       ansTable.nextElementSibling.innerHTML = "You must provide at least 1 correct answer.";
       numOfInvalidTableSoFar++;
     }
+    else
+    {
+      ansTable.nextElementSibling.style.display = 'none';
+    }
 
   } // for loop - looping through each ansTable
 
