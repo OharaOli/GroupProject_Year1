@@ -63,7 +63,7 @@ function validateRequiredInputs()
   {
     if(allQField[index].getAttribute('required') != null)
     {
-      requiredOnes.push(allQField[index].getAttribute('value'));
+      requiredOnes.push(allQField[index].innerHTML);
     }
   } // for loop
 
@@ -71,7 +71,7 @@ function validateRequiredInputs()
   {
     if(allAField[index].getAttribute('required') != null)
     {
-      requiredOnes.push(allAField[index].getAttribute('value'));
+      requiredOnes.push(allAField[index].innerHTML);
     }
   } // for loop
 
