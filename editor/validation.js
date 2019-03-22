@@ -70,7 +70,7 @@ function validateCorrectCheckbox(givenType)
       errorNotifiers[index].style.display = 'none';
       errorNotifiers[index].innerHTML = "";
     } // for loop
-  }
+  } // true part
   else
   {
     console.log("is it valid?" + isCheckedValid);
@@ -80,7 +80,7 @@ function validateCorrectCheckbox(givenType)
       errorNotifiers[index].style.display = 'inline-block';
       errorNotifiers[index].innerHTML = "Oops! Some questions have no correct answers!";
     } // for loop
-  }
+  } // false part
 
   //return
   return isCheckedValid;
