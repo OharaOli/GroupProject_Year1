@@ -10,7 +10,6 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js" type="text/javascript"></script>
   <script src="../misc/connectToDB.js" type="text/javascript"></script>
   <script src="../player/player.js" type="text/javascript"></script>
-  <script src="../quizEditor/retrieve.js" type="text/javascript"></script>
   <link rel="stylesheet" type="text/css" href="../reveal.js-master/css/reveal.css">
   <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
   <link rel="stylesheet" type="text/css" href="host.css">

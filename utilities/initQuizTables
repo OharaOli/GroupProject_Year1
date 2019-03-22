@@ -8,7 +8,7 @@ DROP TABLE IF EXISTS answers;
 
 CREATE TABLE  quizzes(
   quiz_id int NOT NULL AUTO_INCREMENT,
-  name VARCHAR(50) NOT NULL,
+  name VARCHAR(26) NOT NULL,
   user_id int NOT NULL,
   PRIMARY KEY (quiz_id));
   
