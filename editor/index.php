@@ -106,7 +106,7 @@ Quiz creator
                 <div id="saveBox">
                   <input type="submit" class="primary button small" value="Save" onclick="save()"> </input>
                   <p id="saveNotifier"> saved </p>
-                  <p id="errorNotifier1"> <p>
+                  <p id="errorNotifier1"> </p>
                 </div>
                 <div id="rootQDivAll">
                 </div>
@@ -116,7 +116,7 @@ Quiz creator
             <div id="saveBox2">
               <input type="submit" class="primary button small" value="Save" onclick="save()"> </input>
               <p id="saveNotifier2"> saved </p>
-              <p id="errorNotifier2"> <p>
+              <p id="errorNotifier2"> </p>
             </div>
           </form>
             <br/>
