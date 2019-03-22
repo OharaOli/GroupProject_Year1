@@ -94,11 +94,21 @@ Editor
 
 			<!-- Banner -->
 				<section id="content">
-
+            <script>
+            function limitText() {
+                var a =  $("#quizHeader").text().length;
+                if (a > 26) { 
+                  $("#quizHeader").text($(this).text() + "\b");
+                }
+            }
+            //function limitText(event) {
+             // if ($("#quizHeader").text().length > 10) $("#quizHeader").($("#quizHeader").text().substring(0, 10));
+            //}
+            </script>
             <!-- quizEditor -->
             <div id="quizEditor" data-numOfQuestions="0">
               <h3 id="changeQuizNameh2">Change your quiz name here:</h3>
-              <h2 id="quizHeader" contenteditable="true" data-quizId= "1" placeholder='required'></h2>
+              <h2 id="quizHeader" onkeydown="limitText();" contenteditable="true" data-quizId= "1" placeholder='required'></h2>
               <h2 class="give-me-some-space"> </h2>
               <!-- buttons for editing order and submission -->
               <!-- form tag for valiaton -->

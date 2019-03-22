@@ -227,16 +227,6 @@ input.answerField
 }
 
 
-
-h1.quizHeader
-{
-
-
-
-}
-
-
-
 div.orderDiv
 {
 
@@ -446,7 +436,7 @@ input[type="checkbox"], input[type="radio"] {
 header h2{
   margin: 0 0 1em;
   color: #12415f;
-  font-size: -webkit-xxx-large;
+  font-size: xxx-large; /* was -webkit-xxx-large*/
 }
 
 
