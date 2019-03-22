@@ -47,16 +47,11 @@ function validateCorrectCheckbox(givenType)
       ansTable.nextElementSibling.innerHTML = "There must be at least 1 correct answer.";
       isCheckedValid = false;
       //put message on the save notifier as well
-
-
-
     } // true part
     else
     {  // if greater than 1, remove the error message
       ansTable.nextElementSibling.style.display = "none";
       ansTable.nextElementSibling.innerHTML = "";
-      } // for loop
-
     } //false part
   } // for loop - looping through each ansTable
 
