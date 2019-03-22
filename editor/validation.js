@@ -16,8 +16,7 @@ function validateQuizName()
 function validateZeroQ()
 {
   var rootQDivAll = document.getElementById('rootQDivAll');
-  console.log(rootQDivAll.childNodes.length);
-  if(rootQDivAll.childNodes.length == 0)
+  if(rootQDivAll.childNodes.length - 1 == 0)
     return false;
   else
     return true;
