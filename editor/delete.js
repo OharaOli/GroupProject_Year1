@@ -162,6 +162,9 @@ function updateRootQIndex(isDueToDrop)
       subQDiv.childNodes[index2].childNodes[0].setAttribute('id', 'subQTable' + newParentX + (index2 + 1));
       console.log("subQTable after change: " + subQDiv.childNodes[index2].childNodes[0].id);
       subQDiv.childNodes[index2].childNodes[0].setAttribute('data-x', newParentX);
+
+      //change the delete button as well
+      subQDiv.childNodes[index2].childNodes[0].rows[0].cells[1].childNodes[0].setAttribute('data-x', newParentX);
       console.log("subQTable x-coord after change: " + subQDiv.childNodes[index2].childNodes[0].getAttribute('data-x'));
 
     } // for loop
