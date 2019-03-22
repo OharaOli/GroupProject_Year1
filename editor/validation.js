@@ -9,28 +9,54 @@
 function validateCorrectCheckbox()
 {
   var isCheckedValid;
-  var ansTableArray;
   var numOfInvalidTableSoFar = 0;
 
   //first get all of the answer tables
 
-  var ansTableArray = [];
-
   var ansTableArrayRoot = document.getElementsByClassName('ansTableRoot');
+  console.log(ansTableArrayRoot);
   var ansTableArraySub = document.getElementsByClassName('ansTableSub');
+  console.log(ansTableArraySub);
 
-  ansTableArray = ansTableArray.concat(ansTableArrayRoot);
-  ansTableArray = ansTableArray.concat(ansTableArraySub);
 
   //loop through the array, and check
   var numOfCheckedSoFar;
 
 
-  for(var index1 = 0; index1 < ansTableArray.length; index1++)
+  for(var index1 = 0; index1 < ansTableArrayRoot.length; index1++)
   {
     numOfCheckedSoFar = 0;
     //get the ansTable
-    ansTable = ansTableArray[index1];
+    ansTable = ansTableArrayRoot[index1];
+    //now loop throgh the table row.
+    //work out the numOfCheckedSoFar
+    for(var index2 = 0; index2 < ansTable.rows.length; index2++)
+    {
+      if(ansTable.rows[index2].cells[1].childNodes[0].checked == true
+         && ansTable.rows[index2].cells[1].childNodes[0].getAttribute('disabled') == null)
+      {
+       numOfCheckedSoFar++;
+      }
+    } // for loop - looping through eacch row
+
+    //check the num checed
+    if(numOfCheckedSoFar < 1)
+    {
+      ansTable.nextElementSibling.innerHTML = "You must provide at least 1 correct answer.";
+      numOfInvalidTableSoFar++;
+    }
+    else
+    {
+      ansTable.nextElementSibling.style.display = 'none';
+    }
+
+  } // for loop - looping through each ansTable
+
+  for(var index1 = 0; index1 < ansTableArraySub.length; index1++)
+  {
+    numOfCheckedSoFar = 0;
+    //get the ansTable
+    ansTable = ansTableArraySub[index1];
     //now loop throgh the table row.
     //work out the numOfCheckedSoFar
     for(var index2 = 0; index2 < ansTable.rows.length; index2++)
