@@ -124,6 +124,7 @@ function createAnswersTable(givenX, givenY, givenQFeedback, isRoot)
   answerFieldC.setAttribute('placeholder', 'answer C');
   answerFieldC.setAttribute('disabled', true);
   answerFieldC.setAttribute('class', 'answerField');
+  answerFieldC.setAttribute('oninvalid', "this.setCustomValidity('You must fill in C in order to submit D.')");
   answerCellC.appendChild(answerFieldC);
 
 
