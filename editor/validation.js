@@ -14,8 +14,8 @@ function validateCorrectCheckbox()
 
   //first get all of the answer tables
 
-  var ansTableArrayRoot = document.getElementsByClass('ansTableRoot');
-  var ansTableArraySub = document.getElementsByClass('ansTableSub');
+  var ansTableArrayRoot = document.getElementsByClassName('ansTableRoot');
+  var ansTableArraySub = document.getElementsByClassName('ansTableSub');
 
   var ansTableArray = ansTableArrayRoot.concat(ansTableArraySub);
 
