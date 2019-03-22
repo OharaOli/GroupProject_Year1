@@ -148,8 +148,7 @@ function createATableArray(givenATable)
     else
      booleanTest = false;
     console.log("boolean test for empty value:" + booleanTest);
-    if(givenATable.rows[index].cells[2].childNodes[0].value.length != 0
-       && givenATable.rows[index].cells[2].childNodes[0].getAttribute('disabled') == null);
+    if(booleanTest && givenATable.rows[index].cells[2].childNodes[0].getAttribute('disabled') == null);
     {
 
       workArray = [numOfQSoFarSubmit,
