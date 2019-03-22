@@ -46,14 +46,8 @@ function validateCorrectCheckbox(givenType)
       ansTable.nextElementSibling.style.display = "block";
       ansTable.nextElementSibling.innerHTML = "There must be at least 1 correct answer.";
       isCheckedValid = false;
-      console.log("check not valid");
       //put message on the save notifier as well
-      var errorNotifiers = document.getElementsByClassName('errorNotifier');
-      for(var index = 0; index < errorNotifiers.length; index++)
-      {
-        errorNotifiers[index].style.display = 'block';
-        errorNotifiers[index].innerHTML = "Oops! some questions have no correct answers.";
-      } // for loop
+
 
 
     } // true part
@@ -61,18 +55,31 @@ function validateCorrectCheckbox(givenType)
     {  // if greater than 1, remove the error message
       ansTable.nextElementSibling.style.display = "none";
       ansTable.nextElementSibling.innerHTML = "";
-      console.log("check valid");
-      //delete the error notifier message
-      var errorNotifiers = document.getElementsByClassName('errorNotifier');
-      for(var index = 0; index < errorNotifiers.length; index++)
-      {
-        errorNotifiers[index].style.display = 'none';
-        errorNotifiers[index].innerHTML = "";
       } // for loop
 
     } //false part
   } // for loop - looping through each ansTable
 
+  //now change the message
+  if(isCheckedValid)
+  {
+    var errorNotifiers = document.getElementsByClassName('errorNotifier');
+    for(var index = 0; index < errorNotifiers.length; index++)
+    {
+      errorNotifiers[index].style.display = 'block';
+      errorNotifiers[index].innerHTML = "Oops! some questions have no correct answers.";
+    } // for loop
+  }
+  else
+  {
+    var errorNotifiers = document.getElementsByClassName('errorNotifier');
+    for(var index = 0; index < errorNotifiers.length; index++)
+    {
+      errorNotifiers[index].style.display = 'none';
+      errorNotifiers[index].innerHTML = "";
+    } // for loop
+  }
+  
   //return
   return isCheckedValid;
 } // validateCorrectCheckbox
