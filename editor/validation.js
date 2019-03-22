@@ -62,7 +62,7 @@ function validateCorrectCheckbox(givenType)
       ansTable.nextElementSibling.style.display = "none";
       ansTable.nextElementSibling.innerHTML = "";
 
-      //put message on the save notifier as well
+      //delete the error notifier message
       var errorNotifiers = document.getElementsByClassName('errorNotifier');
       for(var index = 0; index < errorNotifiers.length; index++)
       {
