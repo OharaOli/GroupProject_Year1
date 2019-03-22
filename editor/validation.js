@@ -4,13 +4,13 @@
 // if there are no correct answers at all, put error message below the answer table!
 // it seems you should put p element in each cell! (right below the table)
 
-var isCheckedValid = true;
 
 
 function validateCorrectCheckbox(givenType)
 {
+  var isCheckedValid;
   var ansTableArray;
-  var isCheckedValidTemp = true;
+  var numOfInvalidTableSoFar = 0;
 
   //first get all of the answer tables
   if(givenType == "root")
@@ -46,46 +46,32 @@ function validateCorrectCheckbox(givenType)
     //check the numof checed
     if(numOfCheckedSoFar < 1)
     {
-      //if it is less than one, than printout an error message
-      ansTable.nextElementSibling.style.display = "block";
-      ansTable.nextElementSibling.innerHTML = "There must be at least 1 correct answer.";
-      isCheckedValidTemp = false;
-      isCheckedValid = false;
-      //put message on the save notifier as well
-    } // true part
-    else
-    {  // if greater than 1, remove the error message
-      ansTable.nextElementSibling.style.display = "none";
-      ansTable.nextElementSibling.innerHTML = "";
-      isCheckedValidTemp = true;
-
-    } //false part
+      numOfInvalidTableSoFar++;
+    }
   } // for loop - looping through each ansTable
 
-
-  if(isCheckedValidTemp)
-    isCheckedValid = true;
-    
   //now change the message
-  if(isCheckedValid)
+  if(numOfInvalidTableSoFar == 0)
   {
+    isCheckedValid = true;
     console.log("is it valid?" + isCheckedValid);
 
     var errorNotifiers = document.getElementsByClassName('errorNotifier');
     for(var index = 0; index < errorNotifiers.length; index++)
     {
-      errorNotifiers[index].style.display = 'block';
+      errorNotifiers[index].style.display = 'none';
       errorNotifiers[index].innerHTML = "";
     } // for loop
   }
   else
   {
+    isCheckedValid = false;
     console.log("is it valid?" + isCheckedValid);
     var errorNotifiers = document.getElementsByClassName('errorNotifier');
     for(var index = 0; index < errorNotifiers.length; index++)
     {
-      errorNotifiers[index].style.display = 'block';
-      errorNotifiers[index].innerHTML = "Oops! some questions have no correct answers.";
+      errorNotifiers[index].style.display = 'inline-block';
+      errorNotifiers[index].innerHTML = "Oops! Some questions have no correct answers!";
     } // for loop
   }
 
