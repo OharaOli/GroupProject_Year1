@@ -53,7 +53,7 @@ function placeQuiz(quizID, quizName, quizCode, user_id, count)
     var formForEdit = document.createElement("form");
     formForEdit.setAttribute("method", "post");
 
-    // quiz edito
+    // quiz editor
     formForEdit.setAttribute("action", "../editor/");
 
      var inputTheQuizID = document.createElement("input");
@@ -74,6 +74,9 @@ function placeQuiz(quizID, quizName, quizCode, user_id, count)
 
   // when edit button is pressed, send the quiz id by post
  $("#delete" + quizID).click(function() {
+    var isDeleteConfirmed = confirm("Delete " + quizName + " Quiz?");
+    if (isDeleteConfirmed)
+    {
     var deleteForm = document.createElement("form");
     deleteForm.setAttribute("method", "post");
 
@@ -94,6 +97,7 @@ function placeQuiz(quizID, quizName, quizCode, user_id, count)
      deleteForm.appendChild(inputTheQuizID);
      document.body.appendChild(deleteForm);
      deleteForm.submit();
+     }
 } );
 
 });

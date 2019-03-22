@@ -117,3 +117,9 @@ h2{
     word-wrap: break-word;
 }
 
+#error-message
+{
+  color: #CC2400;
+  font-size: 1em !important;
+} 
+
