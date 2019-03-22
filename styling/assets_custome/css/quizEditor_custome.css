@@ -252,7 +252,7 @@ td.timeLimitCell
   border-right: 1px solid rgba(128, 128, 128, 0.15);
   padding-right: 0.5em;
   padding-left: 0.5em;
-  min-width: 7em;
+  width: 7rem;
 }
 
 td.questionCell
@@ -269,6 +269,7 @@ td.buttonCell
 td.indexCell
 {
   border-right: 1px solid rgba(128, 128, 128, 0.15);
+  width: 4rem;
 }
 
 
