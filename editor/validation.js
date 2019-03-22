@@ -3,6 +3,9 @@
 //validate the number of checked boxes for each ans table
 // if there are no correct answers at all, put error message below the answer table!
 // it seems you should put p element in each cell! (right below the table)
+
+var isCheckedValid = true;
+
 function validateCorrectCheckbox(givenType)
 {
   var ansTableArray;
@@ -20,7 +23,6 @@ function validateCorrectCheckbox(givenType)
   //loop through the array, and check
   var numOfCheckedSoFar;
   var ansTable;
-  var isCheckedValid = true;
 
 
   for(var index1 = 0; index1 < ansTableArray.length; index1++)
