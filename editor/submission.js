@@ -19,9 +19,9 @@ function save()
   var checkValid = validateCorrectCheckbox();
   var questionValid = validateRequiredInputs();
 
-
   if(checkValid && questionValid)
   {
+    console.log("saving");
     numOfQSoFarSubmit = 0;
     qTableArray = createQTableArray();
     aTableArrayAll = createATableArrayAll();
