@@ -142,13 +142,22 @@ function createATableArray(givenATable)
     console.log(givenATable.rows[index].cells[2].childNodes[0].value);
     console.log("disability: ");
     console.log(givenATable.rows[index].cells[2].childNodes[0].getAttribute('disabled'));
-    var booleanTest;
+    var booleanTest1;
+    var booleanTest2;
+
     if(givenATable.rows[index].cells[2].childNodes[0].value.length != 0)
-      booleanTest = true;
+      booleanTest1 = true;
     else
-     booleanTest = false;
+     booleanTest1 = false;
+
+    if(givenATable.rows[index].cells[2].childNodes[0].getAttribute('disabled') == null)
+      booleanTest2 = true;
+    else
+      booleanTest2 = false;
+
+
     console.log("boolean test for empty value:" + booleanTest);
-    if(booleanTest && givenATable.rows[index].cells[2].childNodes[0].getAttribute('disabled') == null);
+    if(booleanTest1 && booleanTest2);
     {
 
       workArray = [numOfQSoFarSubmit,
