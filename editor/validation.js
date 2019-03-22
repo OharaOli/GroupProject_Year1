@@ -6,21 +6,15 @@
 
 
 
-function validateCorrectCheckbox(givenType)
+function validateCorrectCheckbox()
 {
   var isCheckedValid;
   var ansTableArray;
   var numOfInvalidTableSoFar = 0;
 
   //first get all of the answer tables
-  if(givenType == "root")
-  {
-    ansTableArray = document.getElementsByClassName('ansTableRoot');
-  }
-  else
-  {
-    ansTableArray = document.getElementsByClassName('ansTableSub');
-  }
+
+  ansTableArray = document.getElementsByName('ansTable');
 
   //loop through the array, and check
   var numOfCheckedSoFar;

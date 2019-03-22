@@ -16,10 +16,9 @@ var username;
 // function for the submit button
 function save()
 {
-  var rootCheckValid = validateCorrectCheckbox("root");
-  var subCheckValid = validateCorrectCheckbox("sub");
 
-  if(rootCheckValid && subCheckValid)
+
+  if(validateCorrectCheckbox())
   {
     numOfQSoFarSubmit = 0;
     qTableArray = createQTableArray();
