@@ -94,10 +94,7 @@ Quiz creator
 
 			<!-- Banner -->
 				<section id="content">
-						<header>
-								<!-- Button to redirect the payer to the join a quiz without logging in -->
-								<h2>Quiz Editor</h2>
-						</header>
+
             <!-- quizEditor -->
             <div id="quizEditor" data-numOfQuestions="0">
               <h3 id="changeQuizNameh2">Change your quiz name bellow</h3>

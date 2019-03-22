@@ -60,7 +60,7 @@ function createAnswersTable(givenX, givenY, givenQFeedback, isRoot)
   var feedbackCell = rowA.insertCell(3);
   feedbackCell.setAttribute('rowspan', 4);
   var feedbackField = document.createElement('textarea');
-  feedbackField.setAttribute('placeholder', 'feedback (optional)');
+  feedbackField.setAttribute('placeholder', 'feedback');
   feedbackField.setAttribute('type', 'text');
   feedbackField.setAttribute('class', 'feedbackField');
   feedbackField.setAttribute('maxlength', 100);
