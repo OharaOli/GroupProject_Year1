@@ -4,7 +4,7 @@
 // if there are no correct answers at all, put error message below the answer table!
 // it seems you should put p element in each cell! (right below the table)f
 
-/*
+
 function validateQuestions()
 {
   var rootQTables = document.getElementsByClassName('rootQTable');
@@ -25,9 +25,9 @@ function validateQuestions()
 
   return true;
 }
-*/
 
-/*
+
+
 function validateAnswers()
 {
   var rootQAnsTables = document.getElementsByClassName('ansTableRoot');
@@ -37,20 +37,24 @@ function validateAnswers()
   for(var index = 0; index < rootQAnsTables.length; index++)
   {
     if(rootQAnsTables[index].rows[0].cells[2].childNodes[0].value.trim() == ""
-      || rootQAnsTables[index].rows[1].cells[2].childNodes[0].value.trim() == "")
+      || rootQAnsTables[index].rows[1].cells[2].childNodes[0].value.trim() == ""
+      || (rootQAnsTables[index].rows[2].calls[2].childNodes[0].value.trim() == ""
+          && !(rootQAnsTables[index].rows[3].calls[2].childNodes[0].value.trim() == "")))
       return false;
   }
 
   for(var index = 0; index < subQAnsTables.length; index++)
   {
-    if(subQAnsTables[index].rows[1].cells[1].childNodes[0].value.trim() == ""
-       )
+    if(subQAnsTables[index].rows[0].cells[2].childNodes[0].value.trim() == ""
+      || subQAnsTables[index].rows[1].cells[2].childNodes[0].value.trim() == ""
+      || (subQAnsTables[index].rows[2].calls[2].childNodes[0].value.trim() == ""
+          && !(subQAnsTables[index].rows[3].calls[2].childNodes[0].value.trim() == "")))
       return false;
   }
 
   return true;
 }
-*/
+
 
 function validateRequiredInputs()
 {

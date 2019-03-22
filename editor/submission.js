@@ -17,9 +17,10 @@ var username;
 function save()
 {
   var checkValid = validateCorrectCheckbox();
-  var questionValid = validateRequiredInputs();
+  var questionValid = validateQuestions();
+  var answersValid = validateAnswers();
 
-  if(checkValid && questionValid)
+  if(checkValid && questionValid && answersValid)
   {
     console.log("saving");
     numOfQSoFarSubmit = 0;
@@ -49,7 +50,7 @@ function deleteAll()
 [1, "what is the capital city of london?", 1, 0,
   parentQX = givenButton.parentNode.parentNode.parentNode.getAttribute('data-x');
   //get the number of sub questions for this root (before pressing the button)
-  var numOfSubQSoFarRoot = parseInt(givenButton.previousElementSibling.getAttribute('data-numOfSubQSoFar'));
+  var numOfSubQSoFarRoot = parseInt(givenButton.previousElementSibling.getAttr]);ibute('data-numOfSubQSoFar'));
 20, "yellow yellow"]*/
 function createQArray(givenQTable)
 {
