@@ -233,7 +233,7 @@ function createATableArrayAll()
 //Store the name of the quiz and return the ID where its stored to store the questions
 function upload_quiz() {
    //Return the name of the quiz being submitted
-   var quizName = $("#quizHeader").value.trim();
+   var quizName = $("#quizHeader").text().trim();
    //Ajax call to store the quiz name (and temp account id) and call submit question with the id
    $.ajax({
       async: false,

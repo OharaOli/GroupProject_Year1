@@ -98,7 +98,7 @@ Quiz creator
             <!-- quizEditor -->
             <div id="quizEditor" data-numOfQuestions="0">
               <h3 id="changeQuizNameh2">Change your quiz name below</h3>
-              <input type="text" id="quizHeader" data-quizId= "1" placeholder='required'></input>
+              <h2 id="quizHeader" contenteditable="true" data-quizId= "1" placeholder='required'></h2>
               <h2 class="give-me-some-space"> </h2>
               <!-- buttons for editing order and submission -->
               <!-- form tag for valiaton -->
