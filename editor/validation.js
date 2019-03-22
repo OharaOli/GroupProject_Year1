@@ -14,14 +14,16 @@ function validateCorrectCheckbox()
 
   //first get all of the answer tables
 
+  var ansTableArray = [];
+
   var ansTableArrayRoot = document.getElementsByClassName('ansTableRoot');
   var ansTableArraySub = document.getElementsByClassName('ansTableSub');
 
-  var ansTableArray = ansTableArrayRoot.concat(ansTableArraySub);
+  ansTableArray = ansTableArray.concat(ansTableArrayRoot);
+  ansTableArray = ansTableArray.concat(ansTableArraySub);
 
   //loop through the array, and check
   var numOfCheckedSoFar;
-  var ansTable;
 
 
   for(var index1 = 0; index1 < ansTableArray.length; index1++)
