@@ -129,6 +129,7 @@ function createATableArray(givenATable)
 
   //empty array for the rows
   var aArray = [];
+  var workArray;
 
   //have to loop through the table to figure out which answers have
   //the inputs
@@ -151,7 +152,7 @@ function createATableArray(givenATable)
        && givenATable.rows[index].cells[2].childNodes[0].getAttribute('disabled') == null);
     {
 
-      var workArray = [numOfQSoFarSubmit,
+      workArray = [numOfQSoFarSubmit,
                        givenATable.getAttribute('data-x'),
                        givenATable.getAttribute('data-y'),
                        givenATable.rows[index].cells[2].childNodes[0].value];
