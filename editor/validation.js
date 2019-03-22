@@ -49,9 +49,11 @@ function validateCorrectCheckbox(givenType)
 
       //put message on the save notifier as well
       errorNotifier1 = document.getElementById('errorNotifier1');
+      errorNotifier1.style.display = 'block';
       errorNotifier1.innerHTML = "Oops! some questions have no correct answers."
 
       errorNotifier2 = document.getElementById('errorNotifier2');
+      errorNotifier2.style.display = 'block';
       errorNotifier2.innerHTML = "Oops! some questions have no correct answers."
 
     } // true part
