@@ -76,7 +76,8 @@ function validateRequiredInputs()
   } // for loop
 
   var includesEmptyField = requiredOnes.includes("");
-
+  console.log(requiredOnes);
+  console.log(includesEmptyField);
   return includesEmptyField;
 }
 
@@ -89,9 +90,9 @@ function validateCorrectCheckbox()
   //first get all of the answer tables
 
   var ansTableArrayRoot = document.getElementsByClassName('ansTableRoot');
-  console.log(ansTableArrayRoot);
+  //.log(ansTableArrayRoot);
   var ansTableArraySub = document.getElementsByClassName('ansTableSub');
-  console.log(ansTableArraySub);
+  //.log(ansTableArraySub);
 
 
   //loop through the array, and check
@@ -164,7 +165,7 @@ function validateCorrectCheckbox()
 
   if(isCheckedValid)
   {
-    console.log("is it valid?" + isCheckedValid);
+    //.log("is it valid?" + isCheckedValid);
 
     //make the message appear below the table
 
@@ -177,7 +178,7 @@ function validateCorrectCheckbox()
   } // true part
   else
   {
-    console.log("is it valid?" + isCheckedValid);
+    //.log("is it valid?" + isCheckedValid);
     var errorNotifiers = document.getElementsByClassName('errorNotifier');
     for(var index = 0; index < errorNotifiers.length; index++)
     {
