@@ -103,7 +103,7 @@ table.rootQTable
 {
   border-right: 1px solid #616168;
   border-left: 1px solid #616168;
-  width: 80%;
+  width: 85%;
 
 }
 
@@ -111,7 +111,7 @@ table.subQTable
 {
   border-right: 1px solid #616168;
   border-left: 1px solid #616168;
-  width: 90%;
+  width: 95%;
 }
 
 
@@ -200,7 +200,7 @@ select.timeLimitList
 
 input.answerField
 {
-  width: 6em;
+  width: 90%;
   height: 1.5em;
 }
 
