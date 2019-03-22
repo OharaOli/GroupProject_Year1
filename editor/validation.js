@@ -74,7 +74,7 @@ function validateCorrectCheckbox(givenType)
       errorNotifiers[index].innerHTML = "";
     } // for loop
   }
-  
+
   //return
   return isCheckedValid;
 } // validateCorrectCheckbox
