@@ -11,7 +11,7 @@ function validateQuizName()
     var errorNotifiers = document.getElementsByClassName('errorNotifier');
     for(var index = 0; index < errorNotifiers.length; index++)
     {
-      errorNotifiers[index].innerHTML = "You must have a quiz Name";
+      errorNotifiers[index].innerHTML = "You must have a quiz name!";
       errorNotifiers[index].style.display = 'block';
 
     } // for loop
@@ -38,7 +38,7 @@ function validateZeroQ()
     for(var index = 0; index < errorNotifiers.length; index++)
     {
       errorNotifiers[index].style.display = 'block';
-      errorNotifiers[index].innerHTML = "You must have at least 1 question";
+      errorNotifiers[index].innerHTML = "You must have at least 1 question!";
     } // for loop
     return false;
   }
@@ -176,7 +176,7 @@ function validateCorrectCheckbox()
     //check the num checed
     if(numOfCheckedSoFar < 1)
     {
-      ansTable.nextElementSibling.innerHTML = "You must provide at least 1 correct answer.";
+      ansTable.nextElementSiblinNEW QUIZ NAMEg.innerHTML = "You must provide at least 1 correct answer!";
       numOfInvalidTableSoFar++;
     }
     else
@@ -206,7 +206,7 @@ function validateCorrectCheckbox()
     if(numOfCheckedSoFar < 1)
     {
       ansTable.nextElementSibling.style.display = 'block';
-      ansTable.nextElementSibling.innerHTML = "You must provide at least 1 correct answer.";
+      ansTable.nextElementSibling.innerHTML = "You must provide at least 1 correct answer!";
       numOfInvalidTableSoFar++;
     }
     else
