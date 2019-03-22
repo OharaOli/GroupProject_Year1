@@ -55,7 +55,10 @@ function validateAnswers()
 function validateRequiredInputs()
 {
   var allQField = document.getElementsByClassName('questionField');
+  console.log(JSON.stringify(allQField));
   var allAField = document.getElementsByClassName('answerField');
+  console.log(JSON.stringify(allAField));
+
   var requiredOnes = [];
 
   for(var index = 0; index < allQField.length; index++)
