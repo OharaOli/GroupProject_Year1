@@ -53,7 +53,6 @@ function validateCorrectCheckbox(givenType)
       ansTable.nextElementSibling.style.display = "none";
       ansTable.nextElementSibling.innerHTML = "";
 
-      
     } //false part
   } // for loop - looping through each ansTable
 
@@ -63,8 +62,8 @@ function validateCorrectCheckbox(givenType)
     var errorNotifiers = document.getElementsByClassName('errorNotifier');
     for(var index = 0; index < errorNotifiers.length; index++)
     {
-      errorNotifiers[index].style.display = 'block';
-      errorNotifiers[index].innerHTML = "Oops! some questions have no correct answers.";
+      errorNotifiers[index].style.display = 'none';
+      errorNotifiers[index].innerHTML = "";
     } // for loop
   }
   else
@@ -72,8 +71,8 @@ function validateCorrectCheckbox(givenType)
     var errorNotifiers = document.getElementsByClassName('errorNotifier');
     for(var index = 0; index < errorNotifiers.length; index++)
     {
-      errorNotifiers[index].style.display = 'none';
-      errorNotifiers[index].innerHTML = "";
+      errorNotifiers[index].style.display = 'block';
+      errorNotifiers[index].innerHTML = "Oops! some questions have no correct answers.";
     } // for loop
   }
 

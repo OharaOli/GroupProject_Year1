@@ -25,9 +25,6 @@ function save()
     qTableArray = createQTableArray();
     aTableArrayAll = createATableArrayAll();
 
-    //JSON stringify
-    console.log(JSON.stringify(aTableArrayAll));
-
 
     upload_quiz();
   } // if statement
