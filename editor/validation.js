@@ -6,9 +6,11 @@
 
 var isCheckedValid = true;
 
+
 function validateCorrectCheckbox(givenType)
 {
   var ansTableArray;
+  var isCheckedValidTemp = true;
 
   //first get all of the answer tables
   if(givenType == "root")
@@ -47,6 +49,7 @@ function validateCorrectCheckbox(givenType)
       //if it is less than one, than printout an error message
       ansTable.nextElementSibling.style.display = "block";
       ansTable.nextElementSibling.innerHTML = "There must be at least 1 correct answer.";
+      isCheckedValidTemp = false;
       isCheckedValid = false;
       //put message on the save notifier as well
     } // true part
@@ -54,10 +57,15 @@ function validateCorrectCheckbox(givenType)
     {  // if greater than 1, remove the error message
       ansTable.nextElementSibling.style.display = "none";
       ansTable.nextElementSibling.innerHTML = "";
+      isCheckedValidTemp = true;
 
     } //false part
   } // for loop - looping through each ansTable
 
+
+  if(isCheckedValidTemp)
+    isCheckedValid = true;
+    
   //now change the message
   if(isCheckedValid)
   {
