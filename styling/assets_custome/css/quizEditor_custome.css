@@ -101,6 +101,7 @@ textarea:invalid
 */
 .dragHandleCell{
   padding-top: 0.7em;
+  border-right: 1px solid #616168;
 }
 
 table.rootQTable
@@ -215,7 +216,8 @@ select.timeLimitList
   color: white;
   font-size: 0.8rem;
   border: solid 1px rgb(54, 55, 62);
-  min-width: 5em;
+  min-width: 7em;
+  width: 100%;
 }
 
 input.answerField
@@ -296,6 +298,7 @@ td.buttonCell
 td.indexCell
 {
   border-right: 1px solid rgba(128, 128, 128, 0.15);
+  border-top: 1px solid #616168 !important;
   width: 4rem;
 }
 
