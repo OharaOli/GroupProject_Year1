@@ -48,13 +48,13 @@ function validateCorrectCheckbox(givenType)
       isCheckedValid = false;
 
       //put message on the save notifier as well
-      errorNotifier1 = document.getElementById('errorNotifier1');
-      errorNotifier1.style.display = 'block';
-      errorNotifier1.innerHTML = "Oops! some questions have no correct answers."
+      var errorNotifiers = document.getElementsByClassName('errorNotifier');
+      for(var index = 0; index < errorNotifiers.length; index++)
+      {
+        errorNotifiers[index].style.display = 'block';
+        errorNotifiers[index].innerHTML = "Oops! some questions have no correct answers.";
+      } // for loop
 
-      errorNotifier2 = document.getElementById('errorNotifier2');
-      errorNotifier2.style.display = 'block';
-      errorNotifier2.innerHTML = "Oops! some questions have no correct answers."
 
     } // true part
     else
@@ -62,15 +62,13 @@ function validateCorrectCheckbox(givenType)
       ansTable.nextElementSibling.style.display = "none";
       ansTable.nextElementSibling.innerHTML = "";
 
-      //remove the message
-      var errorNotifier1 = document.getElementById('errorNotifier1');
-      errorNotifier1.style.display = "none";
-      errorNotifier1.innerHTML = "";
-
-      var errorNotifier2 = document.getElementById('errorNotifier2');
-      errorNotifier2.style.display = "none";
-      errorNotifier2.innerHTML = "";
-
+      //put message on the save notifier as well
+      var errorNotifiers = document.getElementsByClassName('errorNotifier');
+      for(var index = 0; index < errorNotifiers.length; index++)
+      {
+        errorNotifiers[index].style.display = 'none';
+        errorNotifiers[index].innerHTML = "";
+      } // for loop
 
     } //false part
   } // for loop - looping through each ansTable
