@@ -74,7 +74,7 @@ function placeQuiz(quizID, quizName, quizCode, user_id, count)
 
   // when edit button is pressed, send the quiz id by post
  $("#delete" + quizID).click(function() {
-    var isDeleteConfirmed = confirm("Delete " + quizName + " Quiz?");
+    var isDeleteConfirmed = confirm("Delete " + quizName + " quiz?");
     if (isDeleteConfirmed)
     {
     var deleteForm = document.createElement("form");
