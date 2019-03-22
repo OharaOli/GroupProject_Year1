@@ -7,7 +7,7 @@
 <!DOCTYPE html>
 <html>
 <title>
-Quiz creator
+Editor
 </title>
 <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 <head>
@@ -97,7 +97,7 @@ Quiz creator
 
             <!-- quizEditor -->
             <div id="quizEditor" data-numOfQuestions="0">
-              <h3 id="changeQuizNameh2">Change your quiz name below</h3>
+              <h3 id="changeQuizNameh2">Change your quiz name here:</h3>
               <h2 id="quizHeader" contenteditable="true" data-quizId= "1" placeholder='required'></h2>
               <h2 class="give-me-some-space"> </h2>
               <!-- buttons for editing order and submission -->
@@ -105,17 +105,17 @@ Quiz creator
               <form action="javascript:void(0);" method="" name='quiz'>
                 <div id="saveBox">
                   <input type="submit" class="primary button small" value="Save" onclick="save()"> </input>
-                  <p id="saveNotifier"> saved </p>
+                  <p id="saveNotifier">Saved successfully!</p>
                   <p class="errorNotifier"> </p>
                 </div>
                 <div id="rootQDivAll">
                 </div>
               <button id="addRootQButton" class="button small" style="display: block;"  onClick="addRootQuestion(this)">
-              add root question </button>
+              Add Root Question </button>
             </div> <!-- QuizEditor -->
             <div id="saveBox2">
               <input type="submit" class="primary button small" value="Save" onclick="save()"> </input>
-              <p id="saveNotifier2"> saved </p>
+              <p id="saveNotifier2">Saved successfully!</p>
               <p class="errorNotifier"> </p>
             </div>
           </form>

@@ -1,3 +1,7 @@
+form {
+  margin-left: 2vw;
+}
+
 textarea
 {
   resize: none;
@@ -183,9 +187,13 @@ input.addSubQButton
   border-color: grey;
   border-width: 4px;
   border-radius: 10px;
+  box-shadow: none;
+}
 
-
-
+#addRootQButton:hover
+{
+  background-color: #353333;
+  border-color: #2176AE;
 }
 
 
@@ -244,6 +252,24 @@ tbody,
 tr,
 td{
   vertical-align: middle !important;
+}
+
+.rootQTable > tbody > tr:first-child > td:nth-child(3){
+  border-left: 1px solid #616168;
+}
+
+.subQTable > tbody > tr:first-child > td:nth-child(3){
+  border-left: 1px solid #616168;
+}
+
+.rootQTable > tbody > tr:first-child td:nth-child(4){
+  border-left: 1px solid #616168;
+  border-right: 1px solid #616168;
+}
+
+.subQTable > tbody > tr:first-child > td:nth-child(4){
+  border-left: 1px solid #616168;
+  border-right: 1px solid #616168;
 }
 
 td.timeLimitCell
@@ -351,12 +377,11 @@ input[type="checkbox"], input[type="radio"] {
 }
 
 #saveNotifier {
-  float: left;
   display: none;
   font-size: large;
   line-height: large;
   color: #00FF00;
-  margin: 0 0 0 0;
+  margin: 0 0 0 0.5em;
 }
 
 #saveNotifier2 {
@@ -364,17 +389,19 @@ input[type="checkbox"], input[type="radio"] {
   font-size: large;
   line-height: large;
   color: #00FF00;
-  margin: 0 0 0 0;
+  margin: 0 0 0 0.5em;
 }
 
 #saveBox {
   display: inline-block;
+  margin-bottom: 2em;
   padding-bottom: 0;
 }
 
 #saveBox2 {
   display: inline-block;
   padding-bottom: 0;
+  margin-left: 2vw; /* because somehow it isnt part of the form*/
 }
 
 #rootQDivAll{
@@ -421,13 +448,13 @@ header h2{
 
 
 .give-me-some-space{
-  height: 3em;
+  height: 1em;
 }
 
 p.errorNotifier
 {
   color: red;
-  display: 'none';
+  display: none;
 }
 
 p.checkErrorParag
