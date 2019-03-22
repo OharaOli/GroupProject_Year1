@@ -52,9 +52,9 @@ function validateCorrectCheckbox()
 
   //now change the message
   if(numOfInvalidTableSoFar < 1)
-    isCheckedValid = false;
-  else
     isCheckedValid = true;
+  else
+    isCheckedValid = false;
 
   if(isCheckedValid)
   {
