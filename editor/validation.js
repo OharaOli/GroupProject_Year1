@@ -46,7 +46,7 @@ function validateCorrectCheckbox(givenType)
       ansTable.nextElementSibling.style.display = "block";
       ansTable.nextElementSibling.innerHTML = "There must be at least 1 correct answer.";
       isCheckedValid = false;
-
+      console.log("check not valid");
       //put message on the save notifier as well
       var errorNotifiers = document.getElementsByClassName('errorNotifier');
       for(var index = 0; index < errorNotifiers.length; index++)
@@ -61,7 +61,7 @@ function validateCorrectCheckbox(givenType)
     {  // if greater than 1, remove the error message
       ansTable.nextElementSibling.style.display = "none";
       ansTable.nextElementSibling.innerHTML = "";
-
+      console.log("check valid");
       //delete the error notifier message
       var errorNotifiers = document.getElementsByClassName('errorNotifier');
       for(var index = 0; index < errorNotifiers.length; index++)
