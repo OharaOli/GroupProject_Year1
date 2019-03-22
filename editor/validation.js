@@ -176,7 +176,7 @@ function validateCorrectCheckbox()
     //check the num checed
     if(numOfCheckedSoFar < 1)
     {
-      ansTable.nextElementSiblinNEW QUIZ NAMEg.innerHTML = "You must provide at least 1 correct answer!";
+      ansTable.nextElementSibling.innerHTML = "You must provide at least 1 correct answer!";
       numOfInvalidTableSoFar++;
     }
     else
