@@ -511,6 +511,8 @@ function Player(screenName)
   this.giveAnswer = giveAnswer;
 } // Player constructor
 
+// -----------------------------------------------------------------
+
 
 // Calculates a player's score depending if they gave the correct answer.
 function giveAnswer(correctAnswer)
@@ -654,7 +656,10 @@ function displayFeedbackState(answerSelections)
   });
 }  // end-displayFeedbackState
 
+
 /*
+  OBSOLETE
+
   // Hides the number of answers given.
   $("#numberOfAnswers").hide();
   // Loop through answers.
@@ -720,7 +725,7 @@ function generateSlides()
       {
         $("#root" + xIndex).append("<section id='" + xIndex + "-" + yIndex + "'><button class='end-button'>End Quiz</button><div class='question-container'><h2>" + questions[xIndex][yIndex].text + "</h2></div></section>");
       }  // end-els
-      if ($("#" + xIndex + "-" + yIndex + " .question-container h2").text().length > 39)
+      if ($("#" + xIndex + "-" + yIndex + " .question-container h2").text().length > 100)
         $("#" + xIndex + "-" + yIndex + " .question-container h2").css({"margin-top": "3em"});
       addStartButtonToSlide(xIndex, yIndex);
      }  // end-for
@@ -729,7 +734,7 @@ function generateSlides()
     endQuiz();
   });
    
-  // __
+  // Initial configuration for Reveal.
   Reveal.initialize({
      // 13 = ENTER
      // 27 = ESC
@@ -793,12 +798,19 @@ Reveal.addEventListener('slidechanged', function(event) {
 });
 
 
-Reveal.addEventListener( 'overviewshown', function( event ) {
+// Upon pressing 'B' to make screen black.
+Reveal.addEventListener( 'paused', function(event) {
+  // Display a message to inform on how to return.
+  $(".pause-overlay").html("<p class='return-info'>Press 'B' to return to quiz.</p>");
+});
+
+
+Reveal.addEventListener( 'overviewshown', function(event) {
   // In case we decide to use overview
 });
 
 
-Reveal.addEventListener( 'overviewhidden', function( event ) {
+Reveal.addEventListener( 'overviewhidden', function(event) {
   // In case we decide to use overview
 });
 

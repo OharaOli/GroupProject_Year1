@@ -394,6 +394,10 @@ section button:hover {
   transition: 1s width ease;
 }
 
-.resume-button {
-  display: none;
+.return-info {
+  position: absolute;
+  bottom: 1em;
+  left: 1em;
+  font-size: 2em !important;
+  color: #FFF;
 }
