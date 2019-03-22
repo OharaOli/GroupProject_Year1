@@ -43,18 +43,26 @@ function validateCorrectCheckbox(givenType)
       }
     } // for loop - looping through eacch row
 
-    //check the numof checed
+    //check the num checed
     if(numOfCheckedSoFar < 1)
     {
+      ansTable.nextElementSibling.innerHTML = "You must provide at least 1 correct answer.";
       numOfInvalidTableSoFar++;
     }
+
   } // for loop - looping through each ansTable
 
   //now change the message
-  if(numOfInvalidTableSoFar == 0)
-  {
+  if(numOfInvalidTableSoFar < 1)
     isCheckedValid = true;
+  else
+    isCheckedValid = false;
+
+  if(isCheckedValid)
+  {
     console.log("is it valid?" + isCheckedValid);
+
+    //make the message appear below the table
 
     var errorNotifiers = document.getElementsByClassName('errorNotifier');
     for(var index = 0; index < errorNotifiers.length; index++)
@@ -65,7 +73,6 @@ function validateCorrectCheckbox(givenType)
   }
   else
   {
-    isCheckedValid = false;
     console.log("is it valid?" + isCheckedValid);
     var errorNotifiers = document.getElementsByClassName('errorNotifier');
     for(var index = 0; index < errorNotifiers.length; index++)

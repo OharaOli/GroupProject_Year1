@@ -294,8 +294,8 @@ function upload_questions(quizID) {
    } //for
    //this code is triggered when the save is successfully done.
    //$(".errorNotifier").hide();
-   $("#saveNotifier").finish().fadeIn("fast").css({"display": "inline-block"}).delay(2000).fadeOut("slow");
-   $("#saveNotifier2").finish().fadeIn("fast").css({"display": "inline-block"}).delay(2000).fadeOut("slow");
+   $("#saveNotifier").finish().fadeIn("fast").css({"display": "inline-block"}).delay(4000).fadeOut("slow");
+   $("#saveNotifier2").finish().fadeIn("fast").css({"display": "inline-block"}).delay(4000).fadeOut("slow");
 } //upload_questions
 
 //Store the answers under the given question ID
