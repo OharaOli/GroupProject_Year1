@@ -59,15 +59,18 @@ function validateCorrectCheckbox(givenType)
   //now change the message
   if(isCheckedValid)
   {
+    console.log("is it valid?" + isCheckedValid);
+
     var errorNotifiers = document.getElementsByClassName('errorNotifier');
     for(var index = 0; index < errorNotifiers.length; index++)
     {
-      errorNotifiers[index].style.display = 'none';
+      errorNotifiers[index].style.display = 'block';
       errorNotifiers[index].innerHTML = "";
     } // for loop
   }
   else
   {
+    console.log("is it valid?" + isCheckedValid);
     var errorNotifiers = document.getElementsByClassName('errorNotifier');
     for(var index = 0; index < errorNotifiers.length; index++)
     {
