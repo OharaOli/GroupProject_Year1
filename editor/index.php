@@ -121,9 +121,6 @@ Quiz creator
             </div>
 
             <br/>
-                <!-- display validation message -->
-               <p style="color:red;" id="question_validation"></p>
-               <p style="color:red;" id="feedback_validation"></p>
           </section>
     </div>
          <!-- javaScript related to drag & drop -->

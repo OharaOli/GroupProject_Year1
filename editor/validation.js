@@ -48,8 +48,11 @@ function validateCorrectCheckbox(givenType)
       isCheckedValid = false;
 
       //put message on the save notifier as well
-      errorNotifier = document.getElementById('errorNotifier');
-      errorNotifier.innerHTML = "Oops! some questions have no correct answers."
+      errorNotifier1 = document.getElementById('errorNotifier1');
+      errorNotifier1.innerHTML = "Oops! some questions have no correct answers."
+
+      errorNotifier2 = document.getElementById('errorNotifier2');
+      errorNotifier2.innerHTML = "Oops! some questions have no correct answers."
 
     } // true part
     else
@@ -59,9 +62,14 @@ function validateCorrectCheckbox(givenType)
       ansTable.nextElementSibling.innerHTML = "";
 
       //remove the message
-      var errorNotifier = document.getElementById('errorNotifier');
-      errorNotifier.style.display = "none";
-      errorNotifier.innerHTML = "";
+      var errorNotifier1 = document.getElementById('errorNotifier1');
+      errorNotifier1.style.display = "none";
+      errorNotifier1.innerHTML = "";
+
+      var errorNotifier2 = document.getElementById('errorNotifier2');
+      errorNotifier2.style.display = "none";
+      errorNotifier2.innerHTML = "";
+
 
     } //false part
   } // for loop - looping through each ansTable
