@@ -101,6 +101,7 @@ textarea:invalid
 */
 .dragHandleCell{
   padding-top: 0.7em;
+  border-right: 1px solid #616168;
 }
 
 table.rootQTable
@@ -215,7 +216,8 @@ select.timeLimitList
   color: white;
   font-size: 0.8rem;
   border: solid 1px rgb(54, 55, 62);
-  min-width: 5em;
+  min-width: 7em;
+  width: 100%;
 }
 
 input.answerField
@@ -223,16 +225,6 @@ input.answerField
   width: 99%;
   height: 2.2rem;
 }
-
-
-
-h1.quizHeader
-{
-
-
-
-}
-
 
 
 div.orderDiv
@@ -296,6 +288,7 @@ td.buttonCell
 td.indexCell
 {
   border-right: 1px solid rgba(128, 128, 128, 0.15);
+  border-top: 1px solid #616168 !important;
   width: 4rem;
 }
 
@@ -443,7 +436,7 @@ input[type="checkbox"], input[type="radio"] {
 header h2{
   margin: 0 0 1em;
   color: #12415f;
-  font-size: -webkit-xxx-large;
+  font-size: xxx-large; /* was -webkit-xxx-large*/
 }
 
 
@@ -454,8 +447,8 @@ header h2{
 p.errorNotifier
 {
   color: red;
-  display: none;
-  margin: 0 0 0 0.5em
+  display: inline-block !important;
+  margin: 0 0 0 0.5em;
 }
 
 p.checkErrorParag
@@ -463,5 +456,5 @@ p.checkErrorParag
   height: 0px;
   color: red;
   font-size: 0.8rem;
-  display: none !important;
+  display: none;
 }
