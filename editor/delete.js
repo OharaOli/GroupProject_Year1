@@ -113,6 +113,11 @@ function updateRootQIndex(isDueToDrop)
     //update the button as well
     rootQTable.rows[0].cells[1].childNodes[0].setAttribute('data-x', (index));
 
+    //update the id of the answer Table as well
+    rootQTable.rows[1].cells[3].childNodes[0].setAttribute('id', 'ansTable' + index + '0');
+    rootQTable.rows[1].cells[3].childNodes[0].setAttribute('data-x', index);
+
+
  } // for loop
 
 
